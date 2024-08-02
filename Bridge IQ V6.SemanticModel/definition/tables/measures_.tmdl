@@ -1,0 +1,3355 @@
+/// All measures that are filed away in this table should have a description of their function
+table measures_
+	lineageTag: 7020b7c3-2d88-4e8c-8b90-a7c7e4c86cfd
+
+	/// counts the number of behaviors with the mail_activity_type_id of "Offer Signed
+	/// 
+	measure Hires = CALCULATE(DISTINCTCOUNT(behaviors_crm[id]),behaviors_crm[mail_activity_type_id]="Offer Signed")
+		formatString: 0
+		displayFolder: Recruiting
+		lineageTag: 6c36572d-eda8-46a0-a984-96f019cf2a0d
+
+	/// Sum of Total Charges in PCS
+	/// 
+	measure 'PCS Revenue' =
+			
+			CALCULATE(
+			    SUM(pcs_loads[Total Revenue]),
+			    pcs_loads[Ship Date]>=MIN('calendar'[Date]),
+			    pcs_loads[Ship Date]<=MAX('calendar'[Date]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		isHidden
+		displayFolder: Sales Measures\Revenue\PCS
+		lineageTag: 7f132a2e-5769-47af-8a9f-b1f283268a4d
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Sum of Carrier Pay in PCS
+	measure 'PCS Carrier Pay' =
+			
+			CALCULATE(
+			    SUM(pcs_loads[Carrier Pay]),
+			    pcs_loads[Ship Date]>=MIN('calendar'[Date]),
+			    pcs_loads[Ship Date]<=MAX('calendar'[Date]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Pay Measures\PCS
+		lineageTag: 2eb2bdd8-124c-433b-85cc-d9dca1ef2412
+
+	/// Total Charges minus Total Carrier Pay in PCS
+	measure 'PCS Margin' = [PCS Revenue]-[PCS Carrier Pay]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
+		displayFolder: Sales Measures\Margin\PCS
+		lineageTag: de633058-eb32-4ae4-bd19-2c07deb5d9a5
+
+	/// Sum of Revenue on orders still Available
+	/// 
+	measure 'Revenue Available' = CALCULATE(SUM(orders[Total Charges]),movements[Move Status]="Available")
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Revenue
+		lineageTag: 3004f14e-a01c-4b97-abe3-2f950059a3d0
+
+	/// This is the sum of all carrier pays on the movement (Including Other Pay)
+	/// **Note of caution this will not include a other pay if paying a 3rd party payee such as a labor company or insurance company***
+	measure 'McLeod Movements Carrier Pay' =
+			
+			CALCULATE(
+			    SUM(movements[Projected Total Carrier Pay]),
+			    orders[Ship Scheduled Early Date]>=MIN('calendar'[Date]),
+			    orders[Ship Scheduled Early Date]<=MAX('calendar'[Date]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Pay Measures\McLeod
+		lineageTag: 66781810-7d44-4eb1-b454-12032a540d9d
+
+	/// Sum of total Charges on orders excluding Available Loads
+	measure 'McLeod Covered Revenue' =
+			
+			CALCULATE(
+			    SUM(orders[Total Charges]),movements[Move Status]<>"Available",
+			    orders[Ship Scheduled Early Date]>=MIN('calendar'[Date]),
+			    orders[Ship Scheduled Early Date]<=MAX('calendar'[Date]))
+		isHidden
+		displayFolder: Sales Measures\Revenue\McLeod
+		lineageTag: 95e18d0a-5dc1-4d5e-a73e-fee55b8a0553
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This is the sum of all settlement pay for a order coming from the order pay. 
+	/// ***this is the pay used to calculate margin***
+	measure 'Mcleod Orders Carrier Pay' =
+			
+			CALCULATE(
+			    SUM(orders[Projected Total Carrier Pay]),
+			    orders[Ship Scheduled Early Date]>=MIN('calendar'[Date]),
+			    orders[Ship Scheduled Early Date]<=MAX('calendar'[Date]))
+		formatString: 0.00
+		displayFolder: Pay Measures\McLeod
+		lineageTag: 65ee6f17-6816-4263-9f7c-de04f329194c
+
+	/// McLeod Revenue - McLeod Orders Carrier Pay for all orders excluding the move status of Available
+	measure 'McLeod Margin' = CALCULATE([McLeod Covered Revenue]-[Mcleod Orders Carrier Pay],movements[Move Status]<>"Available",orders[Ship Scheduled Early Date]>=MIN('calendar'[Date]),orders[Ship Scheduled Early Date]<=MAX('calendar'[Date]))
+		isHidden
+		displayFolder: Sales Measures\Margin\Mcleod
+		lineageTag: 32b6c49b-106a-47d7-a703-333472502abe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The Sum of all Margin Goals In the Margin Load Count Goals
+	measure 'Margin Goal' = SUM(margin_load_count_goals[Margin Goal])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 8958ff9c-1e17-41e8-95b8-ba4ab63253e2
+
+	/// All Revenue minus all order expenses
+	measure Margin = [McLeod Margin]+[PCS Margin]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: 7590a8b2-7766-4e0f-bb03-c4819dfcb9c5
+
+	/// Best Margin month ever
+	measure 'Best Margin Month Ever' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('calendar','calendar'[Month / Year]),
+			        [Margin]),
+			        REMOVEFILTERS('calendar'[Year]),
+			        REMOVEFILTERS('calendar'[Month Name]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\Bests\Months
+		lineageTag: ae4be7d0-7df0-4f4f-bb6c-06caf6b0d2d2
+
+	/// Count of the distinct order numbers in McLeod
+	/// ***Including Available***
+	measure 'McLeod Count Of Orders' = DISTINCTCOUNT(orders[Order ID])
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\McLeod
+		lineageTag: 9361d764-7974-424f-a790-250359a69452
+
+	/// Count of the distinct order numbers in PCS
+	measure 'PCS Count of Orders' = DISTINCTCOUNT(pcs_loads[Order ID])
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\PCS
+		lineageTag: 5aee6b10-6dea-4806-9096-b71dd7811bf6
+
+	/// Count of all orders in McLeod and PCS
+	/// ***Includes Available Orders***
+	measure 'Count of Orders' = [McLeod Count Of Orders]+[PCS Count of Orders]
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders
+		lineageTag: ff5134d3-dd92-4685-bea4-940ba00beb48
+
+	/// Count of the distinct order numbers Covered and beyond in McLeod and PCS
+	measure 'Count of Orders Covered' = CALCULATE([Count of Orders],movements[Move Status]<>"Available")
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders
+		lineageTag: 75deba24-36c3-4731-99cc-835a67cfdde7
+
+	/// Load Count Goal is Calculated by calculating the Margin Per order Last month then dividing the Margin Goal by the Margin Per Order Last Month
+	measure 'Load Count Goal' = ```
+			
+			Var margin_per_order_LM = CALCULATE([Margin Per Order],DATEADD('calendar'[Date],-  1,MONTH))
+			Var load_count_goal = DIVIDE([Margin Goal],margin_per_order_LM)
+			Var ifs= 
+			    IF(margin_per_order_LM=0,5,load_count_goal)
+			
+			Return 
+			ifs
+			```
+		displayFolder: Sales Measures\Sales Goals\Load Count
+		lineageTag: 49997ed8-aeba-43bd-b18f-305d06aad5d8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Best Month ever of Orders that were Covered and beyond
+	measure 'Best Count of Orders Month Ever' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('calendar','calendar'[Month / Year]),
+			        [Count of Orders Covered]),
+			        REMOVEFILTERS('calendar'[Year]),
+			        REMOVEFILTERS('calendar'[Month Name]))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\Bests\Months
+		lineageTag: 058ce1b5-bebc-4d92-8133-cf6f80c6f0d8
+
+	/// This measure Sets the max value for the Margin vs Margin Goal Gauge. if the best month they have had is less than the goal it will set the goal as the max value. if there goal is less than their best it will set the best as the max of the gauge.
+	measure 'Margin vs Margin Goal Gauge Max' =
+			
+			IF([Margin Goal]>[Best Margin Month Ever],[Margin Goal],[Best Margin Month Ever])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 4d1a5017-a3f7-439f-bf95-345d56d33c45
+
+	/// This measure Sets the max value for the Load Count vs Load Count Goal Gauge. if the best month they have had is less than the goal it will set the goal as the max value. if there goal is less than their best it will set the best as the max of the gauge.
+	measure 'Load Count vs Load Count Goal Guage Max' =
+			
+			IF([Best Count of Orders Month Ever]<=[Load Count Goal],[Load Count Goal],[Best Count of Orders Month Ever])
+		displayFolder: Sales Measures\Sales Goals\Load Count
+		lineageTag: 688b7851-6a66-42a6-9e45-10c83f15650a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Best Margin per order month ever
+	measure 'Best Margin Per Order Month Ever' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('calendar','calendar'[Month / Year]),
+			        [Margin Per Order]),
+			        REMOVEFILTERS('calendar'[Year]),
+			        REMOVEFILTERS('calendar'[Month Name]),
+			        REMOVEFILTERS('calendar'[Date]))
+		formatString: 0
+		displayFolder: Sales Measures\Margin\Bests\Months
+		lineageTag: 890eab4f-9c3f-488d-b25d-b56b93103c78
+
+	/// This measure Sets the max value for the Margin per Order vs Margin per Order Goal Gauge. if the best month they have had is less than the goal it will set the goal as the max value. if there goal is less than their best it will set the best as the max of the gauge.
+	measure 'Margin per Order vs Margin per Order Goal Gauge Max' =
+			
+			IF([Avg Margin Per Order Goal]>=[Best Margin Per Order Month Ever],[Avg Margin Per Order Goal],[Best Margin Per Order Month Ever])
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 0c02dceb-b2dd-4cb0-88d3-de533deacca4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The Average of the Margin per Order Goals in the Margin Load Count Table
+	measure 'Avg Margin Per Order Goal' = AVERAGE(margin_load_count_goals[Margin Per Order Goal])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: f80df9e9-eb8a-4746-9921-bbec4033434a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Margin divided by Revenue
+	/// 
+	measure 'Margin %' = DIVIDE([Margin],[Revenue Covered])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: 59683e76-1236-437d-b778-7e82222e5389
+
+	/// Sum of the Covered Revenue in both PCS and McLeod
+	measure 'Revenue Covered' = [McLeod Covered Revenue]+[PCS Revenue]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Revenue
+		lineageTag: ec7db848-619f-42b1-b965-43c08854cc2b
+
+	/// The Average of the Margin Percentage Goals in the Margin Load Count Table
+	measure 'Avg Margin % Goal' = AVERAGE(margin_load_count_goals[Margin % Goal])
+		formatString: 0%;-0%;0%
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 9b63a7d7-26cd-4cd0-b9a4-1347855bcffd
+
+	/// Best Margin % month ever
+	measure 'Best Margin % Month Ever' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('calendar','calendar'[Month / Year]),
+			        [Margin %]),
+			        REMOVEFILTERS('calendar'[Year]),
+			        REMOVEFILTERS('calendar'[Month Name]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Margin\Bests\Months
+		lineageTag: 42972458-5397-4e50-8431-8713a0131f20
+
+	/// This measure Sets the max value for the Margin % vs Margin % Goal Gauge. if the best month they have had is less than the goal it will set the goal as the max value. if there goal is less than their best it will set the best as the max of the gauge.
+	measure 'Margin % vs Margin % Goal Guage Max' =
+			
+			IF([Best Margin % Month Ever]<=[Avg Margin % Goal],[Avg Margin % Goal],[Best Margin % Month Ever])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: c716c9f2-681e-46bd-9aac-f1454f2404ab
+
+	/// The the Count of completed behaviors divided by the sum of the Behavior goal
+	measure 'Sales BWS Behavior Progress' = ```
+			
+			Var behavior_progress = DIVIDE([BWS Behaviors],[Behavior Goals])
+			Var Ifs = 
+			    IF(behavior_progress=0,0,
+			    IF(behavior_progress>=1,1,
+			    behavior_progress))
+			
+			Return
+			Ifs
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Behavior Goal Measures
+		lineageTag: 8d4cd900-fc1b-4a4f-9c5c-cbde2a106369
+
+	/// Calculates the Average Of their Behavior Progress then multiplies that by the Max Points allowed 
+	/// 
+	/// Max Points is 30
+	measure 'Behavior Points' = ```
+			
+			var avereage_behavior_progress = AVERAGEX(behavior_goals,[Sales BWS Behavior Progress])
+			
+			var behavior_points_pre_july_24 = 
+			    IF(avereage_behavior_progress=0,0,
+			    IF(avereage_behavior_progress>=1,30,
+			    avereage_behavior_progress*30))
+			
+			var max_points_post_after_july24 = 20
+			var behavior_points_after_july24 = 
+			    IF(avereage_behavior_progress=0,0,
+			    IF(avereage_behavior_progress>=1,max_points_post_after_july24,
+			    avereage_behavior_progress*max_points_post_after_july24))
+			
+			var behavior_points = 
+			    IF(MIN('calendar'[Date])>=45474,behavior_points_after_july24,behavior_points_pre_july_24)
+			
+			return
+			behavior_points
+			```
+		displayFolder: BWS\Sales
+		lineageTag: 5ed6fd93-a696-4ec4-9f48-f757bbaa22b7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Takes Margin and divides it by Margin Goal then multiplies that by the Max Points allowed 
+	/// 
+	/// Max Points = 30
+	measure 'Sales Margin Points' =
+			
+			Var max_points_pre_july24 = 30
+			Var max_points_after_july_24 = 80
+			Var margin_progress = DIVIDE([Margin],[Margin Goal])
+			
+			Var margin_points_pre_july24 =
+			    IF(margin_progress=0,0,
+			    IF(margin_progress>=1,max_points_pre_july24,
+			    margin_progress*max_points_pre_july24))
+			
+			Var margin_points_after_july24 =
+			    IF(margin_progress=0,0,
+			    IF(margin_progress>=1,max_points_after_july_24,
+			    margin_progress*max_points_after_july_24))
+			
+			Var ifs = IF(MIN('calendar'[Date])>=45474,margin_points_after_july24,margin_points_pre_july24)
+			
+			Return
+			ifs
+		displayFolder: BWS\Sales
+		lineageTag: e9c94891-ddef-44a4-b210-4e66a712f388
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Count of covered orders divided by load count goal. 
+	/// if progress is 0, 0 points awarded
+	/// if progress is >=1, max points
+	/// standard is progress times max points 
+	/// 
+	/// max points =10
+	measure 'Sales Load Count Points' = ```
+			
+			Var max_points = 10
+			Var load_count_progress = DIVIDE([Count of Orders Covered],[Load Count Goal])
+			Var load_count_points = 
+			    IF(load_count_progress=0,0,
+			    IF(load_count_progress>=1,max_points,
+			    load_count_progress*max_points))
+			
+			Var ifs = IF(MIN('calendar'[Date])>=45474,0,load_count_points)
+			
+			return
+			ifs
+			```
+		displayFolder: BWS\Sales
+		lineageTag: dbdad4c0-fc61-4975-89ac-c6f8a6185a83
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Max Points = 15
+	/// Margin% goal pre 7/1/2023 = 18%
+	/// Current Margin % goal = 10%
+	measure 'Sales margin % Points' = ```
+			
+			Var max_points = 15
+			Var pre_july_twenty_three_goal = .18
+			Var current_percentage_goal = .1
+			 
+			Var old_score =
+			    IF([Margin %]=0,0,
+			    IF([Margin %]>=pre_july_twenty_three_goal,max_points,
+			    max_points-((pre_july_twenty_three_goal-[Margin %])*100)))
+			 
+			Var new_score =
+			    IF([Margin %]=0,0,
+			    IF([Margin %]>=current_percentage_goal,max_points,
+			    max_points-(((current_percentage_goal-[Margin %])*2)*100)))
+			 
+			Var old_ifs =
+			    IF(
+			        MIN('calendar'[Date])<45017,old_score,
+			        new_score)
+			
+			Var ifs = IF(MIN('calendar'[Date])>=45474,0,old_ifs)
+			
+			Return
+			ifs
+			```
+		displayFolder: BWS\Sales
+		lineageTag: d48c168f-d65e-49e6-881f-b4ea7e7d9a24
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Max points =15
+	/// Max Diversity% = 40%
+	/// 
+	/// Salesperson loses .25 points every percent over 40%
+	measure 'Diversity Points' = ```
+			
+			Var max_points = 15
+			Var max_percentage_allowed = .4
+			
+			Var max_of_margin = MAXX(ALL(crm_customer_key[Customer ID]),[Margin])
+			Var grand_total_margin = CALCULATE([Margin],ALL(crm_customer_key[Customer ID]))
+			Var top_customer_percent_of_grand_total = DIVIDE(max_of_margin,grand_total_margin)
+			
+			Var diversity_points_pre_july24 = 
+			    IF([Margin]=0,0,
+			    IF(top_customer_percent_of_grand_total<=max_percentage_allowed,max_points,
+			    max_points-((top_customer_percent_of_grand_total-max_percentage_allowed)*25)))
+			
+			Var ifs = IF(MIN('calendar'[Date])>=45474,0,diversity_points_pre_july24)
+			
+			RETURN
+			ifs
+			```
+		displayFolder: BWS\Sales
+		lineageTag: aa98a156-2d65-4cfd-9920-412886b79eac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Sum of Behavior points, diversity points, load count points, margin % points, and margin points
+	measure 'Total Sales BWS' = [Behavior Points]+[Sales Margin Points]+[Sales Load Count Points]+[Sales margin % Points]+[Diversity Points]
+		displayFolder: BWS\Sales
+		lineageTag: f86d0a72-5b30-4956-b2d2-6f559799134d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Sum of Behavior Goals
+	measure 'Behavior Goals' = SUM(behavior_goals[Goal])
+		formatString: 0
+		displayFolder: Behavior Goal Measures
+		lineageTag: 4bad0591-883f-4f4d-8125-b5002a117c78
+
+	/// This is a distinct Count of the ID of rows in the bws_behaviors table
+	measure 'BWS Behaviors' = DISTINCTCOUNT(bws_behaviors[id])
+		formatString: 0
+		displayFolder: Behavior Goal Measures
+		lineageTag: 1f4c6704-1738-4b19-bde8-687c333e035a
+
+	/// The Average of the Sales BWS. 
+	/// 
+	/// (Made up by Margin Points, Behavior Points, Diversity Points, Load Count Points, and Margin % Points,)
+	measure 'Average Sales BWS' = AVERAGEX(GROUPBY(salesperson_key,salesperson_key[Salesperson Name]),[Total Sales BWS])
+		displayFolder: BWS\Sales
+		lineageTag: 9e3ce4eb-57f3-48df-98f8-f50e42d5e4bd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Count of individuals that BWS is >=85 and <90
+	measure 'Count of LFG' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(salesperson_key[Salesperson Name]),
+			    FILTER(salesperson_key,[Average Sales BWS]>=85),
+			    FILTER(salesperson_key,[Average Sales BWS]<90))
+		formatString: 0
+		displayFolder: BWS\Sales
+		lineageTag: a0d7dbff-b3c5-4e28-945a-3e034b35d776
+
+	/// This is a text box that reads "LFG"
+	measure LFG = "LFG"
+		displayFolder: Text Boxes
+		lineageTag: 4c1b4321-9d7d-45aa-8a7f-e0493a76cb2b
+
+	/// Count of individuals that BWS is >=80and <85
+	/// 
+	measure 'Count of Avg Joe' = ```
+			
+			 CALCULATE(
+			    DISTINCTCOUNT(salesperson_key[Salesperson Name]),
+			    FILTER(salesperson_key,[Average Sales BWS]>=80),
+			    FILTER(salesperson_key,[Average Sales BWS]<85))
+			```
+		formatString: 0
+		displayFolder: BWS\Sales
+		lineageTag: 566e4e9c-2133-477c-829b-a056eef00d00
+
+	/// This is a text box that reads "Avg Joe's"
+	measure 'Avg Joe' = "Avg Joe"
+		displayFolder: Text Boxes
+		lineageTag: 2b36fbd6-f8e8-4e7d-b3bd-d30094107436
+
+	/// Count of individuals that BWS is >=90 and <95
+	measure 'Count of HHS' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT(salesperson_key[Salesperson Name]),
+			    FILTER(salesperson_key,[Average Sales BWS]>=90),
+			    FILTER(salesperson_key,[Average Sales BWS]<95))
+			
+			```
+		formatString: 0
+		displayFolder: BWS\Sales
+		lineageTag: b824482f-f9e0-44be-99d8-1110b82a322d
+
+	/// This is a text box that reads "Grinders"
+	measure WOOO! = "WOOO!"
+		displayFolder: Text Boxes
+		lineageTag: 07aab317-650a-4153-9fbf-bedd12a4afcb
+
+	/// Count of individuals that BWS is >= 95
+	measure 'Count of WOOO!' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(salesperson_key[Salesperson Name]),
+			    FILTER(salesperson_key,[Average Sales BWS]>=95))
+		formatString: 0
+		displayFolder: BWS\Sales
+		lineageTag: 31faf689-d9ad-43bc-b7cd-1d966f158aab
+
+	/// This is a Text Box that reads "HHS"
+	measure HHS = "HHS"
+		displayFolder: Text Boxes
+		lineageTag: c454275e-0312-475d-bcb9-9badc8f70281
+
+	/// Calculates the Last Shipment Date 
+	/// 
+	/// based of of Scheduled pickup
+	measure 'Last Ship Date' = ```
+			
+			Var pcs_last_ship_date = MAX(pcs_loads[Ship Date])
+			Var mcleod_last_ship_date = 
+			    CALCULATE(MAX(orders[Ship Scheduled Early Date]),movements[Move Status]<>"Available")
+			
+			Var ifs =
+			    IF(mcleod_last_ship_date=BLANK(),pcs_last_ship_date,
+			    IF(mcleod_last_ship_date>=TODAY(),TODAY(),
+			    mcleod_last_ship_date))
+			
+			Return
+			ifs
+			```
+		formatString: Short Date
+		displayFolder: Operations Measures
+		lineageTag: bd8be779-c7e4-4512-90cf-3eab6dc7633f
+
+	/// Number of days since the last shipment with a Company
+	/// 
+	measure 'Days Since Last Shipment' = DATEDIFF([Last Ship Date],TODAY(),DAY)
+		formatString: 0
+		displayFolder: Operations Measures
+		lineageTag: 43822a86-d060-4b37-887f-7215d3eccb04
+
+	/// Number of days since a CRM record has moved Stages
+	measure 'Days since Last Stage Update' = ```
+			
+			 DATEDIFF(
+			    MAX(crm[Last Stage Change]),TODAY(),DAY)
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: b669db3e-dfdb-4a29-a533-11647da22c25
+
+	/// The Newest Behavior that has been completed from the behaviors_crm table
+	measure 'Last Behavior Date' = MAX(behaviors_crm[Behavior Date])
+		formatString: Short Date
+		displayFolder: CRM Measures
+		lineageTag: c445a8be-6d34-4033-b3fd-d4b770321e91
+
+	/// Calculates the number of days since the last behavior was completed in Odoo
+	measure 'Days since last Behaivor' = DATEDIFF([Last Behavior Date],TODAY(),DAY)
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: 344dc455-9bf5-4b66-b8b6-1f761e227e84
+
+	/// Calculates the number if Days the Next Behavior for a company in Odoo Is over due
+	measure 'Days Over Due' = ```
+			
+			Var next_behavior_deadline = MAX(crm[activity_date_deadline])
+			Var days_over_due = DATEDIFF(next_behavior_deadline,TODAY(),DAY)
+			
+			Return 
+			days_over_due
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: 49ce9ec4-abec-4123-85c5-c5a4faeb4bb9
+
+	/// Number of days since the current salesperson was put on the CRM record
+	measure 'Days since last Salesperson Update' = DATEDIFF(MAX(crm[date_open]),TODAY(),DAY)
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: 5b3c2468-0e91-4a38-ad72-679abc7b0973
+
+	/// If Days since last shipment is the reason for a company being at risk this measure will equal 1 if not 0
+	/// 
+	/// Applies to Stages:
+	/// 1-3 Loads and Customer
+	/// 
+	/// Var at_risk = IF([Days Since Last Shipment]>120,1,0)
+	/// Var ifs = 
+	///     IF(MIN(crm[Stage])="Customer",at_risk,
+	///     IF(MIN(crm[Stage])="1-3 Loads",at_risk,0))
+	/// 
+	/// 
+	/// return
+	/// ifs
+	measure 'Days since Last Shipment is over 120' = ```
+			
+			Var at_risk = IF([Days Since Last Shipment]>120,1,0)
+			Var ifs = 
+			    IF(MIN(crm[Stage])="Customer",at_risk,
+			    IF(MIN(crm[Stage])="1-3 Loads",at_risk,0))
+			
+			
+			return
+			ifs
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures\At Risk Reasons
+		lineageTag: 2a093521-b4ac-4000-9e06-ac02fb4121b2
+
+	/// Days since last stage update is one of the reasons at risk reason 
+	/// 
+	/// 
+	/// 
+	/// Var prospect_at_risk = if([Days since Last Stage Update]>90,1,0)
+	/// Var pipeline_at_risk = IF([Days since Last Stage Update]>60,1,0)
+	/// Var ifs = 
+	///     IF(MIN(crm[Stage])="Customer",0,
+	///     IF(MIN(crm[Stage])="Working",prospect_at_risk,
+	///     IF(MIN(crm[Stage])="No For Now",prospect_at_risk,
+	///     IF(MIN(crm[Stage])="Qualified",pipeline_at_risk,
+	///     IF(MIN(crm[Stage])="Quoted",pipeline_at_risk,
+	///     IF(MIN(crm[Stage])="Credit App",pipeline_at_risk,
+	///     IF(MIN(crm[Stage])="1-3 Loads",pipeline_at_risk,0)))))))
+	/// 
+	/// Return
+	/// ifs
+	/// 
+	/// 
+	measure 'Days since last stage update is one of the reasons at risk reason' = ```
+			
+			Var prospect_at_risk = if([Days since Last Stage Update]>90,1,0)
+			Var pipeline_at_risk = IF([Days since Last Stage Update]>60,1,0)
+			Var ifs = 
+			    IF(MIN(crm[Stage])="Customer",0,
+			    IF(MIN(crm[Stage])="Working",prospect_at_risk,
+			    IF(MIN(crm[Stage])="No For Now",prospect_at_risk,
+			    IF(MIN(crm[Stage])="Qualified",pipeline_at_risk,
+			    IF(MIN(crm[Stage])="Quoted",pipeline_at_risk,
+			    IF(MIN(crm[Stage])="Credit App",pipeline_at_risk,
+			    IF(MIN(crm[Stage])="1-3 Loads",pipeline_at_risk,0)))))))
+			
+			Return
+			ifs
+			```
+		formatString: 0
+		displayFolder: Crm Measures\At Risk Measures\At Risk Reasons
+		lineageTag: f38c0e47-8b88-46fa-bdd1-497c36c8aaee
+
+	/// Days Since Last Behavior is the reason for at risk
+	/// 
+	/// Var opportunity_at_risk = IF([Days since last Behaivor]>60,1,0)
+	/// Var working_at_risk = IF([Days since last Behaivor]>60,1,0)
+	/// Var no_for_now_at_risk = IF([Days since last Behaivor]>90,1,0)
+	/// 
+	/// Var Ifs = 
+	///     IF(MIN(crm[Stage])="Qualified",opportunity_at_risk,
+	///     IF(MIN(crm[Stage])="Quoted",opportunity_at_risk,
+	///     IF(MIN(crm[Stage])="Credit App", opportunity_at_risk,
+	///     IF(MIN(crm[Stage])="1-3 Loads",opportunity_at_risk,
+	///     IF(MIN(crm[Stage])="Customer",opportunity_at_risk,
+	///     IF(MIN(crm[Stage])="Working",working_at_risk,
+	///     IF(MIN(crm[Stage])="No For Now",no_for_now_at_risk,0)))))))
+	/// 
+	/// Return
+	/// Ifs
+	measure 'Days Since Last Behavior is one of the reason for at risk' = ```
+			
+			Var opportunity_at_risk = IF([Days since last Behaivor]>60,1,0)
+			Var working_at_risk = IF([Days since last Behaivor]>60,1,0)
+			Var no_for_now_at_risk = IF([Days since last Behaivor]>90,1,0)
+			
+			Var Ifs = 
+			    IF(MIN(crm[Stage])="Qualified",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Quoted",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Credit App", opportunity_at_risk,
+			    IF(MIN(crm[Stage])="1-3 Loads",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Customer",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Working",working_at_risk,
+			    IF(MIN(crm[Stage])="No For Now",no_for_now_at_risk,0)))))))
+			
+			Return
+			Ifs
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures\At Risk Reasons
+		lineageTag: 9d5cea29-fc1d-4d61-b959-41c9e97014eb
+
+	/// Count of Companies Deemed to be at risk.
+	/// 
+	/// please see BOTL for details on what is at risk.
+	measure 'Count of At Risk' = CALCULATE(DISTINCTCOUNT(crm[id]),crm[At Risk]="TRUE")
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: cf53aa87-b06c-4ce4-9aef-78789cc8a126
+
+	/// The Sum of the Margin Goal from the customer_margin_goal table
+	measure 'Customer Margin Goal' = ```
+			SUMX(customer_margin_goal,customer_margin_goal[Margin Goal])
+			
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 1b735731-d2fd-4841-b739-1dada7cd43ea
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// This Measure Calculates the difference between Actual Margin with a customer and what the goal set for that Customers Margin.
+	measure 'Customer Margin vs Customer Margin Goal Variance' = if([Customer Margin Goal]<=0,BLANK(),[Margin]-[Customer Margin Goal])
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 39315212-b1a1-4965-ae58-d057a9e8d955
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This Measure Calculates the Margin per Order Last month (MPOLM) then divides the Customer Margin Goal by MPOLM to get the Customer Load count goal. 
+	/// 
+	/// **if there was no MPOLM for that customer it will use the MPOLM for the salesperson as a hole***
+	measure 'Customer Load Count Goal' = ```
+			
+			Var margin_per_load_last_month_customer_filter_removed = 
+			    CALCULATE(
+			        [Margin Per Order],
+			        DATEADD('calendar'[Date],-1,MONTH),
+			        REMOVEFILTERS(customer_key[Customer Name]),
+			        REMOVEFILTERS(parent_customer_key[Customer Name]))
+			Var margin_per_order_last_month = CALCULATE([Margin Per Order],DATEADD('calendar'[Date],-1,MONTH))
+			Var margin_per_order_last_month_ifs = 
+			    IF(margin_per_order_last_month=BLANK(),margin_per_load_last_month_customer_filter_removed,
+			    IF(margin_per_order_last_month<=0,margin_per_load_last_month_customer_filter_removed,
+			    margin_per_order_last_month))
+			Var customer_load_count_goal = 
+			    IF([Customer Margin Goal]=BLANK(),BLANK(),DIVIDE([Customer Margin Goal],margin_per_order_last_month_ifs))
+			    
+			Return
+			customer_load_count_goal
+			```
+		formatString: 0
+		displayFolder: Sales Measures\Sales Goals\Load Count
+		lineageTag: 6cf6030d-51af-4e54-bc24-3e244e859933
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// adds up all of the margin generated on days less than the current day of the month for the month that you have selected in your filter context.
+	measure 'Margin MTD' = TOTALMTD([Margin],'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: 249a2f48-04d8-4f17-b5d5-9c9d69bd62cd
+
+	/// This Measure takes the sum of Margin Goals and divides it by the number of working days in the month.
+	measure 'Margin per day Goal' = ```
+			
+			Var workingdays = 
+			    NETWORKDAYS(
+			        STARTOFMONTH('Calendar'[Date]),
+			        ENDOFMONTH('Calendar'[Date]),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('calendar'[Date]))
+			Var override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('calendar'[Date]))
+			Var mpd = DIVIDE(months_margin_goal,workingdays)
+			
+			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
+			
+			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[Wolf Pack])=BLANK(),override_blank,mpd)
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			
+			Return
+			mpdg
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 6eb1921f-1bec-40f9-97eb-639edb7614ba
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Calculates the Total Margin generated one month prior to the month selected in your filter context.
+	measure 'Margin 1MA' = CALCULATE([Margin],DATEADD('calendar'[Date],-1,MONTH))
+		displayFolder: Sales Measures\Margin\Months Ago
+		lineageTag: dce6050d-571d-47ce-9d3f-689f9b5f5a15
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the covered orders for one month prior to the month selected in your filter context.
+	measure 'Count of Orders Covered 1MA' = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: Operations measures\Count of Orders\Months Ago
+		lineageTag: 63487b85-dd28-4398-92ee-b80bf508a02c
+
+	/// Calculates the Total Margin generated one year prior to the year selected in your filter context.
+	measure 'Margin 1YA' = CALCULATE([Margin],DATEADD('calendar'[Date],-1,YEAR))
+		displayFolder: Sales Measures\Margin\Years Ago
+		lineageTag: 617fecb0-8d75-46f3-84df-4b710f74df58
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates the total of all the covered orders for one year prior to the year selected in your filter context.
+	measure 'Count of Orders Covered 1YA' = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-1,YEAR))
+		formatString: 0
+		displayFolder: Operations measures\Count of Orders\Years Ago
+		lineageTag: 64fcf6c4-b8ee-4b2a-b165-f1101b0efc18
+
+	/// Calculates the Total Margin generated four quarters prior to the quarter selected in your filter context.
+	measure 'Margin 4QA' = CALCULATE([Margin],DATEADD('calendar'[Date],-4,QUARTER))
+		displayFolder: Sales Measures\Margin\Quarters Ago
+		lineageTag: 0cdb8bc0-e7b2-4aba-b16e-c6360b52bf35
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates the total number of Orders Covered four quarters prior to the quarter selected in your filter context.
+	measure 'Count of Orders Covered 4QA' = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-4,QUARTER))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\Quarters Ago
+		lineageTag: bf39d2d8-e802-4d8b-9df2-abed4cdef908
+
+	/// Calculates the Total Margin generated one quarter prior to the quarter selected in your filter context.
+	measure 'Margin 1QA' = CALCULATE([Margin],DATEADD('calendar'[Date],-1,QUARTER))
+		displayFolder: Sales Measures\Margin\Quarters Ago
+		lineageTag: cbf8c580-ff29-47ab-bde0-45901b8a305b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates the total number of Orders Covered one quarter prior to the quarter selected in your filter context.
+	/// 
+	measure 'Count of Orders Covered 1QA' = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-1,QUARTER))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\Quarters Ago
+		lineageTag: 5170147b-9a6a-431c-a8ce-b1191e4d1a06
+
+	/// adds up all of the covered orders generated on days less than the current day of the month for the month that you have selected in your filter context.
+	measure 'Count of Orders Covered MTD' = TOTALMTD([Count of Orders Covered],'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date
+		lineageTag: de744e67-e3df-4ec3-b42a-f74bd25842a2
+
+	/// adds up all of the margin generated on days less than the current day of the month for one month prior to the month selected in your filter context.
+	measure 'Margin MTD 1MA' = CALCULATE([Margin MTD],DATEADD('calendar'[Date],-1,MONTH))
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Months Ago
+		lineageTag: 5c0bdd97-0a66-4af0-b838-3e25e7fb9961
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the covered orders generated on days less than the current day of the month for one month prior to the month selected in your filter context.
+	/// 
+	measure 'Count of Orders Covered MTD 1MA' = CALCULATE([Count of Orders Covered MTD],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date\Months Ago
+		lineageTag: 08118cbe-9372-4e1f-8055-d711a2606d56
+
+	/// adds up all of the covered orders generated on days less than the current day of the month for one year prior to the month selected in your filter context.
+	/// 
+	measure 'Count of Orders Covered MTD 1YA' = CALCULATE([Count of Orders Covered MTD],DATEADD('calendar'[Date],-1,YEAR))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date\Years Ago
+		lineageTag: 9e9a95f7-cda6-47cb-bcc3-af9efd3842ad
+
+	/// adds up all of the margin generated on days less than the current day of the month for one year prior to the month selected in your filter context.
+	measure 'Margin MTD 1YA' = CALCULATE([Margin MTD],DATEADD('calendar'[Date],-1,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Years Ago
+		lineageTag: f8c9de3c-363e-460e-b784-3d7ce2452497
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for the quarter that you have selected in your filter context.
+	measure 'Margin QTD' =
+			
+			Var today_doq = CALCULATE(MIN('calendar'[Day of Quarter]),'calendar'[Date]=TODAY())
+			Var margin_qtd = TOTALQTD([Margin],'calendar'[Date],'calendar'[Day of Quarter]<today_doq)
+			
+			Return margin_qtd
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date
+		lineageTag: 9e2fc52b-d993-44d5-9684-86da2a0b8576
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for the quarter that you have selected in your filter context.
+	measure 'Count of Orders Covered QTD' = ```
+			
+			Var today_doq = CALCULATE(MIN('calendar'[Day of Quarter]),'calendar'[Date]=TODAY())
+			Var load_count_qtd = TOTALQTD([Count of Orders Covered],'calendar'[Date],'calendar'[Day of Quarter]<today_doq)
+			
+			Return 
+			load_count_qtd
+			```
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date
+		lineageTag: 1f8bc65a-6df4-4738-8d42-c6a6836a4211
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for one quarter prior to the quarter selected in your filter context.
+	measure 'Margin QTD 1QA' = CALCULATE([Margin QTD],DATEADD('calendar'[Date],-1,QUARTER))
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
+		lineageTag: b15af374-e621-459c-827d-c8a300ae1ea2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for one quarter prior to the quarter selected in your filter context.
+	measure 'Count of Orders Covered QTD 1QA' = CALCULATE([Count of Orders Covered QTD],DATEADD('calendar'[Date],-1,QUARTER))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
+		lineageTag: 0a0fa56b-3227-43b8-ace7-1ab96dada88e
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for four quarters prior to the quarter selected in your filter context.
+	measure 'Margin QTD 4QA' = CALCULATE([Margin QTD],DATEADD('calendar'[Date],-4,QUARTER))
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
+		lineageTag: d29a5a11-9b0e-4ebd-b009-c4511b3d670e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for four quarters prior to the quarter selected in your filter context.
+	measure 'Count of Orders Covered QTD 4QA' = CALCULATE([Count of Orders Covered QTD],DATEADD('calendar'[Date],-4,QUARTER))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
+		lineageTag: dc08cfc9-a2a3-42c5-872e-382a8955878b
+
+	/// adds up all of the margin generated on days less than the current day of the year for the year that you have selected in your filter context.
+	measure 'Margin YTD' =
+			
+			Var today_doy = CALCULATE(MIN('calendar'[Day of Year]),'calendar'[Date]=TODAY())
+			Var margin_ytd = TOTALYTD([Margin],'calendar'[Date],'calendar'[Day of Year]<today_doy)
+			
+			Return
+			margin_ytd
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date
+		lineageTag: 61189f78-204d-4639-b833-1cad7415fd24
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates the total covered orders generated on days less than the current day of the year for the year prior to your selected year in your filter context.
+	measure 'Count of Orders Covered YTD' =
+			
+			Var today_doy = CALCULATE(MIN('calendar'[Day of Year]),'calendar'[Date]=TODAY())
+			Var load_count_ytd = TOTALYTD([Count of Orders Covered],'calendar'[Date],'calendar'[Day of Year]<today_doy)
+			
+			Return
+			load_count_ytd
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date
+		lineageTag: d2a6a1e1-b548-42e1-b7c1-8b11095a643d
+
+	/// Calculates all of the covered orders generated on days less than the current day of the year for one year prior to the year selected in your filter context.
+	measure 'Count of Orders Covered YTD 1YA' = CALCULATE([Count of Orders Covered YTD],DATEADD('calendar'[Date],-1,YEAR))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date\Years Ago
+		lineageTag: dbe5107f-2d5d-4f47-9834-655bb16dd0e5
+
+	/// adds up all of the margin generated on days less than the current day of the year for one year prior to the year selected in your filter context.
+	measure 'Margin YTD 1YA' = CALCULATE([Margin YTD],DATEADD('calendar'[Date],-1,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Years Ago
+		lineageTag: 0c23eea3-09fa-4c7a-9ce0-dfee73a6f069
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the  covered orders generated on days less than the current day of the month for one month prior to the month selected in your filter context and and finds the difference between the covered orders generated on days less than the current day of the month.
+	/// 
+	/// 
+	measure 'Count of Orders Covered MTD MOM diff' =
+			
+			Var mtd_last_month = [Count of Orders Covered MTD 1MA]
+			Var difference = [Count of Orders Covered MTD]-mtd_last_month
+			
+			
+			Return
+			difference
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month over Month
+		lineageTag: 806ae227-a92e-4901-af98-5bb19b413509
+
+	/// adds up all of the margin generated on days less than the current day of the month for two years prior to the month selected in your filter context.
+	measure 'Margin MTD 2YA' = CALCULATE([Margin MTD],DATEADD('calendar'[Date],-2,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Years Ago
+		lineageTag: 64a1cff2-8b20-4c15-af81-2cee3d2cc026
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the month for three years prior to the month selected in your filter context.
+	measure 'Margin MTD 3YA' = CALCULATE([Margin MTD],DATEADD('calendar'[Date],-3,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Years Ago
+		lineageTag: 9c18c5fa-9963-4b05-9af1-f5cf0bd2b27e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the covered orders generated on days less than the current day of the month for two years prior to the month selected in your filter context.
+	/// 
+	measure 'Count of Orders Covered MTD 2YA' = CALCULATE([Count of Orders Covered MTD],DATEADD('calendar'[Date],-2,YEAR))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date\Years Ago
+		lineageTag: df99e513-c0c3-4db0-9dbd-99587244f7e7
+
+	/// adds up all of the covered orders generated on days less than the current day of the month for three years prior to the month selected in your filter context.
+	/// 
+	measure 'Count of Orders Covered MTD 3YA' = CALCULATE([Count of Orders Covered MTD],DATEADD('calendar'[Date],-3,YEAR))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date\Years Ago
+		lineageTag: 6401f80f-890e-476e-b9bd-4512b74bd6ae
+
+	/// adds up all of the covered orders generated on days less than the current day of the month for one, two month prior to the month selected in your filter context and finds the average percentage change between 13, 25, and 37 month ago(a month prior to the one, two and three years ago).
+	/// 
+	measure 'Avg Count of Orders Covered MTD MOM diff' = ```
+			
+			
+			//1YA LC MTD MOM Variance % 
+			Var LC_therteen_months_ago = CALCULATE([Count of Orders Covered MTD],DATEADD('Calendar'[Date],-13,MONTH))
+			Var one_year_ago_MOM_variance =[Count of Orders Covered MTD 1YA]-LC_therteen_months_ago
+			Var count_therteen = IF(LC_therteen_months_ago=0,0,1)
+			Var count_one_year_ago = IF([Count of Orders Covered MTD 1YA]=0,0,1)
+			Var count_first_occerance = IF(count_one_year_ago+count_therteen>=1,1,0)
+			
+			
+			//2YA LC MTD MOM Variance % 
+			Var LC_twentyfive_months_ago = CALCULATE([Count of Orders Covered MTD],DATEADD('Calendar'[Date],-25,MONTH))
+			Var two_year_ago_MOM_variance =[Count of Orders Covered MTD 2YA]-LC_twentyfive_months_ago
+			Var count_twenty_five_months_ago = IF(LC_twentyfive_months_ago=0,0,1)
+			Var count_two_years_ago = IF([Count of Orders Covered MTD 2YA]=0,0,1)
+			Var count_second_occerance = IF(count_twenty_five_months_ago+count_two_years_ago>=1,1,0)
+			
+			
+			//3YA LC MTD MOM Variance %
+			Var LC_thirtyseven_months_ago = CALCULATE([Count of Orders Covered MTD],DATEADD('Calendar'[Date],-37,MONTH))
+			Var three_year_ago_MOM_variance =[Count of Orders Covered MTD 3YA]-LC_thirtyseven_months_ago
+			Var count_thirtyseven_ma = IF(LC_thirtyseven_months_ago=0,0,1)
+			Var count_three_ya = IF([Count of Orders Covered MTD 3YA]=0,0,1)
+			Var count_third_occerance = IF(count_thirtyseven_ma+count_three_ya>=1,1,0)
+			
+			Var count_of_occerances = count_first_occerance+count_second_occerance+count_third_occerance
+			Var sum_of_change = one_year_ago_MOM_variance + two_year_ago_MOM_variance + three_year_ago_MOM_variance
+			Var avg_load_count_change = DIVIDE(sum_of_change,count_of_occerances)
+			
+			RETURN
+			avg_load_count_change
+			```
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month over Month
+		lineageTag: 1f4f8c46-0916-4a95-a1a4-3d794483c5a9
+
+	/// adds up all of the margin generated on days less than the current day of the month for one month prior to the month selected in your filter context and and finds the difference between the margin generated on days less than the current day of the month.
+	measure 'Margin MTD MOM Variance' =
+			
+			Var mtd_last_month = CALCULATE([Margin MTD],DATEADD('Calendar'[Date],-1,MONTH))
+			Var diference = [Margin MTD]-mtd_last_month
+			
+			Return
+			diference
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Month over Month
+		lineageTag: 817079e0-fb7b-4784-8de0-cc703f310439
+
+	/// adds up all of the margin generated on days less than the current day of the month for one, and two month prior to the month selected in your filter context and finds the average percentage change between 13, 25, and 37 month ago(a month prior to the one, two and three years ago).
+	measure 'Avg Margin MTD MOM Change' = ```
+			
+			
+			//1YA Margin MTD MOM Variance % 
+			Var margin_therteen_months_ago = CALCULATE([Margin MTD],DATEADD('Calendar'[Date],-13,MONTH))
+			Var one_year_ago_MOM_variance =[Margin MTD 1YA]-margin_therteen_months_ago
+			Var count_therteen_months = IF(margin_therteen_months_ago=0,0,1)
+			Var count_one_year_ago = IF([Margin MTD 1YA]=0,0,1)
+			Var count_first_occerance = IF((count_therteen_months+count_one_year_ago)>=1,1,0)
+			
+			//2YA Margin MTD MOM Variance % 
+			Var margin_twentyfive_months_ago = CALCULATE([Margin MTD],DATEADD('Calendar'[Date],-25,MONTH))
+			Var two_year_ago_MOM_variance =[Margin MTD 2YA]-margin_twentyfive_months_ago
+			VAr count_twentyfive_months_ago = IF(margin_twentyfive_months_ago=0,0,1)
+			Var count_two_years_ago = IF([Margin MTD 2YA]=0,0,1)
+			Var count_secound_occerance = IF((count_twentyfive_months_ago+count_two_years_ago)>=1,1,0)
+			
+			//3YA Margin MTD MOM Variance %
+			Var margin_thirtyseven_months_ago = CALCULATE([Margin MTD],DATEADD('Calendar'[Date],-37,MONTH))
+			Var three_year_ago_MOM_variance =[Margin MTD 3YA]-margin_thirtyseven_months_ago
+			Var count_thirtyseven_months_ago = IF(margin_thirtyseven_months_ago=0,0,1)
+			Var count_three_years_ago = IF([Margin MTD 3YA]=0,0,1)
+			Var count_third_occerance = IF((count_thirtyseven_months_ago+count_three_years_ago)>=1,1,0)
+			
+			Var count_occerances = count_first_occerance+count_secound_occerance+count_third_occerance
+			Var sum_margin_change = one_year_ago_MOM_variance+two_year_ago_MOM_variance+three_year_ago_MOM_variance
+			Var avg_margin_change = DIVIDE(sum_margin_change,count_occerances)
+			
+			return
+			avg_margin_change
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Month over Month
+		lineageTag: 5129c6dc-47f6-4ed6-a4ed-820f29ed34ad
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for 1 year prior to the quarter selected in your filter context.
+	measure 'Count of Orders Covered QTD 1YA' = CALCULATE([Count of Orders Covered QTD],DATEADD('calendar'[Date],-4,QUARTER))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: c5843c6f-5b75-4333-9c8f-31ef48fc9997
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for 2 years prior to the quarter selected in your filter context.
+	measure 'Count of Orders Covered QTD 2YA' = CALCULATE([Count of Orders Covered QTD],DATEADD('Calendar'[Date],-8,QUARTER))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: 658aba2d-5d84-4cfb-bbe0-0bdf84055c72
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for 3 years prior to the quarter selected in your filter context.
+	measure 'Count of Orders Covered QTD 3YA' = CALCULATE([Count of Orders Covered QTD],DATEADD('Calendar'[Date],-12,QUARTER))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: b8c7efa5-850e-4b0e-a7c1-35197ed2fcea
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for one quarter prior to the quarter selected in your filter context and and finds the difference between the covered orders generated on days less than the current day of the quarter .
+	measure 'Count of Orders Covered QTD QOQ diff' =
+			
+			Var qtd_last_month = [Count of Orders Covered QTD 1QA]
+			Var difference = [Count of Orders Covered QTD] -qtd_last_month
+			
+			Return
+			difference
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarter over Quarter
+		lineageTag: 799b10cf-66a0-41a8-949a-99aecca2a94f
+
+	/// adds up all of the covered orders generated on days less than the current day of the quarter for one, two and three quarter prior to the quarter selected in your filter context and finds the average percentage change between five, nine, and thirteen quarter ago(a quarter prior to the one, two and three years ago).
+	/// 
+	measure 'Avg Count of Orders Covered QTD QOQ diff' = ```
+			
+			
+			//1YA LC QTD QOQ Variance % 
+			Var LC_5_quarter_ago = CALCULATE([Count of Orders Covered QTD],DATEADD('Calendar'[Date],-5,QUARTER))
+			Var one_year_ago_QOQ_variance =[Count of Orders Covered QTD 1YA]-LC_5_quarter_ago
+			Var count_lc_5_qa = IF(LC_5_quarter_ago=0,0,1)
+			Var count_one_year_ago = IF([Count of Orders Covered QTD 1YA]=0,0,1)
+			Var count_first_occerance = IF((count_lc_5_qa+count_one_year_ago)>=1,1,0)
+			
+			//2YA LC QTD QOQ Variance % 
+			Var LC_9_quarter_ago = CALCULATE([Count of Orders Covered QTD],DATEADD('Calendar'[Date],-9,QUARTER))
+			Var two_year_ago_QOQ_variance =[Count of Orders Covered QTD 2YA]-LC_9_quarter_ago
+			Var count_lc_9 = IF(LC_9_quarter_ago=0,0,1)
+			Var count_two_years_ago = IF([Count of Orders Covered QTD 2YA]=0,0,1)
+			Var count_second_occerance = IF((count_lc_9+count_two_years_ago)>=1,1,0)
+			
+			
+			//3YA LC QTD QOQ Variance %
+			Var LC_13_quarter_ago = CALCULATE([Count of Orders Covered QTD],DATEADD('Calendar'[Date],-13,QUARTER))
+			Var three_year_ago_QOQ_variance =[Count of Orders Covered QTD 3YA]-LC_13_quarter_ago
+			Var count_lc_13 = IF(LC_13_quarter_ago=0,0,1)
+			Var count_three_years_ago = IF([Count of Orders Covered QTD 3YA]=0,0,1)
+			Var count_third_occerance = IF((count_lc_13+count_three_years_ago)>=1,1,0)
+			
+			Var count_occerances = count_first_occerance+count_second_occerance+count_third_occerance
+			Var sum_lc_change = one_year_ago_QOQ_variance + two_year_ago_QOQ_variance + three_year_ago_QOQ_variance
+			Var avg_lc_change = DIVIDE(sum_lc_change,count_occerances)
+			
+			return
+			avg_lc_change
+			```
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarter over Quarter
+		lineageTag: 95ab9588-6a3a-4c6e-a865-fbd07eafed8c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Margin divided by the count of covered orders
+	measure 'Margin Per Order' = DIVIDE([Margin], [Count of Orders Covered])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: 282a5274-5463-4ec8-849b-fb374ded2f20
+
+	measure * = 1
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: dbfb4e40-58de-440c-a31d-f84d278a77b3
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for 1 year prior to the quarter selected in your filter context.
+	measure 'Margin QTD 1YA' = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-4,QUARTER))
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: 0478a08d-511a-4e46-83f8-90fe0fc22e26
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for 2 years prior to the quarter selected in your filter context.
+	measure 'Margin QTD 2YA' = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-2,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: cae4f816-1411-4d68-a556-01b9602fccc1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for 3 years prior to the quarter selected in your filter context.
+	measure 'Margin QTD 3YA' = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-3,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: fded63a7-a448-489a-a271-b04c9e9fe00c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for 5 years prior to the quarter selected in your filter context.
+	measure 'Margin QTD 5YA' = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-5,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: 4c3d7875-6dd3-4b6d-b71c-e03e78288e96
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for one quarter prior to the quarter selected in your filter context and and finds the difference between the margin generated on days less than the current day of the month.
+	measure 'Margin QTD QOQ Variance' =
+			
+			Var mtd_last_month = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-1,QUARTER))
+			Var difference = [Margin QTD]-mtd_last_month
+			
+			Return
+			difference
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years over Year
+		lineageTag: 52f20c6a-7beb-4641-ba4f-4857eb60e26b
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for one, two and three quarter prior to the quarter selected in your filter context and finds the average percentage change between five, nine, and thirteen quarter ago(a quarter prior to the one, two and three years ago).
+	measure 'Avg Margin QTD QOQ change' = ```
+			
+			
+			//1YA Margin QTD QOQ Variance % 
+			Var margin_5_quarter_ago = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-5,MONTH))
+			Var one_year_ago_QOQ_variance =[Margin QTD 1YA]-margin_5_quarter_ago
+			Var count_five_q_ago = IF(margin_5_quarter_ago=0,0,1)
+			Var count_last_year = IF([Margin QTD 1YA]=0,0,1)
+			Var count_first_occerance = IF((count_five_q_ago+count_last_year)>=1,1,0)
+			
+			//2YA Margin QTD QOQ Variance % 
+			Var margin_9_quarter_ago = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-9,MONTH))
+			Var two_year_ago_QOQ_variance =[Margin QTD 2YA]-margin_9_quarter_ago
+			Var count_9_q_ago = IF(margin_9_quarter_ago=0,0,1)
+			Var count_two_years_ago = IF([Margin QTD 2YA]=0,0,1)
+			Var count_secound_occereance = IF((count_9_q_ago+count_two_years_ago)>=1,1,0)
+			
+			//3YA Margin QTD QOQ Variance %
+			Var margin_13_quarter_ago = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-13,MONTH))
+			Var three_year_ago_QOQ_variance =[Margin QTD 3YA]-margin_13_quarter_ago
+			Var count_13_months_ago = IF(margin_13_quarter_ago=0,0,1)
+			Var count_three_years_ago =IF([Margin QTD 3YA]=0,0,1)
+			Var count_third_occerance = IF((count_13_months_ago+count_three_years_ago)>=1,1,0)
+			
+			Var count_occerances = count_first_occerance+count_secound_occereance+count_third_occerance
+			Var sum_margin_change = one_year_ago_QOQ_variance+two_year_ago_QOQ_variance+three_year_ago_QOQ_variance
+			Var avg_margin_change = DIVIDE(sum_margin_change,count_occerances)
+			
+			return
+			avg_margin_change
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years over Year
+		lineageTag: ed86dca9-8d5d-4b22-a0fe-23059291d522
+
+	/// adds up all of the margin generated on days less than the current day of the quarter for 4 years prior to the quarter selected in your filter context.
+	measure 'Margin QTD 4YA' = CALCULATE([Margin QTD],DATEADD('Calendar'[Date],-4,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years Ago
+		lineageTag: 9aaa5d52-ce7f-4346-aa65-df745fb1138a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates all of the covered orders generated on days less than the current day of the year for two years prior to the year selected in your filter context.
+	measure 'Count of Orders Covered YTD 2YA' =
+			
+			CALCULATE([Count of Orders Covered YTD],(dateadd('Calendar'[Date],-2,YEAR)))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date\Years Ago
+		lineageTag: f48df3aa-101f-4cb5-b000-b408bc47dabc
+
+	/// Calculates all of the covered orders generated on days less than the current day of the year for three years prior to the year selected in your filter context.
+	measure 'Count of Orders Covered YTD 3YA' =
+			
+			CALCULATE([Count of Orders Covered YTD],(dateadd('Calendar'[Date],-3,YEAR)))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date\Years Ago
+		lineageTag: 4640a840-05ed-4e55-aabb-5ff0f6850258
+
+	/// Calculates all of the covered orders generated on days less than the current day of the year for four years prior to the year selected in your filter context.
+	measure 'Count of Orders Covered YTD 4YA' =
+			
+			CALCULATE([Count of Orders Covered YTD],(dateadd('Calendar'[Date],-4,YEAR)))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date\Years Ago
+		lineageTag: 842bbf6a-a5d0-4010-a33d-efff8e213303
+
+	/// Calculates all of the covered orders generated on days less than the current day of the year for five years prior to the year selected in your filter context.
+	measure 'Count of Orders Covered YTD 5YA' =
+			
+			CALCULATE([Count of Orders Covered YTD],(dateadd('Calendar'[Date],-5,YEAR)))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date\Years Ago
+		lineageTag: 4b3bd693-2e84-4782-9c9b-3456a19e2670
+
+	/// adds up all of the covered orders generated on days less than the current day of the year for one year prior to the year selected in your filter context and and finds the difference between the covered orders generated on days less than the current day of the year.
+	measure 'Count of Orders Covered YTD YOY Variance' = [Count of Orders Covered YTD]-[Count of Orders Covered YTD 1YA]
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date\Year over year
+		lineageTag: b03f2c30-cae5-450c-bc2a-90b95a41176d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the year for two years prior to the year selected in your filter context.
+	measure 'Margin YTD 2YA' = CALCULATE([Margin YTD],DATEADD('calendar'[Date],-2,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Years Ago
+		lineageTag: 75612467-10c0-4551-b6f6-1ba72b41b735
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the year for three years prior to the year selected in your filter context.
+	measure 'Margin YTD 3YA' = CALCULATE([Margin YTD],DATEADD('calendar'[Date],-3,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Years Ago
+		lineageTag: 0a904415-1656-4c44-b5b5-72838eb513b7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the year for four years prior to the year selected in your filter context.
+	measure 'Margin YTD 4YA' = CALCULATE([Margin YTD],DATEADD('calendar'[Date],-4,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Years Ago
+		lineageTag: 6d653b6b-fdb7-45ec-bd3d-1472ca17aa6d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the year for five years prior to the year selected in your filter context.
+	measure 'Margin YTD 5YA' = CALCULATE([Margin YTD],DATEADD('calendar'[Date],-5,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Years Ago
+		lineageTag: 2ea99271-4a4f-4417-b4c1-9597538fc625
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// adds up all of the margin generated on days less than the current day of the year for one year prior to the year selected in your filter context and and finds the difference between the margin generated on days less than the current day of the year.
+	/// 
+	measure 'Margin YTD YOY Variance' = ```
+			[Margin YTD]-[Margin YTD 1YA] 
+			
+			```
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Year over Year
+		lineageTag: e92e9679-2cac-4413-9ad7-2e8b29912560
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This takes the current month Count of Orders Covered and subtracts last months Count of orders covered to give you the Variance.
+	measure 'Count of Orders Covered MOM 1MA Variance' = [Count of Orders Covered 1MA] - [Count of Orders Covered 2MA]
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\Month over Month
+		lineageTag: 114be6bd-1326-48ed-a569-2cfcfb8f25e2
+
+	/// This Measure Calculates the average Change in Orders Covered from the month prior to the one you have selected and the month you have selected over the last 3 years.
+	measure 'Avg Count of Orders Covered MOM Variance' =
+			
+			
+			//1YA LC MOM Variance
+			Var lc_13ma = CALCULATE([Count of Orders Covered],DATEADD('Calendar'[Date],-13,MONTH))
+			Var one_year_ago_MOM_variance =[Count of Orders Covered 1YA]-lc_13ma
+			Var count_13ma = IF(lc_13ma=0,0,1)
+			Var count_1ya = IF([Count of Orders Covered 1YA]=0,0,1)
+			Var count_first_occerance = IF((count_13ma+count_1ya)>=1,1,0)
+			
+			//2YA LC MOM Variance
+			Var lc_25ma = CALCULATE([Count of Orders Covered],DATEADD('Calendar'[Date],-25,MONTH))
+			Var two_year_ago_MOM_variance =[Count of Orders Covered 2YA]-lc_25ma
+			Var count_25ma = IF(lc_25ma=0,0,1)
+			Var count_2ya = IF([Count of Orders Covered MTD 2YA]=0,0,1)
+			Var count_second_occerance = IF((count_25ma+count_2ya)>=1,1,0)
+			
+			//3YA LC MOM Variance
+			Var lc_37ma = CALCULATE([Count of Orders Covered],DATEADD('Calendar'[Date],-37,MONTH))
+			Var three_year_ago_MOM_variance =[Count of Orders Covered 3YA]-lc_37ma
+			Var count_37ma = IF(lc_37ma=0,0,1)
+			Var count_3ya = IF([Count of Orders Covered 3YA]=0,0,1)
+			Var count_third_occerance = IF((count_37ma+count_3ya)>=1,1,0)
+			
+			Var count_of_occerances = count_first_occerance+count_second_occerance+count_third_occerance
+			Var sum_lc_change = one_year_ago_MOM_variance + two_year_ago_MOM_variance + three_year_ago_MOM_variance
+			Var avg_lc_change = DIVIDE(sum_lc_change,count_of_occerances)
+			
+			return
+			avg_lc_change
+		displayFolder: Operations Measures\Count of Orders\Month over Month
+		lineageTag: eaace1a2-e357-408e-8c1f-6a6b2a1a2c81
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates the total of all the covered orders for two years prior to the year selected in your filter context.
+	measure 'Count of Orders Covered 2YA' = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-2,YEAR))
+		formatString: 0
+		displayFolder: Operations measures\Count of Orders\Years Ago
+		lineageTag: f50c0a9a-5869-4928-a009-e44336fb5245
+
+	/// Calculates the total of all the covered orders for three years prior to the year selected in your filter context.
+	/// 
+	measure 'Count of Orders Covered 3YA' = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-3,YEAR))
+		formatString: 0
+		displayFolder: Operations measures\Count of Orders\Years Ago
+		lineageTag: 03207215-75ee-4d4b-8d47-332b666e7c17
+
+	/// This Measure Calculates the average Change of margin from the month prior to the one you have selected and the month you have selected over the last 3 years.
+	measure 'Avg Margin MOM change' = ```
+			
+			
+			//1YA Margin MTD MOM Variance % 
+			Var margin_therteen_months_ago = CALCULATE([Margin],DATEADD('Calendar'[Date],-13,MONTH))
+			Var one_year_ago_MOM_variance =[Margin 1YA]-margin_therteen_months_ago
+			Var count_13ma = IF(margin_therteen_months_ago=0,0,1)
+			Var count_1ya = IF([Margin 1YA]=0,0,1)
+			VAr count_first_occerance = IF((count_13ma+count_1ya)>=1,1,0)
+			
+			//2YA Margin MTD MOM Variance % 
+			Var margin_twentyfive_months_ago = CALCULATE([Margin],DATEADD('Calendar'[Date],-25,MONTH))
+			Var two_year_ago_MOM_variance =[Margin 2YA]-margin_twentyfive_months_ago
+			Var count_25ma = IF(margin_twentyfive_months_ago=0,0,1)
+			Var count_2ya = IF([Margin 2YA]=0,0,1)
+			Var count_secound_occerance = IF((count_25ma+count_2ya)>=1,1,0)
+			
+			//3YA Margin MTD MOM Variance %
+			Var margin_thirtyseven_months_ago = CALCULATE([Margin],DATEADD('Calendar'[Date],-37,MONTH))
+			Var three_year_ago_MOM_variance =[Margin 3YA]-margin_thirtyseven_months_ago
+			Var count_37ma = IF(margin_thirtyseven_months_ago=0,0,1)
+			Var count_3ya = IF([Margin 3YA]=0,0,1)
+			Var count_third_occerance = IF((count_37ma+count_3ya)>=1,1,0)
+			
+			Var count_occerances = count_first_occerance+count_secound_occerance+count_third_occerance
+			Var sum_margin_change = one_year_ago_MOM_variance+two_year_ago_MOM_variance+three_year_ago_MOM_variance
+			Var avg_margin_change = DIVIDE(sum_margin_change,count_occerances)
+			
+			return
+			avg_margin_change
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\Month over Month
+		lineageTag: 99f9d417-7cf4-46ec-9ccd-0879d063cf4b
+
+	/// Calculates the Total Margin generated two years prior to the year selected in your filter context.
+	measure 'Margin 2YA' = CALCULATE([Margin],DATEADD('Calendar'[Date],-2,YEAR))
+		displayFolder: Sales Measures\Margin\Years Ago
+		lineageTag: 08df6c2a-5508-4dc1-833f-3e4ed1a99bb4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates the Total Margin generated three years prior to the year selected in your filter context.
+	measure 'Margin 3YA' = CALCULATE([Margin],DATEADD('Calendar'[Date],-3,YEAR))
+		displayFolder: Sales Measures\Margin\Years Ago
+		lineageTag: abb87c2e-f892-4e57-a502-229f5c951e23
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This takes the month selected Margin and subtracts the month prior to the one selected Margin to give you the Variance.
+	measure 'Margin MOM Variance' = [Margin]-[Margin 1MA]
+		displayFolder: Sales Measures\Margin\Month over Month
+		lineageTag: 5dab9d3f-ad85-4a35-a8d7-5cfe055e7237
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This takes the quarter you have selected Count of Orders Covered and subtracts quarter priors Count of orders covered to give you the Variance.
+	/// 
+	/// *** Can not have a Month slicer Affect this measure ***
+	measure 'Count of Orders Covered QOQ Variance' = [Count of Orders Covered]-[Count of Orders Covered 1QA]
+		displayFolder: Operations Measures\Count of Orders\Quarter over Quarter
+		lineageTag: 5b6c79fc-e1c0-4d05-aeed-737e523d47f4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This takes the quarter selected Margin and subtracts the quarter prior to the one selected Margin to give you the Variance.
+	measure 'Margin QOQ Variance' = [Margin]-[Margin 1QA]
+		displayFolder: Sales Measures\Margin\Quarter over Quarter
+		lineageTag: 254d3949-1439-4b65-9156-e5563054f2b0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This Measure Calculates the average Change in Orders Covered from the quarter prior to the one you have selected and the quarter you have selected over the last 3 years.
+	measure 'Avg Count of Orders Covered QOQ Variance' =
+			
+			
+			//1YA LC MOM Variance
+			Var lc_5qa = CALCULATE([Count of Orders Covered],DATEADD('Calendar'[Date],-5,QUARTER))
+			Var one_year_ago_qoq_variance =[Count of Orders Covered 4QA]-LC_5qa
+			Var count_lc_5qa = IF(LC_5qa=0,0,1)
+			Var count_4qa = IF([Count of Orders Covered 4QA]=0,0,1)
+			Var count_first_occerance = IF((count_lc_5qa+count_4qa)>=1,1,0)
+			
+			//2YA LC MOM Variance
+			Var lc_9qa = CALCULATE([Count of Orders Covered],DATEADD('Calendar'[Date],-9,QUARTER))
+			Var lc_8qa = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-8,QUARTER))
+			Var two_year_ago_qoq_variance= lc_8qa-LC_9qa
+			Var count_9qa = IF(LC_9qa=0,0,1)
+			Var count_8qa = IF(lc_8qa=0,0,1)
+			Var count_second_occerance = IF((count_9qa+count_8qa)>=1,1,0)
+			
+			//3YA LC MOM Variance
+			Var lc_13qa = CALCULATE([Count of Orders Covered],DATEADD('Calendar'[Date],-13,QUARTER))
+			Var lc_12qa = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-12,QUARTER))
+			Var three_year_ago_qoq_variance =lc_12qa-lc_13qa
+			Var count_13qa = IF(lc_13qa=0,0,1)
+			Var count_12qa = IF(lc_12qa=0,0,1)
+			Var count_third_occerance = IF((count_13qa+count_12qa)>=1,1,0)
+			
+			Var count_of_occerances = count_first_occerance+count_second_occerance+count_third_occerance
+			Var sum_lc_change = one_year_ago_qoq_variance + two_year_ago_qoq_variance + three_year_ago_qoq_variance
+			Var avg_lc_change = DIVIDE(sum_lc_change,count_of_occerances)
+			
+			return
+			avg_lc_change
+		displayFolder: Operations Measures\Count of Orders\Quarter over Quarter
+		lineageTag: e825ddbd-3810-445f-800a-6c44643dee7b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This Measure Calculates the average Change of margin from the quarter prior to the one you have selected and the quarter you have selected over the last 3 years.
+	measure 'Avg Margin QOQ change' = ```
+			
+			
+			//1YA Margin QOQ Variance
+			Var margin_5qa = CALCULATE([Margin],DATEADD('Calendar'[Date],-5,QUARTER))
+			Var one_ya_qoq_variance =[Margin 4QA]-margin_5qa
+			Var count_5qa = IF(margin_5qa=0,0,1)
+			Var count_4qa = IF([Margin 4QA]=0,0,1)
+			VAr count_first_occerance = IF((count_5qa+count_4qa)>=1,1,0)
+			
+			//2YA Margin QOQ Variance 
+			Var margin_9qa = CALCULATE([Margin],DATEADD('Calendar'[Date],-9,QUARTER))
+			Var margin_8qa = CALCULATE([Margin],DATEADD('calendar'[Date],-8,QUARTER))
+			Var two_ya_qoq_variance =margin_8qa-margin_9qa
+			Var count_margin_9qa = IF(margin_9qa=0,0,1)
+			Var count_margin_8qa= IF(margin_8qa=0,0,1)
+			Var count_secound_occerance = IF((count_margin_9qa+count_margin_8qa)>=1,1,0)
+			
+			//3YA Margin QOQ Variance
+			Var margin_13qa = CALCULATE([Margin],DATEADD('Calendar'[Date],-13,QUARTER))
+			Var margin_12qa = CALCULATE([Margin],DATEADD('calendar'[Date],-12,QUARTER))
+			Var three_ya_qoq_variance =margin_12qa-margin_13qa
+			Var count_13qa = IF(margin_13qa=0,0,1)
+			Var count_12qa = IF(margin_13qa=0,0,1)
+			Var count_third_occerance = IF((count_13qa+count_12qa)>=1,1,0)
+			
+			Var count_occerances = count_first_occerance+count_secound_occerance+count_third_occerance
+			Var sum_margin_change = one_ya_qoq_variance+two_ya_qoq_variance+three_ya_qoq_variance
+			Var avg_margin_change = DIVIDE(sum_margin_change,count_occerances)
+			
+			return
+			avg_margin_change
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\Quarter over Quarter
+		lineageTag: 5e7a8b9c-2972-4ae0-8f36-4ae454a453b2
+
+	/// This takes the Year selected Count of Orders Covered and subtracts the quarter prior to the one selected  Count of Orders Covered to give you the Variance.
+	measure 'Count of Orders Covered YOY Variance' = [Count of Orders Covered]-[Count of Orders Covered 1YA]
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\Year over Year
+		lineageTag: a378b099-ed6e-43bf-8315-75304e0c982d
+
+	/// This measure Compares the Margin in the time period selected against the same time period one year prior
+	measure 'Margin YOY Variance' = [Margin]-[Margin 1YA]
+		displayFolder: Sales Measures\Margin\Year over Year
+		lineageTag: d1697a0e-1f3d-4c71-a366-44a513a4325f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// This Measure Subtracts the Sum of Margin Goals from the Sum of Margin to calculate the Variance
+	measure 'Margin Vs Margin Goal Variance' = [Margin]-[Margin Goal]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 31cb3625-4116-44af-a351-901c19d1a4c6
+
+	/// This Measure sets the y axis on the margin per day bar chart in sales reports
+	measure 'Margin Per Day Bar Chart axis max' = ```
+			
+			var Graph_max = CALCULATE(
+			    MAXX(
+			    GROUPBY('calendar','calendar'[Date]),
+			    [Margin]) * 1.25)
+			 
+			var margin_goal_max = [Margin per day Goal] * 1.25
+			 
+			var ifs = IF([Margin per day Goal] > Graph_max,margin_goal_max,Graph_max)
+			 
+			return
+			ifs
+			```
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 45955de9-4b53-41ed-9081-fb866d74e56a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The Difference between margin actual and margin per day goal
+	/// 
+	measure 'Margin per Day Variance' = [Margin]-[Margin per day Goal]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 326c1bc9-1258-4ce1-bd5b-1da00ca47b5f
+
+	/// The distinct count or movement ID's that the move status is not available
+	/// 
+	measure 'Count of Movements Booked' = CALCULATE(DISTINCTCOUNT(movements[Movement ID]),movements[Move Status]<>"Available")
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: fad2db90-d340-4622-bb28-f08db420a77f
+
+	/// Takes the Margin goal for the month of the dates selected divides it by the number of working days in the month then multiplies that by the working days in the week.
+	measure 'Margin per Week Goal' = ```
+			
+			
+			Var min_date = MIN('calendar'[Date])
+			Var max_date = MAX('calendar'[Date])
+			Var count_of_months = DISTINCTCOUNT('calendar'[MonthNmb])
+			
+			//first month measures
+			Var start_of_month_min_date = calculate(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=min_date)
+			Var end_of_month_min_date = CALCULATE(ENDOFMONTH('calendar'[Date]),'calendar'[Date]=min_date)
+			Var working_days_of_min_month = 
+			    NETWORKDAYS(
+			        start_of_month_min_date,
+			        end_of_month_min_date,
+			        1,
+			        observed_holidays)
+			Var working_days_of_week_of_first_month = 
+			    NETWORKDAYS(
+			        min_date,
+			        end_of_month_min_date,
+			        1,
+			        observed_holidays)
+			Var margin_goal_first_month = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month_min_date)
+			Var mpwg_min_month = DIVIDE(margin_goal_first_month,working_days_of_min_month)
+			Var mpwg_first_half = mpwg_min_month*working_days_of_week_of_first_month
+			//end first month measures
+			
+			//second month measures
+			Var start_of_month_max_date = CALCULATE(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=max_date)
+			Var end_of_month_max_date = CALCULATE(ENDOFMONTH('calendar'[Date]),'calendar'[Date]=max_date)
+			Var working_days_max_month = 
+			    NETWORKDAYS(
+			        start_of_month_max_date,
+			        end_of_month_max_date,
+			        1,
+			        observed_holidays)
+			Var working_days_of_week_of_secound_month = 
+			    NETWORKDAYS(
+			        start_of_month_max_date,
+			        max_date,
+			        1,
+			        observed_holidays)
+			Var margin_goal_secound_month = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month_max_date)
+			Var mpwg_secound_month = DIVIDE(margin_goal_secound_month,working_days_max_month)
+			Var mpwg_second_half = mpwg_secound_month*working_days_of_week_of_secound_month
+			//end second month measures
+			
+			//standard month
+			Var workingdays = 
+			    NETWORKDAYS(
+			        MIN('calendar'[Date]),
+			        MAX('calendar'[Date]),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month_min_date)
+			Var mpwg = DIVIDE(months_margin_goal,working_days_of_min_month)
+			Var mpwg_single_month = mpwg*workingdays
+			//end standard month
+			
+			//override margin goal first month
+			Var override_margin_goal_min_month = CALCULATE([Override margin goal],'calendar'[Date]=start_of_month_min_date)
+			Var override_mpwg_first_half_override_set = override_margin_goal_min_month*working_days_of_week_of_first_month
+			Var override_mpwg_first_half = 
+			    IF(override_margin_goal_min_month>0,
+			    override_mpwg_first_half_override_set,
+			    mpwg_first_half)
+			//end override margin goal first month
+			
+			//override margin goal second month
+			Var override_margin_goal_max_month = CALCULATE([Override margin goal],'calendar'[Date]=start_of_month_max_date)
+			Var override_mpwg_second_month_override_set = override_margin_goal_max_month*working_days_of_week_of_secound_month
+			Var override_mpwg_second_half =
+			    IF(override_margin_goal_max_month>0,
+			    override_mpwg_second_month_override_set,
+			    mpwg_second_half)
+			//end overridge margin goal second month
+			
+			//override margin goal single month
+			Var override_mpwg_single_month_override_set = override_margin_goal_min_month*workingdays
+			Var override_mpwg_single_month = 
+			    IF(override_margin_goal_min_month>0,
+			   override_mpwg_single_month_override_set,
+			    mpwg_single_month)
+			//end override margin goal single month
+			
+			Var two_month_goal = mpwg_first_half+mpwg_second_half
+			Var two_month_goal_salerperson_not_set = override_mpwg_first_half+override_mpwg_second_half
+			
+			Var if_2_months = 
+			    IF(count_of_months=2,
+			    two_month_goal,
+			    mpwg_single_month)
+			Var if_2_month_salesperson_not_set = 
+			    IF(count_of_months=2,
+			    two_month_goal_salerperson_not_set,
+			    override_mpwg_single_month)
+			
+			Var salesperson_is_selected = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Salesperson Name])=BLANK(),if_2_month_salesperson_not_set,if_2_months)
+			
+			RETURN
+			salesperson_is_selected
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 5702792e-f7a9-413b-990b-1d1be2e13e4a
+
+	/// Calculates sum of all margin goal from each sales person for today.
+	/// Then will output the sum of all margin goal if override margin goal is blank.
+	/// Or will output override margin goal is sales person is blank.
+	measure 'Todays margin goal' = ```
+			
+			Var start_of_month = CALCULATE(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=TODAY())
+			
+			Var workingdays = 
+			    NETWORKDAYS(
+			        CALCULATE(STARTOFMONTH('Calendar'[Date]),'calendar'[Date]=start_of_month),
+			        CALCULATE(ENDOFMONTH('Calendar'[Date]),'calendar'[Date]=TODAY()),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month)
+			Var override_mpdg = CALCULATE([Override margin goal],'calendar'[Date]=start_of_month)
+			Var mpd = DIVIDE(months_margin_goal,workingdays)
+			Var override_is_blank = IF(override_mpdg=0,mpd,override_mpdg)
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_is_blank,mpd)
+			
+			Return
+			mpdg
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: 953aa526-b0c2-41e9-b4a6-362d066e40ee
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Total charges on available loads multiplied by margin %.
+	/// 
+	measure 'Available Margin' =
+			
+			VAR avaialable_rev = CALCULATE(SUM(orders[Total Charges]),movements[Move Status]="Available")
+			Var available_margin = avaialable_rev*[Margin %]
+			
+			Return
+			available_margin
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: a395a683-4df4-4379-bc65-e3a21bdb415a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Margin MTD divided by working days elapsed
+	/// 
+	measure 'Average Margin Per Day MTD' = divide([Margin MTD], [Working days Elapsed])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: db3295ae-6e4e-4822-9574-849234d72bec
+
+	/// Best Margin day ever.
+	/// ***This data does not include PCS margin***
+	/// 
+	measure 'Best Margin Day Ever (since McLeod)' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY(orders,orders[Ship Scheduled Early Date]),
+			        [McLeod Margin]),
+			        REMOVEFILTERS('Calendar'[Date]))
+			     //REMOVEFILTERS('Calendar'[Month],'Calendar'[Year]))
+		displayFolder: Sales Measures\Margin\Bests\Days
+		lineageTag: 0a81a7d5-ffb5-45ae-873e-45301a701742
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Best margin week ever of all margin.
+	/// 
+	measure 'Best Margin Week Ever' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('Calendar','calendar'[Week / Year]),
+			        [Margin]),
+			        REMOVEFILTERS('Calendar'[Date]))
+		displayFolder: Sales Measures\Margin\Bests\Week
+		lineageTag: 22cedc96-261a-46f1-a972-2394134fb643
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Distinct Count of Customers ID's that has a move status of anything but available.
+	/// 
+	measure 'Customers Served' = CALCULATE(DISTINCTCOUNT(orders[Customer ID]),movements[Move Status]<>"Available")
+		formatString: 0
+		displayFolder: Sales Measures\Customers Served
+		lineageTag: ce424f5b-d00a-4a7d-92f9-99df3dd35d7f
+
+	/// Total margin for the current week.
+	/// ***This data does not include PCS data***
+	///  
+	measure 'This Weeks Margin' = CALCULATE([McLeod Margin],YEAR(orders[Ship Scheduled Early Date])=YEAR(TODAY()) && WEEKNUM(orders[Ship Scheduled Early Date])=WEEKNUM(TODAY()))
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: 22d96f79-6ea6-4aad-8579-1afc9f0ac0eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Count of Movements Booked that are greater then 50 miles and the order type is FTL, BW, or PARTIAL
+	measure 'Count of Trackable Movements' = ```
+			
+			Var count_ftl = 
+			    CALCULATE([Count of Movements Booked],
+			        orders[Order Type]="FTL",
+			        orders[Bill Distance]>50)
+			Var count_bw = 
+			    CALCULATE([Count of Movements Booked],
+			        orders[Order Type]="BW",
+			        orders[Bill Distance]>50)
+			        
+			Var count_partials =
+			    CALCULATE([Count of Movements Booked],
+			        orders[Order Type]="PARTIAL",
+			        orders[Bill Distance]>50)
+			Var count_of_trackable_movements = count_ftl+count_bw+count_partials
+			RETURN
+			count_of_trackable_movements
+			```
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: e6656c9e-faca-45b9-8ca9-be3a07299cbb
+
+	/// Count of callins that were entered by loadmaster
+	measure 'Count of tracking pings' = CALCULATE([Count of Callins],callins[Entered by]="loadmaster")
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: a1501a9e-c930-41e7-8fcf-6b6d90f47c93
+
+	/// count of callins
+	measure 'Count of Callins' = COUNTROWS(callins)
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: f47a6a66-3de6-44cb-9b4a-9064edd73dfc
+
+	/// The distinct count of callin movements that were entered by loadmaster and has at least one tracking ping 
+	measure 'Count of movements with 1 or more pings' = CALCULATE(DISTINCTCOUNT(callins[Movement]),callins[Entered by]="loadmaster")
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 5c3f9f56-4202-4b62-8466-2032026e906c
+
+	/// The distinct count of callin movements that were entered by loadmaster and has at least one tracking ping 
+	/// 
+	measure 'Count of movements with 3 or more pings' =
+			
+			CALCULATE(DISTINCTCOUNT(callins[Movement]),
+			FILTER(GROUPBY(callins,callins[Movement]),[Count of tracking pings]>=3))
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 9ce3c18f-e28d-4d7b-aebb-b754fa57c47c
+
+	/// Divides count of movements with 1 or more ping by count of trackable movements
+	/// 
+	measure 'Percentage Of movement with 1 or more pings' = DIVIDE([Count of movements with 1 or more pings],[Count of Trackable Movements])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 42f38d99-3fa7-4570-bfd0-f345c9d3f89c
+
+	/// Divides count of movements with 3 or more ping by count of trackable movements
+	measure 'Percentage Of movement with 3 or more pings' = DIVIDE([Count of movements with 3 or more pings],[Count of Trackable Movements])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 25f9d793-4d4a-4812-8458-82f129717541
+
+	/// Find Margin of today only
+	measure 'Margin Today' = CALCULATE([Margin],'calendar'[Date]=TODAY())
+		formatString: 0.00
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: 0dc28837-5a19-4b20-b71a-b668993a1c62
+
+	/// Finds the max number of trackable moves by day
+	/// 
+	measure 'Max trackable Movements grouped by day' = ```
+			
+			    CALCULATE(
+			        MAXX(
+			            GROUPBY('calendar','calendar'[Date]),
+			            [Count of Trackable Movements]))
+			```
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: ee69639b-829a-4424-97cb-3b0507aa19bf
+
+	/// Sum of projected freight carrier pay that move status is NOT available.
+	measure 'Total Linehall Carrier Pay' = CALCULATE(SUM(orders[Projected Freight Carrier Pay]),movements[Move Status]<>"Available")
+		displayFolder: Movement Measures\Carrier Pay
+		lineageTag: 9b10112b-6cc0-4e11-b362-f873605a5c42
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Linehall Charges' = CALCULATE(SUM(orders[Linehaul Charges]),movements[Move Status]<>"Available")
+		displayFolder: Movement Measures\Carrier Pay
+		lineageTag: 52db7fc6-96ac-459f-9288-c69d79a34a15
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Divides Total Linehall Charges by Count of orders. 
+	measure 'Average Linehall Charges' =
+			//this measure calculates the average linehall charges
+			DIVIDE([Total Linehall Charges],[Count of Orders])
+		displayFolder: Movement Measures\Carrier Pay
+		lineageTag: 2196f4ec-df1f-4a16-a07a-28cb8cffb9a9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Finds the max number of trackable moves by Dispatchers name
+	measure 'Max Trackable Movements Grouped by dispatcher' = ```
+			
+			    CALCULATE(
+			        MAXX(
+			            GROUPBY(dispatcher_key,dispatcher_key[Dispatcher Name]),
+			            [Count of Trackable Movements]))
+			```
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 8e499a05-6434-4a62-88b7-5f73162a8a38
+
+	/// adds up all of the margin generated on days less than the current day of the month for two months prior to the month selected in your filter context.
+	measure 'Margin MTD 2MA' = CALCULATE([Margin MTD],DATEADD('calendar'[Date],-2,MONTH))
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Months Ago
+		lineageTag: 75396d90-df40-4729-9c2c-e4dab1c53290
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Calculates the Total Margin generated two months prior to the month selected in your filter context.
+	measure 'Margin 2MA' = CALCULATE([Margin],DATEADD('calendar'[Date],-2,MONTH))
+		displayFolder: Sales Measures\Margin\Months Ago
+		lineageTag: e1e7ff08-a862-4516-a65e-6f8d0284a6bf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Finds the Max count of orders covered grouped by month / year, then removes the filters of start of month and move status is not equal to available
+	measure 'Customer Best Load Count' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY(orders,'calendar'[Month / Year]),
+			        [Count of Orders Covered]),
+			        REMOVEFILTERS('calendar'[Start of Month]),
+			        movements[Move Status]<>"Available")
+		formatString: 0
+		displayFolder: Sales Measures\Sales Goals\Load Count
+		lineageTag: 102cd559-c639-46f2-9091-827536ff6a09
+
+	/// adds up all of the covered orders generated on days less than the current day of the month for two months prior to the month selected in your filter context.
+	/// 
+	measure 'Count of Orders Covered MTD 2MA' = CALCULATE([Count of Orders Covered MTD],DATEADD('calendar'[Date],-2,MONTH))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date\Months Ago
+		lineageTag: aa380414-bd72-4cd9-8fd0-4b26f76a9064
+
+	/// The variance between Margin % and Avg Marging% Goal
+	/// 
+	measure 'Margin % Goal Variance' = [Margin %]-[Avg Margin % Goal]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 54e40f26-1419-4a7d-80f9-493d07511ffd
+
+	/// Margin per day goal multiplied by working days elapsed
+	/// 
+	measure 'Margin MTD Goal' = ```
+			
+			Var workingdays = 
+			    NETWORKDAYS(
+			        STARTOFMONTH('Calendar'[Date]),
+			        ENDOFMONTH('Calendar'[Date]),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('calendar'[Date]))
+			Var override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('calendar'[Date]))
+			Var mpd = DIVIDE(months_margin_goal,workingdays)
+			Var mpdg_wolf_pack = 
+			    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[Wolf Pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Salesperson Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])
+			
+			RETURN
+			mpdg
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 6a34313b-f870-4422-9a9e-d2a3974f078e
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// Calculates the difference between Margin MTD and Margin MTD Goal.
+	measure 'Margin MTD vs Margin MTD Goal variance' = [Margin MTD]-[Margin MTD Goal]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 6e41b9b5-77f6-4161-bc15-b694cc404ee9
+
+	/// Calculates Covered Revenue for days in the month less than today.
+	measure 'Revenue Covered MTD' = TOTALMTD([Revenue Covered], 'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		displayFolder: Sales Measures\Revenue\To Date Measures\Month To Date
+		lineageTag: 01e399cf-dbec-40ff-9529-533045440f99
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % MTD' = DIVIDE([Margin MTD],[Revenue Covered MTD])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: 689b7579-c777-42d9-90b3-5a84271c1efa
+
+	measure 'Margin Per Order MTD' = DIVIDE([Margin MTD], [Count of Orders Covered MTD])
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: f8159109-09b4-4b33-986f-d291997c54c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The variance between Margin % MTD and Avg Marging% Goal
+	measure 'Margin % MTD Goal Variance' = [Margin % MTD]-[Avg Margin % Goal]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 7bb17fcf-c1bf-4d7a-8eaf-239710cc1c52
+
+	/// Calculates the number of customers served one year prior to the time selected in your filter context.
+	measure 'Customers Served 1YA' = CALCULATE([Customers Served],DATEADD('calendar'[Date],-1,YEAR))
+		formatString: 0
+		displayFolder: Sales Measures\Customers Served\Years Ago
+		lineageTag: 6b367d41-b688-4d91-97ea-40038716aa09
+
+	/// This measure calculates the count of customers that we billed during a time peroid that we had not billed in the last 90 days
+	/// 
+	measure 'New / Revived Bill-too''s' = ```
+			
+			//This measure calculates the count of customers that we billed during a time peroid that we had not billed in the last 90 days
+			Var customer_tm = VALUES(orders[Customer ID])
+			Var prior_customers = 
+			CALCULATETABLE(
+			    VALUES(orders[Customer ID]),
+			    FILTER(ALL('Calendar'),
+			     'Calendar'[Date] > MIN('Calendar'[Date])-90 &&
+			     'Calendar'[Date] < min('Calendar'[Date])))
+			
+			Return
+			COUNTROWS(
+			    EXCEPT(customer_tm,prior_customers))
+			```
+		formatString: 0
+		displayFolder: Sales Measures\Customers Served
+		lineageTag: 29c65dca-27f7-4be8-a2e1-a0ae021290c7
+
+	/// This measure calculates the count of customers that we billed one year prior to the time peroid that we had not billed in the last 90 days prior to time selected
+	/// 
+	/// 
+	measure 'New / Revived Bill-too''s 1YA' = CALCULATE([New / Revived Bill-too's],DATEADD('calendar'[Date],-1,YEAR))
+		formatString: 0
+		displayFolder: Sales Measures\Customers Served\Years Ago
+		lineageTag: 33b7ed6a-1b8c-4321-87ab-548a2fa46db8
+
+	/// Margin minus margin per week goal
+	/// 
+	measure 'Margin vs Margin per week Goal Variance' = [Margin]-[Margin per Week Goal]
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: a7a46cdc-053a-4b95-a1e9-6ed70d05f482
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The difference in days between payments received bill date and todays date
+	/// 
+	measure 'Days Since Billed' = DATEDIFF(MIN(payments_received[Bill Date]),TODAY(),DAY)
+		formatString: 0
+		displayFolder: Billing Measures
+		lineageTag: c10ce8c7-683c-403f-a047-86d72d0748e1
+
+	/// Sum of order payment balance that are between 30 and 60 days old
+	/// 
+	measure 'Over 30' =
+			CALCULATE(SUM(payments_received[Order Payment Balance]),
+			FILTER(orders,[Days Since Billed]>30),
+			FILTER(orders,[Days Since Billed]<=60))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Billing Measures
+		lineageTag: 33f6f66e-0eb8-4d06-9abf-06dc95845d51
+
+	/// Sum of order payment balance that are between 60 and 90 days old
+	/// 
+	measure 'Over 60' =
+			CALCULATE(SUM(payments_received[Order Payment Balance]),
+			FILTER(orders,[Days Since Billed]>60),
+			FILTER(orders,[Days Since Billed]<=90))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Billing Measures
+		lineageTag: 7c59d01f-aada-4661-b778-4e7e107872db
+
+	/// Sum of order payment balance that are greater than  90 days old
+	/// 
+	measure 'Over 90' =
+			CALCULATE(SUM(payments_received[Order Payment Balance]),
+			FILTER(orders,[Days Since Billed]>90))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Billing Measures
+		lineageTag: 78cfb761-e353-4880-bc6d-95865bc95278
+
+	/// Takes total order balance and filters it by days since billed that are greater than the customers pay terms
+	measure 'Total Overdue' =
+			
+			CALCULATE([Order Balance],
+			FILTER(orders,[Days Since Billed]>MIN(customer_key[Pay Terms])))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Billing Measures
+		lineageTag: 463077cb-300d-43a3-a721-9a305c1c4495
+
+	/// Sum of payment received table, order invoice and debit amount
+	measure 'Invoice Amount' = SUM(payments_received[Order Invoice And Debit Amount])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Billing Measures
+		lineageTag: 0765a584-1bc5-420b-9d66-ffd7786e656b
+
+	/// sum of payment received table, order payment balance
+	/// 
+	measure 'Order Balance' = SUM(payments_received[Order Payment Balance])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Billing Measures
+		lineageTag: 0794fdbc-a306-4c3f-859d-9bfa504dcf77
+
+	/// average days to pay by customer key
+	/// 
+	measure 'Avg Days to Pay' = MIN(customer_key[Average Days to Pay])
+		displayFolder: Billing Measures
+		lineageTag: 8609293a-be11-40e9-a30b-16fac1b8aece
+
+	/// Subtracts days since billed by customer key pay terms
+	/// 
+	measure 'Days Overdue' = [Days Since Billed]-MIN(customer_key[Pay Terms])
+		formatString: 0
+		displayFolder: Billing Measures
+		lineageTag: ef289013-307c-449c-a818-213e59bcb6b5
+
+	/// finds the max payment received payment date and removes the filter if order payment balance
+	/// 
+	measure 'Last Payment' = CALCULATE(MAX(payments_received[Payment Date]),REMOVEFILTERS(payments_received[Order Payment Balance]))
+		formatString: Short Date
+		displayFolder: Billing Measures
+		lineageTag: b68e063c-b0a7-48b4-bfab-148eccdda91a
+
+	/// Subtracts average margin per day MTD and  Margin per day goal
+	/// 
+	measure 'Average Margin per day MTD vs margin today goal' = [Average Margin Per Day MTD] - [Margin per day Goal]
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: be9e3f4b-57ff-4141-a0a1-6de41783bb59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Margin MTD plus the product of average margin per day MTD and working days left in the month.
+	/// 
+	measure 'Forcasted Margin this month' = ```
+			[Margin MTD] + ([Average Margin Per Day MTD] * [Working Days Left] )
+			
+			```
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: a5be087a-792b-4844-9c92-34ddf7efa8f7
+
+	/// Subtracts working days  by working days elapsed. 
+	measure 'Working Days Left' = [Working Days]-[Working days Elapsed]
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 039cc8de-fdc3-49c3-af2f-c757866a39e5
+
+	/// Counts the rows of the overdue check call table
+	measure 'Count Overdue Check Calls' = COUNTROWS(overdue_check_calls)
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 43e5929e-a4a4-41d8-9fda-339b9bcf0376
+
+	/// Divides Count of overdue check calls by Count of Callins
+	measure 'Overdue Check Calls vs Count of Check Calls' = DIVIDE([Count Overdue Check Calls],[Count of Callins])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: ffe3c242-1781-4f53-925e-2ecd0a3ef76b
+
+	/// Sum of daily number override Margin Number
+	measure 'Override margin goal' = SUM(daily_number_override[Margin Number])
+		formatString: 0
+		displayFolder: Sales Measures\Margin\Current Margin Measures
+		lineageTag: d6af1cc2-db68-456e-8f70-90fe9494cf39
+
+	measure 'Count of DNC' = CALCULATE([Count of Movements Booked],movements[DNC] = TRUE)
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: ac905068-b9de-4e23-8041-ad274b1fa69a
+
+	measure 'Count of DNC by Rev code' = [Count of DNC] / [Count of Movements Booked]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 58fc7993-7c0b-4432-b0cd-fd238884e418
+
+	measure 'Count of movements all time' =
+			CALCULATE([Count of Movements Booked],
+			REMOVEFILTERS('calendar'[Date]))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: cd5c84c7-53a1-4c34-97be-0a8722b880a9
+
+	measure 'Average Revenue Per Week' =
+			
+			Var count_of_weeks = DISTINCTCOUNT('calendar'[Week / Year])
+			Var avg_rev_per_week = DIVIDE([Revenue Covered],count_of_weeks)
+			
+			RETURN
+			avg_rev_per_week
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: ***Undocumented***
+		lineageTag: 59c4d908-73a9-47b3-9abb-424e4a5edbd3
+
+	measure 'SDR OPS Date' = SUM(sdr_key[x_studio_start_date])+14
+		formatString: General Date
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: cbd3b68a-5781-4996-9cb4-e2bcb854ad69
+
+	measure 'SDR Move Date' = ```
+			
+			Var start_date_plus90 = SUM(sdr_key[x_studio_start_date])+90
+			Var first_monday_of_start_date_plus90 = Format(CEILING(EOMONTH(start_date_plus90,-1)-1,7)+2,"dddd, mmm dd, yyyy")
+			Var first_monday_of_month_after_start_date_plus90 = FORMAT(CEILING(EOMONTH(start_date_plus90,-0)-1,7)+2, "dddd, mmm dd, yyyy")
+			Var day_of_start_date = Day(SUM(sdr_key[x_studio_start_date]))
+			Var estamate_of_sdr_move_date = 
+			    IF(day_of_start_date>15,first_monday_of_month_after_start_date_plus90,first_monday_of_start_date_plus90)
+			Var override = IF(SUM(sdr_key[x_studio_sdr_start_date])=BLANK(),estamate_of_sdr_move_date,FORMAT(SUM(sdr_key[x_studio_sdr_start_date]),"dddd, mmm, dd, yyyy"))
+			
+			RETURN
+			override
+			```
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: 6cef3c46-cc79-4e41-b066-2de65e34824a
+
+	measure 'SDR D-Team Move Date estamate' = ```
+			
+			Var sdr_move_plus_3_months = SUM(sdr_key[x_studio_start_date])+180
+			Var first_monday_of_sdr_move_plus3 = Format(CEILING(EOMONTH(sdr_move_plus_3_months,-1)-1,7)+2,"dddd, mmmm dd, yyyy")
+			Var first_monday_of_monday_after_sdr_plus3 = FORMAT(CEILING(EOMONTH(sdr_move_plus_3_months,0)+1,7)+2, "dddd, mmmm dd, yyyy")
+			Var day_of_start_date = DAY(SUM(sdr_key[x_studio_start_date]))
+			Var estemate_of_dteam_date = 
+			    IF(day_of_start_date>15,first_monday_of_monday_after_sdr_plus3,first_monday_of_monday_after_sdr_plus3)
+			
+			RETURN
+			estemate_of_dteam_date
+			```
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: d9317f2d-e52c-42c5-8709-06a2c2129ba8
+
+	measure 'SDR Margin new' =
+			
+			Var lead_passed_date_var = MIN(crm[x_studio_lead_passed_date])
+			Var end_monitor = lead_passed_date_var+180
+			Var margin = CALCULATE([Margin],orders[Ship Scheduled Early Date]>=lead_passed_date_var, orders[Ship Scheduled Early Date]<=end_monitor)
+			
+			Return
+			margin
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: 77a2ba51-4443-450c-a93b-da64f92bac8a
+
+	measure 'Qualified Leads' = CALCULATE(DISTINCTCOUNT(behaviors_crm[id]),behaviors_crm[mail_activity_type_id]="Lead Passed")
+		formatString: 0
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: 06c3b12a-9066-4963-a4fc-142e891e4492
+
+	measure 'Unqualified Leads' = CALCULATE(DISTINCTCOUNT(behaviors_crm[id]),behaviors_crm[mail_activity_type_id]="Unqualified Lead Passed")
+		formatString: 0
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: e9c7cf92-dadf-4dcb-98df-db754c90bae6
+
+	measure 'Total Leads Remove Calendar Filter' =
+			
+			var unqualified_lead_ratio = DIVIDE([Unqualified Leads],3)
+			Var total_leads = CALCULATE([Qualified Leads]+unqualified_lead_ratio,REMOVEFILTERS('calendar'[Quarter],'calendar'[Year]))
+			
+			RETURN
+			total_leads
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: e9d65f4c-d8a9-43de-aa11-d2359ca2f097
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of SDR Grads' = ```
+			
+			    CALCULATE(
+			        DISTINCTCOUNT(sdr_key[user_id]),
+			        sdr_key[x_studio_d_team_start_date]>MIN('calendar'[Date]),
+			        sdr_key[x_studio_d_team_start_date]<MAX('calendar'[Date]))
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: d5d70614-896a-4adc-9aa2-a165259969ee
+
+	measure 'Average Leads Passed By Grads' = DIVIDE([Total Leads Remove Calendar Filter],[Count of SDR Grads])
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: 9180be1c-e3b0-4e3b-a2cb-23879a3617c7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Leads closed in 90 days' = ```
+			
+			Var lead_passed_date_var = MIN(crm[x_studio_lead_passed_date])
+			Var lead_passed_dateplus90 = lead_passed_date_var+90
+			Var first_order = 
+			    CALCULATE(
+			    MIN(orders[Ship Scheduled Early Date]),
+			    REMOVEFILTERS('calendar'[Quarter]),
+			    REMOVEFILTERS('calendar'[Year]),
+			    orders[Ship Scheduled Early Date]>=lead_passed_date_var)
+			Var count_of_orders_in_90_day_window = CALCULATE([Count of Orders Covered],first_order>=lead_passed_date_var,orders[Ship Scheduled Early Date]<=lead_passed_dateplus90)
+			Var if_closed = IF(count_of_orders_in_90_day_window>=1,1,0)
+			
+			RETURN
+			count_of_orders_in_90_day_window
+			```
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: 91e225f5-e6cb-4db5-a3e4-0e60a142e4aa
+
+	measure 'Lead was passed in 90 days prior to quarter' = ```
+			
+			Var lead_passed_date_var = MIN(crm[x_studio_lead_passed_date])
+			Var start_of_qrt_minus90 = MIN('calendar'[Date])-90
+			Var end_of_qrt = MAX('calendar'[Date])
+			Var lead_passed_date_in_window = 
+			    if(lead_passed_date_var>= start_of_qrt_minus90,
+			    if(lead_passed_date_var<=end_of_qrt,1,0))
+			    
+			RETURN  
+			lead_passed_date_in_window
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***\SDR Measures
+		lineageTag: e657874e-d183-4aa3-926b-35158e851a32
+
+	measure '% of orders covered CRT' =
+			
+			
+			var total_covered = [Count of Orders Covered]
+			var CRT_covered = CALCULATE([Count of Orders Covered],dispatcher_key[Level] = "Central Operations")
+			var diff = CRT_covered / total_covered
+			
+			RETURN
+			diff
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 4f8d5da2-9d68-4057-8232-7898928c8b56
+
+	measure 'Avg Margin per load CRT' =
+			
+			
+			var CRT_covered = CALCULATE([Count of Orders Covered],dispatcher_key[Level] = "Central Operations")
+			var CRT_margin = CALCULATE([Margin],dispatcher_key[Level] = "Central Operations")
+			var diff = CRT_margin / CRT_covered
+			
+			RETURN
+			diff
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: ***Undocumented***
+		lineageTag: dfb64c3a-fe9c-484c-9f8d-9fab70f80677
+
+	measure 'Count of orders covered CRT' =
+			
+			
+			var CRT_covered = CALCULATE([Count of Orders Covered],dispatcher_key[Level] = "Central Operations")
+			
+			RETURN
+			CRT_covered
+		formatString: #,0
+		displayFolder: ***Undocumented***
+		lineageTag: ba06b593-47be-4319-970a-95ea0004ba3f
+
+	measure 'Margin % CRT' =
+			
+			
+			var CRT_rev = CALCULATE([Revenue Covered],dispatcher_key[Level] = "Central Operations")
+			var CRT_margin = CALCULATE([Margin],dispatcher_key[Level] = "Central Operations")
+			var diff = CRT_margin / CRT_rev
+			
+			RETURN
+			diff
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 6c650ba6-55ad-4ea4-a01b-55ee879159ea
+
+	measure 'Total Margin % CRT' =
+			
+			
+			var total_margin = [Margin]
+			var CRT_margin = CALCULATE([Margin],dispatcher_key[Level] = "Central Operations")
+			var diff = CRT_margin / total_margin
+			
+			RETURN
+			diff
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 993b6ca9-5097-469e-a026-c1703856bfe7
+
+	measure 'Carriers onboarded vs Load count' =
+			
+			
+			var onboarded = SUM(highway_onboarded[count])
+			var loads_covered_per_dispatcher = CALCULATE([Count of Orders Covered],dispatcher_key[Dispatcher Name] = min(highway_onboarded[Dispatcher]))
+			var diff = onboarded / loads_covered_per_dispatcher
+			
+			return
+			diff
+		formatString: 0%;-0%;0%
+		displayFolder: ***Undocumented***
+		lineageTag: 3a6d64d4-cfec-4514-a9be-034413eaaff9
+
+	measure '% of Carriers Onboarded CRT' =
+			
+			
+			var total_CRT = [Count of Carrier Onboards CRT]
+			var count_ = [Count of orders covered CRT]
+			var diff = DIVIDE(total_CRT , count_)
+			
+			RETURN
+			diff
+		formatString: 0%;-0%;0%
+		displayFolder: ***Undocumented***
+		lineageTag: 7c2ac733-ea31-4951-a389-7350066e4674
+
+	measure 'Count of Carrier Onboards CRT' =
+			
+			
+			var CRT_ = CALCULATE(SUM(highway_onboarded[count]),dispatcher_key[Level] = "Central Operations")
+			
+			RETURN
+			CRT_
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: f7c5973e-6891-431f-9845-d66322541a0b
+
+	measure 'Count of Next sched Check calls' = COUNTROWS(check_call_roller)
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: f9f11a2f-f1f7-4c03-bc30-c8c3b3c192a3
+
+	measure 'Next sched check call vs Overdue' = DIVIDE([Count Overdue Check Calls],[Count of Next sched Check calls])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 41ee16c1-c155-4798-a2ac-e3d5ad297043
+
+	measure 'Count of orders covered by team' =
+			
+			
+			var team_covered = CALCULATE([Count of Orders Covered],dispatcher_key[Level] <> "Central Operations",dispatcher_key[Level] <> "admin")
+			
+			RETURN
+			team_covered
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 28639271-b443-4448-841e-3f31d4cda4e7
+
+	measure 'CRT booking goal' = [Count of Orders Covered] * .8
+		displayFolder: ***Undocumented***
+		lineageTag: 9bfedd23-4c7e-4066-b349-d326008ce8e1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % Team' =
+			
+			
+			var team_rev = CALCULATE([Revenue Covered],dispatcher_key[Level] <> "Central Operations",dispatcher_key[Level] <> "Admin")
+			var team_margin = CALCULATE([Margin],dispatcher_key[Level] <> "Central Operations",dispatcher_key[Level] <> "Admin")
+			var diff = team_margin / team_rev
+			
+			RETURN
+			diff
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 2f75e6d9-aff7-47d8-aa36-206d9c2883e0
+
+	measure 'Avg Margin per load team' =
+			
+			
+			var team_covered = CALCULATE([Count of Orders Covered],dispatcher_key[Level] <> "Central Operations")
+			var team_margin = CALCULATE([Margin],dispatcher_key[Level] <> "Central Operations")
+			var diff = team_margin / team_covered
+			
+			RETURN
+			diff
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: ***Undocumented***
+		lineageTag: a3658ea9-0639-4491-9d0f-065e65e4318f
+
+	measure 'Margin CRT' =
+			
+			var CRT_margin = CALCULATE([Margin],dispatcher_key[Level] = "Central Operations")
+			
+			RETURN
+			CRT_margin
+		displayFolder: ***Undocumented***
+		lineageTag: f8613ff4-33ba-4fa6-a10e-639940786f7a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % Parade' =
+			
+			
+			var CRT_rev = CALCULATE([Revenue Covered],dispatcher_key[Level] = "Admin")
+			var CRT_margin = CALCULATE([Margin],dispatcher_key[Level] = "Admin")
+			var diff = CRT_margin / CRT_rev
+			
+			RETURN
+			diff
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 027e7d9c-11bc-42c5-94e5-beebfbd1eaba
+
+	measure 'Margin % CRT + P' =
+			
+			var CRT_rev = CALCULATE([Revenue Covered],dispatcher_key[Level] = "Central Operations")
+			var CRT_margin = CALCULATE([Margin],dispatcher_key[Level] = "Central Operations")
+			var p_rev = CALCULATE([Revenue Covered],dispatcher_key[Level] = "admin")
+			var p_margin = CALCULATE([Margin],dispatcher_key[Level] = "admin")
+			var mar = (CRT_margin + p_margin)
+			var rev = (CRT_rev + p_rev)
+			var diff = DIVIDE(mar,rev)
+			
+			RETURN
+			diff
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 04326934-0fdf-4150-8234-5b2f20077354
+
+	measure 'Count of orders covered Parade' =
+			
+			
+			var p_covered = CALCULATE([Count of Orders Covered],dispatcher_key[Level] = "admin")
+			
+			RETURN
+			p_covered
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 36528c3d-926f-43c6-8da9-f201059233de
+
+	measure 'Count of orders covered CRT + P' =
+			
+			var CRT_ = CALCULATE([Count of orders covered CRT],dispatcher_key[Level] = "Central Operations")
+			var p_ = CALCULATE([Count of orders covered Parade],dispatcher_key[Level] = "admin")
+			var add_ = CRT_ + p_
+			
+			RETURN
+			add_
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: a3f10482-5888-4256-a200-aaf776b8ea7b
+
+	measure '% of Passed Back Loads Covered CRT + P' = ```
+			
+			
+			var CRT_ = CALCULATE([Count of orders covered CRT],
+			    dispatcher_key[Level] = "Central Operations",
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 1, 
+			    FILTER(movements,[Was Passed] = 1))
+			
+			var p_ = CALCULATE([Count of orders covered Parade],
+			    dispatcher_key[Level] = "admin",
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 1,
+			    FILTER(movements,[Was Passed] = 1))
+			
+			var add_ = CRT_ + p_
+			
+			var x = DIVIDE(add_,[Total Passed])
+			
+			RETURN 
+			x
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: fa9fa466-0061-405f-8ded-f7662b87a0e4
+
+	measure 'Margin Team' =
+			
+			var team_margin = CALCULATE([Margin],dispatcher_key[Level] <> "Central Operations")
+			
+			RETURN
+			team_margin
+		displayFolder: ***Undocumented***
+		lineageTag: 15d8ca8a-6469-476b-af7a-474e0ee17f75
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Parade' =
+			
+			var Parade_margin = CALCULATE([Margin],dispatcher_key[Level] = "admin")
+			
+			RETURN
+			Parade_margin
+		displayFolder: ***Undocumented***
+		lineageTag: 49043af4-3d8d-4555-aab8-91716ec8b5c8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin CRT + P' =
+			
+			
+			VAR CRT = [Margin CRT]
+			VAR PARADE = [Margin Parade]
+			VAR ADD_ = CRT + PARADE
+			
+			RETURN
+			ADD_
+		displayFolder: ***Undocumented***
+		lineageTag: 21805806-3793-4e4b-b5ed-778410efd333
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Best Margin Month Ever remove date' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('calendar','calendar'[Month / Year]),
+			        [Margin]),
+			        REMOVEFILTERS('calendar'[Year]),
+			        REMOVEFILTERS('calendar'[Month Name]),
+			        REMOVEFILTERS('calendar'[Date]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\Bests\Months
+		lineageTag: 107d8412-7d73-4825-81c6-ed9a06250a55
+
+	measure 'Margin Goal MTD' = ```
+			
+			Var workingdays = 
+			    NETWORKDAYS(
+			        STARTOFMONTH('Calendar'[Date]),
+			        ENDOFMONTH('Calendar'[Date]),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Margin Goal])
+			Var override_mpdg = CALCULATE([Override margin goal])
+			Var mpd = DIVIDE(months_margin_goal,workingdays)
+			
+			Var override_blank = if(override_mpdg=0,mpd,override_mpdg)
+			Var mpdg_wolf_pack = 
+			    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[Wolf Pack])=BLANK(),override_blank*[Working days Elapsed],mpd*[Working days Elapsed])
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Salesperson Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])
+			
+			RETURN
+			mpdg
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: ***Undocumented***
+		lineageTag: 0350b5b4-3603-410d-bee7-897d8431b530
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Customers Served 1MA' = CALCULATE([Customers Served],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 4b0f25eb-819c-488a-b3a4-62a4686faa21
+
+	measure 'Customers Served MOM Variance' = [Customers Served] - [Customers Served 1MA]
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: fda16fb7-8333-49ed-8bc5-a902b07fad22
+
+	measure 'Customers Served MTD' = TOTALMTD([Customers Served],'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: f26264db-4f36-4cda-a374-9d2b5e1aaf28
+
+	measure 'Customers Served MTD 1MA' = CALCULATE([Customers Served MTD],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: bbe9545c-23d5-41db-bfea-e3f548c76556
+
+	measure 'Customers Served MTD MOM Variance' = [Customers Served MTD] - [Customers Served MTD 1MA]
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: c091abbe-ca3e-4fd7-80a2-66976ce3166d
+
+	measure 'Margin Goal 1MA' = CALCULATE([Margin Goal],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: ***Undocumented***
+		lineageTag: 44c593b2-139e-4da2-ad6c-f492218abde5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Todays margin per order goal' = ```
+			
+			Var start_of_month = CALCULATE(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=TODAY())
+			Var workingdays = 
+			    NETWORKDAYS(
+			        CALCULATE(STARTOFMONTH('Calendar'[Date]),'calendar'[Date]=start_of_month),
+			        CALCULATE(ENDOFMONTH('Calendar'[Date]),'calendar'[Date]=TODAY()),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Avg Margin Per Order Goal],'calendar'[Date]=start_of_month)
+			Var mpd = months_margin_goal
+			
+			Return
+			mpd
+			```
+		displayFolder: ***Undocumented***
+		lineageTag: cc3b5088-a317-4175-8598-43406b1b4788
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered 2MA' = CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-2,MONTH))
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\Months Ago
+		lineageTag: 78672060-930b-4514-8635-d231e2f3913c
+
+	measure 'Count of Orders Covered MOM Variance' = [Count of Orders Covered] - [Count of Orders Covered 1MA]
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\Month over Month
+		lineageTag: 190aaf74-69a3-494d-80e6-18e5e58fe831
+
+	measure 'Margin per order 1MA' = CALCULATE([Margin Per Order],DATEADD('calendar'[Date],-1,MONTH))
+		displayFolder: ***Undocumented***
+		lineageTag: afa49517-cd2c-4cb4-bc75-2e6c554895f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin per order MOM Variance' = [Margin Per Order] -[Margin per order 1MA]
+		displayFolder: ***Undocumented***
+		lineageTag: de5fd95b-81d2-4440-ae4e-063eef4e22de
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Carriers Onboarded 1MA' = CALCULATE(count(highway_onboarded[count]),DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: bac8d3f9-fb7e-495a-887d-edf0f958fe37
+
+	measure 'Carriers Onboarded 2MA' = CALCULATE(count(highway_onboarded[count]),DATEADD('calendar'[Date],-2,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 4cc66e1e-7bf6-441d-9f08-230950d6296d
+
+	measure 'Carriers Onboarded MOM 1MA' = [Carriers Onboarded 1MA]-[Carriers Onboarded 2MA]
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: a46fb3f1-ab68-4784-a95d-a5f50edcd207
+
+	measure 'Carriers Onboarded MTD' = TOTALMTD(count(highway_onboarded[count]),'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 598b307b-d8b6-45e6-8198-51106f7f7de3
+
+	measure 'Carriers Onboarded MTD 1MA' = CALCULATE([Carriers Onboarded MTD],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: b0246966-d0b6-4a15-8dbd-c59568ee6282
+
+	measure 'Carriers Onboarded MOM MTD' = [Carriers Onboarded MTD]-[Carriers Onboarded MTD 1MA]
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: cae47b45-62ae-48da-8915-a539f39837d9
+
+	measure 'Count of Carriers reloaded' =
+			
+			var count_ = CALCULATE(DISTINCTCOUNT(movements[Carrier ID]),
+			    FILTER(carrier_key,[Count of Orders Covered] > 1))
+			
+			return count_
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 1c542828-b561-4dfb-8d67-30d3fcd1ec83
+
+	measure 'Distinct carrier ID' = ```
+			DISTINCTCOUNT(movements[Carrier ID])
+			
+			
+			
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 818cd40d-7845-4560-9321-e79ba68b3e66
+
+	measure 'Count of Carriers reloaded 1MA' = CALCULATE([Count of Carriers reloaded],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 39ed9bbf-d4d8-4437-b8c1-8ad8e9d98d05
+
+	measure 'Count of Carriers reloaded 2MA' = CALCULATE([Count of Carriers reloaded],DATEADD('calendar'[Date],-2,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 57e856e2-20c0-4f74-b60a-307b5c054e21
+
+	measure 'Count of Carriers reloaded MTD' = TOTALMTD([Count of Carriers reloaded],'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 4e463d76-dde2-495d-bd7e-aa0194216186
+
+	measure 'Count of Carriers reloaded MTD 1MA' = CALCULATE([Count of Carriers reloaded MTD],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 5f093bb5-c45a-4979-a660-0991079cc4b8
+
+	measure 'Count of Carriers reloaded MOM Variance' = [Count of Carriers reloaded 1MA] - [Count of Carriers reloaded 2MA]
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 9762d623-500f-4c1c-87a4-f23066af1e42
+
+	measure 'Count of Carriers reloaded MTD MOM Variance' = [Count of Carriers reloaded MTD] - [Count of Carriers reloaded MTD 1MA]
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 05b96afb-df07-4d8e-9e1d-aeb9e8b1a561
+
+	measure '% of Recurring Carriers' = DIVIDE([Count of Carriers reloaded],[Distinct carrier ID])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 5bff9f79-c4b1-4708-9c5a-4cd67a005a38
+
+	measure 'Pass Rate (Sales to CRT)' = ```
+			
+			Var num_pass = CALCULATE(COUNT(carrier_dispatch_movement_data[Movement ID]), 
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 0)
+			    
+			
+			VAR pass_by_total = DIVIDE(num_pass,[Count of Orders] )
+			
+			
+			return 
+			pass_by_total
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: ***Undocumented***
+		lineageTag: 5a686f24-15b2-4d17-8253-44d778a2c007
+
+	measure 'Pass Rate 1MA (Sales to CRT)' = CALCULATE([Pass Rate (Sales to CRT)],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: ac628bf7-b5f6-4b96-878d-17aea10563f7
+
+	measure 'Pass Rate MOM Variance' = [Pass Rate 1MA (Sales to CRT)] - [Pass Rate 2MA (Sales to CRT)]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 2336834b-fc9f-487e-96f2-960e55ddd3be
+
+	measure 'Pass Rate 2MA (Sales to CRT)' = CALCULATE([Pass Rate (Sales to CRT)],DATEADD('calendar'[Date],-2,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: abe13779-dea0-4ce0-b039-9d61fafbfef5
+
+	measure 'Pass Rate MTD' = TOTALMTD([Pass Rate (Sales to CRT)],'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: ***Undocumented***
+		lineageTag: f46d5baf-c817-4797-bdaf-aa2f530c858b
+
+	measure 'Pass Rate MTD 1MA' = CALCULATE([Pass Rate MTD],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 57d06f07-0737-4c2a-95c9-bc8802f20b69
+
+	measure 'Pass Rate MOM MTD Variance' = [Pass Rate MTD] - [Pass Rate MTD 1MA]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: f716de9d-e1f1-48d5-8096-f751195bd4a6
+
+	measure '% of Passed Loads Covered CRT + P' = ```
+			
+			var CRT_ = CALCULATE([Count of orders covered CRT],
+			    dispatcher_key[Level] = "Central Operations", 
+			    FILTER(movements,[Was Passed] = 1))
+			
+			var p_ = CALCULATE([Count of orders covered Parade],
+			    dispatcher_key[Level] = "admin",
+			    FILTER(movements,[Was Passed] = 1))
+			
+			var add_ = CRT_ + p_
+			
+			var x = DIVIDE(add_,[Total Passed])
+			
+			RETURN 
+			x
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 424999c2-d27a-4943-96c6-d2fe31cc77e7
+
+	measure 'Total Passed' = ```
+			
+			Var num_pass = CALCULATE(DISTINCTCOUNT(carrier_dispatch_movement_data[Movement ID]), 
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 0)
+			
+			RETURN
+			num_pass
+			
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 03d6cba5-e875-45bb-80cd-81a4841e8bc5
+
+	measure 'Pass Back Rate (1 or more)' = ```
+			
+			Var num_pass = CALCULATE(COUNT(carrier_dispatch_movement_data[Movement ID]), 
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 1)
+			    
+			VAR pass_by_total = DIVIDE(num_pass,[Count of Orders])
+			
+			return 
+			pass_by_total
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 0b5d4f6d-6f64-4c9d-a5e6-d08812accfd4
+
+	measure 'Pass Back Rate (3 or more)' = ```
+			
+			Var num_pass = CALCULATE(COUNT(carrier_dispatch_movement_data[Movement ID]), 
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 3)
+			VAR pass_by_total = DIVIDE(num_pass,[Count of Orders])
+			
+			return 
+			pass_by_total
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 67727ea6-d947-4442-86a1-ca91133d3f78
+
+	measure 'Pass Back Rate MTD' = TOTALMTD([Pass Back Rate (1 or more)],'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: dcd0ef6a-e954-476e-a921-0fe511eca04a
+
+	measure 'Pass Back Rate MTD 1MA' = CALCULATE([Pass Back Rate MTD],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: ebd83a5b-691b-42bb-814d-de9c489a2355
+
+	measure 'Pass Back Rate MOM MTD Variance' = [Pass Back Rate MTD] - [Pass Back Rate MTD 1MA]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: a9e8c85b-56c5-4b5a-b26c-ebe7aa272f80
+
+	measure 'Pass Back Rate 1MA (Sales to CRT)' = CALCULATE([Pass Back Rate (1 or more)],DATEADD('calendar'[Date],-1,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 77b04f13-4772-4245-a12b-6548afc8bfdd
+
+	measure 'Pass Back Rate 2MA (Sales to CRT)' = CALCULATE([Pass Back Rate (1 or more)],DATEADD('calendar'[Date],-2,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: d7566789-9d8d-4b3c-8404-6b6d85abfca6
+
+	measure 'Pass Back Rate MOM Variance' = [Pass Back Rate 1MA (Sales to CRT)] - [Pass Back Rate 2MA (Sales to CRT)]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 1135343e-3df7-4229-85b6-064f86e75249
+
+	measure '% of eligible loads covered CRT + P (Pass Back 1 or more)' = [Pass Back Rate (1 or more)] * [% of Passed Back Loads Covered CRT + P]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 86890a8f-37f3-420e-b0e1-f2b4438d2df4
+
+	measure 'Total Pass Back (1 or more)' = ```
+			
+			Var num_pass = CALCULATE(DISTINCTCOUNT(carrier_dispatch_movement_data[Movement ID]), 
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 1)
+			
+			return 
+			num_pass
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 31999f2b-9b31-4363-b8ea-de4627a26f9c
+
+	measure 'Total Not Passed' = ```
+			
+			Var num_pass = CALCULATE(DISTINCTCOUNT(carrier_dispatch_movement_data[Movement ID]), 
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 0)
+			VAR total_orders = [Count of Orders]
+			
+			var diff = total_orders - num_pass
+			
+			RETURN
+			diff
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: 2364cc46-7db8-44c0-b859-3c872f0f153c
+
+	measure 'Was Passed' = if(min(movements[Movement ID]) = min(carrier_dispatch_movement_data[Movement ID]),1,0)
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: fc2607b1-7b3f-4850-b273-3d05fab47fa5
+
+	measure '% of Not Passed Loads Covered CRT + P' = ```
+			
+			var CRT_ = CALCULATE([Count of orders covered CRT],
+			    dispatcher_key[Level] = "Central Operations", 
+			    FILTER(movements,[Was Passed] = 0))
+			
+			var p_ = CALCULATE([Count of orders covered Parade],
+			    dispatcher_key[Level] = "admin",
+			    FILTER(movements,[Was Passed] = 0))
+			
+			var add_ = CRT_ + p_
+			
+			var x = DIVIDE(add_,[Total Not Passed])
+			
+			RETURN 
+			x
+			```
+		formatString: 0%;-0%;0%
+		displayFolder: ***Undocumented***
+		lineageTag: 1bb263a1-8d2d-449c-8101-80c6ef393475
+
+	measure 'Total Success Rate' =
+			
+			var pass_ = [% of Passed Loads Covered CRT + P] * [Pass Rate (Sales to CRT)]
+			var not_passed = [% of Not Passed Loads Covered CRT + P] * [Not Pass Rate (Sales to CRT)]
+			var add_ = pass_ + not_passed
+			RETURN
+			add_
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 7925302a-2c09-480d-8941-cd6fb2082b84
+
+	measure 'Not Pass Rate (Sales to CRT)' = ```
+			
+			Var num_pass = CALCULATE(COUNT(carrier_dispatch_movement_data[Movement ID]), 
+			    carrier_dispatch_movement_data[Number of Pass Backs] >= 0)
+			
+			VAR pass_by_total = DIVIDE([Total Not Passed],[Count of Orders] )
+			
+			
+			return 
+			pass_by_total
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 6fd34ad4-f0cc-4155-a3e6-10e200ebfef4
+
+	measure '% of orders covered CRT + P' = [% of orders covered CRT]+[% of Orders Covered Parade]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 40e6c544-92ab-46b2-b319-d5f82ed0fd64
+
+	measure '% of Orders Covered Parade' =
+			
+			var total_covered = [Count of Orders Covered]
+			var Parade_covered = [Count of orders covered Parade]
+			var diff = Parade_covered / total_covered
+			
+			RETURN
+			diff
+		displayFolder: ***Undocumented***
+		lineageTag: 9573f31d-08f5-4fa4-8dd8-957b2d65aacd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Time from Available to Loadboard time' = ```
+			
+			
+			VAR total_seconds = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Available Date Time], 
+			    carrier_dispatch_movement_data[Load Board Date Time], 
+			    SECOND)
+			)
+			
+			VAR XDay = INT(total_seconds / (24 * 60 * 60))
+			VAR XHours = MOD(INT(total_seconds / (60 * 60)), 24)
+			VAR XMinutes = MOD(INT(total_seconds / 60), 60)
+			VAR XSeconds = MOD(total_seconds, 60)
+			VAR XEnd = TIME(XHours,XMinutes,XSeconds)
+			
+			RETURN 
+			XEnd
+			
+			```
+		formatString: hh:nn:ss
+		displayFolder: ***Undocumented***
+		lineageTag: dce9417c-31da-4559-99eb-5519b08bccf2
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	measure 'Time from Loadboard to Covered time' = ```
+			
+			
+			VAR total_seconds = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Load Board Date Time], 
+			    carrier_dispatch_movement_data[Covered Date Time], 
+			    SECOND)
+			)
+			
+			VAR XDay = INT(total_seconds / (24 * 60 * 60))
+			VAR XHours = MOD(INT(total_seconds / (60 * 60)), 24)
+			VAR XMinutes = MOD(INT(total_seconds / 60), 60)
+			VAR XSeconds = MOD(total_seconds, 60)
+			VAR XEnd = TIME(XHours,XMinutes,XSeconds)
+			
+			RETURN 
+			XEnd
+			
+			```
+		formatString: hh:nn:ss
+		displayFolder: ***Undocumented***
+		lineageTag: 792c4050-e087-4dc9-8cde-1064092d4891
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	measure 'Time from Available to Give Back time' = ```
+			
+			
+			VAR total_seconds = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Available Date Time], 
+			    carrier_dispatch_movement_data[Give Back Date Time], 
+			    SECOND)
+			)
+			
+			VAR Hours = MOD(INT(total_seconds / (60 * 60)), 24)
+			VAR Minutes = MOD(INT(total_seconds / 60), 60)
+			VAR Seconds = MOD(total_seconds, 60)
+			VAR End_ = TIME(Hours,Minutes,Seconds)
+			
+			
+			RETURN 
+			End_
+			
+			```
+		formatString: hh:nn:ss
+		displayFolder: ***Undocumented***
+		lineageTag: 67345104-ebff-44ad-aea7-39f68c12c558
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	measure 'Available to Give Back sec' = ```
+			
+			
+			VAR total_seconds = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Available Date Time], 
+			    carrier_dispatch_movement_data[Give Back Date Time], 
+			    SECOND)
+			)
+			
+			
+			RETURN 
+			total_seconds
+			
+			```
+		displayFolder: ***Undocumented***
+		lineageTag: f0768cce-9769-4c4f-9cc7-1d82f95439b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Available to Loadboard sec' = ```
+			
+			
+			VAR total_seconds = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Available Date Time], 
+			    carrier_dispatch_movement_data[Load Board Date Time], 
+			    SECOND)
+			)
+			
+			RETURN 
+			total_seconds
+			
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: f3e4c279-3f1d-4148-b028-061fc33caa26
+
+	measure 'Load Board to Covered time sec' = ```
+			
+			VAR total_seconds = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Load Board Date Time], 
+			    carrier_dispatch_movement_data[Covered Date Time], 
+			    SECOND)
+			)
+			
+			RETURN 
+			total_seconds
+			```
+		formatString: 0
+		displayFolder: ***Undocumented***
+		lineageTag: c73062dd-bcc0-42a1-b88a-b68c38db66f6
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Time from Give Back to Covered time' = ```
+			
+			
+			VAR total_seconds1 = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Give Back Date Time], 
+			    carrier_dispatch_movement_data[Covered Date Time], 
+			    SECOND)
+			)
+			VAR total_seconds2 = AVERAGEX(carrier_dispatch_movement_data, 
+			    DATEDIFF(carrier_dispatch_movement_data[Available Date Time], 
+			    carrier_dispatch_movement_data[Give Back Date Time], 
+			    SECOND)
+			)
+			VAR total_seconds3 =total_seconds1 - total_seconds2
+			
+			VAR Hours = MOD(INT(total_seconds3 / (60 * 60)), 24)
+			VAR Minutes = MOD(INT(total_seconds3 / 60), 60)
+			VAR Seconds = MOD(total_seconds3, 60)
+			VAR End_ = TIME(Hours,Minutes,Seconds)
+			
+			
+			RETURN 
+			End_
+			
+			```
+		formatString: hh:nn:ss
+		displayFolder: ***Undocumented***
+		lineageTag: 725e6fcf-9d32-48bb-a2c9-f1bb4c86efe9
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	measure 'Carriers Onboarded MTD %' = DIVIDE([Carriers Onboarded MTD] , [Count of Orders Covered MTD])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 2e304744-a36a-4f4c-a995-6d531c7776cf
+
+	measure 'Carriers Onboarded MTD 1MA %' = DIVIDE([Carriers Onboarded MTD 1MA] , [Count of Orders Covered MTD 1MA])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 7f3145a0-a933-4bb0-98f3-28a0a4861a44
+
+	measure 'Carriers Onboarded MOM MTD %' = ([Carriers Onboarded MTD %]-[Carriers Onboarded MTD 1MA %])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: f4faa457-10fb-4eb2-b777-0ee05355ad01
+
+	measure 'Carriers Onboarded 1MA %' = DIVIDE([Carriers Onboarded 1MA] , [Count of Orders Covered 1MA])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 36f0aa91-83ea-430e-a00b-a52b6acb1858
+
+	measure 'Carriers Onboarded 2MA %' = DIVIDE([Carriers Onboarded 2MA] , [Count of Orders Covered 2MA])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: d8116683-9f89-42ef-86de-836c060cdeee
+
+	measure 'Carriers Onboarded MOM 1MA %' = [Carriers Onboarded 1MA %]-[Carriers Onboarded 2MA %]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: ***Undocumented***
+		lineageTag: 2b56f51c-b98c-42f7-a26f-761b4b5c9b09
+
+	measure 'Commision Rate' = ```
+			
+			Var Margin= [McLeod Margin]
+			
+			Var Commission_pre_august_first_twenty_three= 
+			IF(Margin>=20000,1875+((Margin-19999)*.175),
+			IF(Margin>=15000,1125+((Margin-14999)*.15),
+			IF(Margin>=10000,500+((Margin-9999)*.125),
+			IF(Margin>=5000,((Margin-4999)*.1),
+			0))))
+			
+			Var commission_post_august_first_twenty_three=
+			IF(margin>=200000,44626+((margin-199999)*.3),
+			IF(margin>=150000,30876+((margin-149999)*.275),
+			IF(margin>=100000,18376+((margin-99999)*.25),
+			IF(margin>=50000,7126+((margin-49999)*.225),
+			IF(margin>=20000,1875+((margin-19999)*.175),
+			IF(Margin>=15000,1125+((Margin-14999)*.15),
+			IF(Margin>=10000,500+((Margin-9999)*.125),
+			IF(Margin>=5000,((Margin-4999)*.1),
+			0))))))))
+			
+			Var commission_rate=
+			IF(MIN('Calendar'[Date])<=45138,Commission_pre_august_first_twenty_three,commission_post_august_first_twenty_three)
+			
+			Return 
+			commission_rate
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Commission Measures
+		lineageTag: 94c8588a-bac4-4bce-86bf-381940bbff76
+
+	measure '10% Commission' = [Margin]*.1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Commission Measures
+		lineageTag: 6ce55daa-86cc-4dee-af9d-e951b1729375
+
+	/// Counts the Rows of the Employee Table whose termination date are >= min(date), termination date <= max(date), and termination date are not blank
+	measure 'Staff Turnover' =
+			
+			CALCULATE(
+			    COUNTROWS(employees),
+			    FILTER(VALUES(employees[Termination Date]),employees[Termination Date]>=MIN('calendar'[Date])),
+			    employees[Termination Date]<>BLANK(),
+			    FILTER(employees,employees[Termination Date]<=MAX('calendar'[Date])))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 7658f84d-4e42-4fde-9cf7-1de7446a2692
+
+	measure 'Current Staff' =
+			
+			CALCULATE(
+			    COUNTROWS(employees),
+			    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(employees[Termination Date]), OR(employees[Termination Date] >= MIN('calendar'[Date]), ISBLANK(employees[Termination Date]))))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: d7380fe7-e2c8-43e0-a9e2-a141a474a642
+
+	measure 'Avg Monthy Head Count' =
+			
+			AVERAGEX(
+			    SUMMARIZE(
+			        'Calendar',
+			        'Calendar'[Month / Year],
+			        "avg head count",[Current Staff]
+			    ),
+			    [avg head count]
+			)
+		displayFolder: HR
+		lineageTag: c88a84f8-dc1f-4671-b100-1703bbe76197
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Turnover Rate' = DIVIDE([Staff Turnover],[Avg Monthy Head Count])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: 13529256-6b8e-40f3-a64c-fc49fc4483b7
+
+	measure 'Turnover Rate 12 Months Prior' = CALCULATE([Turnover Rate],DATEADD('Calendar'[Date],-12,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: 612467f9-8b6f-477e-80ea-a4c97c1f50b7
+
+	measure 'Turnover YOY Variance' = [Turnover Rate]-[Turnover Rate 12 Months Prior]
+		displayFolder: HR
+		lineageTag: f092ff6e-93cb-49a8-8797-ef8fc0d7fc94
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Monthly Staff Turnover' =
+			
+			AVERAGEX(
+			    SUMMARIZE(
+			        'Calendar',
+			        'Calendar'[Month / Year],
+			        "avg staff turnover",[Staff Turnover]
+			    ),
+			    [avg staff turnover]
+			)
+		displayFolder: HR
+		lineageTag: 5e22ca9d-baa3-46d7-9a14-e2e56fae5781
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg monthly turnover Rate' = DIVIDE([Avg Monthly Staff Turnover],[Avg Monthy Head Count])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: 227273ed-bcdd-436a-b7e7-dc0d6c1f66ce
+
+	measure 'Average Monthly Turnover Rate 12 Months Prior' = CALCULATE([Avg monthly turnover Rate],DATEADD('Calendar'[Date],-12,MONTH))
+		displayFolder: HR
+		lineageTag: 0fa363d3-2315-4024-b467-0c472a329097
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a38f1fb3-97d7-4560-ac7f-362302c5b519
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition measures_ = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 30d8a488f3be407cbf3748524ffb8738
+

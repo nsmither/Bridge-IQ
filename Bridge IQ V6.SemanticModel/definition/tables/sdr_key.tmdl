@@ -1,0 +1,174 @@
+table sdr_key
+	lineageTag: 5c52ff80-d193-4595-af1f-c4d8b90b9941
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 8192d320-ad64-4274-9103-948ce50352ae
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 1e4faf6f-ccf1-4d17-a4b1-0f4d69e6a272
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_id
+		dataType: string
+		lineageTag: 49de693d-6cd0-43d2-a4ba-7bf0f5e59a12
+		summarizeBy: none
+		sourceColumn: job_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage_id
+		dataType: string
+		lineageTag: 699a5589-87e7-4e95-9e37-a51c63776422
+		summarizeBy: none
+		sourceColumn: stage_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		lineageTag: 2c6f7ed5-fe0f-4361-9337-bd44131e3944
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column create_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bab90627-f9a8-421e-b1ee-3169d940016e
+		summarizeBy: none
+		sourceColumn: create_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_id
+		dataType: string
+		lineageTag: 6a99393c-4727-4d2b-9025-1d2d2c184159
+		summarizeBy: none
+		sourceColumn: source_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_start_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d7d3ae30-598c-4ca4-ad14-03546191012c
+		summarizeBy: none
+		sourceColumn: x_studio_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_team
+		dataType: string
+		lineageTag: 494311a3-5e06-4eb8-992c-c10350b22b38
+		summarizeBy: none
+		sourceColumn: x_studio_team
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_sdr_start_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d6866a4a-8e8a-4abc-abf5-70a04a403947
+		summarizeBy: none
+		sourceColumn: x_studio_sdr_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_d_team_start_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ac55a9e5-2a14-4adf-a882-abf3db22d9a8
+		summarizeBy: none
+		sourceColumn: x_studio_d_team_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_henry_start_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 727ed2d3-aa64-4391-b573-5c4ea7ffb83b
+		summarizeBy: none
+		sourceColumn: x_studio_henry_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_mcleod_user_code
+		dataType: string
+		lineageTag: 417269b4-ef7c-40a8-b5ac-fac0b22ad4f3
+		summarizeBy: none
+		sourceColumn: x_studio_mcleod_user_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_mcleod_salesperson_code
+		dataType: string
+		lineageTag: 3165476a-683e-4bd6-be04-08027e103012
+		summarizeBy: none
+		sourceColumn: x_studio_mcleod_salesperson_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_termination_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 5f205ec6-b802-4d9d-9a38-e83d0315ab2a
+		summarizeBy: none
+		sourceColumn: x_studio_termination_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_bamboo_employee_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 14174d94-d983-436c-8019-5178430e8c88
+		summarizeBy: sum
+		sourceColumn: x_studio_bamboo_employee_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Active
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 90467ed9-7859-45d1-9b58-d5c77a941610
+		summarizeBy: none
+		sourceColumn: Active
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sdr_key = m
+		mode: import
+		source =
+				let
+				    Source = recruitment,
+				    #"Filtered Rows" = Table.SelectRows(Source, each [x_studio_sdr_start_date] <> null and [x_studio_sdr_start_date] <> ""),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"x_studio_dat_license", "x_studio_bi_license"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","SDR 4-6","SDR",Replacer.ReplaceText,{"stage_id"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Replaced Value", "Active", each if [active] = false then false else if [stage_id] <> "SDR" then false else true),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column",{"active"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns1",{{"Active", type logical}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

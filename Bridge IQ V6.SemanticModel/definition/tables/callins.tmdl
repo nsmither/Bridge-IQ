@@ -1,0 +1,80 @@
+table callins
+	lineageTag: 486019b8-ab72-446f-988c-cbc6b8d3ac3e
+
+	column 'Entered date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 96121565-2816-4fcc-aade-123906e57e24
+		summarizeBy: none
+		sourceColumn: Entered date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Entered by'
+		dataType: string
+		lineageTag: f4f53187-e5d1-4944-89b0-01713659e6c8
+		summarizeBy: none
+		sourceColumn: Entered by
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Callin type'
+		dataType: string
+		lineageTag: edd6b4cd-cf4d-4d26-9700-77458a179413
+		summarizeBy: none
+		sourceColumn: Callin type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Movement
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f02f9f6-5e04-4f79-91c3-377f80c96b12
+		summarizeBy: none
+		sourceColumn: Movement
+
+		annotation SummarizationSetBy = Automatic
+
+	column Carrier
+		dataType: string
+		lineageTag: d1d45b41-aad0-47b3-9e9a-4152d6590d6c
+		summarizeBy: none
+		sourceColumn: Carrier
+
+		annotation SummarizationSetBy = Automatic
+
+	column Time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: ecac440f-89e4-41fb-b616-607f6af6256d
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition callins = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\NSmither\Bridge Logistics Inc\BL-Bi Team - Documents\bridge_iq\Data Sets\Callins"),
+				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File", each #"Transform File"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File", Table.ColumnNames(#"Transform File"(#"Sample File"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"call_date_time", type datetimezone}, {"entered_by", type text}, {"initiated_type", type text}, {"movement_id", Int64.Type}, {"payee_id", type text}, {"id", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Source.Name", "id"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"call_date_time", type datetime}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"payee_id", "Carrier"}, {"movement_id", "Movement"}, {"initiated_type", "Callin type"}, {"entered_by", "Entered by"}, {"call_date_time", "Entered date"}}),
+				    #"Inserted Time" = Table.AddColumn(#"Renamed Columns", "Time", each DateTime.Time([Entered date]), type time),
+				    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{"Entered date", DateTime.Date, type date}}),
+				    #"Appended Query" = Table.Combine({#"Extracted Date", #"Old Callins"})
+				in
+				    #"Appended Query"
+
+	annotation PBI_ResultType = Table
+

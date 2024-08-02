@@ -1,0 +1,31 @@
+table images
+	lineageTag: b03d02f5-0108-468e-b020-518999ac8f99
+
+	column name
+		dataType: string
+		lineageTag: 2888791d-7619-45b7-bf6d-90daec244fd3
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column url
+		dataType: string
+		lineageTag: 42a1cc20-b845-442d-aa06-65eae91966c4
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: url
+
+		annotation SummarizationSetBy = Automatic
+
+	partition images = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("TcyxCsIwFIXhV5HMTW6ooOKuVAQHQTqUDOE2tlfTJLSRS99ebBfHA//5mkaMhG9RiD7nNB0BmFlRDsxOYRyAk8QYsgsZPslH205Q6lKDPsCdUJ69pVHWMapX6oQpVm7T0fOPHFxLVnWU+nkxlw1eV4/9XF2uuxtuazxpWIvf15gv", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [name = _t, url = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"name", type text}, {"url", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

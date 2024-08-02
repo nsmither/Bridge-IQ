@@ -1,0 +1,118 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Transform File from behaviors_api_files'
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup 'Transform File from behaviors_api_files\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from parade_orders_api_files'
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup 'Transform File from parade_orders_api_files\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Callendar Tables'
+
+	annotation PBI_QueryGroupOrder = 5
+
+queryGroup 'Transform File from Query1'
+
+	annotation PBI_QueryGroupOrder = 8
+
+queryGroup 'Transform File from Query1\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from Old Callins'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from Old Callins\Helper Queries Old Callins'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from Callins'
+
+	annotation PBI_QueryGroupOrder = 11
+
+queryGroup 'Transform File from Callins\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+/// Contains Shipper and Consignee Zip Code Tables
+queryGroup 'Zip Codes'
+
+	annotation PBI_QueryGroupOrder = 13
+
+annotation PBI_QueryOrder = ["behavior_key","behaviors_crm","behavior_goals","bws_behaviors","callins","carrier_key","contacts_module","contacts_parent","crm","crm_customer_key","crm_parent_customer_key","crm_stages","customer_duns","customer_key","customer_margin_goal","daily_numbers","daily_number_override","dispatcher_key","dnc","HealthyPipelineGoals","images","lanes","lead_ops","margin_load_count_goals","movements","observed_holidays","Old Callins","orders","overdue_check_calls","parade_orders","parent_customer_key","pcs_loads","recruiter_key","calendar","recruitment","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","recruitment_goals","Parameter6","Transform Sample File (6)","Sample File (6)","Transform File (6)","rev_codes","salesperson_change","sdr_key","sop_issues","wolf_pack","Parameter5","Transform Sample File (5)","Sample File (5)","Transform File (5)","Parameter1","Transform Sample File","Sample File","Transform File","shipper_zips","shipper_three_digit_zips","consignee_zip_codes","consignee_three_digit_zip_codes","payments_received","avereage_days_to_pay","carrier_dispatch_movement_data","check_call_roller","highway_onboarded","pay_schedule","job_history","employees","salesperson_key"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.131.1203.0 (24.07)
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table calendar
+ref table crm
+ref table recruitment
+ref table behaviors_crm
+ref table recruitment_goals
+ref table recruiter_key
+ref table measures_
+ref table movements
+ref table orders
+ref table crm_customer_key
+ref table dispatcher_key
+ref table margin_load_count_goals
+ref table overdue_check_calls
+ref table behavior_goals
+ref table carrier_key
+ref table crm_stages
+ref table observed_holidays
+ref table parent_customer_key
+ref table lead_ops
+ref table rev_codes
+ref table wolf_pack
+ref table sdr_key
+ref table daily_numbers
+ref table behavior_key
+ref table contacts_module
+ref table contacts_parent
+ref table bws_behaviors
+ref table HealthyPipelineGoals
+ref table customer_margin_goal
+ref table customer_key
+ref table lanes
+ref table crm_parent_customer_key
+ref table daily_number_override
+ref table callins
+ref table images
+ref table pcs_loads
+ref table shipper_zips
+ref table shipper_three_digit_zips
+ref table consignee_zip_codes
+ref table consignee_three_digit_zip_codes
+ref table sop_issues
+ref table payments_received
+ref table carrier_dispatch_movement_data
+ref table check_call_roller
+ref table highway_onboarded
+ref table pay_schedule
+ref table job_history
+ref table employees
+ref table salesperson_key
+
+ref cultureInfo en-US
+

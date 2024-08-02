@@ -1,0 +1,40 @@
+table HealthyPipelineGoals
+	lineageTag: 139732e1-7a05-4d8e-9aa5-5bbda2259786
+
+	column 'Saleperson Name'
+		dataType: string
+		lineageTag: c4d67f57-6c8b-4fdb-b03a-a408fb1c01f2
+		summarizeBy: none
+		sourceColumn: Saleperson Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stage
+		dataType: string
+		lineageTag: 61c59c93-2fdb-406a-9628-66a5293826d6
+		summarizeBy: none
+		sourceColumn: Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Healthy #'
+		dataType: int64
+		formatString: 0
+		lineageTag: fafa56ef-24d4-4b41-911f-78c0d2a4dea4
+		summarizeBy: sum
+		sourceColumn: Healthy #
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HealthyPipelineGoals = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\NSmither\Bridge Logistics Inc\Sales Goals - Documents\Sales Goals.xlsx"), null, true),
+				    HealthyPipelineGoals_Table = Source{[Item="HealthyPipelineGoals",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(HealthyPipelineGoals_Table,{{"Saleperson Name", type text}, {"Stage", type text}, {"Healthy #", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

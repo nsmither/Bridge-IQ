@@ -1,0 +1,95 @@
+table behaviors_crm
+	lineageTag: 60a6b8ea-3595-4a19-a6c9-b7355eac33e4
+
+	/// Date behavior was marked complete
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0aa12d9c-cf22-40c7-b224-bbabe2d6dba0
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// User Name that marked done on the behavior
+	column author_id
+		dataType: string
+		lineageTag: 4f908433-a839-4c6e-b2fa-2d4dce4b2562
+		summarizeBy: none
+		sourceColumn: author_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Name of Behavior completed
+	column mail_activity_type_id
+		dataType: string
+		lineageTag: 0247e02c-01b0-44bf-be49-7fb372422165
+		summarizeBy: none
+		sourceColumn: mail_activity_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Id of the record in the CRM module
+	column res_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 06161d52-7d68-4575-8914-1b86a2bd9d8e
+		summarizeBy: none
+		sourceColumn: res_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Behavior Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: afa771b7-71ab-4ebb-b50d-0f38a702bbea
+		summarizeBy: none
+		sourceColumn: Behavior Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Behavior Time'
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 2ad0ebf3-c111-41a4-8cc4-84a27088a9ab
+		summarizeBy: none
+		sourceColumn: Behavior Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column model
+		dataType: string
+		lineageTag: 32ecc5e1-db95-4fda-9994-ef3a13bd6346
+		summarizeBy: none
+		sourceColumn: model
+
+		annotation SummarizationSetBy = Automatic
+
+	partition behaviors_crm = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\NSmither\Bridge Logistics Inc\BL-Bi Team - Documents\bridge_iq\Data Sets\behaviors_api_files"),
+				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (2)", each #"Transform File (2)"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (2)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (2)", Table.ColumnNames(#"Transform File (2)"(#"Sample File (2)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"id", Int64.Type}, {"date", type datetime}, {"author_id", type any}, {"mail_activity_type_id", type text}, {"model", type text}, {"res_id", Int64.Type}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Changed Type", each true),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"Source.Name"}),
+				    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Removed Columns", {{"author_id", each Text.BetweenDelimiters(_, "'", "'"), type text}, {"mail_activity_type_id", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Extracted Text Between Delimiters", {{"author_id", null}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Replaced Errors", each ([model] <> "gamification.badge.user") and ([author_id] <> null and [author_id] <> "OdooBot" and [author_id] <> "Portal User Template")),
+				    #"Split Column by Delimiter" = Table.SplitColumn(Table.TransformColumnTypes(#"Filtered Rows", {{"date", type text}}, "en-US"), "date", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"date.1", "date.2"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"date.1", type date}, {"date.2", type time}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type2",{{"date.1", "Behavior Date"}, {"date.2", "Behavior Time"}})
+				in
+				    #"Renamed Columns2"
+
+	annotation PBI_ResultType = Table
+
