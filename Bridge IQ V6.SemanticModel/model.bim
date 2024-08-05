@@ -8413,6 +8413,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -9100,9 +9104,10 @@
                 "    #\"Duplicated Column3\" = Table.DuplicateColumn(#\"Duplicated Column2\", \"Shipper State\", \"Shipper State - Copy\"),",
                 "    #\"Merged Columns1\" = Table.CombineColumns(#\"Duplicated Column3\",{\"Shipper City - Copy\", \"Shipper State - Copy\"},Combiner.CombineTextByDelimiter(\", \", QuoteStyle.None),\"Shipper City, State\"),",
                 "    #\"Merged Columns2\" = Table.CombineColumns(#\"Merged Columns1\",{\"Shipper City, State\", \"Consignee City, State\"},Combiner.CombineTextByDelimiter(\" - \", QuoteStyle.None),\"Lane\"),",
-                "    #\"Uppercased Text\" = Table.TransformColumns(#\"Merged Columns2\",{{\"Lane\", Text.Upper, type text}})",
+                "    #\"Uppercased Text\" = Table.TransformColumns(#\"Merged Columns2\",{{\"Lane\", Text.Upper, type text}}),",
+                "    #\"Filtered Rows\" = Table.SelectRows(#\"Uppercased Text\", each Cube.AttributeMemberId([Order ID]) <> \"[Order].[Order ID].&[0193271]\" meta [DisplayName = \"0193271\"])",
                 "in",
-                "    #\"Uppercased Text\""
+                "    #\"Filtered Rows\""
               ],
               "type": "m"
             }
