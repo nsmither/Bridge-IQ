@@ -1,4 +1,4 @@
-/// This Table contains the data from the Recruitment module in Odoo. 
+/// This Table contains the data from the Recruitment module in Odoo.
 /// Direct Relationships:
 /// 1 to * with behaviors_recruitment
 /// * to 1 with recruiter_key

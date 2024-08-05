@@ -222,11 +222,6 @@ relationship 413c8424-a043-f076-f062-d4406c347088
 	fromColumn: job_history.ID
 	toColumn: employees.ID
 
-relationship a78fa2e1-8b83-4d2b-cc27-01d43f2819c1
-	isActive: false
-	fromColumn: employees.'Hire Date'
-	toColumn: calendar.Date
-
 relationship bb824532-5e41-9e1d-8150-5566ef7ed862
 	isActive: false
 	fromColumn: employees.'Termination Date'
@@ -303,5 +298,10 @@ relationship f9775e4c-e176-7042-95a7-a8cffe447cea
 relationship d69178bf-f19c-f5ad-2457-c81284c3dfc9
 	isActive: false
 	fromColumn: orders.'Ship Scheduled Late Date'
+	toColumn: calendar.Date
+
+relationship 7c4ddc93-1d7a-6a9b-d1e6-fe55a32b92cd
+	isActive: false
+	fromColumn: employees.'Hire Date'
 	toColumn: calendar.Date
 

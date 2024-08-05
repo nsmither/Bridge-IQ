@@ -2,7 +2,7 @@ table calendar
 	lineageTag: fce9a9ae-211f-4e89-b504-aa0ddde156ec
 	dataCategory: Time
 
-	/// This Measure calculates the number of working days between the minimum date in your filter context and the max date in your filter context. 
+	/// This Measure calculates the number of working days between the minimum date in your filter context and the max date in your filter context.
 	measure 'Working Days' = ```
 			
 			    NETWORKDAYS(

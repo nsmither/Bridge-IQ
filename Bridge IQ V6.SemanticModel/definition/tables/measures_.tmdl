@@ -74,7 +74,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	/// This is the sum of all settlement pay for a order coming from the order pay. 
+	/// This is the sum of all settlement pay for a order coming from the order pay.
 	/// ***this is the pay used to calculate margin***
 	measure 'Mcleod Orders Carrier Pay' =
 			
@@ -278,7 +278,7 @@ table measures_
 		displayFolder: Behavior Goal Measures
 		lineageTag: 8d4cd900-fc1b-4a4f-9c5c-cbde2a106369
 
-	/// Calculates the Average Of their Behavior Progress then multiplies that by the Max Points allowed 
+	/// Calculates the Average Of their Behavior Progress then multiplies that by the Max Points allowed
 	/// 
 	/// Max Points is 30
 	measure 'Behavior Points' = ```
@@ -307,7 +307,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	/// Takes Margin and divides it by Margin Goal then multiplies that by the Max Points allowed 
+	/// Takes Margin and divides it by Margin Goal then multiplies that by the Max Points allowed
 	/// 
 	/// Max Points = 30
 	measure 'Sales Margin Points' =
@@ -335,10 +335,10 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	/// Count of covered orders divided by load count goal. 
+	/// Count of covered orders divided by load count goal.
 	/// if progress is 0, 0 points awarded
 	/// if progress is >=1, max points
-	/// standard is progress times max points 
+	/// standard is progress times max points
 	/// 
 	/// max points =10
 	measure 'Sales Load Count Points' = ```
@@ -441,7 +441,7 @@ table measures_
 		displayFolder: Behavior Goal Measures
 		lineageTag: 1f4c6704-1738-4b19-bde8-687c333e035a
 
-	/// The Average of the Sales BWS. 
+	/// The Average of the Sales BWS.
 	/// 
 	/// (Made up by Margin Points, Behavior Points, Diversity Points, Load Count Points, and Margin % Points,)
 	measure 'Average Sales BWS' = AVERAGEX(GROUPBY(salesperson_key,salesperson_key[Salesperson Name]),[Total Sales BWS])
@@ -517,7 +517,7 @@ table measures_
 		displayFolder: Text Boxes
 		lineageTag: c454275e-0312-475d-bcb9-9badc8f70281
 
-	/// Calculates the Last Shipment Date 
+	/// Calculates the Last Shipment Date
 	/// 
 	/// based of of Scheduled pickup
 	measure 'Last Ship Date' = ```
@@ -592,9 +592,9 @@ table measures_
 	/// 1-3 Loads and Customer
 	/// 
 	/// Var at_risk = IF([Days Since Last Shipment]>120,1,0)
-	/// Var ifs = 
-	///     IF(MIN(crm[Stage])="Customer",at_risk,
-	///     IF(MIN(crm[Stage])="1-3 Loads",at_risk,0))
+	/// Var ifs =
+	/// IF(MIN(crm[Stage])="Customer",at_risk,
+	/// IF(MIN(crm[Stage])="1-3 Loads",at_risk,0))
 	/// 
 	/// 
 	/// return
@@ -614,20 +614,20 @@ table measures_
 		displayFolder: CRM Measures\At Risk Measures\At Risk Reasons
 		lineageTag: 2a093521-b4ac-4000-9e06-ac02fb4121b2
 
-	/// Days since last stage update is one of the reasons at risk reason 
+	/// Days since last stage update is one of the reasons at risk reason
 	/// 
 	/// 
 	/// 
 	/// Var prospect_at_risk = if([Days since Last Stage Update]>90,1,0)
 	/// Var pipeline_at_risk = IF([Days since Last Stage Update]>60,1,0)
-	/// Var ifs = 
-	///     IF(MIN(crm[Stage])="Customer",0,
-	///     IF(MIN(crm[Stage])="Working",prospect_at_risk,
-	///     IF(MIN(crm[Stage])="No For Now",prospect_at_risk,
-	///     IF(MIN(crm[Stage])="Qualified",pipeline_at_risk,
-	///     IF(MIN(crm[Stage])="Quoted",pipeline_at_risk,
-	///     IF(MIN(crm[Stage])="Credit App",pipeline_at_risk,
-	///     IF(MIN(crm[Stage])="1-3 Loads",pipeline_at_risk,0)))))))
+	/// Var ifs =
+	/// IF(MIN(crm[Stage])="Customer",0,
+	/// IF(MIN(crm[Stage])="Working",prospect_at_risk,
+	/// IF(MIN(crm[Stage])="No For Now",prospect_at_risk,
+	/// IF(MIN(crm[Stage])="Qualified",pipeline_at_risk,
+	/// IF(MIN(crm[Stage])="Quoted",pipeline_at_risk,
+	/// IF(MIN(crm[Stage])="Credit App",pipeline_at_risk,
+	/// IF(MIN(crm[Stage])="1-3 Loads",pipeline_at_risk,0)))))))
 	/// 
 	/// Return
 	/// ifs
@@ -659,14 +659,14 @@ table measures_
 	/// Var working_at_risk = IF([Days since last Behaivor]>60,1,0)
 	/// Var no_for_now_at_risk = IF([Days since last Behaivor]>90,1,0)
 	/// 
-	/// Var Ifs = 
-	///     IF(MIN(crm[Stage])="Qualified",opportunity_at_risk,
-	///     IF(MIN(crm[Stage])="Quoted",opportunity_at_risk,
-	///     IF(MIN(crm[Stage])="Credit App", opportunity_at_risk,
-	///     IF(MIN(crm[Stage])="1-3 Loads",opportunity_at_risk,
-	///     IF(MIN(crm[Stage])="Customer",opportunity_at_risk,
-	///     IF(MIN(crm[Stage])="Working",working_at_risk,
-	///     IF(MIN(crm[Stage])="No For Now",no_for_now_at_risk,0)))))))
+	/// Var Ifs =
+	/// IF(MIN(crm[Stage])="Qualified",opportunity_at_risk,
+	/// IF(MIN(crm[Stage])="Quoted",opportunity_at_risk,
+	/// IF(MIN(crm[Stage])="Credit App", opportunity_at_risk,
+	/// IF(MIN(crm[Stage])="1-3 Loads",opportunity_at_risk,
+	/// IF(MIN(crm[Stage])="Customer",opportunity_at_risk,
+	/// IF(MIN(crm[Stage])="Working",working_at_risk,
+	/// IF(MIN(crm[Stage])="No For Now",no_for_now_at_risk,0)))))))
 	/// 
 	/// Return
 	/// Ifs
@@ -718,7 +718,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	/// This Measure Calculates the Margin per Order Last month (MPOLM) then divides the Customer Margin Goal by MPOLM to get the Customer Load count goal. 
+	/// This Measure Calculates the Margin per Order Last month (MPOLM) then divides the Customer Margin Goal by MPOLM to get the Customer Load count goal.
 	/// 
 	/// **if there was no MPOLM for that customer it will use the MPOLM for the salesperson as a hole***
 	measure 'Customer Load Count Goal' = ```
@@ -1780,7 +1780,7 @@ table measures_
 
 	/// Total margin for the current week.
 	/// ***This data does not include PCS data***
-	///  
+	/// 
 	measure 'This Weeks Margin' = CALCULATE([McLeod Margin],YEAR(orders[Ship Scheduled Early Date])=YEAR(TODAY()) && WEEKNUM(orders[Ship Scheduled Early Date])=WEEKNUM(TODAY()))
 		displayFolder: Sales Measures\Margin\Current Margin Measures
 		lineageTag: 22d96f79-6ea6-4aad-8579-1afc9f0ac0eb
@@ -1822,13 +1822,13 @@ table measures_
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: f47a6a66-3de6-44cb-9b4a-9064edd73dfc
 
-	/// The distinct count of callin movements that were entered by loadmaster and has at least one tracking ping 
+	/// The distinct count of callin movements that were entered by loadmaster and has at least one tracking ping
 	measure 'Count of movements with 1 or more pings' = CALCULATE(DISTINCTCOUNT(callins[Movement]),callins[Entered by]="loadmaster")
 		formatString: 0
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: 5c3f9f56-4202-4b62-8466-2032026e906c
 
-	/// The distinct count of callin movements that were entered by loadmaster and has at least one tracking ping 
+	/// The distinct count of callin movements that were entered by loadmaster and has at least one tracking ping
 	/// 
 	measure 'Count of movements with 3 or more pings' =
 			
@@ -1883,7 +1883,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	/// Divides Total Linehall Charges by Count of orders. 
+	/// Divides Total Linehall Charges by Count of orders.
 	measure 'Average Linehall Charges' =
 			//this measure calculates the average linehall charges
 			DIVIDE([Total Linehall Charges],[Count of Orders])
@@ -2140,7 +2140,7 @@ table measures_
 		displayFolder: Sales Measures\Margin\Current Margin Measures
 		lineageTag: a5be087a-792b-4844-9c92-34ddf7efa8f7
 
-	/// Subtracts working days  by working days elapsed. 
+	/// Subtracts working days  by working days elapsed.
 	measure 'Working Days Left' = [Working Days]-[Working days Elapsed]
 		formatString: 0
 		displayFolder: Calendar Measures
@@ -3324,16 +3324,89 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Avg monthly turnover Rate' = DIVIDE([Avg Monthly Staff Turnover],[Avg Monthy Head Count])
+	measure 'Avg Monthly Turnover Rate' = DIVIDE([Avg Monthly Staff Turnover],[Avg Monthy Head Count])
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: HR
 		lineageTag: 227273ed-bcdd-436a-b7e7-dc0d6c1f66ce
 
-	measure 'Average Monthly Turnover Rate 12 Months Prior' = CALCULATE([Avg monthly turnover Rate],DATEADD('Calendar'[Date],-12,MONTH))
+	measure 'Average Monthly Turnover Rate 12 Months Prior' = CALCULATE([Avg Monthly Turnover Rate],DATEADD('Calendar'[Date],-12,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: HR
 		lineageTag: 0fa363d3-2315-4024-b467-0c472a329097
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+	measure 'Average Monthly YOY Variance' = [Avg monthly turnover Rate]-[Average Monthly Turnover Rate 12 Months Prior]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: dec11f80-26c6-427a-bc20-c32e30c7e47b
+
+	measure 'Ops Team Move Date' = SUM(employees[Hire Date])+14
+		formatString: Short Date
+		displayFolder: HR\Move Dates
+		lineageTag: 6a435a0c-2890-47ad-a4c3-6245e624100d
+
+	measure 'SDR Move Date new' = ```
+			
+			Var job_history_sdr_date = 
+			    CALCULATE(
+			        MIN(job_history[Job Start Date]),
+			        FILTER(job_history,job_history[Division]="SDR Team"))
+			Var hire_date_plus_90 = MIN(employees[Hire Date])+90
+			Var first_monday_of_hire_plus_90 = CEILING(EOMONTH(hire_date_plus_90,-1)-1,7)+2
+			Var first_monday_of_next_month = CEILING(EOMONTH(hire_date_plus_90,-0)-1,7)+2
+			Var employee_start_day_of_month = DAY(MIN(employees[Hire Date]))
+			Var estamate_of_sdr_move_date = 
+			    IF(employee_start_day_of_month>15,
+			    first_monday_of_next_month,
+			    first_monday_of_hire_plus_90
+			    )
+			Var ifs = 
+			    IF(job_history_sdr_date=BLANK(),
+			    estamate_of_sdr_move_date,
+			    job_history_sdr_date
+			    )
+			
+			RETURN
+			FORMAT(ifs,"Short Date")
+			```
+		displayFolder: HR\Move Dates
+		lineageTag: 0845dcef-c9b8-48b5-b1fe-8a8c2835509c
+
+	measure 'D-Team Move Date' = ```
+			
+			Var job_history_d_team_date = 
+			    CALCULATE(
+			        MIN(job_history[Job Start Date]),
+			        FILTER(job_history,job_history[Division]="Development Team Sales"))
+			Var sdr_date_plus_90 =[SDR Move Date new]+100
+			Var estemate_of_d_team_move_date= CEILING(EOMONTH(sdr_date_plus_90,-1)-1,7)+2
+			
+			Var ifs = 
+			    IF(job_history_d_team_date=BLANK(),
+			    estemate_of_d_team_move_date,
+			    job_history_d_team_date
+			    )
+			
+			RETURN
+			FORMAT(ifs,"Short Date")
+			```
+		displayFolder: HR\Move Dates
+		lineageTag: fb8f6181-cc37-44e9-ae33-d406161a02f9
+
+	measure 'Henry Move Date' = ```
+			
+			Var JobHirstoryHenryDate = 
+			     CALCULATE(
+			        MIN(job_history[Job Start Date]),
+			        FILTER(job_history,job_history[Division]="Logistics Advisor Sales (Formerly Henry)"))
+			Var StartOfNextMonth = CALCULATE(EOMONTH(MIN(employees[Hire Date]),0)+1,DATEADD(employees[Hire Date],365,DAY))
+			Var ifs = IF(JobHirstoryHenryDate=BLANK(),StartOfNextMonth,JobHirstoryHenryDate)
+			
+			Return
+			ifs
+			```
+		formatString: General Date
+		displayFolder: HR\Move Dates
+		lineageTag: 2d517e8d-254a-4051-860e-cca595a4c3db
 
 	column Column
 		dataType: int64
