@@ -7890,25 +7890,35 @@
             "displayFolder": "HR\\Move Dates",
             "expression": [
               "",
-              "Var JobHirstoryHenryDate = ",
-              "     CALCULATE(",
+              "Var job_history_henry_date = ",
+              "    CALCULATE(",
               "        MIN(job_history[Job Start Date]),",
               "        FILTER(job_history,job_history[Division]=\"Logistics Advisor Sales (Formerly Henry)\"))",
-              "Var StartOfNextMonth = CALCULATE(EOMONTH(MIN(employees[Hire Date]),0)+1,DATEADD(employees[Hire Date],365,DAY))",
-              "Var ifs = IF(JobHirstoryHenryDate=BLANK(),StartOfNextMonth,JobHirstoryHenryDate)",
+              "Var Dteam_date_plus_90 =[D-Team Move Date]+100",
+              "Var estemate_of_henry_move_date= CEILING(EOMONTH(Dteam_date_plus_90,-1)-1,7)+2",
               "",
-              "Return",
-              "ifs"
+              "Var ifs = ",
+              "    IF(job_history_henry_date=BLANK(),",
+              "    EDATE(estemate_of_henry_move_date, 3),",
+              "    job_history_henry_date - 1",
+              "    )",
+              "",
+              "Var ifs_plus_6_months = EDATE(estemate_of_henry_move_date, 3)",
+              "",
+              "RETURN",
+              "FORMAT(ifs,\"Short Date\")"
             ],
-            "formatString": "General Date",
             "lineageTag": "2d517e8d-254a-4051-860e-cca595a4c3db"
           },
           {
-            "name": "Test",
+            "name": "is this month",
             "displayFolder": "***Undocumented***",
-            "expression": "[Margin] * 2",
+            "expression": [
+              "",
+              "IF(YEAR(min('calendar'[Date]))=YEAR(TODAY()) && MONTH(min('calendar'[Date]))=MONTH(TODAY()),1,0)"
+            ],
             "formatString": "0",
-            "lineageTag": "cf9f5ee9-9765-40fb-9125-0b911e84a514"
+            "lineageTag": "37103aab-c910-4d7e-bd6b-e3a1b818bf2d"
           }
         ],
         "partitions": [
