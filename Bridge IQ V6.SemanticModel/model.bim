@@ -4,7 +4,7 @@
     "annotations": [
       {
         "name": "PBI_QueryOrder",
-        "value": "[\"behavior_key\",\"behaviors_crm\",\"behavior_goals\",\"bws_behaviors\",\"callins\",\"carrier_key\",\"contacts_module\",\"contacts_parent\",\"crm\",\"crm_customer_key\",\"crm_parent_customer_key\",\"crm_stages\",\"customer_duns\",\"customer_key\",\"customer_margin_goal\",\"daily_numbers\",\"daily_number_override\",\"dispatcher_key\",\"dnc\",\"HealthyPipelineGoals\",\"images\",\"lanes\",\"lead_ops\",\"margin_load_count_goals\",\"movements\",\"observed_holidays\",\"Old Callins\",\"orders\",\"overdue_check_calls\",\"parade_orders\",\"parent_customer_key\",\"pcs_loads\",\"recruiter_key\",\"calendar\",\"recruitment\",\"Parameter2\",\"Transform Sample File (2)\",\"Sample File (2)\",\"Transform File (2)\",\"Parameter3\",\"Transform Sample File (3)\",\"Sample File (3)\",\"Transform File (3)\",\"recruitment_goals\",\"Parameter6\",\"Transform Sample File (6)\",\"Sample File (6)\",\"Transform File (6)\",\"rev_codes\",\"salesperson_change\",\"sdr_key\",\"sop_issues\",\"wolf_pack\",\"Parameter5\",\"Transform Sample File (5)\",\"Sample File (5)\",\"Transform File (5)\",\"Parameter1\",\"Transform Sample File\",\"Sample File\",\"Transform File\",\"shipper_zips\",\"shipper_three_digit_zips\",\"consignee_zip_codes\",\"consignee_three_digit_zip_codes\",\"payments_received\",\"avereage_days_to_pay\",\"carrier_dispatch_movement_data\",\"check_call_roller\",\"highway_onboarded\",\"pay_schedule\",\"job_history\",\"employees\",\"salesperson_key\"]"
+        "value": "[\"behavior_key\",\"behavior_goals\",\"bws_behaviors\",\"carrier_key\",\"contacts_module\",\"contacts_parent\",\"crm\",\"crm_customer_key\",\"crm_parent_customer_key\",\"crm_stages\",\"customer_duns\",\"customer_key\",\"customer_margin_goal\",\"daily_numbers\",\"daily_number_override\",\"dispatcher_key\",\"dnc\",\"HealthyPipelineGoals\",\"images\",\"lanes\",\"lead_ops\",\"margin_load_count_goals\",\"movements\",\"observed_holidays\",\"Old Callins\",\"orders\",\"overdue_check_calls\",\"parade_orders\",\"parent_customer_key\",\"pcs_loads\",\"recruiter_key\",\"calendar\",\"recruitment\",\"Parameter2\",\"Transform Sample File (2)\",\"Sample File (2)\",\"Transform File (2)\",\"Parameter3\",\"Transform Sample File (3)\",\"Sample File (3)\",\"Transform File (3)\",\"recruitment_goals\",\"Parameter6\",\"Transform Sample File (6)\",\"Sample File (6)\",\"Transform File (6)\",\"rev_codes\",\"salesperson_change\",\"sdr_key\",\"sop_issues\",\"wolf_pack\",\"Parameter5\",\"Transform Sample File (5)\",\"Sample File (5)\",\"Transform File (5)\",\"shipper_zips\",\"shipper_three_digit_zips\",\"consignee_zip_codes\",\"consignee_three_digit_zip_codes\",\"payments_received\",\"avereage_days_to_pay\",\"carrier_dispatch_movement_data\",\"check_call_roller\",\"highway_onboarded\",\"pay_schedule\",\"job_history\",\"employees\",\"salesperson_key\",\"behaviors_crm\",\"Parameter4\",\"Transform Sample File (4)\",\"Sample File (4)\",\"Transform File (4)\",\"callins\",\"Parameter7\",\"Transform Sample File (7)\",\"Sample File (7)\",\"Transform File (7)\"]"
       },
       {
         "name": "__PBI_TimeIntelligenceEnabled",
@@ -732,7 +732,7 @@
         "expression": "#\"Sample File (6)\" meta [IsParameterQuery=true, BinaryIdentifier=#\"Sample File (6)\", Type=\"Binary\", IsParameterQueryRequired=true]",
         "kind": "m",
         "lineageTag": "c3dafccf-d036-4b92-8002-193863622695",
-        "queryGroup": "Transform File from Query1\\Helper Queries"
+        "queryGroup": "Transform File from overdue_check_calls\\Helper Queries"
       },
       {
         "name": "Transform Sample File (6)",
@@ -751,15 +751,11 @@
         ],
         "kind": "m",
         "lineageTag": "9ba321c4-0e3f-4c5c-8671-0d97be3abd56",
-        "queryGroup": "Transform File from Query1"
+        "queryGroup": "Transform File from overdue_check_calls"
       },
       {
         "name": "Sample File (6)",
         "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
           {
             "name": "PBI_ResultType",
             "value": "Binary"
@@ -775,7 +771,7 @@
         ],
         "kind": "m",
         "lineageTag": "22c385c7-2f8d-4f21-8947-620ee1470bd4",
-        "queryGroup": "Transform File from Query1\\Helper Queries"
+        "queryGroup": "Transform File from overdue_check_calls\\Helper Queries"
       },
       {
         "name": "Transform File (6)",
@@ -797,7 +793,7 @@
         ],
         "kind": "m",
         "lineageTag": "87de5f5d-0d5e-4648-831e-5ba554d8d433",
-        "queryGroup": "Transform File from Query1\\Helper Queries"
+        "queryGroup": "Transform File from overdue_check_calls\\Helper Queries"
       },
       {
         "name": "customer_duns",
@@ -998,81 +994,6 @@
         "queryGroup": "Transform File from Old Callins\\Helper Queries Old Callins"
       },
       {
-        "name": "Parameter1",
-        "annotations": [
-          {
-            "name": "PBI_ResultType",
-            "value": "Binary"
-          }
-        ],
-        "expression": "#\"Sample File\" meta [IsParameterQuery=true, BinaryIdentifier=#\"Sample File\", Type=\"Binary\", IsParameterQueryRequired=true]",
-        "kind": "m",
-        "lineageTag": "b97f6438-36e3-4987-92c0-cb0b0362f10d",
-        "queryGroup": "Transform File from Callins\\Helper Queries"
-      },
-      {
-        "name": "Transform Sample File",
-        "annotations": [
-          {
-            "name": "PBI_ResultType",
-            "value": "Table"
-          }
-        ],
-        "expression": [
-          "let",
-          "    Source = Excel.Workbook(Parameter1, null, true),",
-          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
-          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
-          "in",
-          "    #\"Promoted Headers\""
-        ],
-        "kind": "m",
-        "lineageTag": "da9e0ddd-b100-4f38-8749-c616e8f588fc",
-        "queryGroup": "Transform File from Callins"
-      },
-      {
-        "name": "Sample File",
-        "annotations": [
-          {
-            "name": "PBI_ResultType",
-            "value": "Binary"
-          }
-        ],
-        "expression": [
-          "let",
-          "    Source = Folder.Files(\"C:\\Users\\NSmither\\Bridge Logistics Inc\\BL-Bi Team - Documents\\bridge_iq\\Data Sets\\Callins\"),",
-          "    Navigation1 = Source{0}[Content]",
-          "in",
-          "    Navigation1"
-        ],
-        "kind": "m",
-        "lineageTag": "4e2b3593-4c1b-4f07-861d-e4d8d5dba9df",
-        "queryGroup": "Transform File from Callins\\Helper Queries"
-      },
-      {
-        "name": "Transform File",
-        "annotations": [
-          {
-            "name": "PBI_ResultType",
-            "value": "Exception"
-          }
-        ],
-        "expression": [
-          "let",
-          "    Source = (Parameter1 as binary) => let",
-          "        Source = Excel.Workbook(Parameter1, null, true),",
-          "        Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
-          "        #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
-          "    in",
-          "        #\"Promoted Headers\"",
-          "in",
-          "    Source"
-        ],
-        "kind": "m",
-        "lineageTag": "b6204fd3-6ae7-4859-86e8-bdea4fe14209",
-        "queryGroup": "Transform File from Callins\\Helper Queries"
-      },
-      {
         "name": "salesperson_change",
         "annotations": [
           {
@@ -1126,6 +1047,166 @@
         ],
         "kind": "m",
         "lineageTag": "211212d3-e96f-400e-a3b3-c1cf3768b05a"
+      },
+      {
+        "name": "Parameter4",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Binary"
+          }
+        ],
+        "expression": "#\"Sample File (4)\" meta [IsParameterQuery=true, BinaryIdentifier=#\"Sample File (4)\", Type=\"Binary\", IsParameterQueryRequired=true]",
+        "kind": "m",
+        "lineageTag": "d10caa27-8293-417a-a78e-ecf0682d2fea",
+        "queryGroup": "Transform File from behaviors_crm_new\\Helper Queries"
+      },
+      {
+        "name": "Transform Sample File (4)",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Excel.Workbook(Parameter4, null, true),",
+          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "in",
+          "    #\"Promoted Headers\""
+        ],
+        "kind": "m",
+        "lineageTag": "095dbc50-11a9-4778-ab57-67766169b3cc",
+        "queryGroup": "Transform File from behaviors_crm_new"
+      },
+      {
+        "name": "Sample File (4)",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Binary"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = SharePoint.Files(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam\", [ApiVersion = 15]),",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2021/\" or [Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2022/\" or [Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2023/\" or [Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2024/\")),",
+          "    #\"Filtered Hidden Files1\" = Table.SelectRows(#\"Filtered Rows\", each [Attributes]?[Hidden]? <> true),",
+          "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Hidden Files1\",{\"Content\", \"Name\"}),",
+          "    Navigation1 = #\"Removed Other Columns\"{0}[Content]",
+          "in",
+          "    Navigation1"
+        ],
+        "kind": "m",
+        "lineageTag": "4f5baa30-7de7-424a-a048-c25fb5950a11",
+        "queryGroup": "Transform File from behaviors_crm_new\\Helper Queries"
+      },
+      {
+        "name": "Transform File (4)",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Function"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = (Parameter4 as binary) => let",
+          "    Source = Excel.Workbook(Parameter4, null, true),",
+          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "in",
+          "    #\"Promoted Headers\"",
+          "in",
+          "    Source"
+        ],
+        "kind": "m",
+        "lineageTag": "49ccfb7e-7eab-4b5c-a7f0-73c19dbc452e",
+        "mAttributes": "[ FunctionQueryBinding = \"{\"\"exemplarFormulaName\"\":\"\"Transform Sample File (4)\"\"}\" ]",
+        "queryGroup": "Transform File from behaviors_crm_new\\Helper Queries"
+      },
+      {
+        "name": "Parameter7",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Binary"
+          }
+        ],
+        "expression": "#\"Sample File (7)\" meta [IsParameterQuery=true, BinaryIdentifier=#\"Sample File (7)\", Type=\"Binary\", IsParameterQueryRequired=true]",
+        "kind": "m",
+        "lineageTag": "afebfc23-e658-4aae-b3f8-7402c7f16d46",
+        "queryGroup": "Transform File from callins_new\\Helper Queries"
+      },
+      {
+        "name": "Transform Sample File (7)",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Excel.Workbook(Parameter7, null, true),",
+          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "in",
+          "    #\"Promoted Headers\""
+        ],
+        "kind": "m",
+        "lineageTag": "cb3181ff-124b-4a87-89e2-235cdc7d28ee",
+        "queryGroup": "Transform File from callins_new"
+      },
+      {
+        "name": "Sample File (7)",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Binary"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = SharePoint.Files(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam\", [ApiVersion = 15]),",
+          "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callins/2024/\")),",
+          "    Navigation1 = #\"Filtered Rows\"{0}[Content]",
+          "in",
+          "    Navigation1"
+        ],
+        "kind": "m",
+        "lineageTag": "5f75e230-39d9-4bf2-9dc3-3f04d6234b4b",
+        "queryGroup": "Transform File from callins_new\\Helper Queries"
+      },
+      {
+        "name": "Transform File (7)",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Function"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = (Parameter7) => let",
+          "        Source = Excel.Workbook(Parameter7, null, true),",
+          "        Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "        #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "    in",
+          "        #\"Promoted Headers\"",
+          "in",
+          "    Source"
+        ],
+        "kind": "m",
+        "lineageTag": "9526a855-86c5-4ab8-bc6c-fa56b3180503",
+        "mAttributes": "[ FunctionQueryBinding = \"{\"\"exemplarFormulaName\"\":\"\"Transform Sample File (7)\"\"}\" ]",
+        "queryGroup": "Transform File from callins_new\\Helper Queries"
       }
     ],
     "queryGroups": [
@@ -1169,33 +1250,6 @@
         "annotations": [
           {
             "name": "PBI_QueryGroupOrder",
-            "value": "5"
-          }
-        ],
-        "folder": "Callendar Tables"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
-            "value": "8"
-          }
-        ],
-        "folder": "Transform File from Query1"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
-            "value": "0"
-          }
-        ],
-        "folder": "Transform File from Query1\\Helper Queries"
-      },
-      {
-        "annotations": [
-          {
-            "name": "PBI_QueryGroupOrder",
             "value": "0"
           }
         ],
@@ -1214,10 +1268,20 @@
         "annotations": [
           {
             "name": "PBI_QueryGroupOrder",
-            "value": "11"
+            "value": "13"
           }
         ],
-        "folder": "Transform File from Callins"
+        "description": "Contains Shipper and Consignee Zip Code Tables",
+        "folder": "Zip Codes"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "8"
+          }
+        ],
+        "folder": "Transform File from overdue_check_calls"
       },
       {
         "annotations": [
@@ -1226,7 +1290,25 @@
             "value": "0"
           }
         ],
-        "folder": "Transform File from Callins\\Helper Queries"
+        "folder": "Transform File from overdue_check_calls\\Helper Queries"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "11"
+          }
+        ],
+        "folder": "Transform File from behaviors_crm_new"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ],
+        "folder": "Transform File from behaviors_crm_new\\Helper Queries"
       },
       {
         "annotations": [
@@ -1235,19 +1317,19 @@
             "value": "13"
           }
         ],
-        "description": "Contains Shipper and Consignee Zip Code Tables",
-        "folder": "Zip Codes"
+        "folder": "Transform File from callins_new"
+      },
+      {
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ],
+        "folder": "Transform File from callins_new\\Helper Queries"
       }
     ],
     "relationships": [
-      {
-        "name": "24ac51c5-cadb-4768-93ec-0e4b6868f1e7",
-        "crossFilteringBehavior": "bothDirections",
-        "fromColumn": "res_id",
-        "fromTable": "behaviors_crm",
-        "toColumn": "id",
-        "toTable": "crm"
-      },
       {
         "name": "22529093-f9bd-406f-a999-686e0860562d",
         "fromColumn": "user_id",
@@ -1328,13 +1410,6 @@
         "fromTable": "margin_load_count_goals",
         "toColumn": "Date",
         "toTable": "calendar"
-      },
-      {
-        "name": "afe339e3-6f90-4184-8e26-c9cc15a58538",
-        "fromColumn": "mail_activity_type_id",
-        "fromTable": "behaviors_crm",
-        "toColumn": "Behavior ID",
-        "toTable": "behavior_key"
       },
       {
         "name": "40fea7cf-a715-4e4c-8c8c-1876e2e177d4",
@@ -1437,13 +1512,6 @@
         "fromTable": "daily_number_override",
         "toColumn": "Date",
         "toTable": "calendar"
-      },
-      {
-        "name": "f2d8a68b-d990-48bf-8a50-cd7ffd52dfee",
-        "fromColumn": "Movement",
-        "fromTable": "callins",
-        "toColumn": "Movement ID",
-        "toTable": "movements"
       },
       {
         "name": "b93b6a4b-b0bd-4805-b540-c3f480a14d7a",
@@ -2663,7 +2731,7 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Excel.Workbook(File.Contents(\"C:\\Users\\NSmither\\Bridge Logistics Inc\\BL-Bi Team - Documents\\bridge_iq\\Data Sets\\CRM\\CRM_api.xlsx\"), null, true),",
+                "    Source = Excel.Workbook(Web.Contents(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/CRM/CRM_api.xlsx\"), null, true),",
                 "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
                 "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),",
                 "    #\"Extracted Text Between Delimiters\" = Table.TransformColumns(#\"Promoted Headers\", {{\"user_id\", each Text.BetweenDelimiters(Text.From(_, \"en-US\"), \"'\", \"'\"), type text}, {\"stage_id\", each Text.BetweenDelimiters(_, \"'\", \"'\"), type text}, {\"x_studio_primary_industry\", each Text.BetweenDelimiters(Text.From(_, \"en-US\"), \"'\", \"'\"), type text}, {\"state_id\", each Text.BetweenDelimiters(Text.From(_, \"en-US\"), \"'\", \"'\"), type text}, {\"x_stage_id\", each Text.BetweenDelimiters(Text.From(_, \"en-US\"), \"'\", \"'\"), type text}}),",
@@ -3017,154 +3085,6 @@
                 "    #\"Filtered Rows\" = Table.SelectRows(#\"Uppercased Text1\", each true)",
                 "in",
                 "    #\"Filtered Rows\""
-              ],
-              "type": "m"
-            }
-          }
-        ]
-      },
-      {
-        "name": "behaviors_crm",
-        "annotations": [
-          {
-            "name": "PBI_ResultType",
-            "value": "Table"
-          }
-        ],
-        "columns": [
-          {
-            "name": "id",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "int64",
-            "description": "Date behavior was marked complete",
-            "formatString": "0",
-            "lineageTag": "0aa12d9c-cf22-40c7-b224-bbabe2d6dba0",
-            "sourceColumn": "id",
-            "summarizeBy": "sum"
-          },
-          {
-            "name": "author_id",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "description": "User Name that marked done on the behavior",
-            "lineageTag": "4f908433-a839-4c6e-b2fa-2d4dce4b2562",
-            "sourceColumn": "author_id",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "mail_activity_type_id",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "description": "Name of Behavior completed",
-            "lineageTag": "0247e02c-01b0-44bf-be49-7fb372422165",
-            "sourceColumn": "mail_activity_type_id",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "res_id",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "int64",
-            "description": "Id of the record in the CRM module",
-            "formatString": "0",
-            "lineageTag": "06161d52-7d68-4575-8914-1b86a2bd9d8e",
-            "sourceColumn": "res_id",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Behavior Date",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              },
-              {
-                "name": "UnderlyingDateTimeDataType",
-                "value": "Date"
-              }
-            ],
-            "dataType": "dateTime",
-            "formatString": "Long Date",
-            "lineageTag": "afa771b7-71ab-4ebb-b50d-0f38a702bbea",
-            "sourceColumn": "Behavior Date",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Behavior Time",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              },
-              {
-                "name": "UnderlyingDateTimeDataType",
-                "value": "Time"
-              }
-            ],
-            "dataType": "dateTime",
-            "formatString": "Long Time",
-            "lineageTag": "2ad0ebf3-c111-41a4-8cc4-84a27088a9ab",
-            "sourceColumn": "Behavior Time",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "model",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "lineageTag": "32ecc5e1-db95-4fda-9994-ef3a13bd6346",
-            "sourceColumn": "model",
-            "summarizeBy": "none"
-          }
-        ],
-        "lineageTag": "60a6b8ea-3595-4a19-a6c9-b7355eac33e4",
-        "partitions": [
-          {
-            "name": "behaviors_crm",
-            "mode": "import",
-            "source": {
-              "expression": [
-                "let",
-                "    Source = Folder.Files(\"C:\\Users\\NSmither\\Bridge Logistics Inc\\BL-Bi Team - Documents\\bridge_iq\\Data Sets\\behaviors_api_files\"),",
-                "    #\"Filtered Hidden Files1\" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),",
-                "    #\"Invoke Custom Function1\" = Table.AddColumn(#\"Filtered Hidden Files1\", \"Transform File (2)\", each #\"Transform File (2)\"([Content])),",
-                "    #\"Renamed Columns1\" = Table.RenameColumns(#\"Invoke Custom Function1\", {\"Name\", \"Source.Name\"}),",
-                "    #\"Removed Other Columns1\" = Table.SelectColumns(#\"Renamed Columns1\", {\"Source.Name\", \"Transform File (2)\"}),",
-                "    #\"Expanded Table Column1\" = Table.ExpandTableColumn(#\"Removed Other Columns1\", \"Transform File (2)\", Table.ColumnNames(#\"Transform File (2)\"(#\"Sample File (2)\"))),",
-                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Table Column1\",{{\"Source.Name\", type text}, {\"id\", Int64.Type}, {\"date\", type datetime}, {\"author_id\", type any}, {\"mail_activity_type_id\", type text}, {\"model\", type text}, {\"res_id\", Int64.Type}}),",
-                "    #\"Filtered Rows1\" = Table.SelectRows(#\"Changed Type\", each true),",
-                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Filtered Rows1\",{\"Source.Name\"}),",
-                "    #\"Extracted Text Between Delimiters\" = Table.TransformColumns(#\"Removed Columns\", {{\"author_id\", each Text.BetweenDelimiters(_, \"'\", \"'\"), type text}, {\"mail_activity_type_id\", each Text.BetweenDelimiters(_, \"'\", \"'\"), type text}}),",
-                "    #\"Replaced Errors\" = Table.ReplaceErrorValues(#\"Extracted Text Between Delimiters\", {{\"author_id\", null}}),",
-                "    #\"Filtered Rows\" = Table.SelectRows(#\"Replaced Errors\", each ([model] <> \"gamification.badge.user\") and ([author_id] <> null and [author_id] <> \"OdooBot\" and [author_id] <> \"Portal User Template\")),",
-                "    #\"Split Column by Delimiter\" = Table.SplitColumn(Table.TransformColumnTypes(#\"Filtered Rows\", {{\"date\", type text}}, \"en-US\"), \"date\", Splitter.SplitTextByEachDelimiter({\" \"}, QuoteStyle.Csv, false), {\"date.1\", \"date.2\"}),",
-                "    #\"Changed Type2\" = Table.TransformColumnTypes(#\"Split Column by Delimiter\",{{\"date.1\", type date}, {\"date.2\", type time}}),",
-                "    #\"Renamed Columns2\" = Table.RenameColumns(#\"Changed Type2\",{{\"date.1\", \"Behavior Date\"}, {\"date.2\", \"Behavior Time\"}})",
-                "in",
-                "    #\"Renamed Columns2\""
               ],
               "type": "m"
             }
@@ -11148,7 +11068,7 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Excel.Workbook(File.Contents(\"C:\\Users\\NSmither\\Bridge Logistics Inc\\BL-Bi Team - Documents\\bridge_iq\\Data Sets\\CRM\\Contacts_api.xlsx\"), null, true),",
+                "    Source = Excel.Workbook(Web.Contents(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/CRM/Contacts_api.xlsx\"), null, true),",
                 "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
                 "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),",
                 "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"x_studio_zoominfo_contact_id\", Int64.Type}}),",
@@ -12157,134 +12077,6 @@
                 "    #\"Changed Type\" = Table.TransformColumnTypes(daily_number_override_Table,{{\"Month\", type date}, {\"Margin Number\", Int64.Type}})",
                 "in",
                 "    #\"Changed Type\""
-              ],
-              "type": "m"
-            }
-          }
-        ]
-      },
-      {
-        "name": "callins",
-        "annotations": [
-          {
-            "name": "PBI_ResultType",
-            "value": "Table"
-          }
-        ],
-        "columns": [
-          {
-            "name": "Entered date",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              },
-              {
-                "name": "UnderlyingDateTimeDataType",
-                "value": "Date"
-              }
-            ],
-            "dataType": "dateTime",
-            "formatString": "Short Date",
-            "lineageTag": "96121565-2816-4fcc-aade-123906e57e24",
-            "sourceColumn": "Entered date",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Entered by",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "lineageTag": "f4f53187-e5d1-4944-89b0-01713659e6c8",
-            "sourceColumn": "Entered by",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Callin type",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "lineageTag": "edd6b4cd-cf4d-4d26-9700-77458a179413",
-            "sourceColumn": "Callin type",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Movement",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "int64",
-            "formatString": "0",
-            "lineageTag": "5f02f9f6-5e04-4f79-91c3-377f80c96b12",
-            "sourceColumn": "Movement",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Carrier",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "lineageTag": "d1d45b41-aad0-47b3-9e9a-4152d6590d6c",
-            "sourceColumn": "Carrier",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Time",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              },
-              {
-                "name": "UnderlyingDateTimeDataType",
-                "value": "Time"
-              }
-            ],
-            "dataType": "dateTime",
-            "formatString": "Long Time",
-            "lineageTag": "ecac440f-89e4-41fb-b616-607f6af6256d",
-            "sourceColumn": "Time",
-            "summarizeBy": "none"
-          }
-        ],
-        "lineageTag": "486019b8-ab72-446f-988c-cbc6b8d3ac3e",
-        "partitions": [
-          {
-            "name": "callins",
-            "mode": "import",
-            "source": {
-              "expression": [
-                "let",
-                "    Source = Folder.Files(\"C:\\Users\\NSmither\\Bridge Logistics Inc\\BL-Bi Team - Documents\\bridge_iq\\Data Sets\\Callins\"),",
-                "    #\"Filtered Hidden Files1\" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),",
-                "    #\"Invoke Custom Function1\" = Table.AddColumn(#\"Filtered Hidden Files1\", \"Transform File\", each #\"Transform File\"([Content])),",
-                "    #\"Renamed Columns1\" = Table.RenameColumns(#\"Invoke Custom Function1\", {\"Name\", \"Source.Name\"}),",
-                "    #\"Removed Other Columns1\" = Table.SelectColumns(#\"Renamed Columns1\", {\"Source.Name\", \"Transform File\"}),",
-                "    #\"Expanded Table Column1\" = Table.ExpandTableColumn(#\"Removed Other Columns1\", \"Transform File\", Table.ColumnNames(#\"Transform File\"(#\"Sample File\"))),",
-                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Table Column1\",{{\"Source.Name\", type text}, {\"call_date_time\", type datetimezone}, {\"entered_by\", type text}, {\"initiated_type\", type text}, {\"movement_id\", Int64.Type}, {\"payee_id\", type text}, {\"id\", type text}}),",
-                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Changed Type\",{\"Source.Name\", \"id\"}),",
-                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Removed Columns\",{{\"call_date_time\", type datetime}}),",
-                "    #\"Renamed Columns\" = Table.RenameColumns(#\"Changed Type1\",{{\"payee_id\", \"Carrier\"}, {\"movement_id\", \"Movement\"}, {\"initiated_type\", \"Callin type\"}, {\"entered_by\", \"Entered by\"}, {\"call_date_time\", \"Entered date\"}}),",
-                "    #\"Inserted Time\" = Table.AddColumn(#\"Renamed Columns\", \"Time\", each DateTime.Time([Entered date]), type time),",
-                "    #\"Extracted Date\" = Table.TransformColumns(#\"Inserted Time\",{{\"Entered date\", DateTime.Date, type date}}),",
-                "    #\"Appended Query\" = Table.Combine({#\"Extracted Date\", #\"Old Callins\"})",
-                "in",
-                "    #\"Appended Query\""
               ],
               "type": "m"
             }
@@ -14081,10 +13873,6 @@
         "name": "salesperson_key",
         "annotations": [
           {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
-          {
             "name": "PBI_ResultType",
             "value": "Table"
           }
@@ -14283,6 +14071,284 @@
                 "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([McLeod Salesperson Code] <> null))",
                 "in",
                 "    #\"Filtered Rows\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "behaviors_crm",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "6fef6eaf-0f33-476f-9397-62bf79ce1118",
+            "sourceColumn": "id",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Behavior Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "ddea93bb-511c-451d-aa33-4efd0250a656",
+            "sourceColumn": "Behavior Date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Behavior Time",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Time"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Time",
+            "lineageTag": "b2a5c7b9-5cbd-4fc1-a32a-03183ad575f5",
+            "sourceColumn": "Behavior Time",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "author_id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "74082a51-2c20-4a7e-8e9a-d5a51c41c070",
+            "sourceColumn": "author_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "mail_activity_type_id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "a11c4576-84a2-4444-8340-6fb524150253",
+            "sourceColumn": "mail_activity_type_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "model",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "92df256f-c9c3-4486-8b9d-d5a21ee0f153",
+            "sourceColumn": "model",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "res_id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "41b29651-2b6a-48b8-a5ba-d81994fb4035",
+            "sourceColumn": "res_id",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "d1f202cb-d19a-45cf-830c-b0ee40637dba",
+        "partitions": [
+          {
+            "name": "behaviors_crm",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = SharePoint.Files(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam\", [ApiVersion = 15]),",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2021/\" or [Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2022/\" or [Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2023/\" or [Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2024/\")),",
+                "    #\"Filtered Hidden Files1\" = Table.SelectRows(#\"Filtered Rows\", each [Attributes]?[Hidden]? <> true),",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(#\"Filtered Hidden Files1\",{\"Content\", \"Name\"}),",
+                "    #\"Filtered Hidden Files2\" = Table.SelectRows(#\"Removed Other Columns\", each [Attributes]?[Hidden]? <> true),",
+                "    #\"Invoke Custom Function1\" = Table.AddColumn(#\"Filtered Hidden Files2\", \"Transform File (4)\", each #\"Transform File (4)\"([Content])),",
+                "    #\"Removed Other Columns1\" = Table.SelectColumns(#\"Invoke Custom Function1\", {\"Transform File (4)\"}),",
+                "    #\"Expanded Table Column1\" = Table.ExpandTableColumn(#\"Removed Other Columns1\", \"Transform File (4)\", Table.ColumnNames(#\"Transform File (4)\"(#\"Sample File (4)\"))),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Table Column1\",{{\"id\", Int64.Type}, {\"date\", type datetime}, {\"author_id\", type any}, {\"mail_activity_type_id\", type text}, {\"model\", type text}, {\"res_id\", Int64.Type}}),",
+                "    #\"Filtered Rows1\" = Table.SelectRows(#\"Changed Type\", each true),",
+                "    #\"Extracted Text Between Delimiters\" = Table.TransformColumns(#\"Filtered Rows1\", {{\"author_id\", each Text.BetweenDelimiters(_, \"'\", \"'\"), type text}, {\"mail_activity_type_id\", each Text.BetweenDelimiters(_, \"'\", \"'\"), type text}}),",
+                "    #\"Replaced Errors\" = Table.ReplaceErrorValues(#\"Extracted Text Between Delimiters\", {{\"author_id\", null}}),",
+                "    #\"Filtered Rows2\" = Table.SelectRows(#\"Replaced Errors\", each ([model] <> \"gamification.badge.user\") and ([author_id] <> null and [author_id] <> \"OdooBot\" and [author_id] <> \"Portal User Template\")),",
+                "    #\"Split Column by Delimiter\" = Table.SplitColumn(Table.TransformColumnTypes(#\"Filtered Rows2\", {{\"date\", type text}}, \"en-US\"), \"date\", Splitter.SplitTextByEachDelimiter({\" \"}, QuoteStyle.Csv, false), {\"date.1\", \"date.2\"}),",
+                "    #\"Changed Type2\" = Table.TransformColumnTypes(#\"Split Column by Delimiter\",{{\"date.1\", type date}, {\"date.2\", type time}}),",
+                "    #\"Renamed Columns2\" = Table.RenameColumns(#\"Changed Type2\",{{\"date.1\", \"Behavior Date\"}, {\"date.2\", \"Behavior Time\"}})",
+                "in",
+                "    #\"Renamed Columns2\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "callins",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Entered date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "016787e3-5c7f-4d6a-9e39-d6038e056844",
+            "sourceColumn": "Entered date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Entered by",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "30864c19-dc23-4f3d-ab50-c403cccb156a",
+            "sourceColumn": "Entered by",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Callin type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "2286da3a-f302-44b3-b51a-afba842b31d8",
+            "sourceColumn": "Callin type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Movement",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "67539b2a-ed4d-4a8f-a2ca-c09b60a09b3c",
+            "sourceColumn": "Movement",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Carrier",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "fa2ea8fd-d2f0-41d1-8663-e324dc05d0d4",
+            "sourceColumn": "Carrier",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Time",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Time"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Time",
+            "lineageTag": "a0d17078-cb14-4481-8a6d-637c5a37ea8b",
+            "sourceColumn": "Time",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "f8ce91d6-2304-4ad3-9cd9-62100b1227a4",
+        "partitions": [
+          {
+            "name": "callins",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = SharePoint.Files(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam\", [ApiVersion = 15]),",
+                "    #\"Filtered Rows\" = Table.SelectRows(Source, each ([Folder Path] = \"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callins/2024/\")),",
+                "    #\"Filtered Hidden Files1\" = Table.SelectRows(#\"Filtered Rows\", each [Attributes]?[Hidden]? <> true),",
+                "    #\"Invoke Custom Function1\" = Table.AddColumn(#\"Filtered Hidden Files1\", \"Transform File (7)\", each #\"Transform File (7)\"([Content])),",
+                "    #\"Renamed Columns1\" = Table.RenameColumns(#\"Invoke Custom Function1\", {\"Name\", \"Source.Name\"}),",
+                "    #\"Removed Other Columns1\" = Table.SelectColumns(#\"Renamed Columns1\", {\"Source.Name\", \"Transform File (7)\"}),",
+                "    #\"Expanded Table Column1\" = Table.ExpandTableColumn(#\"Removed Other Columns1\", \"Transform File (7)\", Table.ColumnNames(#\"Transform File (7)\"(#\"Sample File (7)\"))),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Table Column1\",{{\"Source.Name\", type text}, {\"call_date_time\", type datetimezone}, {\"entered_by\", type text}, {\"initiated_type\", type text}, {\"movement_id\", Int64.Type}, {\"payee_id\", type text}, {\"id\", type text}}),",
+                "    #\"Removed Columns\" = Table.RemoveColumns(#\"Changed Type\",{\"Source.Name\", \"id\"}),",
+                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Removed Columns\",{{\"call_date_time\", type datetime}}),",
+                "    #\"Renamed Columns\" = Table.RenameColumns(#\"Changed Type1\",{{\"payee_id\", \"Carrier\"}, {\"movement_id\", \"Movement\"}, {\"initiated_type\", \"Callin type\"}, {\"entered_by\", \"Entered by\"}, {\"call_date_time\", \"Entered date\"}}),",
+                "    #\"Inserted Time\" = Table.AddColumn(#\"Renamed Columns\", \"Time\", each DateTime.Time([Entered date]), type time),",
+                "    #\"Extracted Date\" = Table.TransformColumns(#\"Inserted Time\",{{\"Entered date\", DateTime.Date, type date}}),",
+                "    #\"Appended Query\" = Table.Combine({#\"Extracted Date\", #\"Old Callins\"})",
+                "in",
+                "    #\"Appended Query\""
               ],
               "type": "m"
             }
