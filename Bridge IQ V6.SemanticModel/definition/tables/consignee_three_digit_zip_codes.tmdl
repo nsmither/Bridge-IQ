@@ -1,0 +1,24 @@
+table consignee_three_digit_zip_codes
+	lineageTag: b3484401-356b-4e85-b121-56d03170fa26
+
+	column 'Consignee Three Digit Zip'
+		dataType: string
+		lineageTag: e03da5b8-375e-454a-9d20-c823f37267f6
+		summarizeBy: none
+		sourceColumn: Consignee Three Digit Zip
+
+		annotation SummarizationSetBy = Automatic
+
+	partition consignee_three_digit_zip_codes = m
+		mode: import
+		queryGroup: 'Zip Codes'
+		source =
+				let
+				    Source = consignee_zip_codes,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Consignee Three Digit Zip"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_ResultType = Table
+

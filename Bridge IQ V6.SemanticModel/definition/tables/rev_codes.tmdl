@@ -1,0 +1,42 @@
+table rev_codes
+	lineageTag: bb2c870f-aba8-48d7-9252-c3a68792661e
+
+	column 'Rev Code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ca505a8-9ec2-498b-8660-2de8ce70b611
+		summarizeBy: none
+		sourceColumn: Rev Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Lead Ops'
+		dataType: string
+		lineageTag: aa434e81-7861-41f1-bfdc-28bfd7865a9a
+		summarizeBy: none
+		sourceColumn: Lead Ops
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wolf Pack'
+		dataType: string
+		lineageTag: 96169d05-bbf3-4553-956a-345d326516ba
+		summarizeBy: none
+		sourceColumn: Wolf Pack
+
+		annotation SummarizationSetBy = Automatic
+
+	partition rev_codes = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Teams.xlsx"), null, true),
+				    rev_codes_Table = Source{[Item="rev_codes",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(rev_codes_Table,{{"Rev Code", Int64.Type}, {"Lead Ops", type text}, {"Wolf Pack", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

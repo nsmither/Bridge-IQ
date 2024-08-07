@@ -1,0 +1,63 @@
+table daily_numbers
+	lineageTag: 7fc3ff80-2630-474c-b7da-a1fcbb9906d0
+
+	column 'Recruiter Name'
+		dataType: string
+		lineageTag: 965a2ca0-44c6-4853-979f-2d8937b2459a
+		summarizeBy: none
+		sourceColumn: Recruiter Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 55ac7acb-cf4e-4a06-a8ca-c610b6347d27
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Behavior Id'
+		dataType: string
+		lineageTag: 13eda8d1-383c-46c1-ad5b-1e04ee658923
+		summarizeBy: none
+		sourceColumn: Behavior Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Count
+		dataType: double
+		lineageTag: 9e6f5d88-30b0-41e7-86bd-d29ed0c7224f
+		summarizeBy: sum
+		sourceColumn: Count
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition daily_numbers = m
+		mode: import
+		source =
+				let
+				     Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BridgeRecruiting/Shared%20Documents/Tracking%20Sheets/Daily%20Numbers.xlsx"), null, true),
+				    DailyNumbers_Table = Source{[Item="DailyNumbers",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(DailyNumbers_Table,{{"ID", Int64.Type}, {"Start time", type datetime}, {"Completion time", type datetime}, {"Email", type text}, {"Name", type text}, {"Date", type date}, {"Indeed", Int64.Type}, {"Zip Recruiter", Int64.Type}, {"LinkedIn", Int64.Type}, {"Handshake", Int64.Type}, {"Other", Int64.Type}, {"Events", Int64.Type}, {"University Convos", Int64.Type}, {"Meetings", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"ID", "Start time", "Completion time", "Email"}),
+				    #"Unpivoted Columns" = Table.UnpivotOtherColumns(#"Removed Columns", {"Name", "Date"}, "Attribute", "Value"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Columns",{{"Attribute", "Behavior"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each ([Value] <> 0)),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Filtered Rows",{{"Behavior", "BehaviorId"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns1","Jessica McGill","Jess Mcgill",Replacer.ReplaceText,{"Name"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Replaced Value",{{"Name", "Recruiter Name"}, {"Value", "Count"}, {"BehaviorId", "Behavior Id"}}),
+				    #"Calculated Start of Month" = Table.TransformColumns(#"Renamed Columns2",{{"Date", Date.StartOfMonth, type date}}),
+				    #"Grouped Rows" = Table.Group(#"Calculated Start of Month", {"Recruiter Name", "Date", "Behavior Id"}, {{"Count", each List.Sum([Count]), type number}})
+				in
+				    #"Grouped Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

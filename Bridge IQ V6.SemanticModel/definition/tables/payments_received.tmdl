@@ -1,0 +1,100 @@
+table payments_received
+	lineageTag: c6fd4ef6-4883-4787-92cf-a1d3817e718c
+
+	column 'Order.Move Status'
+		dataType: string
+		lineageTag: 731cf421-5582-40f4-93e6-e002f2cf3b35
+		summarizeBy: none
+		sourceColumn: Order.Move Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order.Order ID'
+		dataType: string
+		lineageTag: bcade7e8-b8e5-4ea6-85fe-0095132a35e2
+		summarizeBy: none
+		sourceColumn: Order.Order ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c7c475c5-9047-461f-aec6-5fd20511e47d
+		summarizeBy: none
+		sourceColumn: Payment Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Total Charges'
+		dataType: double
+		lineageTag: bf3f4d50-fd56-48f7-b58f-8b87b17056f9
+		summarizeBy: sum
+		sourceColumn: Total Charges
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Bill Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 89de9286-9ece-43d9-968a-c39c9ec0dd83
+		summarizeBy: none
+		sourceColumn: Bill Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Order Payment Balance'
+		dataType: double
+		lineageTag: 9c6a8699-8dae-4977-a4fe-1fa4bd5b2d0e
+		summarizeBy: sum
+		sourceColumn: Order Payment Balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Order Invoice And Debit Amount'
+		dataType: double
+		lineageTag: c7ea95b2-dc07-4351-a5be-e844f8b9231a
+		summarizeBy: sum
+		sourceColumn: Order Invoice And Debit Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition payments_received = m
+		mode: import
+		source =
+				let
+				    Source = AnalysisServices.Databases("bl-mcbiserver", [TypedMeasureColumns=true, Implementation="2.0"]),
+				    McLeodIQ_2019_Powerbroker = Source{[Name="McLeodIQ_2019_Powerbroker"]}[Data],
+				    McLeodIQ_Powerbroker1 = McLeodIQ_2019_Powerbroker{[Id="McLeodIQ_Powerbroker"]}[Data],
+				    McLeodIQ_Powerbroker2 = McLeodIQ_Powerbroker1{[Id="McLeodIQ_Powerbroker"]}[Data],
+				    #"Added Items" = Cube.Transform(McLeodIQ_Powerbroker2,
+				        {
+				            {Cube.AddAndExpandDimensionColumn, "[Order]", {"[Order].[Move Status].[Move Status]", "[Order].[Order ID].[Order ID]"}, {"Order.Move Status", "Order.Order ID"}},
+				            {Cube.AddAndExpandDimensionColumn, "[Date Payment Recvd]", {"[Date Payment Recvd].[Date Payment Recvd.Date].[Date Payment Recvd.Date]"}, {"Date Payment Recvd.Date Payment Recvd.Date"}},
+				            {Cube.AddMeasureColumn, "Total Charges", "[Measures].[Total Charges]"},
+				            {Cube.AddAndExpandDimensionColumn, "[Date Billed]", {"[Date Billed].[Date Billed.Date].[Date Billed.Date]"}, {"Date Billed.Date Billed.Date"}},
+				            {Cube.AddMeasureColumn, "Order Payment Balance", "[Measures].[Order Payment Balance]"},
+				            {Cube.AddMeasureColumn, "Order Invoice And Debit Amount", "[Measures].[Order Invoice And Debit Amount]"}
+				        }),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Items",{{"Date Billed.Date Billed.Date", "Bill Date"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each (Cube.AttributeMemberId([Order.Move Status]) = "[Order].[Move Status].&[Covered]" meta [DisplayName = "Covered"] or Cube.AttributeMemberId([Order.Move Status]) = "[Order].[Move Status].&[Delivered]" meta [DisplayName = "Delivered"] or Cube.AttributeMemberId([Order.Move Status]) = "[Order].[Move Status].&[In Progress]" meta [DisplayName = "In Progress"])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Date Payment Recvd.Date Payment Recvd.Date", type date}, {"Bill Date", type date}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"Date Payment Recvd.Date Payment Recvd.Date", "Payment Date"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns1", each [Bill Date] > #date(1969, 12, 31))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

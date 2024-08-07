@@ -1,0 +1,147 @@
+table crm_parent_customer_key
+	lineageTag: 2fbc90a7-9788-494e-8234-e098138d4707
+
+	column 'Customer ID'
+		dataType: string
+		lineageTag: 9d9276e6-0848-4221-87c0-ef1eaddc7779
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 5aaa1f0c-ca65-4bad-a427-6475f734b0fc
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 4cc1bff6-8289-4e7b-9967-26ce62da7d34
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Bridge ID'
+		dataType: string
+		lineageTag: 6efa45b2-c301-4355-b8a9-f8444ab3de0a
+		summarizeBy: none
+		sourceColumn: Customer Bridge ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: c3de4e50-2198-4ecd-a801-1a0794d00577
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 5d081d4d-fb15-4efb-963d-e27ef448fe81
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Zip Code'
+		dataType: string
+		lineageTag: 277bba73-5c6a-4bf6-9ab5-f7e5ef4da653
+		summarizeBy: none
+		sourceColumn: Zip Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Added'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4a12d866-6de4-48b9-ad7d-486c04ccbab5
+		summarizeBy: none
+		sourceColumn: Date Added
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Change Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dcef8b2c-5087-4240-8cd5-dc1a226d8f8d
+		summarizeBy: none
+		sourceColumn: Change Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Pay Terms'
+		dataType: int64
+		formatString: 0
+		lineageTag: 50d174c8-756e-4452-aa58-f2ddcfad1616
+		summarizeBy: none
+		sourceColumn: Pay Terms
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer.Credit Limit'
+		dataType: string
+		lineageTag: f8ad2084-b847-4790-90a2-52ecd98c9d21
+		summarizeBy: none
+		sourceColumn: Customer.Credit Limit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Billed Orders'
+		dataType: int64
+		formatString: 0
+		lineageTag: 859fb995-dbc2-47fd-9c5e-2ecb0284e154
+		summarizeBy: none
+		sourceColumn: Billed Orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column Orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a484e1e-a233-4a93-ae57-c06d28fd8d92
+		summarizeBy: none
+		sourceColumn: Orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Average Days To Pay'
+		dataType: double
+		lineageTag: 44c99441-41e2-48cc-9702-df5745f9bd3b
+		summarizeBy: none
+		sourceColumn: Average Days To Pay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Customer.Obsolete Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3432c4d0-dd12-403c-a997-5affbebb3988
+		summarizeBy: none
+		sourceColumn: Customer.Obsolete Date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition crm_parent_customer_key = m
+		mode: import
+		source =
+				let
+				    Source = parent_customer_key
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

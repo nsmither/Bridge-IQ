@@ -1,0 +1,70 @@
+table bws_behaviors
+	lineageTag: 71e5160e-8d9f-4a46-ad18-d16cc7c0147b
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: aae2fd04-41f4-4c9c-917b-ada1032b58aa
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Behavior Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7baeafca-7c3d-4b76-91ae-9ca9b5b2876c
+		summarizeBy: none
+		sourceColumn: Behavior Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column author_id
+		dataType: string
+		lineageTag: 49e20062-16be-415b-960f-32aa8beb2ac1
+		summarizeBy: none
+		sourceColumn: author_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mail_activity_type_id
+		dataType: string
+		lineageTag: 5cac5fa3-1113-4f3b-b9e5-dfc3c78ac534
+		summarizeBy: none
+		sourceColumn: mail_activity_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column model
+		dataType: string
+		lineageTag: 5674ac47-9163-435a-a4d3-bdc8daa37cda
+		summarizeBy: none
+		sourceColumn: model
+
+		annotation SummarizationSetBy = Automatic
+
+	column res_id
+		dataType: int64
+		formatString: 0
+		lineageTag: e4926f0c-7c64-4d15-acdb-c6b708faf5b1
+		summarizeBy: sum
+		sourceColumn: res_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bws_behaviors = m
+		mode: import
+		source =
+				let
+				    Source = behaviors_crm,
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Behavior Time"}),
+				    #"Calculated Start of Month" = Table.TransformColumns(#"Removed Columns",{{"Behavior Date", Date.StartOfMonth, type date}})
+				in
+				    #"Calculated Start of Month"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

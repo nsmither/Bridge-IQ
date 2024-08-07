@@ -1,0 +1,74 @@
+table contacts_module
+	lineageTag: e1c34827-308e-45ee-80d7-c0da7ae34cc0
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: bbbbdeb7-60dc-4bdc-9d3c-14ba9925ab52
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 53a76c79-a719-48c3-a6c6-d27026936950
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_company
+		dataType: string
+		lineageTag: ed3bd495-cc03-4cc7-bb90-82bd72f62794
+		summarizeBy: none
+		sourceColumn: is_company
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_zoominfo_contact_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 007961ab-4edf-46bf-8c56-b9f8e8043f61
+		summarizeBy: sum
+		sourceColumn: x_studio_zoominfo_contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_zoominfo_company_id
+		dataType: string
+		lineageTag: cb4bf698-2aea-4a63-ba5c-5cceb55f06c0
+		summarizeBy: none
+		sourceColumn: x_studio_zoominfo_company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parent ID'
+		dataType: string
+		lineageTag: ba8797fc-37ce-4552-9978-18a769bab06b
+		summarizeBy: none
+		sourceColumn: Parent ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition contacts_module = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/CRM/Contacts_api.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"x_studio_zoominfo_contact_id", Int64.Type}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"id", Int64.Type}}),
+				    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Changed Type1", {{"parent_id", each Text.AfterDelimiter(Text.From(_, "en-US"), "["), type text}}),
+				    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Extracted Text After Delimiter", {{"parent_id", each Text.BeforeDelimiter(_, ","), type text}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter",{{"parent_id", Int64.Type}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type2", "Parent ID", each if [is_company] = false then [parent_id] else [id]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"parent_id"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

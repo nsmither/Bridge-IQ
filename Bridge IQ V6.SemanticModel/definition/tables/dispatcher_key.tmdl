@@ -1,0 +1,193 @@
+table dispatcher_key
+	lineageTag: 76626843-7293-435a-ad1f-37133060195b
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9e59fd49-26b0-4150-afdc-8439cf1a1686
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dispatcher Name'
+		dataType: string
+		lineageTag: 6b6f2ed8-7e14-4255-b3e6-10804a34f232
+		summarizeBy: none
+		sourceColumn: Dispatcher Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Title'
+		dataType: string
+		lineageTag: 968134c5-0659-4afd-917c-812a1ea08a28
+		summarizeBy: none
+		sourceColumn: Job Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level
+		dataType: string
+		lineageTag: 25b034b8-8f00-4127-923b-4c8bd3768f33
+		summarizeBy: none
+		sourceColumn: Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		lineageTag: 775b1799-f040-494f-be75-e2d42cc4da67
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column create_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8626e48c-a68f-4ce3-8e6a-9bc9e3e04a1e
+		summarizeBy: none
+		sourceColumn: create_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_id
+		dataType: string
+		lineageTag: eacceed7-179a-4297-9ace-41c5b7279e65
+		summarizeBy: none
+		sourceColumn: source_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column active
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 33112455-5aaa-44bc-96a8-86915fad2bd9
+		summarizeBy: none
+		sourceColumn: active
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d526473f-8533-4218-8ac4-c8a242f51d92
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Team
+		dataType: string
+		lineageTag: 5b75c235-faac-430f-a286-2898cec7a14e
+		summarizeBy: none
+		sourceColumn: Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_sdr_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 871dda95-5244-4aa6-b697-fee9478a5e62
+		summarizeBy: none
+		sourceColumn: x_studio_sdr_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_d_team_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1cf218f1-bf56-421c-9868-aee7424aca9b
+		summarizeBy: none
+		sourceColumn: x_studio_d_team_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_henry_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 098181bd-41a1-4fa1-b4f5-59ccd8a8fdd6
+		summarizeBy: none
+		sourceColumn: x_studio_henry_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Dispatch McLeod ID'
+		dataType: string
+		lineageTag: 064e346a-558e-4e20-bbf5-f0f47b32f4fe
+		summarizeBy: none
+		sourceColumn: Dispatch McLeod ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_mcleod_salesperson_code
+		dataType: string
+		lineageTag: 4950e2ec-59b0-4265-8c6d-24d11a0cec8e
+		summarizeBy: none
+		sourceColumn: x_studio_mcleod_salesperson_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_termination_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 12565dc9-c620-421c-8914-0bfbfe6eee05
+		summarizeBy: none
+		sourceColumn: x_studio_termination_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_dat_license
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e8afc197-991f-4b8b-968c-95603c41b779
+		summarizeBy: none
+		sourceColumn: x_studio_dat_license
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_bi_license
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 247d9446-eec5-4d29-92e8-4f903f85cf2e
+		summarizeBy: none
+		sourceColumn: x_studio_bi_license
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_bamboo_employee_number
+		dataType: int64
+		formatString: 0
+		lineageTag: c386af6d-5729-4845-9163-643a8a758f4b
+		summarizeBy: sum
+		sourceColumn: x_studio_bamboo_employee_number
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dispatcher_key = m
+		mode: import
+		source =
+				let
+				    Source = recruitment,
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"x_studio_mcleod_user_code", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([x_studio_mcleod_user_code] <> "false")),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"name", "Dispatcher Name"}, {"job_id", "Job Title"}, {"stage_id", "Level"}, {"x_studio_start_date", "Start Date"}, {"x_studio_team", "Team"}, {"x_studio_mcleod_user_code", "Dispatch McLeod ID"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([Dispatch McLeod ID] <> "FALSE")),
+				    #"Uppercased Text" = Table.TransformColumns(#"Filtered Rows1",{{"Dispatcher Name", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
