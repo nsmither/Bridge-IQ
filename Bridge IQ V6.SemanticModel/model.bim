@@ -2760,6 +2760,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -3056,7 +3060,7 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Excel.Workbook(File.Contents(\"C:\\Users\\NSmither\\Bridge Logistics Inc\\BL-Bi Team - Documents\\bridge_iq\\Data Sets\\Recruitment\\recruitment_api.xlsx\"), null, true),",
+                "    Source = Excel.Workbook(Web.Contents(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Recruitment/recruitment_api.xlsx\"), null, true),",
                 "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
                 "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),",
                 "    //start fixing dates and replaceing date errors",
