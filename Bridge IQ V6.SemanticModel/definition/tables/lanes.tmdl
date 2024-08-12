@@ -1,0 +1,27 @@
+table lanes
+	lineageTag: 23626554-de07-423a-b475-21a74378deb6
+
+	column Lane
+		dataType: string
+		lineageTag: 81126767-ce63-4693-9b92-0bb308c277ba
+		summarizeBy: none
+		sourceColumn: Lane
+
+		annotation SummarizationSetBy = Automatic
+
+	partition lanes = m
+		mode: import
+		source =
+				let
+				    Source = pcs_loads,
+				    #"Appended Query" = Table.Combine({Source, orders}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Appended Query",{"Lane"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Removed Other Columns",{{"Lane", Text.Upper, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Uppercased Text"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Blank Rows", {"Lane"})
+				in
+				    #"Removed Errors"
+
+	annotation PBI_ResultType = Table
+

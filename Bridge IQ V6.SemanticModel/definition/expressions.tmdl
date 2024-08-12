@@ -1,0 +1,352 @@
+expression Parameter6 = #"Sample File (6)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (6)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: c3dafccf-d036-4b92-8002-193863622695
+	queryGroup: 'Transform File from overdue_check_calls\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (6)' =
+		let
+		    Source = Excel.Workbook(Parameter6, null, true),
+		    overdue_check_calls_Table = Source{[Item="overdue_check_calls",Kind="Table"]}[Data]
+		in
+		    overdue_check_calls_Table
+	lineageTag: 9ba321c4-0e3f-4c5c-8671-0d97be3abd56
+	queryGroup: 'Transform File from overdue_check_calls'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File (6)' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Overdue Check Call/")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 22c385c7-2f8d-4f21-8947-620ee1470bd4
+	queryGroup: 'Transform File from overdue_check_calls\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform File (6)' =
+		let
+		    Source = (Parameter6 as binary) => let
+		        Source = Excel.Workbook(Parameter6, null, true),
+		        overdue_check_calls_Table = Source{[Item="overdue_check_calls",Kind="Table"]}[Data]
+		    in
+		        overdue_check_calls_Table
+		in
+		    Source
+	lineageTag: 87de5f5d-0d5e-4648-831e-5ba554d8d433
+	queryGroup: 'Transform File from overdue_check_calls\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression customer_duns =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Customer%20Duns.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type2" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Changed Type2",{{"Column1", type text}, {"Column2", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Code", type text}, {"D & B number", type text}})
+		in
+		    #"Changed Type1"
+	lineageTag: 495e790e-954f-48c9-96fe-44cf692da953
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dnc =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/DNC/DNC.xlsx"), null, true),
+		    dnc_Table = Source{[Item="dnc",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(dnc_Table,{{"DNC", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: e7a43602-db79-42a3-b99d-164d77830354
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'Old Callins' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2021 Callins/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2022 Callins/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2023 Callins/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2024 Callins/")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (5)", each #"Transform File (5)"([Content])),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File (5)"}),
+		    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (5)", Table.ColumnNames(#"Transform File (5)"(#"Sample File (5)"))),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Order", Int64.Type}, {"Carrier", type text}, {"Entered by", type text}, {"Entered date", type datetime}, {"Move status", type text}, {"Callin type", type text}, {"Movement", Int64.Type}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Order", "Move status"}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Removed Columns", each [Entered date] < #datetime(2024, 2, 1, 0, 0, 0)),
+		    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows1","Brokerage tracking","T",Replacer.ReplaceText,{"Callin type"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Comments","O",Replacer.ReplaceText,{"Callin type"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","Broker initiated","B",Replacer.ReplaceText,{"Callin type"}),
+		    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","Carrier initiated","C",Replacer.ReplaceText,{"Callin type"}),
+		    #"Inserted Time" = Table.AddColumn(#"Replaced Value3", "Time", each DateTime.Time([Entered date]), type time),
+		    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{"Entered date", DateTime.Date, type date}})
+		in
+		    #"Extracted Date"
+	lineageTag: 6b7f48ca-773e-4859-978f-d08d8e6dca39
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Parameter5 = #"Sample File (5)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (5)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: e1e1bfc5-6e8f-4d92-89a3-f3903434beb9
+	queryGroup: 'Transform File from Old Callins\Helper Queries Old Callins'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (5)' =
+		let
+		    Source = Excel.Workbook(Parameter5, null, true),
+		    #"Grid Data_Sheet" = Source{[Item="Grid Data",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Grid Data_Sheet", [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: da3b7853-6eed-4aa3-a431-536447938c88
+	queryGroup: 'Transform File from Old Callins'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File (5)' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2021 Callins/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2022 Callins/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2023 Callins/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callin data/2024 Callins/")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: eba83614-88b8-45a5-a707-c3ebb760201e
+	queryGroup: 'Transform File from Old Callins\Helper Queries Old Callins'
+
+	annotation PBI_ResultType = Binary
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'Transform File (5)' =
+		let
+		    Source = (Parameter5 as binary) => let
+		        Source = Excel.Workbook(Parameter5, null, true),
+		        #"Grid Data_Sheet" = Source{[Item="Grid Data",Kind="Sheet"]}[Data],
+		        #"Promoted Headers" = Table.PromoteHeaders(#"Grid Data_Sheet", [PromoteAllScalars=true])
+		    in
+		        #"Promoted Headers"
+		in
+		    Source
+	lineageTag: 49c1d90a-3936-4f11-a436-5644c4dcfaea
+	queryGroup: 'Transform File from Old Callins\Helper Queries Old Callins'
+
+	annotation PBI_ResultType = Exception
+
+expression salesperson_change =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Salesperon%20Change/Salesperson%20Change.xlsx"), null, true),
+		    salesperson_change_Table = Source{[Item="salesperson_change",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(salesperson_change_Table,{{"Customer ID", type text}, {"Change Date", type date}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type",{{"Customer ID", Order.Ascending}, {"Change Date", Order.Descending}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Customer ID"})
+		in
+		    #"Removed Duplicates"
+	lineageTag: ea294292-80c4-451f-92c4-af2c44ee4695
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression avereage_days_to_pay =
+		let
+		    Source = AnalysisServices.Databases("bl-mcbiserver", [TypedMeasureColumns=true, Implementation="2.0"]),
+		    McLeodIQ_2019_Powerbroker = Source{[Name="McLeodIQ_2019_Powerbroker"]}[Data],
+		    McLeodIQ_Powerbroker1 = McLeodIQ_2019_Powerbroker{[Id="McLeodIQ_Powerbroker"]}[Data],
+		    McLeodIQ_Powerbroker2 = McLeodIQ_Powerbroker1{[Id="McLeodIQ_Powerbroker"]}[Data],
+		    #"Added Items" = Cube.Transform(McLeodIQ_Powerbroker2,
+		        {
+		            {Cube.AddAndExpandDimensionColumn, "[Customer]", {"[Customer].[Average Pay Days ].[Average Pay Days ]", "[Customer].[Customer ID].[Customer ID]", "[Customer].[Obsolete Date].[Obsolete Date]"}, {"Customer.Average Pay Days ", "Customer.Customer ID", "Customer.Obsolete Date"}}
+		        }),
+		    #"Filtered Rows" = Table.SelectRows(#"Added Items", each (Cube.AttributeMemberId([Customer.Obsolete Date]) = "[Customer].[Obsolete Date].&" meta [DisplayName = "(null)"])),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Customer.Obsolete Date"})
+		in
+		    #"Removed Columns"
+	lineageTag: 211212d3-e96f-400e-a3b3-c1cf3768b05a
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Parameter4 = #"Sample File (4)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (4)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: d10caa27-8293-417a-a78e-ecf0682d2fea
+	queryGroup: 'Transform File from behaviors_crm_new\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (4)' =
+		let
+		    Source = Excel.Workbook(Parameter4, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 095dbc50-11a9-4778-ab57-67766169b3cc
+	queryGroup: 'Transform File from behaviors_crm_new'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File (4)' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2021/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2022/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2023/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/behaviors_api_files/2024/")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Hidden Files1",{"Content", "Name"}),
+		    Navigation1 = #"Removed Other Columns"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 4f5baa30-7de7-424a-a048-c25fb5950a11
+	queryGroup: 'Transform File from behaviors_crm_new\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform File (4)' =
+		let
+		    Source = (Parameter4 as binary) => let
+		    Source = Excel.Workbook(Parameter4, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (4)""}" ]
+	lineageTag: 49ccfb7e-7eab-4b5c-a7f0-73c19dbc452e
+	queryGroup: 'Transform File from behaviors_crm_new\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter7 = #"Sample File (7)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (7)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: afebfc23-e658-4aae-b3f8-7402c7f16d46
+	queryGroup: 'Transform File from callins_new\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (7)' =
+		let
+		    Source = Excel.Workbook(Parameter7, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: cb3181ff-124b-4a87-89e2-235cdc7d28ee
+	queryGroup: 'Transform File from callins_new'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File (7)' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callins/2024/")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 5f75e230-39d9-4bf2-9dc3-3f04d6234b4b
+	queryGroup: 'Transform File from callins_new\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform File (7)' =
+		let
+		    Source = (Parameter7 as binary) => let
+		    Source = Excel.Workbook(Parameter7, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (7)""}" ]
+	lineageTag: 9526a855-86c5-4ab8-bc6c-fa56b3180503
+	queryGroup: 'Transform File from callins_new\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression parade_orders =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2023/December/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2023/November/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/April/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/February/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/January/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/June/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/March/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/May/")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File", each #"Transform File"([Content])),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File"}),
+		    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File", Table.ColumnNames(#"Transform File"(#"Sample File"))),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"id", Int64.Type}, {"reference_id", type text}, {"created_at", type datetime}, {"archived_at", type datetime}, {"src_city", type text}, {"src_state", type text}, {"src_date", type date}, {"src_postal_code", type text}, {"dst_city", type text}, {"dst_state", type text}, {"dst_date", type date}, {"dst_postal_code", type text}, {"num_stops", Int64.Type}, {"equipment", type text}, {"trailer_type", type text}, {"rate_customer", type number}, {"first_load", type logical}, {"customer_id", type text}, {"revenue_code", Int64.Type}, {"team_name", type any}, {"rep_email", type text}, {"rep_name", type text}, {"carrier_manager", type any}, {"category", type text}, {"conversion_category", type text}, {"partner", type text}, {"margin_amount", type number}, {"margin_pct", type number}, {"carrier_name", type text}, {"dot_number", Int64.Type}, {"mc_number", Int64.Type}, {"carrier_rate", Int64.Type}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Source.Name"}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"rate_customer", Currency.Type}, {"margin_amount", Currency.Type}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type1",{{"reference_id", Order.Ascending}}),
+		    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Sorted Rows", {{"reference_id", each Text.AfterDelimiter(_, "-"), type text}}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Extracted Text After Delimiter", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"reference_id", "movement_id"}}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([category] <> "outside_parade") and ([conversion_category] <> "Manually Assigned")),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Filtered Rows1",{{"movement_id", Int64.Type}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type2", {"id"})
+		in
+		    #"Removed Duplicates"
+	lineageTag: de7386b4-0d32-40d2-928c-0f6eafbf8dbd
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: cd6543e4-45c5-4bdc-8a61-de98e8eab9b1
+	queryGroup: 'Transform File from parade_orders_new\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File' =
+		let
+		    Source = Excel.Workbook(Parameter1, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 42e0eb40-7106-466d-a3db-4ecfa25ac594
+	queryGroup: 'Transform File from parade_orders_new'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2023/December/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2023/November/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/April/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/February/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/January/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/June/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/March/" or [Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/parade_orders_api_files/2024/May/")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: d818ac26-b7c4-4e27-b21f-68d678dc03a0
+	queryGroup: 'Transform File from parade_orders_new\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform File' =
+		let
+		    Source = (Parameter1 as binary) => let
+		    Source = Excel.Workbook(Parameter1, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File""}" ]
+	lineageTag: 29ae6a1e-a3e3-4bc4-8cd8-087fe09920dc
+	queryGroup: 'Transform File from parade_orders_new\Helper Queries'
+
+	annotation PBI_ResultType = Function
+

@@ -1,0 +1,135 @@
+table salesperson_key
+	lineageTag: dc38fb35-7721-42f3-9170-246236066562
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 3cd80c87-6c63-46b1-95c8-c9e3a659b69e
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: e4704ffb-b723-43e9-9673-ff4cfe3dc2bf
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hire Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 49aa5e0a-6522-4ddb-ad65-131436c6561d
+		summarizeBy: none
+		sourceColumn: Hire Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Termination Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ae39ea18-535c-4e51-860a-3a57b5d37fe5
+		summarizeBy: none
+		sourceColumn: Termination Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Reporting to'
+		dataType: string
+		lineageTag: 9f42f50a-1cf8-4ef9-9bfb-017feea0cb08
+		summarizeBy: none
+		sourceColumn: Reporting to
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Type'
+		dataType: string
+		lineageTag: 1629ec25-3408-440d-80d4-d88a7055720c
+		summarizeBy: none
+		sourceColumn: Termination Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Reason'
+		dataType: string
+		lineageTag: 18d45931-0c3f-485c-9a05-eb1aa917ed22
+		summarizeBy: none
+		sourceColumn: Termination Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Regrettable or non- regrettable'
+		dataType: string
+		lineageTag: f9503f62-1907-419a-bb8e-8d8e04e6ba8a
+		summarizeBy: none
+		sourceColumn: Regrettable or non- regrettable
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Title'
+		dataType: string
+		lineageTag: fb41b9bc-a8df-4774-9077-43865b0680a7
+		summarizeBy: none
+		sourceColumn: Job Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'McLeod User Code'
+		dataType: string
+		lineageTag: a467783f-9ddf-4296-ba04-9ceeb0fb4f97
+		summarizeBy: none
+		sourceColumn: McLeod User Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'McLeod Salesperson Code'
+		dataType: string
+		lineageTag: 01465035-2dce-4684-be04-8b09422e3de7
+		summarizeBy: none
+		sourceColumn: McLeod Salesperson Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work Email'
+		dataType: string
+		lineageTag: 56ec310b-83b3-4799-8701-cbf92a5ba571
+		summarizeBy: none
+		sourceColumn: Work Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Devision
+		dataType: string
+		lineageTag: 49fb8c54-e90e-457a-a887-7dcec44c33e7
+		summarizeBy: none
+		sourceColumn: Devision
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 8c2554d9-e45d-4b3e-b306-edcae7aef530
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	partition salesperson_key = m
+		mode: import
+		source =
+				let
+				    Source = employees,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([McLeod Salesperson Code] <> null))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

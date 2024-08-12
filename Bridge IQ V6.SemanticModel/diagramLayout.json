@@ -941,7 +941,7 @@
         },
         {
           "location": {
-            "x": 1759.7241379310347,
+            "x": 1759.7241379310346,
             "y": 825.68965517241384
           },
           "nodeIndex": "behavior_goals",
@@ -1005,10 +1005,75 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 786,
+            "y": 455
+          },
+          "nodeIndex": "crm",
+          "nodeLineageTag": "374853d7-fcbf-4947-a402-2244d828387e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 868,
+            "y": 50
+          },
+          "nodeIndex": "salesperson_key",
+          "nodeLineageTag": "dc38fb35-7721-42f3-9170-246236066562",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 416,
+            "y": 1067
+          },
+          "nodeIndex": "orders",
+          "nodeLineageTag": "aa3b9040-5a73-4edf-938f-bd361198cbf4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1574.3254564983886,
+            "y": 580.810955961332
+          },
+          "nodeIndex": "crm_customer_key",
+          "nodeLineageTag": "b98d9d2d-73b0-4ee7-9962-b97515159738",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 858,
+            "y": 1269
+          },
+          "nodeIndex": "pcs_loads",
+          "nodeLineageTag": "d4e1c165-81d9-45ca-8a53-66f1a155ed20",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "Layout 2",
-      "zoomValue": 100,
+      "zoomValue": 54.15939499709134,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

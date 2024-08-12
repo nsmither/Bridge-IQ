@@ -1,0 +1,326 @@
+table calendar
+	lineageTag: fce9a9ae-211f-4e89-b504-aa0ddde156ec
+	dataCategory: Time
+
+	/// This Measure calculates the number of working days between the minimum date in your filter context and the max date in your filter context.
+	measure 'Working Days' = ```
+			
+			    NETWORKDAYS(
+			        MIN('calendar'[Date]),
+			        MAX('calendar'[Date]),
+			        1,
+			        observed_holidays)
+			```
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 8c102c07-e4b9-42e2-9136-bec68cb20f95
+
+	/// This measure Calculates the number of working days from the minimum date in your filter context and the current date minus 1.
+	/// 
+	measure 'Working days Elapsed' =
+			
+			If(DAY(TODAY())=1,0,
+			    NETWORKDAYS(
+			        MIN('Calendar'[Date]),
+			        TODAY()-1,
+			        1,
+			        observed_holidays))
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 1d241d9b-f183-49c9-97b9-c6fc0122166a
+
+	measure ** = "*"
+		displayFolder: ***Undocumented***
+		lineageTag: 008f7130-708a-4f40-9518-cd40f419fcb3
+
+	/// If the week of the month number is equal to the week of the month number of today this measure will output 1 if not 0
+	/// 
+	measure 'Week Number Equals this Week' =
+			
+			IF(
+			    MIN('calendar'[Week of Year])=WEEKNUM(TODAY()),
+			    1,
+			    0
+			)
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 290137a1-174e-463e-b3f9-a989e04db338
+
+	measure 'Callendar Date SK' = MIN('calendar'[Date])*1
+		displayFolder: Calendar Measures
+		lineageTag: 9d2954ab-746c-459f-aeeb-870e5084856d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: 3f507b7d-235c-4066-a087-d3bc2f84407d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 651a7c89-640c-4906-8b4b-e67c87597462
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: cfbabec9-aae5-4792-af9a-80e471da8154
+		summarizeBy: none
+		sourceColumn: Month Name
+		sortByColumn: MonthNmb
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthAbv
+		dataType: string
+		lineageTag: 2cb6f642-75fb-4a6d-b4d7-600ec7adcfb9
+		summarizeBy: none
+		sourceColumn: MonthAbv
+		sortByColumn: MonthNmb
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNmb
+		dataType: int64
+		formatString: 0
+		lineageTag: 714a7d82-cb49-46e7-b4d7-18fbb6f3533d
+		summarizeBy: sum
+		sourceColumn: MonthNmb
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 39fb850e-3f75-443c-81b1-a40eee62f1e1
+		summarizeBy: none
+		sourceColumn: Quarter
+		sortByColumn: QuarterNmb
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week of Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: 51d8ea38-3fe1-49ad-bcd8-2e4c2a8c65b3
+		summarizeBy: sum
+		sourceColumn: Week of Month
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Date is in the past
+	column 'Is Past'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5e6fbd22-3068-4124-b885-600aa91b4918
+		summarizeBy: none
+		sourceColumn: Is Past
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: d1859176-4e69-4f06-9a25-669ed741f2e5
+		summarizeBy: sum
+		sourceColumn: Day of Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d881b6a5-f0c7-4c77-b817-c45b4bed1680
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column QuarterNmb
+		dataType: int64
+		formatString: 0
+		lineageTag: 8cf8146f-97a6-4697-be3d-bd1f20abbb98
+		summarizeBy: sum
+		sourceColumn: QuarterNmb
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week of Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 39f328a6-5424-41fb-a9af-c5ec77343a71
+		summarizeBy: sum
+		sourceColumn: Week of Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: b8792d7a-b021-4f5b-9438-4ac23439f5a8
+		summarizeBy: sum
+		sourceColumn: Day of Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		dataType: string
+		lineageTag: 7bc81a08-84e2-4a8c-a6ad-2998b40a400b
+		summarizeBy: none
+		sourceColumn: Day Name
+		sortByColumn: 'Day of Week'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d6893eb-cc6e-47e7-b20e-8666e71ff2d9
+		summarizeBy: sum
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month / Year'
+		dataType: string
+		lineageTag: 17e578cf-1f51-4ecd-b766-0cfd52409b8d
+		summarizeBy: none
+		sourceColumn: Month / Year
+		sortByColumn: 'Start of Month'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Working Day' =
+			
+			Var is_working_day = IF([Working Days]=1,TRUE(),FALSE())
+			
+			Return
+			is_working_day
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c3cee918-b51b-4446-b055-0bb99e2213b3
+		summarizeBy: none
+		isDataTypeInferred
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Quarter'
+		dataType: string
+		lineageTag: 51b3b2c8-9710-40bc-bf38-f621dcf2795e
+		summarizeBy: none
+		sourceColumn: Day of Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week / Year'
+		dataType: string
+		lineageTag: d16d19a5-acab-4860-8869-c978a0bef28c
+		summarizeBy: none
+		sourceColumn: Week / Year
+		sortByColumn: 'Start of Week'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Week'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9db66bf6-3f9c-4136-a390-d5bcaa341e60
+		summarizeBy: none
+		sourceColumn: Start of Week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	hierarchy 'Year Hierarchy'
+		lineageTag: ef7a8ed7-9ad4-4576-b05a-e4ae3b1d836d
+
+		level Year
+			lineageTag: 73eb8ff3-53b4-4068-9b95-aecc65077636
+			column: Year
+
+		level Quarter
+			lineageTag: ff610923-2ca4-43a0-8bb5-fc0c1d14eecc
+			column: Quarter
+
+		level 'Month Name'
+			lineageTag: 9dc47c8d-742d-4276-aee5-95c3b105d26c
+			column: 'Month Name'
+
+		level 'Week of Year'
+			lineageTag: 5d9b25d8-9357-4487-aa40-aa5d8fba623e
+			column: 'Week of Year'
+
+		level 'Week of Month'
+			lineageTag: 627f7431-ed11-4837-8ae2-45b381e0940a
+			column: 'Week of Month'
+
+		level 'Day Name'
+			lineageTag: 3f76aa0b-88e5-4446-9820-9c0421a41b36
+			column: 'Day Name'
+
+	partition calendar = m
+		mode: import
+		source =
+				let
+				    //Variables
+				    StartDate = #date(2001,1,1),
+				    EndDate = #date(2024,12,31),
+				    Duration = Duration.Days(Duration.From(EndDate-StartDate))+1,
+				    Today = DateTime.Date(DateTime.LocalNow()),
+				
+				    //Date Columns
+				    Dates = List.Dates(StartDate,Duration,#duration(1,0,0,0)),
+				    #"Converted to Table" = Table.FromList(Dates, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Date"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Date", type date}}),
+				    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type", "Start of Month", each Date.StartOfMonth([Date]), type date),
+				    #"Inserted Year" = Table.AddColumn(#"Inserted Start of Month", "Year", each Date.Year([Date]), Int64.Type),
+				    #"Inserted Quarter" = Table.AddColumn(#"Inserted Year", "Quarter", each "Q"&Text.From(Date.QuarterOfYear([Date]))),
+				    #"Inserted QuarterNmb" = Table.AddColumn(#"Inserted Quarter", "QuarterNmb", each Date.QuarterOfYear([Date]), Int64.Type),
+				    #"Inserted Month Name" = Table.AddColumn(#"Inserted QuarterNmb", "Month Name", each Date.MonthName([Date]), type text),
+				    #"Inserted MonthAbv" = Table.AddColumn(#"Inserted Month Name", "MonthAbv", each Text.Start(Date.MonthName([Date]),3), type text),
+				    #"Inserted MonthNmb" = Table.AddColumn(#"Inserted MonthAbv", "MonthNmb", each Date.Month([Date]), Int64.Type),
+				    #"Inserted Week of Year" = Table.AddColumn(#"Inserted MonthNmb", "Week of Year", each Date.WeekOfYear([Date]), Int64.Type),
+				    #"Inserted Week of Month" = Table.AddColumn(#"Inserted Week of Year", "Week of Month", each Date.WeekOfMonth([Date]), Int64.Type),
+				    #"Inserted Day of Year" = Table.AddColumn(#"Inserted Week of Month", "Day of Year", each Date.DayOfYear([Date]), Int64.Type),
+				    #"Inserted Day of Month" = Table.AddColumn(#"Inserted Day of Year", "Day of Month", each Date.Day([Date]), Int64.Type),
+				    #"Inserted Day of Week" = Table.AddColumn(#"Inserted Day of Month", "Day of Week", each Date.DayOfWeek([Date]), Int64.Type),
+				    #"Inserted Day Name" = Table.AddColumn(#"Inserted Day of Week", "Day Name", each Date.DayOfWeekName([Date]), type text),
+				    #"Inserted Is Past" = Table.AddColumn(#"Inserted Day Name", "Is Past", each [Date]<Today),
+				    #"Changed Is Past to True False" = Table.TransformColumnTypes(#"Inserted Is Past",{{"Is Past", type logical}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Is Past to True False", "Month / Year", each Date.ToText([Date], "MMM/yyyy")),
+				    #"Added Day of Quarter" = Table.AddColumn(#"Added Custom", "Day of Quarter", each Date.DayOfYear(Date.From([Date])) - Date.DayOfYear(Date.From(Date.StartOfQuarter([Date]))) + 1),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Day of Quarter", "Week of Year", "Week of Year - Copy"),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "Year", "Year - Copy"),
+				    #"Merged Columns" = Table.CombineColumns(Table.TransformColumnTypes(#"Duplicated Column1", {{"Week of Year - Copy", type text}, {"Year - Copy", type text}}, "en-US"),{"Week of Year - Copy", "Year - Copy"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Week / Year"),
+				    #"Inserted Start of Week" = Table.AddColumn(#"Merged Columns", "Start of Week", each Date.StartOfWeek([Date]), type date)
+				in
+				    #"Inserted Start of Week"
+
+	annotation PBI_ResultType = Table
+
