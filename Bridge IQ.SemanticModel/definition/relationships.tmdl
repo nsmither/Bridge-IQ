@@ -13,7 +13,7 @@ relationship 8d14e89c-e544-4385-98f8-508dfc22b753
 
 relationship 83b360a2-33f5-7785-f8a7-ef35de4ab6ea
 	fromColumn: orders.'Customer ID'
-	toColumn: crm_customer_key.'Customer ID'
+	toColumn: customer_key.'Customer ID'
 
 relationship 27014f7e-0f89-4b2b-8180-abb1dca93024
 	fromColumn: overdue_check_calls.'Movement ID'
@@ -31,7 +31,7 @@ relationship 30050c35-cbbb-4842-b573-1848d35afd2c
 relationship a71c78f7-f7d2-4e03-9bc8-e958e28c95a2
 	crossFilteringBehavior: bothDirections
 	fromColumn: crm.x_studio_mcleod_code
-	toColumn: crm_customer_key.'Customer ID'
+	toColumn: customer_key.'Customer ID'
 
 relationship d523c10b-ff71-4850-b55c-24bd060c999c
 	isActive: false
@@ -77,26 +77,9 @@ relationship 147be2e7-70b7-4b36-a593-93470f98d668
 	fromColumn: customer_margin_goal.Month
 	toColumn: calendar.Date
 
-relationship a6bff216-a6f5-4159-b052-a6e5f85c55cf
-	fromColumn: customer_key.'Customer Bridge ID'
-	toColumn: parent_customer_key.'Customer ID'
-
-relationship 4e10fe7c-960b-47ed-a215-d917d96a08ae
-	fromColumn: customer_margin_goal.'Customer Code'
-	toColumn: customer_key.'Customer ID'
-
-relationship 609776e0-5105-4bff-bba8-5b32a73d8c26
-	crossFilteringBehavior: bothDirections
-	fromColumn: orders.'Customer ID'
-	toColumn: customer_key.'Customer ID'
-
 relationship 287a95fd-ec44-4974-83d3-8f9aaf31f0da
 	fromColumn: orders.Lane
 	toColumn: lanes.Lane
-
-relationship 2ae30b7a-ac2f-400a-bc54-2c747fdc305b
-	fromColumn: crm_customer_key.'Customer Bridge ID'
-	toColumn: crm_parent_customer_key.'Customer ID'
 
 relationship 04793540-54a8-4973-a51b-d06c026283dc
 	fromColumn: movements.'Dispatcher Id'
@@ -132,7 +115,7 @@ relationship 425f4b74-db29-474e-8576-a4bfd06a617d
 
 relationship 319ab913-a323-4a0b-ae8f-afc6296e8b6f
 	fromColumn: pcs_loads.'Customer ID'
-	toColumn: crm_customer_key.'Customer ID'
+	toColumn: customer_key.'Customer ID'
 
 relationship c26ad854-6dba-47cc-aa2d-d042840bd668
 	fromColumn: pcs_loads.Lane
@@ -235,6 +218,7 @@ relationship 77a8daee-43d1-4d8f-f88f-fbea6c59c10c
 	toColumn: salesperson_key.Name
 
 relationship 4a2e5e68-e856-6032-7133-2fc88fd755db
+	isActive: false
 	fromColumn: crm.user_id
 	toColumn: salesperson_key.Name
 
@@ -298,7 +282,6 @@ relationship 564f5bb0-955f-a395-f272-06618d09b2ac
 	toColumn: salesperson_key.Name
 
 relationship e2e8d78b-23a5-11eb-ae12-a5862abbf0d1
-	isActive: false
 	crossFilteringBehavior: bothDirections
 	toCardinality: many
 	fromColumn: crm.x_studio_mcleod_code

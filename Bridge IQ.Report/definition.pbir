@@ -2,7 +2,7 @@
   "version": "4.0",
   "datasetReference": {
     "byPath": {
-      "path": "../Bridge IQ V6.SemanticModel"
+      "path": "../Bridge IQ.SemanticModel"
     },
     "byConnection": null
   }

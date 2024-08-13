@@ -1,4 +1,4 @@
-table crm_customer_key
+table customer_key
 	lineageTag: b98d9d2d-73b0-4ee7-9962-b97515159738
 
 	column 'Customer ID'
@@ -133,7 +133,7 @@ table crm_customer_key
 
 		annotation SummarizationSetBy = Automatic
 
-	partition crm_customer_key = m
+	partition customer_key = m
 		mode: import
 		source =
 				let

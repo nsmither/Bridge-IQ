@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "SemanticModel",
-    "displayName": "Bridge IQ V6"
+    "type": "Report",
+    "displayName": "Bridge IQ"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "15352f4f-0749-43b6-a8fc-95781fba5f91"
+    "logicalId": "af66bd2f-a9bb-474d-b88b-db57ad7c4cf6"
   }
 }

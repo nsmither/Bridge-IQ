@@ -52,7 +52,7 @@ queryGroup 'Transform File from parade_orders_new\Helper Queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
-annotation PBI_QueryOrder = ["behavior_key","behavior_goals","bws_behaviors","carrier_key","contacts_module","contacts_parent","crm","crm_customer_key","crm_parent_customer_key","crm_stages","customer_duns","customer_key","customer_margin_goal","daily_numbers","daily_number_override","dispatcher_key","dnc","HealthyPipelineGoals","lanes","lead_ops","margin_load_count_goals","movements","observed_holidays","Old Callins","orders","overdue_check_calls","parent_customer_key","pcs_loads","recruiter_key","calendar","recruitment","recruitment_goals","Parameter6","Transform Sample File (6)","Sample File (6)","Transform File (6)","rev_codes","salesperson_change","sdr_key","sop_issues","wolf_pack","Parameter5","Transform Sample File (5)","Sample File (5)","Transform File (5)","shipper_zips","shipper_three_digit_zips","consignee_zip_codes","consignee_three_digit_zip_codes","payments_received","avereage_days_to_pay","carrier_dispatch_movement_data","check_call_roller","highway_onboarded","pay_schedule","job_history","employees","salesperson_key","behaviors_crm","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","callins","Parameter7","Transform Sample File (7)","Sample File (7)","Transform File (7)","parade_orders","Parameter1","Transform Sample File","Sample File","Transform File"]
+annotation PBI_QueryOrder = ["behavior_key","behavior_goals","bws_behaviors","carrier_key","contacts_module","contacts_parent","crm","customer_key","crm_stages","customer_duns","customer_margin_goal","daily_numbers","daily_number_override","dispatcher_key","dnc","HealthyPipelineGoals","lanes","lead_ops","margin_load_count_goals","movements","observed_holidays","Old Callins","orders","overdue_check_calls","parent_customer_key","pcs_loads","recruiter_key","calendar","recruitment","recruitment_goals","Parameter6","Transform Sample File (6)","Sample File (6)","Transform File (6)","rev_codes","salesperson_change","sdr_key","sop_issues","wolf_pack","Parameter5","Transform Sample File (5)","Sample File (5)","Transform File (5)","shipper_zips","shipper_three_digit_zips","consignee_zip_codes","consignee_three_digit_zip_codes","payments_received","avereage_days_to_pay","carrier_dispatch_movement_data","check_call_roller","highway_onboarded","pay_schedule","job_history","employees","salesperson_key","behaviors_crm","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","callins","Parameter7","Transform Sample File (7)","Sample File (7)","Transform File (7)","parade_orders","Parameter1","Transform Sample File","Sample File","Transform File"]
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
@@ -68,7 +68,7 @@ ref table recruiter_key
 ref table measures_
 ref table movements
 ref table orders
-ref table crm_customer_key
+ref table customer_key
 ref table dispatcher_key
 ref table margin_load_count_goals
 ref table overdue_check_calls
@@ -88,9 +88,7 @@ ref table contacts_parent
 ref table bws_behaviors
 ref table HealthyPipelineGoals
 ref table customer_margin_goal
-ref table customer_key
 ref table lanes
-ref table crm_parent_customer_key
 ref table daily_number_override
 ref table pcs_loads
 ref table shipper_zips

@@ -403,8 +403,8 @@ table measures_
 			Var max_points = 15
 			Var max_percentage_allowed = .4
 			
-			Var max_of_margin = MAXX(ALL(crm_customer_key[Customer ID]),[Margin])
-			Var grand_total_margin = CALCULATE([Margin],ALL(crm_customer_key[Customer ID]))
+			Var max_of_margin = MAXX(ALL(customer_key[Customer ID]),[Margin])
+			Var grand_total_margin = CALCULATE([Margin],ALL(customer_key[Customer ID]))
 			Var top_customer_percent_of_grand_total = DIVIDE(max_of_margin,grand_total_margin)
 			
 			Var diversity_points_pre_july24 = 
@@ -3472,16 +3472,12 @@ table measures_
 
 	measure 'First Load after lead passed' = ```
 			
-			Var lead_passed_date = min(crm[x_studio_lead_passed_date])
-			Var first_load_after_passed = 
-			    CALCULATE(MIN(orders[Ship Scheduled Early Date]),
-			    movements[Move Status]<>"Available",
-			    orders[Ship Scheduled Early Date]>=lead_passed_date
+			    CALCULATE(
+			        MIN(orders[Ship Scheduled Early Date]),
+			        movements[Move Status]<>"Available",
+			        FILTER(orders,orders[Ship Scheduled Early Date]>=[Lead Passed Date])
 			)
 			
-			      
-			Return
-			first_load_after_passed
 			```
 		formatString: Short Date
 		displayFolder: CRM Measures\SDR
@@ -3489,27 +3485,17 @@ table measures_
 
 	measure 'SDR Last Ship Date' = ```
 			
-			
-			Var mcleod_last_ship_date = 
-			    CALCULATE(
-			        MAX(orders[Ship Scheduled Early Date]),
-			        movements[Move Status]<>"Available")
-			
-			Var ifs =
 			    IF(
 			        CALCULATE(
 			            MAX(
 			                orders[Ship Scheduled Early Date]),
-			                movements[Move Status]<>"Avaialble")<MIN(crm[x_studio_lead_passed_date]),BLANK(),
-			    IF(mcleod_last_ship_date>=TODAY(),TODAY(),
-			    CALCULATE(
-			        MAX(orders[Ship Scheduled Early Date]),
-			        movements[Move Status]<>"Available")
-			    ))
-			    
-			
-			Return
-			ifs
+			                movements[Move Status]<>"Avaialble")<[Lead Passed Date],BLANK(),
+			        IF(
+			            MAX(orders[Ship Scheduled Early Date])>=TODAY(),
+			            TODAY(),
+			            CALCULATE(
+			                MAX(orders[Ship Scheduled Early Date]),
+			                movements[Move Status]<>"Available")))
 			```
 		formatString: Short Date
 		displayFolder: CRM Measures\SDR
@@ -3517,20 +3503,9 @@ table measures_
 
 	measure 'SDR Closes' = ```
 			
-			Var lead_passed_date = MIN(crm[x_studio_lead_passed_date])
-			Var first_load_after_passed = 
-			    CALCULATE(MIN(orders[Ship Scheduled Early Date]),
-			    movements[Move Status]<>"Available",
-			    orders[Ship Scheduled Early Date]>=lead_passed_date
-			)
-			VAr sdr_closes = 
 			    CALCULATE(
 			        DISTINCTCOUNT(crm[x_studio_mcleod_code]),
-			        FILTER(crm,first_load_after_passed>=MIN(crm[x_studio_lead_passed_date]))
-			)
-			
-			Return
-			sdr_closes
+			        FILTER(crm,[First Load after lead passed]>=[Lead Passed Date]))
 			```
 		formatString: 0
 		displayFolder: CRM Measures\SDR
@@ -3548,20 +3523,42 @@ table measures_
 
 	measure 'Revenue After Lead Passed' =
 			
-			CALCULATE([Revenue Covered],FILTER(orders,orders[Ship Scheduled Early Date]>=MIN(crm[x_studio_lead_passed_date])))
+			CALCULATE(
+			    SUM(orders[Total Charges]),
+			    FILTER(movements,movements[Move Status]<>"Available"),
+			    FILTER(orders,orders[Ship Scheduled Early Date]>=[Lead Passed Date]))
 		displayFolder: CRM Measures\SDR
 		lineageTag: 06698a42-6d5c-46ed-9a65-adff8c4d6bc9
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Margin After Lead Passed' =
-			
-			CALCULATE(
-			    [McLeod Margin],
-			    FILTER(orders, orders[Ship Scheduled Early Date]>=MIN(crm[x_studio_lead_passed_date])),
-			    REMOVEFILTERS(crm[x_studio_lead_type]))
+	measure 'Margin After Lead Passed' = [Revenue After Lead Passed]-[Carrier Pay After Lead Passed]
 		displayFolder: CRM Measures\SDR
 		lineageTag: 1b51344d-8037-4d1a-877b-928607b22571
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lead Passed Date' = ```
+			
+			CALCULATE(
+			    MIN(crm[x_studio_lead_passed_date]),
+			    FILTER(crm,crm[x_studio_lead_passed_date]>=MIN('calendar'[Date])),
+			    FILTER(crm,crm[x_studio_lead_passed_date]<=MAX('calendar'[Date])))
+			
+			```
+		formatString: Short Date
+		displayFolder: CRM Measures\SDR
+		lineageTag: 690bb474-dddf-4f36-88c6-f1d451b91801
+
+	measure 'Carrier Pay After Lead Passed' = ```
+			
+			    CALCULATE(
+			        SUM(orders[Projected Total Carrier Pay]),
+			        FILTER(movements,movements[Move Status]<>"Available"),
+			        FILTER(orders,orders[Ship Scheduled Early Date]>=[Lead Passed Date]))
+			```
+		displayFolder: CRM Measures\SDR
+		lineageTag: 5c551ed6-21a7-454c-8b18-8374696b65d9
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

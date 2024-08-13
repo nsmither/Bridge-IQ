@@ -83,7 +83,7 @@ table parent_customer_key
 		dataType: int64
 		formatString: 0
 		lineageTag: 4bab3007-eb6c-4917-8eb2-baf737939283
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: Pay Terms
 
 		annotation SummarizationSetBy = Automatic
@@ -100,7 +100,7 @@ table parent_customer_key
 		dataType: int64
 		formatString: 0
 		lineageTag: c27ace02-3141-4594-b9fe-64c1ae273c19
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: Billed Orders
 
 		annotation SummarizationSetBy = Automatic
@@ -109,7 +109,7 @@ table parent_customer_key
 		dataType: int64
 		formatString: 0
 		lineageTag: 9c52cbad-f4fb-47c4-bde1-c9ea975b259c
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: Orders
 
 		annotation SummarizationSetBy = Automatic
@@ -117,7 +117,7 @@ table parent_customer_key
 	column 'Average Days To Pay'
 		dataType: double
 		lineageTag: 0f785fa0-8349-45f7-89fe-405c6f00877b
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: Average Days To Pay
 
 		annotation SummarizationSetBy = Automatic
@@ -137,9 +137,11 @@ table parent_customer_key
 		mode: import
 		source =
 				let
-				    Source = crm_customer_key
+				    Source = customer_key
 				in
 				    Source
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
 
