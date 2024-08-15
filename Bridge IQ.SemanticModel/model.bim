@@ -7762,7 +7762,8 @@
             "displayFolder": "***Undocumented***",
             "expression": [
               "",
-              "IF(YEAR(min('calendar'[Date]))=YEAR(TODAY()) && MONTH(min('calendar'[Date]))=MONTH(TODAY()),1,0)"
+              "if(YEAR(min('calendar'[Date]))=YEAR(TODAY()) && MONTH(min('calendar'[Date]))=MONTH(TODAY())+1,1,0)",
+              ""
             ],
             "formatString": "0",
             "lineageTag": "37103aab-c910-4d7e-bd6b-e3a1b818bf2d"
@@ -8065,6 +8066,66 @@
             "expression": "[Hires 1MA]-[Hires 2MA]",
             "formatString": "0",
             "lineageTag": "88f2538f-ffe8-4349-8810-0253f8798cc9"
+          },
+          {
+            "name": "Ops Move Date color",
+            "displayFolder": "HR",
+            "expression": [
+              "",
+              "",
+              "VAR OPS = CONTAINSSTRING(min(employees[Devision]),\"CRT\")",
+              "VAR IFS = IF(OPS = TRUE,1,0)",
+              "",
+              "RETURN",
+              "IFS"
+            ],
+            "formatString": "0",
+            "lineageTag": "6e4167f3-f7ad-445b-94da-e0a5642f258e"
+          },
+          {
+            "name": "SDR Move Date color",
+            "displayFolder": "HR",
+            "expression": [
+              "",
+              "",
+              "VAR SDR =CONTAINSSTRING(min(employees[Devision]),\"SDR\")",
+              "VAR IFS = IF(SDR = TRUE,1,0)",
+              "",
+              "RETURN",
+              "IFS"
+            ],
+            "formatString": "0",
+            "lineageTag": "b6aa68da-89de-42db-8a18-a44396dd82cc"
+          },
+          {
+            "name": "D-Team Move Date color",
+            "displayFolder": "HR",
+            "expression": [
+              "",
+              "",
+              "var dteam = CONTAINSSTRING(min(employees[Devision]),\"Development Team\")",
+              "VAR IFS = IF(dteam = TRUE,1,0)",
+              "",
+              "RETURN",
+              "IFS"
+            ],
+            "formatString": "0",
+            "lineageTag": "fe3169e6-494a-48bd-8558-9dd8ff84d955"
+          },
+          {
+            "name": "LA Move Date color",
+            "displayFolder": "HR\\Move Dates",
+            "expression": [
+              "",
+              "",
+              "var LA = CONTAINSSTRING(min(employees[Devision]),\"Logistics Advisor Sales\")",
+              "VAR IFS = IF(LA = TRUE,1,0)",
+              "",
+              "RETURN",
+              "IFS"
+            ],
+            "formatString": "0",
+            "lineageTag": "325dbdc9-e675-444b-9c02-51bcbd1e0c53"
           }
         ],
         "partitions": [
@@ -11155,10 +11216,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Exception"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -12672,10 +12729,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -13353,10 +13406,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -14079,10 +14128,6 @@
       {
         "name": "CRT Movement Data",
         "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
