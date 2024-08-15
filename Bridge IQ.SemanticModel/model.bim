@@ -4,7 +4,7 @@
     "annotations": [
       {
         "name": "PBI_QueryOrder",
-        "value": "[\"behavior_key\",\"behavior_goals\",\"bws_behaviors\",\"carrier_key\",\"contacts_module\",\"contacts_parent\",\"crm\",\"customer_key\",\"crm_stages\",\"customer_duns\",\"customer_margin_goal\",\"daily_numbers\",\"daily_number_override\",\"dispatcher_key\",\"dnc\",\"HealthyPipelineGoals\",\"lanes\",\"lead_ops\",\"margin_load_count_goals\",\"movements\",\"observed_holidays\",\"Old Callins\",\"orders\",\"overdue_check_calls\",\"parent_customer_key\",\"pcs_loads\",\"recruiter_key\",\"calendar\",\"recruitment\",\"recruitment_goals\",\"Parameter6\",\"Transform Sample File (6)\",\"Sample File (6)\",\"Transform File (6)\",\"rev_codes\",\"salesperson_change\",\"sdr_key\",\"sop_issues\",\"wolf_pack\",\"Parameter5\",\"Transform Sample File (5)\",\"Sample File (5)\",\"Transform File (5)\",\"shipper_zips\",\"shipper_three_digit_zips\",\"consignee_zip_codes\",\"consignee_three_digit_zip_codes\",\"payments_received\",\"avereage_days_to_pay\",\"carrier_dispatch_movement_data\",\"check_call_roller\",\"highway_onboarded\",\"pay_schedule\",\"job_history\",\"employees\",\"salesperson_key\",\"behaviors_crm\",\"Parameter4\",\"Transform Sample File (4)\",\"Sample File (4)\",\"Transform File (4)\",\"callins\",\"Parameter7\",\"Transform Sample File (7)\",\"Sample File (7)\",\"Transform File (7)\",\"parade_orders\",\"Parameter1\",\"Transform Sample File\",\"Sample File\",\"Transform File\"]"
+        "value": "[\"behavior_key\",\"behavior_goals\",\"bws_behaviors\",\"carrier_key\",\"contacts_module\",\"contacts_parent\",\"crm\",\"customer_key\",\"crm_stages\",\"customer_duns\",\"customer_margin_goal\",\"daily_numbers\",\"daily_number_override\",\"dispatcher_key\",\"dnc\",\"HealthyPipelineGoals\",\"lanes\",\"lead_ops\",\"margin_load_count_goals\",\"movements\",\"observed_holidays\",\"Old Callins\",\"orders\",\"overdue_check_calls\",\"parent_customer_key\",\"pcs_loads\",\"recruiter_key\",\"calendar\",\"recruitment\",\"recruitment_goals\",\"Parameter6\",\"Transform Sample File (6)\",\"Sample File (6)\",\"Transform File (6)\",\"rev_codes\",\"salesperson_change\",\"sdr_key\",\"sop_issues\",\"wolf_pack\",\"Parameter5\",\"Transform Sample File (5)\",\"Sample File (5)\",\"Transform File (5)\",\"shipper_zips\",\"shipper_three_digit_zips\",\"consignee_zip_codes\",\"consignee_three_digit_zip_codes\",\"payments_received\",\"avereage_days_to_pay\",\"carrier_dispatch_movement_data\",\"check_call_roller\",\"highway_onboarded\",\"pay_schedule\",\"job_history\",\"employees\",\"salesperson_key\",\"behaviors_crm\",\"Parameter4\",\"Transform Sample File (4)\",\"Sample File (4)\",\"Transform File (4)\",\"callins\",\"Parameter7\",\"Transform Sample File (7)\",\"Sample File (7)\",\"Transform File (7)\",\"parade_orders\",\"Parameter1\",\"Transform Sample File\",\"Sample File\",\"Transform File\",\"CRT Movement Data\"]"
       },
       {
         "name": "__PBI_TimeIntelligenceEnabled",
@@ -27,260 +27,497 @@
           "content": {
             "Entities": {
               "check_call_roller.scheduled_check_call_time": {
-                "Binding": {
-                  "ConceptualEntity": "check_call_roller",
-                  "ConceptualProperty": "Scheduled Check Call Time"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "check_call_roller",
+                    "ConceptualProperty": "Scheduled Check Call Time"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.avg_margin__goal": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Avg Margin % Goal"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Avg Margin % Goal"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_carrier_onboards_crt": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of Carrier Onboards CRT"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of Carrier Onboards CRT"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_movements_with_1_or_more_pings": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of movements with 1 or more pings"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of movements with 1 or more pings"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_movements_with_3_or_more_pings": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of movements with 3 or more pings"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of movements with 3 or more pings"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_orders_covered": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of Orders Covered"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of Orders Covered"
+                  }
                 },
-                "State": "Generated"
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Orders Covered": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
               },
               "measures_.count_of_orders_covered_1ma": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of Orders Covered 1MA"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of Orders Covered 1MA"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_orders_covered_1ya": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of Orders Covered 1YA"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of Orders Covered 1YA"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_orders_covered_by_team": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of orders covered by team"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of orders covered by team"
+                  }
                 },
-                "State": "Generated"
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Covered by team": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
               },
               "measures_.count_of_orders_covered_crt": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of orders covered CRT"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of orders covered CRT"
+                  }
                 },
-                "State": "Generated"
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Covered by CRT": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
               },
               "measures_.count_of_orders_covered_mom_variance": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of Orders Covered MOM Variance"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of Orders Covered MOM Variance"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_orders_covered_mtd": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of Orders Covered MTD"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of Orders Covered MTD"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.count_of_orders_covered_parade": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of orders covered Parade"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of orders covered Parade"
+                  }
                 },
-                "State": "Generated"
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Covered by Parade": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
               },
               "measures_.count_of_trackable_movements": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Count of Trackable Movements"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Count of Trackable Movements"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.customer_margin_vs_customer_margin_goal_variance": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Customer Margin vs Customer Margin Goal Variance"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Customer Margin vs Customer Margin Goal Variance"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.load_count_mtd_1ma": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Load Count MTD 1MA"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Load Count MTD 1MA"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.load_count_mtd_1ya": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Load Count MTD 1YA"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Load Count MTD 1YA"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.load_count_qoq_qtd": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Load Count QOQ QTD"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Load Count QOQ QTD"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin__mtd_goal_variance": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin % MTD Goal Variance"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin % MTD Goal Variance"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin_mtd_goal": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin MTD Goal"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin MTD Goal"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin_mtd_sppy": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin MTD SPPY"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin MTD SPPY"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin_mtd_sppy_1ya": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin MTD SPPY 1YA"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin MTD SPPY 1YA"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin_mtd_vs_margin_mtd_goal_variance": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin MTD vs Margin MTD Goal variance"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin MTD vs Margin MTD Goal variance"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin_per_order": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin Per Order"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin Per Order"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin_ytd_sppy": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin YTD SPPY"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin YTD SPPY"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.margin_ytd_sppy_1ya": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Margin YTD SPPY 1YA"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Margin YTD SPPY 1YA"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.of_eligible_loads_covered_crt__p_pass_back_1_or_more": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "% of eligible loads covered CRT + P (Pass Back 1 or more)"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "% of eligible loads covered CRT + P (Pass Back 1 or more)"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.of_orders_covered_crt": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "% of orders covered CRT"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "% of orders covered CRT"
+                  }
                 },
                 "State": "Generated"
+              },
+              "measures_.of_orders_covered_crt__p": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "% of orders covered CRT + P"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Success Rate": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "measures_.pass_rate_1ma_sales_to_crt": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Pass Rate 1MA (Sales to CRT)"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Pass Rate 1MA": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "measures_.pass_rate_2ma_sales_to_crt": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Pass Rate 2MA (Sales to CRT)"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Pass Rate 2MA": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "measures_.pass_rate_mom_mtd_variance": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Pass Rate MOM MTD Variance"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Variance": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "measures_.pass_rate_mom_variance": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Pass Rate MOM Variance"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Variance": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
               },
               "measures_.pass_rate_sales_to_crt": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Pass Rate (Sales to CRT)"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Pass Rate (Sales to CRT)"
+                  }
                 },
-                "State": "Generated"
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Pass Rate": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
               },
               "measures_.percentage_of_movement_with_1_or_more_pings": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Percentage Of movement with 1 or more pings"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Percentage Of movement with 1 or more pings"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.percentage_of_movement_with_3_or_more_pings": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Percentage Of movement with 3 or more pings"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Percentage Of movement with 3 or more pings"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.revenue_covered": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Revenue Covered"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Revenue Covered"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.sumx_total_overdue": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "SumX Total Overdue"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "SumX Total Overdue"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.total_load_count_1ya": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Total load Count 1YA"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Total load Count 1YA"
+                  }
                 },
                 "State": "Generated"
               },
               "measures_.total_success_rate": {
-                "Binding": {
-                  "ConceptualEntity": "measures_",
-                  "ConceptualProperty": "Total Success Rate"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "measures_",
+                    "ConceptualProperty": "Total Success Rate"
+                  }
                 },
                 "State": "Generated"
               },
               "overdue_check_calls.check_call_time": {
-                "Binding": {
-                  "ConceptualEntity": "overdue_check_calls",
-                  "ConceptualProperty": "Check Call time"
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "overdue_check_calls",
+                    "ConceptualProperty": "Check Call time"
+                  }
                 },
                 "State": "Generated"
               }
             },
             "Language": "en-US",
-            "Version": "1.0.0"
+            "Version": "2.0.0"
           },
           "contentType": "json"
         }
@@ -1447,6 +1684,45 @@
         "toCardinality": "many",
         "toColumn": "Customer ID",
         "toTable": "orders"
+      },
+      {
+        "name": "f4f5f86a-ba74-4c8a-6f72-6ede1ef803d5",
+        "fromColumn": "Avail Time",
+        "fromTable": "CRT Movement Data",
+        "isActive": false,
+        "toColumn": "Date",
+        "toTable": "calendar"
+      },
+      {
+        "name": "4328794a-0a0e-d202-df36-9f1308614a66",
+        "fromColumn": "Covered Time",
+        "fromTable": "CRT Movement Data",
+        "isActive": false,
+        "toColumn": "Date",
+        "toTable": "calendar"
+      },
+      {
+        "name": "6e8acc7b-7160-f6db-771e-ae0654052974",
+        "fromColumn": "Give Back Time ",
+        "fromTable": "CRT Movement Data",
+        "isActive": false,
+        "toColumn": "Date",
+        "toTable": "calendar"
+      },
+      {
+        "name": "755851e6-088f-6852-f977-ebbb7ee7a036",
+        "fromColumn": "Load Board Time",
+        "fromTable": "CRT Movement Data",
+        "isActive": false,
+        "toColumn": "Date",
+        "toTable": "calendar"
+      },
+      {
+        "name": "8fff883f-8aa5-efa7-72c0-5b3101adf7e5",
+        "fromColumn": "Movement ID",
+        "fromTable": "CRT Movement Data",
+        "toColumn": "Movement ID",
+        "toTable": "movements"
       }
     ],
     "sourceQueryCulture": "en-US",
@@ -3058,7 +3334,16 @@
               "***Including Available***"
             ],
             "displayFolder": "Operations Measures\\Count of Orders\\McLeod",
-            "expression": "DISTINCTCOUNT(orders[Order ID])",
+            "expression": [
+              "",
+              "",
+              "CALCULATE",
+              "    (DISTINCTCOUNT(orders[Order ID]),",
+              "    FILTER(VALUES(orders[Ship Scheduled Early Date]),orders[Ship Scheduled Early Date] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES(orders[Ship Scheduled Early Date]), orders[Ship Scheduled Early Date] >=MIN('Calendar'[Date])))",
+              "",
+              "    "
+            ],
             "formatString": "0",
             "lineageTag": "9361d764-7974-424f-a790-250359a69452"
           },
@@ -3066,7 +3351,15 @@
             "name": "PCS Count of Orders",
             "description": "Count of the distinct order numbers in PCS",
             "displayFolder": "Operations Measures\\Count of Orders\\PCS",
-            "expression": "DISTINCTCOUNT(pcs_loads[Order ID])",
+            "expression": [
+              "",
+              "CALCULATE",
+              "    (DISTINCTCOUNT(pcs_loads[Order ID]),",
+              "    FILTER(VALUES(pcs_loads[Ship Date]),pcs_loads[Ship Date] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES(pcs_loads[Ship Date]), pcs_loads[Ship Date] >=MIN('Calendar'[Date])))",
+              "",
+              ""
+            ],
             "formatString": "0",
             "lineageTag": "5aee6b10-6dea-4806-9096-b71dd7811bf6"
           },
@@ -6447,7 +6740,7 @@
               "Var mpdg_wolf_pack = ",
               "    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[Wolf Pack])=BLANK(),override_blank*[Working days Elapsed],mpd*[Working days Elapsed])",
               "",
-              "Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Salesperson Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])",
+              "Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])",
               "",
               "RETURN",
               "mpdg"
@@ -6688,17 +6981,24 @@
             "displayFolder": "***Undocumented***",
             "expression": [
               "",
-              "Var num_pass = CALCULATE(COUNT(carrier_dispatch_movement_data[Movement ID]), ",
-              "    carrier_dispatch_movement_data[Number of Pass Backs] >= 0)",
-              "    ",
+              "Var num_pass = CALCULATE(",
+              "    DISTINCTCOUNT('CRT Movement Data'[Movement ID]),",
+              "    'CRT Movement Data'[Avail #] >=1,",
+              "    FILTER(VALUES('CRT Movement Data'[Avail Time]),'CRT Movement Data'[Avail Time] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES('CRT Movement Data'[Avail Time]),'CRT Movement Data'[Avail Time] >= MIN('Calendar'[Date])))",
               "",
-              "VAR pass_by_total = DIVIDE(num_pass,[Count of Orders] )",
               "",
+              "var count_ = CALCULATE",
+              "    (DISTINCTCOUNT(orders[Order ID]),",
+              "    FILTER(VALUES(orders[Ship Scheduled Early Date]),orders[Ship Scheduled Early Date] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES(orders[Ship Scheduled Early Date]), orders[Ship Scheduled Early Date] >=MIN('Calendar'[Date])))",
               "",
-              "return ",
+              "VAR pass_by_total = DIVIDE(num_pass,count_)",
+              "",
+              "RETURN",
               "pass_by_total"
             ],
-            "formatString": "0.0%;-0.0%;0.0%",
+            "formatString": "0.00%;-0.00%;0.00%",
             "lineageTag": "5a686f24-15b2-4d17-8253-44d778a2c007"
           },
           {
@@ -6726,7 +7026,7 @@
             "name": "Pass Rate MTD",
             "displayFolder": "***Undocumented***",
             "expression": "TOTALMTD([Pass Rate (Sales to CRT)],'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))",
-            "formatString": "0.0%;-0.0%;0.0%",
+            "formatString": "0.00%;-0.00%;0.00%",
             "lineageTag": "f46d5baf-c817-4797-bdaf-aa2f530c858b"
           },
           {
@@ -6772,12 +7072,15 @@
             "displayFolder": "***Undocumented***",
             "expression": [
               "",
-              "Var num_pass = CALCULATE(DISTINCTCOUNT(carrier_dispatch_movement_data[Movement ID]), ",
-              "    carrier_dispatch_movement_data[Number of Pass Backs] >= 0)",
+              "",
+              "Var num_pass = CALCULATE(",
+              "    DISTINCTCOUNT('CRT Movement Data'[Movement ID]), ",
+              "    FILTER(VALUES('CRT Movement Data'[Avail Time]),'CRT Movement Data'[Avail Time] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES('CRT Movement Data'[Avail Time]),'CRT Movement Data'[Avail Time] >= MIN('Calendar'[Date])))",
+              "",
               "",
               "RETURN",
-              "num_pass",
-              ""
+              "num_pass"
             ],
             "formatString": "0",
             "lineageTag": "03d6cba5-e875-45bb-80cd-81a4841e8bc5"
@@ -6896,7 +7199,7 @@
           {
             "name": "Was Passed",
             "displayFolder": "***Undocumented***",
-            "expression": "if(min(movements[Movement ID]) = min(carrier_dispatch_movement_data[Movement ID]),1,0)",
+            "expression": "if(min(movements[Movement ID]) = min('CRT Movement Data'[Movement ID]),1,0)",
             "formatString": "0",
             "lineageTag": "fc2607b1-7b3f-4850-b273-3d05fab47fa5"
           },
@@ -7327,24 +7630,13 @@
           },
           {
             "name": "Turnover YOY Variance",
-            "annotations": [
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"isGeneralNumber\":true}"
-              }
-            ],
             "displayFolder": "HR",
             "expression": "[Turnover Rate]-[Turnover Rate 12 Months Prior]",
+            "formatString": "0.00%;-0.00%;0.00%",
             "lineageTag": "f092ff6e-93cb-49a8-8797-ef8fc0d7fc94"
           },
           {
             "name": "Avg Monthly Staff Turnover",
-            "annotations": [
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"isGeneralNumber\":true}"
-              }
-            ],
             "displayFolder": "HR",
             "expression": [
               "",
@@ -7357,6 +7649,7 @@
               "    [avg staff turnover]",
               ")"
             ],
+            "formatString": "0.00%;-0.00%;0.00%",
             "lineageTag": "5e22ca9d-baa3-46d7-9a14-e2e56fae5781"
           },
           {
@@ -7477,8 +7770,26 @@
           {
             "name": "test",
             "displayFolder": "***Undocumented***",
-            "expression": "1",
-            "formatString": "0",
+            "expression": [
+              "",
+              "",
+              "Var num_pass = CALCULATE(",
+              "    DISTINCTCOUNT('CRT Movement Data'[Movement ID]), ",
+              "    FILTER(VALUES('CRT Movement Data'[Avail Time]),'CRT Movement Data'[Avail Time] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES('CRT Movement Data'[Avail Time]),'CRT Movement Data'[Avail Time] >= MIN('Calendar'[Date])))",
+              "",
+              "",
+              "var count_ = CALCULATE",
+              "    (DISTINCTCOUNT(orders[Order ID]),",
+              "    FILTER(VALUES(orders[Ship Scheduled Early Date]),orders[Ship Scheduled Early Date] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES(orders[Ship Scheduled Early Date]), orders[Ship Scheduled Early Date] >=MIN('Calendar'[Date])))",
+              "",
+              "VAR pass_by_total = DIVIDE(num_pass,count_)",
+              "",
+              "RETURN",
+              "pass_by_total"
+            ],
+            "formatString": "#,0%;-#,0%;#,0%",
             "lineageTag": "8e761e2c-e137-4abf-8163-1dd9a4ff0fbe"
           },
           {
@@ -7652,6 +7963,108 @@
               "        FILTER(orders,orders[Ship Scheduled Early Date]>=[Lead Passed Date]))"
             ],
             "lineageTag": "5c551ed6-21a7-454c-8b18-8374696b65d9"
+          },
+          {
+            "name": "Total Turnover Last 30 days",
+            "displayFolder": "HR",
+            "expression": "DIVIDE([Staff Turnover Last 30 Days],[Current Staff Last 30 Days])",
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "f0a6123a-84bf-4780-ac44-1911c4ac69c9"
+          },
+          {
+            "name": "Staff Turnover Last 30 Days",
+            "displayFolder": "HR",
+            "expression": [
+              "",
+              "CALCULATE( COUNTROWS(employees),",
+              "    FILTER( VALUES(employees[Termination Date]), employees[Termination Date]>= (TODAY()-30)),",
+              "        employees[Termination Date]<>BLANK(),",
+              "    FILTER(employees,employees[Termination Date]<=TODAY()))"
+            ],
+            "formatString": "0",
+            "lineageTag": "6c4ecf40-a646-47fc-bd2d-60319560b355"
+          },
+          {
+            "name": "Current Staff Last 30 Days",
+            "displayFolder": "HR",
+            "expression": [
+              "",
+              "CALCULATE( COUNTROWS(employees),",
+              "    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= TODAY()),",
+              "    FILTER( VALUES( employees[Termination Date]), OR( employees[Termination Date]>=(TODAY()-30),ISBLANK(employees[Termination Date]))))"
+            ],
+            "formatString": "0",
+            "lineageTag": "95f107bc-053a-4478-a1bd-70b24e6e7cf3"
+          },
+          {
+            "name": "Turnover 60-30 Days Ago",
+            "displayFolder": "HR",
+            "expression": [
+              "",
+              "Var Twoma = ",
+              "CALCULATE( COUNTROWS(employees),",
+              "    FILTER( VALUES( employees[Termination Date]), employees[Termination Date]>= (TODAY()-60)),",
+              "        employees[Termination Date]<>BLANK(),",
+              "    FILTER(employees,employees[Termination Date]<=TODAY()-30))",
+              "",
+              "Var HeadCount2ma =  ",
+              "CALCULATE( COUNTROWS(employees),",
+              "    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= TODAY()-30),",
+              "    FILTER( VALUES( employees[Termination Date]), OR( employees[Termination Date]>=(TODAY()-60),ISBLANK(employees[Termination Date]))))",
+              "Var Turnover60to30daysAgo = DIVIDE(Twoma,HeadCount2ma)",
+              "",
+              "RETURN",
+              "Turnover60to30daysAgo"
+            ],
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "44d72772-1fe4-408f-b29f-a2309966dfbd"
+          },
+          {
+            "name": "Turnover Rate variance 60-30 and 30-today",
+            "displayFolder": "HR",
+            "expression": "[Total Turnover Last 30 days]-[Turnover 60-30 Days Ago]",
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "0a3c23f9-8b68-4e89-8d8b-64a98620ad66"
+          },
+          {
+            "name": "Hires 1MA",
+            "displayFolder": "HR",
+            "expression": "CALCULATE([Employees Hires],DATEADD('Calendar'[Date],-1,MONTH))",
+            "formatString": "0",
+            "lineageTag": "8aa496d4-43d8-4704-a9a7-250c6912ad04"
+          },
+          {
+            "name": "Hires Vs Hires 1MA Variance",
+            "displayFolder": "HR",
+            "expression": "[Employees Hires]-[Hires 1MA]",
+            "formatString": "0",
+            "lineageTag": "1cc0b116-49c9-43d5-9826-4a256ba4be12"
+          },
+          {
+            "name": "Employees Hires",
+            "displayFolder": "HR\\Move Dates",
+            "expression": [
+              "",
+              "CALCULATE( COUNTROWS(employees),",
+              "    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= MAX('Calendar'[Date])),",
+              "    FILTER( VALUES( employees[Hire Date]), employees[Hire Date]>=MIN('Calendar'[Date])))"
+            ],
+            "formatString": "0",
+            "lineageTag": "92a4a1ca-262c-4f97-b96b-62b84153cb14"
+          },
+          {
+            "name": "Hires 2MA",
+            "displayFolder": "HR",
+            "expression": "CALCULATE([Employees Hires],DATEADD('Calendar'[Date],-2,MONTH))",
+            "formatString": "0",
+            "lineageTag": "db69faab-f02b-4292-a98c-c649515fc374"
+          },
+          {
+            "name": "Hires 2MA Vs Hires 1MA Variance",
+            "displayFolder": "HR",
+            "expression": "[Hires 1MA]-[Hires 2MA]",
+            "formatString": "0",
+            "lineageTag": "88f2538f-ffe8-4349-8810-0253f8798cc9"
           }
         ],
         "partitions": [
@@ -8156,10 +8569,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -9956,10 +10365,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -10749,7 +11154,7 @@
         "annotations": [
           {
             "name": "PBI_ResultType",
-            "value": "Table"
+            "value": "Exception"
           },
           {
             "name": "PBI_NavigationStepName",
@@ -12267,6 +12672,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -12944,6 +13353,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -13005,7 +13418,7 @@
               }
             ],
             "dataType": "dateTime",
-            "formatString": "Long Date",
+            "formatString": "Short Date",
             "lineageTag": "ff726827-95e7-4ada-af03-207be03f89dc",
             "sourceColumn": "Termination Date",
             "summarizeBy": "none"
@@ -13174,10 +13587,6 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
-          },
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
           }
         ],
         "columns": [
@@ -13661,6 +14070,209 @@
                 "    #\"Appended Query\" = Table.Combine({#\"Extracted Date\", #\"Old Callins\"})",
                 "in",
                 "    #\"Appended Query\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "CRT Movement Data",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Order ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "28ef65ac-c22a-4b9b-bf42-815b15cffaec",
+            "sourceColumn": "Order ID",
+            "summarizeBy": "count"
+          },
+          {
+            "name": "Movement ID",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "045226a7-352f-4fe5-8894-d533b91c8edd",
+            "sourceColumn": "Movement ID",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Avail #",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "c9294c75-ff52-4cbb-a393-6dc039ee2dae",
+            "sourceColumn": "Avail #",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Avail Time",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "lineageTag": "d3cfc09d-fb10-480c-aee5-d0f761c556c1",
+            "sourceColumn": "Avail Time",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Load Board Time",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "lineageTag": "ca4f645c-d438-4709-8ade-742ca0a6f19d",
+            "sourceColumn": "Load Board Time",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Give Back Time ",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "lineageTag": "558222a0-237c-45f3-9a44-67ec79cbaf74",
+            "sourceColumn": "Give Back Time ",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Covered Time",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "lineageTag": "89123fe5-3dbe-4df6-a8d4-dfab467d6fac",
+            "sourceColumn": "Covered Time",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start Max Pay",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "lineageTag": "a04b0742-993c-4291-9b4e-3475079ce6db",
+            "sourceColumn": "Start Max Pay",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "End Max Pay",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "d1dbda45-99b6-469f-8c82-c926080c7f86",
+            "sourceColumn": "End Max Pay",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Carrier Offers before LB",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "4a11f2ef-245d-4eca-8bcc-fd19797463d7",
+            "sourceColumn": "Carrier Offers before LB",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Carrier Offers",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "be3d50c0-d6e7-4958-871b-9f18354f2bd4",
+            "sourceColumn": "Carrier Offers",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Number Count",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "5a77259f-b894-47d4-a75e-74afc2bcf3bf",
+            "sourceColumn": "Number Count",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "2211438e-33a4-4c0b-b2e0-653e06c7f1d2",
+        "partitions": [
+          {
+            "name": "CRT Movement Data",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Excel.Workbook(Web.Contents(\"https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Carrier_Dispatch_Movement_data_New/Carrier_Dispatch_Movement_data_New.xlsx\"), null, true),",
+                "    CRT_DATA_Table = Source{[Item=\"CRT_DATA\",Kind=\"Table\"]}[Data],",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(CRT_DATA_Table,{{\"Order ID\", Int64.Type}, {\"Movement ID\", Int64.Type}, {\"Avail #\", Int64.Type}, {\"Avail Time\", type datetime}, {\"Load Board Time\", type datetime}, {\"Give Back Time \", type datetime}, {\"Covered Time\", type datetime}, {\"Start Max Pay\", type number}, {\"End Max Pay\", Int64.Type}, {\"Carrier Offers before LB\", Int64.Type}, {\"Carrier Offers\", Int64.Type}, {\"Number Count\", type text}})",
+                "in",
+                "    #\"Changed Type\""
               ],
               "type": "m"
             }
