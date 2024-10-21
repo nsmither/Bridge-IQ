@@ -17,13 +17,21 @@ queryGroup 'Historic Tables'
 
 queryGroup 'Transform File from parade_orders'
 
-	annotation PBI_QueryGroupOrder = 2
+	annotation PBI_QueryGroupOrder = 4
 
 queryGroup 'Transform File from parade_orders\Helper Queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
-annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","stop","customer","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","movements","driver_extra_pay","Calendar","employees","job_history","salesperson_key","parade_orders","Parameter1","Transform Sample File","Sample File","Transform File"]
+queryGroup 'Transform File from historic_parade_orders'
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup 'Transform File from historic_parade_orders\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","stop","customer","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","movements","driver_extra_pay","Calendar","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -46,10 +54,10 @@ ref table employees
 ref table job_history
 ref table salesperson_key
 ref table parade_orders
-ref table LocalDateTable_a8328f22-0b1c-4b91-bd66-b9d417473a7c
-ref table LocalDateTable_09011132-5c71-427d-98e5-1d70d60c2ed6
-ref table LocalDateTable_af1b1b77-4e1b-4641-8323-a735a9a78bc1
-ref table LocalDateTable_719d1492-704f-4647-99a5-6f533f79361b
+ref table LocalDateTable_1597a8f1-96f6-4a2b-a857-77839b7b4a1c
+ref table LocalDateTable_c8f1405c-b7f6-4839-9069-8149e1cde346
+ref table LocalDateTable_b667b19a-6034-4038-803d-3ee895c62605
+ref table LocalDateTable_6c1135c2-bb71-4f52-b967-ff64807a396e
 
 ref cultureInfo en-US
 

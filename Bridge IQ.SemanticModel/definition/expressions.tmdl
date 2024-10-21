@@ -285,7 +285,7 @@ expression movement_order =
 
 expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
 	lineageTag: 59e49c03-a356-4cef-87fc-37914b4d1cd5
-	queryGroup: 'Transform File from parade_orders\Helper Queries'
+	queryGroup: 'Transform File from historic_parade_orders\Helper Queries'
 
 	annotation PBI_ResultType = Binary
 
@@ -297,7 +297,7 @@ expression 'Transform Sample File' =
 		in
 		    #"Promoted Headers"
 	lineageTag: 1fbdd36a-69da-4bdd-8d07-bdf16a9c249c
-	queryGroup: 'Transform File from parade_orders'
+	queryGroup: 'Transform File from historic_parade_orders'
 
 	annotation PBI_ResultType = Table
 
@@ -310,7 +310,7 @@ expression 'Sample File' =
 		in
 		    Navigation1
 	lineageTag: 3619b482-2bf8-4f12-915b-aab38357cf1f
-	queryGroup: 'Transform File from parade_orders\Helper Queries'
+	queryGroup: 'Transform File from historic_parade_orders\Helper Queries'
 
 	annotation PBI_NavigationStepName = Navigation
 
@@ -328,7 +328,82 @@ expression 'Transform File' =
 		    Source
 	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File""}" ]
 	lineageTag: 9bb2a554-9b20-411a-b1b6-ea04113e9d7c
+	queryGroup: 'Transform File from historic_parade_orders\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter2 = #"Sample File (2)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (2)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: f0b8ebc3-304f-43e6-bbee-db250c156091
+	queryGroup: 'Transform File from parade_orders\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (2)' =
+		let
+		    Source = Excel.Workbook(Parameter2, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: b142244a-63e0-49ba-9f70-76864dbaf607
+	queryGroup: 'Transform File from parade_orders'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File (2)' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each Text.Contains([Folder Path], "02 BL-Areas/bridge_iq/Data Sets/Parade/parade_orders_api_files")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    Navigation1 = #"Filtered Hidden Files1"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: c286de1c-fe54-4fb7-9c49-86bf12c129db
+	queryGroup: 'Transform File from parade_orders\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform File (2)' =
+		let
+		    Source = (Parameter2) => let
+		        Source = Excel.Workbook(Parameter2, null, true),
+		        Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		        #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		    in
+		        #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (2)""}" ]
+	lineageTag: bf0440a7-90f6-460f-9fbc-c2f0a8fce758
 	queryGroup: 'Transform File from parade_orders\Helper Queries'
 
 	annotation PBI_ResultType = Function
+
+expression historic_parade_orders =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each Text.Contains([Folder Path], "02 BL-Areas/bridge_iq/Data Sets/Parade/parade_orders_api_files")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File", each #"Transform File"([Content])),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File"}),
+		    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File", Table.ColumnNames(#"Transform File"(#"Sample File"))),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"id", Int64.Type}, {"reference_id", type text}, {"created_at", type datetime}, {"archived_at", type datetime}, {"src_city", type text}, {"src_state", type text}, {"src_date", type date}, {"src_postal_code", type text}, {"dst_city", type text}, {"dst_state", type text}, {"dst_date", type date}, {"dst_postal_code", type text}, {"num_stops", Int64.Type}, {"equipment", type text}, {"trailer_type", type text}, {"rate_customer", type number}, {"first_load", type logical}, {"customer_id", type text}, {"revenue_code", Int64.Type}, {"team_name", type any}, {"rep_email", type text}, {"rep_name", type text}, {"carrier_manager", type text}, {"category", type text}, {"conversion_category", type text}, {"partner", type text}, {"margin_amount", type number}, {"margin_pct", type number}, {"carrier_name", type text}, {"dot_number", Int64.Type}, {"mc_number", Int64.Type}, {"carrier_rate", type number}}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"rate_customer", Currency.Type}, {"margin_amount", Currency.Type}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type1",{{"reference_id", Order.Ascending}}),
+		    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Sorted Rows", {{"reference_id", each Text.AfterDelimiter(_, "-"), type text}}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Extracted Text After Delimiter", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"reference_id", "movement_id"}}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([category] <> "outside_parade") and ([conversion_category] <> "Manually Assigned")),
+		    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows1", {"id"}),
+		    #"Filtered orders before RefreshCutOffDate" = Table.SelectRows(#"Removed Duplicates", each [created_at] < RefreshCutOffDate)
+		in
+		    #"Filtered orders before RefreshCutOffDate"
+	lineageTag: 95446394-12c9-44d4-bfbc-ea7f8fb2d92d
+	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
 

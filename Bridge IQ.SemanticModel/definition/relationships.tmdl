@@ -162,27 +162,27 @@ relationship 0f6ed619-f10e-89b5-6047-9c7b87b6393e
 	fromColumn: employees.'McLeod User Code'
 	toColumn: movements.dispatcher_user_id
 
-relationship b4eb9a41-08ba-46f1-af45-0b275869de37
+relationship 097ad856-9351-46aa-b401-0f8f89534195
 	joinOnDateBehavior: datePartOnly
 	fromColumn: parade_orders.created_at
-	toColumn: LocalDateTable_a8328f22-0b1c-4b91-bd66-b9d417473a7c.Date
+	toColumn: LocalDateTable_1597a8f1-96f6-4a2b-a857-77839b7b4a1c.Date
 
-relationship 075eb7b4-2110-4932-8089-431a239c1550
+relationship c77e1805-0e8d-40fc-bd42-713e4db26dd9
 	joinOnDateBehavior: datePartOnly
 	fromColumn: parade_orders.archived_at
-	toColumn: LocalDateTable_09011132-5c71-427d-98e5-1d70d60c2ed6.Date
+	toColumn: LocalDateTable_c8f1405c-b7f6-4839-9069-8149e1cde346.Date
 
-relationship 29b8e0f9-1ef0-427e-a89f-753afc97c6b2
+relationship 5566dd3a-ee1f-4176-a92b-c7aeee8c4529
 	joinOnDateBehavior: datePartOnly
 	fromColumn: parade_orders.src_date
-	toColumn: LocalDateTable_af1b1b77-4e1b-4641-8323-a735a9a78bc1.Date
+	toColumn: LocalDateTable_b667b19a-6034-4038-803d-3ee895c62605.Date
 
-relationship 4cdfaed2-b431-42dc-ad8b-1ab9e90dfcf8
+relationship fbd3dd6c-f41c-4a4f-bdd7-fca190be9a60
 	joinOnDateBehavior: datePartOnly
 	fromColumn: parade_orders.dst_date
-	toColumn: LocalDateTable_719d1492-704f-4647-99a5-6f533f79361b.Date
+	toColumn: LocalDateTable_6c1135c2-bb71-4f52-b967-ff64807a396e.Date
 
-relationship AutoDetected_5b8eca19-da57-46f0-a2b1-82f7b8fbc400
+relationship AutoDetected_3ef9aa58-30b8-4fb4-b0b5-805ab17fe2cf
 	fromColumn: parade_orders.customer_id
 	toColumn: customer.id
 
