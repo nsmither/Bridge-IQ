@@ -1,0 +1,320 @@
+table parade_orders
+	lineageTag: a4b76fe1-e24e-408e-9907-eb5b24f0aab4
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2bfd7db6-5633-489a-8e6d-395359fa9369
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column reference_id
+		dataType: string
+		lineageTag: 8e78ab62-27b6-4e47-9744-fd776c8c8061
+		summarizeBy: none
+		sourceColumn: reference_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 21d3c68e-1d92-4a65-8a55-491eaceca158
+		summarizeBy: none
+		sourceColumn: created_at
+
+		variation Variation
+			isDefault
+			relationship: b4eb9a41-08ba-46f1-af45-0b275869de37
+			defaultHierarchy: LocalDateTable_a8328f22-0b1c-4b91-bd66-b9d417473a7c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column archived_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8528acff-bb0c-4705-aeb4-4735ffbe22e8
+		summarizeBy: none
+		sourceColumn: archived_at
+
+		variation Variation
+			isDefault
+			relationship: 075eb7b4-2110-4932-8089-431a239c1550
+			defaultHierarchy: LocalDateTable_09011132-5c71-427d-98e5-1d70d60c2ed6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_city
+		dataType: string
+		lineageTag: 110a827c-3a34-4969-9915-d1adee8ea6c1
+		summarizeBy: none
+		sourceColumn: src_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_state
+		dataType: string
+		lineageTag: 940f5328-88e3-4599-a13f-a97a8e1a9daf
+		summarizeBy: none
+		sourceColumn: src_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column src_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a955bb06-530a-47e0-ada6-333845b5e46e
+		summarizeBy: none
+		sourceColumn: src_date
+
+		variation Variation
+			isDefault
+			relationship: 29b8e0f9-1ef0-427e-a89f-753afc97c6b2
+			defaultHierarchy: LocalDateTable_af1b1b77-4e1b-4641-8323-a735a9a78bc1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column src_postal_code
+		dataType: string
+		lineageTag: 1297eec8-6053-4a3a-b9b7-13000a2ed623
+		summarizeBy: none
+		sourceColumn: src_postal_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column dst_city
+		dataType: string
+		lineageTag: f9f2d7ee-0a3c-473e-aa2b-8248f411af2d
+		summarizeBy: none
+		sourceColumn: dst_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column dst_state
+		dataType: string
+		lineageTag: fb367d57-1785-41df-9227-c64e38d710eb
+		summarizeBy: none
+		sourceColumn: dst_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column dst_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 47595937-7e2b-4ad1-8ac9-864a8bc91ec9
+		summarizeBy: none
+		sourceColumn: dst_date
+
+		variation Variation
+			isDefault
+			relationship: 4cdfaed2-b431-42dc-ad8b-1ab9e90dfcf8
+			defaultHierarchy: LocalDateTable_719d1492-704f-4647-99a5-6f533f79361b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dst_postal_code
+		dataType: string
+		lineageTag: 8126e649-501a-4901-b9ca-95a2c45f9ec3
+		summarizeBy: none
+		sourceColumn: dst_postal_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column num_stops
+		dataType: int64
+		formatString: 0
+		lineageTag: b4b98f99-ad7d-4388-a23b-11ed1aceeea7
+		summarizeBy: sum
+		sourceColumn: num_stops
+
+		annotation SummarizationSetBy = Automatic
+
+	column equipment
+		dataType: string
+		lineageTag: f6d21dd1-17e0-488f-ae28-ea5801b8d6cb
+		summarizeBy: none
+		sourceColumn: equipment
+
+		annotation SummarizationSetBy = Automatic
+
+	column trailer_type
+		dataType: string
+		lineageTag: 04c57cb6-196a-425b-89e9-cdbd24399056
+		summarizeBy: none
+		sourceColumn: trailer_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column rate_customer
+		dataType: double
+		lineageTag: 58ec9671-ebac-4df1-969a-fbfd434e1cc8
+		summarizeBy: sum
+		sourceColumn: rate_customer
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column first_load
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6388da24-a1e4-4c21-af7e-af8d72dd6e58
+		summarizeBy: none
+		sourceColumn: first_load
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 64e72ed7-d3ac-46f5-80d5-6231a5eb850c
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue_code
+		dataType: int64
+		formatString: 0
+		lineageTag: d4798d5d-eb5a-494f-be38-6e34c6ad8022
+		summarizeBy: sum
+		sourceColumn: revenue_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_name
+		dataType: string
+		lineageTag: 2cd62d1f-5ea3-45b2-9e09-eab5dbbb232d
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column rep_email
+		dataType: string
+		lineageTag: 59562e59-c90a-43e7-9eed-be1647013114
+		summarizeBy: none
+		sourceColumn: rep_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column rep_name
+		dataType: string
+		lineageTag: 1a68c0f5-53ac-46df-ad13-0b32d2d88eef
+		summarizeBy: none
+		sourceColumn: rep_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_manager
+		dataType: string
+		lineageTag: 9dfabff1-d061-4c78-89c2-0832886c2669
+		summarizeBy: none
+		sourceColumn: carrier_manager
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: f6e26fd7-06c4-4dd6-9b6c-999e880ac874
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column conversion_category
+		dataType: string
+		lineageTag: 145cedac-d8b9-4f95-9575-436749344a1f
+		summarizeBy: none
+		sourceColumn: conversion_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column partner
+		dataType: string
+		lineageTag: 3e7c729a-7bc4-4969-b3ac-2607ca3c73da
+		summarizeBy: none
+		sourceColumn: partner
+
+		annotation SummarizationSetBy = Automatic
+
+	column margin_amount
+		dataType: double
+		lineageTag: 9a77043b-8a42-4cd4-a6c3-281227ac36d0
+		summarizeBy: sum
+		sourceColumn: margin_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margin_pct
+		dataType: double
+		lineageTag: b8805091-410d-4a56-8eba-470bfcb4d176
+		summarizeBy: sum
+		sourceColumn: margin_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column carrier_name
+		dataType: string
+		lineageTag: 6a8f502d-8f9b-46b8-bba8-d049e3fcedfe
+		summarizeBy: none
+		sourceColumn: carrier_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column dot_number
+		dataType: int64
+		formatString: 0
+		lineageTag: e277262e-20d5-4201-a064-ad76891036f1
+		summarizeBy: sum
+		sourceColumn: dot_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column mc_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 9871bf36-f75f-4e47-971c-9c0e6c99c93c
+		summarizeBy: sum
+		sourceColumn: mc_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column carrier_rate
+		dataType: double
+		lineageTag: d5554e77-ddb6-41f5-b9fd-8d9f4465de28
+		summarizeBy: sum
+		sourceColumn: carrier_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition parade_orders = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+				    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each Text.Contains([Folder Path], "02 BL-Areas/bridge_iq/Data Sets/Parade/parade_orders_api_files")),
+				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File", each #"Transform File"([Content])),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File", Table.ColumnNames(#"Transform File"(#"Sample File"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"id", Int64.Type}, {"reference_id", type text}, {"created_at", type datetime}, {"archived_at", type datetime}, {"src_city", type text}, {"src_state", type text}, {"src_date", type date}, {"src_postal_code", type text}, {"dst_city", type text}, {"dst_state", type text}, {"dst_date", type date}, {"dst_postal_code", type text}, {"num_stops", Int64.Type}, {"equipment", type text}, {"trailer_type", type text}, {"rate_customer", type number}, {"first_load", type logical}, {"customer_id", type text}, {"revenue_code", Int64.Type}, {"team_name", type any}, {"rep_email", type text}, {"rep_name", type text}, {"carrier_manager", type text}, {"category", type text}, {"conversion_category", type text}, {"partner", type text}, {"margin_amount", type number}, {"margin_pct", type number}, {"carrier_name", type text}, {"dot_number", Int64.Type}, {"mc_number", Int64.Type}, {"carrier_rate", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

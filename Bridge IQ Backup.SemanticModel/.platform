@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Bridge IQ Backup"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "15352f4f-0749-43b6-a8fc-95781fba5f91"
+  }
+}

@@ -1,0 +1,290 @@
+table crm
+	lineageTag: 374853d7-fcbf-4947-a402-2244d828387e
+
+	column id
+		dataType: string
+		lineageTag: 0392bdc5-ae96-4380-8590-4ee557fcc7d7
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: e3d59652-8d17-4e8f-99e7-cd11d6133ff6
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_mcleod_code
+		dataType: string
+		lineageTag: 06b3114b-04b7-4ab1-abfc-b4d01c1b20e7
+		summarizeBy: none
+		sourceColumn: x_studio_mcleod_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		lineageTag: cb657696-dca4-442b-a82c-e96069514a3d
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_sdr
+		dataType: string
+		lineageTag: d8d50d78-1855-4258-9e65-6afac0af5505
+		summarizeBy: none
+		sourceColumn: x_studio_sdr
+
+		annotation SummarizationSetBy = Automatic
+
+	column activity_date_deadline
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: eb635af0-efc3-4adb-82d6-9079476b2ea9
+		summarizeBy: none
+		sourceColumn: activity_date_deadline
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column date_open
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ff18e01b-ed93-4f15-b1d1-06191ace71db
+		summarizeBy: none
+		sourceColumn: date_open
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column partner_id
+		dataType: string
+		lineageTag: 060012db-948f-49b0-9c6c-538b7f86ae7a
+		summarizeBy: none
+		sourceColumn: partner_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_do_not_move
+		dataType: string
+		lineageTag: 2b904698-69c6-47cf-b79a-3738304012e6
+		summarizeBy: none
+		sourceColumn: x_studio_do_not_move
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_lead_type
+		dataType: string
+		lineageTag: ba3b1ae8-5517-4872-99fa-a178a6cf5a6e
+		summarizeBy: none
+		sourceColumn: x_studio_lead_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_originally_passed_to
+		dataType: string
+		lineageTag: 8257e263-b7b2-4b88-87be-5e00b8bfa533
+		summarizeBy: none
+		sourceColumn: x_studio_originally_passed_to
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_lead_passed_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 72ee5a04-b3ab-4471-8b88-0977189c204a
+		summarizeBy: none
+		sourceColumn: x_studio_lead_passed_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_enrichment_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 696e9156-b04f-44c2-a021-ee31b02512cf
+		summarizeBy: none
+		sourceColumn: x_studio_enrichment_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column city
+		dataType: string
+		lineageTag: 61d2e49a-a37c-4e71-95b4-2fcd413bb40a
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_revenue_range
+		dataType: string
+		lineageTag: 24fa1024-338a-47b9-8a83-fff10b6ad02c
+		summarizeBy: none
+		sourceColumn: x_studio_revenue_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_primary_industry
+		dataType: string
+		lineageTag: ac9a9140-c05c-4be8-98e8-fce9e8ad9d90
+		summarizeBy: none
+		sourceColumn: x_studio_primary_industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_id
+		dataType: string
+		lineageTag: 13f83aa8-fb7e-4cea-a974-0ed412cd596a
+		summarizeBy: none
+		sourceColumn: state_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: bcb22193-a954-429f-abc2-e46c2fd14cdb
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 23e267f2-0bbb-4e28-8c49-4ec4c930fc7e
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stage
+		dataType: string
+		lineageTag: 18cdc1c5-a6e2-4d97-a99b-45727cc2c309
+		summarizeBy: none
+		sourceColumn: Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Stage Change'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4b0aff3a-e167-46bb-ada1-23b093153882
+		summarizeBy: none
+		sourceColumn: Last Stage Change
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'At Risk' = ```
+			
+			Var Working = 
+			    IF([Days since Last Salesperson Update]<7,"False",
+			    IF(crm[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>90,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			Var NoForNow = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(crm[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>90,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>90,"TRUE",
+			    "FALSE")))))
+			
+			Var Qualified = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(crm[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>60,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			    
+			Var Quoted = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(crm[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>60,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			Var CreditApp = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(crm[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>60,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			Var OneToThree = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(crm[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since Last Shipment]>120,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			Var Customer = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(crm[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since Last Shipment]>120,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			
+			Var AtRisk =
+			    IF(CRM[Stage]="Working",Working,
+			    IF(CRM[Stage]="No For Now",NoForNow,
+			    IF(CRM[Stage]="Qualified",Qualified,
+			    IF(CRM[Stage]="Quoted",Quoted,
+			    IF(CRM[Stage]="Credit App",CreditApp,
+			    IF(CRM[Stage]="1-3 Loads",OneToThree,
+			    IF(CRM[Stage]="Customer",Customer,
+			
+			    "FALSE")))))))
+			
+			Return
+			AtRisk
+			```
+		dataType: string
+		lineageTag: 507fd75a-9439-49af-bb78-eed961a86964
+		summarizeBy: none
+		isDataTypeInferred
+
+		annotation SummarizationSetBy = Automatic
+
+	partition crm = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/CRM/CRM_api.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+				    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Promoted Headers", {{"user_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}, {"stage_id", each Text.BetweenDelimiters(_, "'", "'"), type text}, {"x_studio_primary_industry", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}, {"state_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}, {"x_stage_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+				    #"Extracted Text Between Delimiters1" = Table.TransformColumns(#"Extracted Text Between Delimiters", {{"partner_id", each Text.BetweenDelimiters(_, "[", ","), type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Extracted Text Between Delimiters1",false,null,Replacer.ReplaceValue,{"x_studio_mcleod_code", "x_studio_sdr", "stage_id", "date_last_stage_update", "activity_date_deadline", "date_open", "x_studio_lead_type", "x_studio_originally_passed_to", "x_studio_lead_passed_date", "x_studio_enrichment_date", "city", "x_studio_revenue_range"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Replaced Value", "Stage", each if [type] = "lead" then [x_stage_id] else [stage_id]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"stage_id", "x_stage_id"}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Removed Columns", "Last Stage Change", each if [type] = "lead" then [x_date_last_prospect_stage_change] else [date_last_stage_update]),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column1",{"date_last_stage_update", "x_date_last_prospect_stage_change"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns1",{{"date_open", type datetime}, {"Last Stage Change", type datetime}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"Last Stage Change", type date}, {"x_studio_enrichment_date", type date}, {"date_open", type date}, {"activity_date_deadline", type date}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type1", {"partner_id"}),
+				    #"Extracted Text Between Delimiters2" = Table.TransformColumns(#"Removed Errors", {{"x_studio_sdr", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Extracted Text Between Delimiters2",{{"x_studio_lead_passed_date", type date}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_ResultType = Table
+

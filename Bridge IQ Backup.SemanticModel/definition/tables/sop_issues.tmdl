@@ -1,0 +1,57 @@
+table sop_issues
+	lineageTag: e78cb277-9a3a-41af-b956-2f397ca138e9
+
+	column 'Movement ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: f06eb9b3-d7b5-45d3-8a58-83eb64c224e1
+		summarizeBy: none
+		sourceColumn: Movement ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SOP Type'
+		dataType: string
+		lineageTag: a758fd32-8abc-4c7b-bf5c-9088f9456c32
+		summarizeBy: none
+		sourceColumn: SOP Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_time
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 24808ac8-9754-461d-b501-094c405ce40d
+		summarizeBy: none
+		sourceColumn: Date_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: a77a694f-77ba-407a-8136-02d0c8131b45
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition sop_issues = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/SOP%20Has%20Been%20Marked/SOP%20Has%20Been%20Marked.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Movement ID", Int64.Type}, {"SOP Type", type text}, {"Date_time", type datetime}}),
+				    #"Inserted Time" = Table.AddColumn(#"Changed Type", "Time", each DateTime.Time([Date_time]), type time),
+				    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{"Date_time", DateTime.Date, type date}})
+				in
+				    #"Extracted Date"
+
+	annotation PBI_ResultType = Table
+

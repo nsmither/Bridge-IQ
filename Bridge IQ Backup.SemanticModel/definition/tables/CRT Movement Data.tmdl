@@ -1,0 +1,123 @@
+table 'CRT Movement Data'
+	lineageTag: 2211438e-33a4-4c0b-b2e0-653e06c7f1d2
+
+	column 'Order ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 28ef65ac-c22a-4b9b-bf42-815b15cffaec
+		summarizeBy: count
+		sourceColumn: Order ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Movement ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 045226a7-352f-4fe5-8894-d533b91c8edd
+		summarizeBy: none
+		sourceColumn: Movement ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Avail #'
+		dataType: int64
+		formatString: 0
+		lineageTag: c9294c75-ff52-4cbb-a393-6dc039ee2dae
+		summarizeBy: sum
+		sourceColumn: Avail #
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Avail Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d3cfc09d-fb10-480c-aee5-d0f761c556c1
+		summarizeBy: none
+		sourceColumn: Avail Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Load Board Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ca4f645c-d438-4709-8ade-742ca0a6f19d
+		summarizeBy: none
+		sourceColumn: Load Board Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Give Back Time '
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 558222a0-237c-45f3-9a44-67ec79cbaf74
+		summarizeBy: none
+		sourceColumn: "Give Back Time "
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Covered Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 89123fe5-3dbe-4df6-a8d4-dfab467d6fac
+		summarizeBy: none
+		sourceColumn: Covered Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Max Pay'
+		dataType: double
+		lineageTag: a04b0742-993c-4291-9b4e-3475079ce6db
+		summarizeBy: sum
+		sourceColumn: Start Max Pay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'End Max Pay'
+		dataType: int64
+		formatString: 0
+		lineageTag: d1dbda45-99b6-469f-8c82-c926080c7f86
+		summarizeBy: sum
+		sourceColumn: End Max Pay
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Carrier Offers before LB'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a11f2ef-245d-4eca-8bcc-fd19797463d7
+		summarizeBy: sum
+		sourceColumn: Carrier Offers before LB
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Carrier Offers'
+		dataType: int64
+		formatString: 0
+		lineageTag: be3d50c0-d6e7-4958-871b-9f18354f2bd4
+		summarizeBy: sum
+		sourceColumn: Carrier Offers
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number Count'
+		dataType: string
+		lineageTag: 5a77259f-b894-47d4-a75e-74afc2bcf3bf
+		summarizeBy: none
+		sourceColumn: Number Count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'CRT Movement Data' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Carrier_Dispatch_Movement_data_New/Carrier_Dispatch_Movement_data_New.xlsx"), null, true),
+				    CRT_DATA_Table = Source{[Item="CRT_DATA",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(CRT_DATA_Table,{{"Order ID", Int64.Type}, {"Movement ID", Int64.Type}, {"Avail #", Int64.Type}, {"Avail Time", type datetime}, {"Load Board Time", type datetime}, {"Give Back Time ", type datetime}, {"Covered Time", type datetime}, {"Start Max Pay", type number}, {"End Max Pay", Int64.Type}, {"Carrier Offers before LB", Int64.Type}, {"Carrier Offers", Int64.Type}, {"Number Count", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,32 @@
+table lead_ops
+	lineageTag: 808721e3-1653-4c99-8ae1-6379a85ab9ca
+
+	column 'Lead Ops'
+		dataType: string
+		lineageTag: 1606f45f-aa6e-41c7-bd8b-f22cf6d65d78
+		summarizeBy: none
+		sourceColumn: Lead Ops
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wolf Pack'
+		dataType: string
+		lineageTag: 98a720a1-ab10-4879-9b9f-26dbeb2066e3
+		summarizeBy: none
+		sourceColumn: Wolf Pack
+
+		annotation SummarizationSetBy = Automatic
+
+	partition lead_ops = m
+		mode: import
+		source =
+				let
+				    Source = rev_codes,
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Rev Code"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Columns"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Removed Blank Rows"
+
+	annotation PBI_ResultType = Table
+

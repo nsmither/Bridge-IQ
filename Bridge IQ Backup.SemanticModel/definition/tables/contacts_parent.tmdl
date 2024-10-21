@@ -1,0 +1,63 @@
+table contacts_parent
+	lineageTag: 93dc4e66-df7c-420c-af11-05f4c6e9563d
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5cd7a662-c1e7-4aa4-9b6a-fcd91b2a4fc3
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_company
+		dataType: string
+		lineageTag: 6660ebd6-2a7d-4e4f-9686-659b9ff97818
+		summarizeBy: none
+		sourceColumn: is_company
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 897f09d2-13a7-4fc3-ad8a-0b82d877eb4b
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_zoominfo_contact_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c5a32d7-80e8-43d4-8c7c-e38cfbd65f0d
+		summarizeBy: sum
+		sourceColumn: x_studio_zoominfo_contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_zoominfo_company_id
+		dataType: string
+		lineageTag: 41df6b94-8b20-4683-9e9e-ab5544301ec0
+		summarizeBy: none
+		sourceColumn: x_studio_zoominfo_company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parent ID'
+		dataType: string
+		lineageTag: 69049c38-88ae-49a0-a601-9ea86838b970
+		summarizeBy: none
+		sourceColumn: Parent ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition contacts_parent = m
+		mode: import
+		source =
+				let
+				    Source = contacts_module
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

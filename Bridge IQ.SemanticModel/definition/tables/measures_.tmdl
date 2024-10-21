@@ -1,0 +1,429 @@
+table measures_
+	lineageTag: 4f6dad67-79ad-4db3-9aa7-ea35ff6c1845
+
+	measure 'Sum of freight_charges' =
+			
+			CALCULATE(
+			    SUM(orders[freight_charge]),
+			    orders[shipper_sched_early_date]>=MIN('Calendar'[Date]),
+			    orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 89d17990-2077-45c7-af5c-49710ca0fdc8
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Sum of other_charges' =
+			
+			CALCULATE(
+			    SUM(orders[other_charges_total]),
+			    orders[shipper_sched_early_date]>=MIN('Calendar'[Date]),
+			    orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 5f9abf81-2be6-48b2-9799-922feb050f30
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Total Revenue' = [Sum of freight_charges]+[Sum of other_charges]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 39ae93b5-50d6-453e-80c8-dbbb58f43df7
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Sum of override_pay_amt' =
+			
+			CALCULATE(
+			    SUM(movements[override_pay_amt]),
+			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
+			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			)
+		lineageTag: 4afe6d8c-348c-4f5f-9fa1-593d24fa27a4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sum of driver_extra_pay' =
+			
+			CALCULATE(
+			    SUM(driver_extra_pay[amount]),
+			    orders[shipper_sched_early_date]>=MIN('Calendar'[Date]),
+			    orders[shipper_sched_early_date]<=MAX('Calendar'[Date])
+			)
+		lineageTag: 6be686a6-e220-4dff-91a4-141b0da5ca73
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Carrier Pay' = [Sum of driver_extra_pay]+[Sum of override_pay_amt]
+		lineageTag: c7c5f213-a346-4367-8717-3924d6ef52da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Margin = [Total Revenue]-[Total Carrier Pay]
+		lineageTag: 3491f4d3-9764-45b7-a60b-c17891311500
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Counts the Rows of the Employee Table whose termination date are >= min(date), termination date <= max(date), and termination date are not blank
+	measure 'Staff Turnover' =
+			
+			CALCULATE(
+			    COUNTROWS(employees),
+			    FILTER(VALUES(employees[Termination Date]),employees[Termination Date]>=MIN('calendar'[Date])),
+			    employees[Termination Date]<>BLANK(),
+			    FILTER(employees,employees[Termination Date]<=MAX('calendar'[Date])))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 3f85f56a-a39f-40ee-82a3-6960eea53eb9
+
+	measure 'Avg Monthy Head Count' =
+			
+			AVERAGEX(
+			    SUMMARIZE(
+			        'Calendar',
+			        'Calendar'[Month / Year],
+			        "avg head count",[Current Staff]
+			    ),
+			    [avg head count]
+			)
+		displayFolder: HR
+		lineageTag: 24b21e8e-4c91-4e76-9c0a-d36e34fee514
+
+	measure 'Current Staff' =
+			
+			CALCULATE(
+			    COUNTROWS(employees),
+			    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(employees[Termination Date]), OR(employees[Termination Date] >= MIN('calendar'[Date]), ISBLANK(employees[Termination Date]))))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 7f4fea41-84eb-4da1-a4e5-10b82bc756e7
+
+	measure 'Turnover Rate' = DIVIDE([Staff Turnover],[Avg Monthy Head Count])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: 44b3bc15-cc1c-4413-9ff3-e30f06a285e8
+
+	measure 'Turnover Rate 12 Months Prior' = CALCULATE([Turnover Rate],DATEADD('Calendar'[Date],-12,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: 84493348-e95a-4075-aece-f38c8f0aead7
+
+	measure 'Turnover YOY Variance' = [Turnover Rate]-[Turnover Rate 12 Months Prior]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: a3afd5ea-9c53-4cd1-9707-cef0c1a8d083
+
+	measure 'Avg Monthly Staff Turnover' =
+			
+			AVERAGEX(
+			    SUMMARIZE(
+			        'Calendar',
+			        'Calendar'[Month / Year],
+			        "avg staff turnover",[Staff Turnover]
+			    ),
+			    [avg staff turnover]
+			)
+		displayFolder: HR
+		lineageTag: 4d740f20-09f9-4b84-9bb0-7cc7705ad68e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Monthly Turnover Rate' = DIVIDE([Avg Monthly Staff Turnover],[Avg Monthy Head Count])
+		displayFolder: HR
+		lineageTag: 02a7ca5f-d396-4f11-884c-fe49f1305636
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Monthly Turnover Rate 12 Months Prior' = CALCULATE([Avg Monthly Turnover Rate],DATEADD('Calendar'[Date],-12,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: 13ea2ec0-3823-4fb7-aa81-01ad79e4b0f4
+
+	measure 'Average Monthly YOY Variance' = [Avg monthly turnover Rate]-[Average Monthly Turnover Rate 12 Months Prior]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: fb19c866-be07-47d3-b40e-8dbc4753e4d7
+
+	measure 'Total Turnover Last 30 days' = DIVIDE([Staff Turnover Last 30 Days],[Current Staff Last 30 Days])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: cf1e053e-55f5-48f8-a774-fa2363abc66e
+
+	measure 'Staff Turnover Last 30 Days' =
+			
+			CALCULATE( COUNTROWS(employees),
+			    FILTER( VALUES(employees[Termination Date]), employees[Termination Date]>= (TODAY()-30)),
+			        employees[Termination Date]<>BLANK(),
+			    FILTER(employees,employees[Termination Date]<=TODAY()))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 64796ec6-6b55-45a7-8df6-97b6ee60b46c
+
+	measure 'Current Staff Last 30 Days' =
+			
+			CALCULATE( COUNTROWS(employees),
+			    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= TODAY()),
+			    FILTER( VALUES( employees[Termination Date]), OR( employees[Termination Date]>=(TODAY()-30),ISBLANK(employees[Termination Date]))))
+		formatString: 0%;-0%;0%
+		displayFolder: HR
+		lineageTag: 6461da47-61c5-4590-9b18-723ef98fe1f5
+
+	measure 'Turnover 60-30 Days Ago' = ```
+			
+			Var Twoma = 
+			CALCULATE( COUNTROWS(employees),
+			    FILTER( VALUES( employees[Termination Date]), employees[Termination Date]>= (TODAY()-60)),
+			        employees[Termination Date]<>BLANK(),
+			    FILTER(employees,employees[Termination Date]<=TODAY()-30))
+			
+			Var HeadCount2ma =  
+			CALCULATE( COUNTROWS(employees),
+			    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= TODAY()-30),
+			    FILTER( VALUES( employees[Termination Date]), OR( employees[Termination Date]>=(TODAY()-60),ISBLANK(employees[Termination Date]))))
+			Var Turnover60to30daysAgo = DIVIDE(Twoma,HeadCount2ma)
+			
+			RETURN
+			Turnover60to30daysAgo
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: edee7803-0364-4c4b-935c-72af59f7347f
+
+	measure 'Turnover Rate variance 60-30 and 30-today' = [Total Turnover Last 30 days]-[Turnover 60-30 Days Ago]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: HR
+		lineageTag: 6157deea-5af5-43f7-ab18-cd548bcb7fa7
+
+	measure 'Employees Hires' =
+			
+			CALCULATE( COUNTROWS(employees),
+			    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= MAX('Calendar'[Date])),
+			    FILTER( VALUES( employees[Hire Date]), employees[Hire Date]>=MIN('Calendar'[Date])))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 4910a8b9-24b3-42d7-9ca6-8314b8f73dba
+
+	measure 'Hires 1MA' = CALCULATE([Employees Hires],DATEADD('Calendar'[Date],-1,MONTH))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 8b95fa9b-1965-4c32-bc57-090b9f66bbb5
+
+	measure 'Hires Vs Hires 1MA Variance' = [Employees Hires]-[Hires 1MA]
+		formatString: 0
+		displayFolder: HR
+		lineageTag: ccb2c481-c962-4d98-8fff-547fa2ee9c46
+
+	measure 'Hires 2MA' = CALCULATE([Employees Hires],DATEADD('Calendar'[Date],-2,MONTH))
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 3bd4bd75-c274-4c0c-876b-1e68d17cc48a
+
+	measure 'Hires 2MA Vs Hires 1MA Variance' = [Hires 1MA]-[Hires 2MA]
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 0d3df909-9f69-47f7-8154-31b1c42a38e2
+
+	measure '45 Day Review' = MIN(employees[Hire Date])+45
+		formatString: Short Date
+		displayFolder: HR\Check Ins
+		lineageTag: 172b1ef2-2cac-43f6-9c29-dc0e18a4a509
+
+	measure '1 Month Into SDR' =
+			
+			Var IfBefore15th = MIN(employees[Hire Date])+122
+			Var IfAfter15th = MIN(employees[Hire Date])+136
+			Var start_date_day_of_month = DAY(MIN(employees[Hire Date]))
+			Var IFS = IF(start_date_day_of_month<15,IfBefore15th,IfAfter15th)
+			
+			RETURN
+			IFS
+		formatString: Short Date
+		displayFolder: HR\Check Ins
+		lineageTag: 2b048199-89b7-40a6-a333-8329aaa3a48a
+
+	measure '1 Month Into D Team' =
+			
+			Var IfUnder15 = MIN(employees[Hire Date])+213
+			Var IfAfter15 =MIN(employees[Hire Date])+227
+			Var start_date_day_of_month = DAY(MIN(employees[Hire Date]))
+			Var IFS = IF(start_date_day_of_month<15,IfUnder15,IfAfter15)
+			
+			Return
+			IFS
+		formatString: Short Date
+		displayFolder: HR\Check Ins
+		lineageTag: 76938b93-0cab-4366-b94b-9b6aa87f34e3
+
+	measure 'D-Team Move Date' = ```
+			
+			Var job_history_d_team_date = 
+			    CALCULATE(
+			        MIN(job_history[Job Start Date]),
+			        FILTER(job_history,job_history[Division]="Development Team Sales"))
+			Var sdr_date_plus_90 =[SDR Move Date]+100
+			Var estemate_of_d_team_move_date= CEILING(EOMONTH(sdr_date_plus_90,-1)-1,7)+2
+			
+			Var ifs = 
+			    IF(job_history_d_team_date=BLANK(),
+			    estemate_of_d_team_move_date,
+			    job_history_d_team_date
+			    )
+			
+			RETURN
+			FORMAT(ifs,"Short Date")
+			```
+		displayFolder: HR\Move Dates
+		lineageTag: cb27c10a-85f5-46fc-b8c1-eb7f6b33eb82
+
+	measure 'Henry Move Date' = ```
+			
+			Var job_history_henry_date = 
+			    CALCULATE(
+			        MIN(job_history[Job Start Date]),
+			        FILTER(job_history,job_history[Division]="Logistics Advisor Sales (Formerly Henry)"))
+			Var Dteam_date_plus_90 =[D-Team Move Date]+100
+			Var estemate_of_henry_move_date= CEILING(EOMONTH(Dteam_date_plus_90,-1)-1,7)+2
+			
+			Var ifs = 
+			    IF(job_history_henry_date=BLANK(),
+			    EDATE(estemate_of_henry_move_date, 3),
+			    job_history_henry_date - 1
+			    )
+			
+			Var ifs_plus_6_months = EDATE(estemate_of_henry_move_date, 3)
+			
+			RETURN
+			FORMAT(ifs,"Short Date")
+			```
+		displayFolder: HR\Move Dates
+		lineageTag: 9e50448b-7070-4aea-8bf5-4238b9fb76d8
+
+	measure 'LA Move Date color' =
+			
+			
+			var LA = CONTAINSSTRING(min(employees[Devision]),"Logistics Advisor Sales")
+			VAR IFS = IF(LA = TRUE,1,0)
+			
+			RETURN
+			IFS
+		formatString: 0
+		displayFolder: HR\Move Dates
+		lineageTag: 92c48fc4-72d9-4870-aa26-500a9ab2577c
+
+	measure 'Ops Team Move Date' = SUM(employees[Hire Date])+14
+		formatString: Short Date
+		displayFolder: HR\Move Dates
+		lineageTag: cfcd1c60-9853-4860-826b-d020ea0080b7
+
+	measure 'SDR Move Date' = ```
+			
+			Var job_history_sdr_date = 
+			    CALCULATE(
+			        MIN(job_history[Job Start Date]),
+			        FILTER(job_history,job_history[Division]="SDR Team"))
+			Var hire_date_plus_90 = MIN(employees[Hire Date])+90
+			Var first_monday_of_hire_plus_90 = CEILING(EOMONTH(hire_date_plus_90,-1)-1,7)+2
+			Var first_monday_of_next_month = CEILING(EOMONTH(hire_date_plus_90,-0)-1,7)+2
+			Var employee_start_day_of_month = DAY(MIN(employees[Hire Date]))
+			Var estamate_of_sdr_move_date = 
+			    IF(employee_start_day_of_month>15,
+			    first_monday_of_next_month,
+			    first_monday_of_hire_plus_90
+			    )
+			Var ifs = 
+			    IF(job_history_sdr_date=BLANK(),
+			    estamate_of_sdr_move_date,
+			    job_history_sdr_date
+			    )
+			
+			RETURN
+			FORMAT(ifs,"Short Date")
+			```
+		displayFolder: HR\Move Dates
+		lineageTag: eb84ecc1-09f5-45f5-8e43-77dfb52ae922
+
+	measure 'Ops Move Date color' =
+			
+			
+			VAR OPS = CONTAINSSTRING(min(employees[Devision]),"CRT")
+			VAR IFS = IF(OPS = TRUE,1,0)
+			
+			RETURN
+			IFS
+		formatString: 0
+		displayFolder: HR\Move Dates
+		lineageTag: aefaa231-2640-4693-8651-522f6a239055
+
+	measure 'SDR Move Date color' =
+			
+			
+			VAR SDR =CONTAINSSTRING(min(employees[Devision]),"SDR")
+			VAR IFS = IF(SDR = TRUE,1,0)
+			
+			RETURN
+			IFS
+		formatString: 0
+		displayFolder: HR\Move Dates
+		lineageTag: bb1dbbcd-506c-4916-9220-e69080250954
+
+	measure 'D-Team Move Date color' =
+			
+			
+			var dteam = CONTAINSSTRING(min(employees[Devision]),"Development Team")
+			VAR IFS = IF(dteam = TRUE,1,0)
+			
+			RETURN
+			IFS
+		formatString: 0
+		displayFolder: HR\Move Dates
+		lineageTag: c3103726-c85a-4789-8119-103a5a4e8749
+
+	measure 'Current Carrier Booking Team' =
+			
+			CALCULATE(
+			    COUNTROWS(job_history),
+			    FILTER(VALUES(job_history[Job Start Date]),job_history[Job Start Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(job_history[Job End Date]), OR(job_history[Job End Date] >= MIN('calendar'[Date]), ISBLANK(job_history[Job End Date]))),
+			    FILTER(job_history,job_history[Division]="CRT-Booking"))
+		formatString: 0
+		lineageTag: 37af42d0-1cf4-4736-9874-ace293c6c112
+
+	measure 'Count of Movements Booked' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(movements[id]),
+			    FILTER(movements,movements[status]<>"Available"),
+			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
+			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date])
+			))
+		formatString: 0
+		lineageTag: 9a92c758-8ba8-4423-a380-55402b47cdf1
+
+	measure 'Count of Orders' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[id]),
+			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
+			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			    )
+		formatString: 0
+		lineageTag: ebc9309e-c0e2-478d-8534-2f3bb96fc500
+
+	column Column
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 746e082c-433f-4c69-8ea2-18b07c8517b2
+		summarizeBy: sum
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition measures_ = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = cb8739f6b6f74399b74587f43495ffe2
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

@@ -1,0 +1,142 @@
+table employees
+	lineageTag: 5f921b3f-e0bd-4c57-84dd-41df4142eb25
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: cd7ce602-defc-43ac-a7a7-4f1e88239c9a
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 9523bdd8-901c-4e02-ad77-381d2bcded17
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hire Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ec84285b-a52e-40cf-9c74-c3e9a6cfcf8e
+		summarizeBy: none
+		sourceColumn: Hire Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Termination Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ff726827-95e7-4ada-af03-207be03f89dc
+		summarizeBy: none
+		sourceColumn: Termination Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Reporting to'
+		dataType: string
+		lineageTag: d6a37ef5-564f-4720-85ce-2cb9b9022449
+		summarizeBy: none
+		sourceColumn: Reporting to
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Type'
+		dataType: string
+		lineageTag: 56af5af3-194a-4d8b-a532-d45de2f301ec
+		summarizeBy: none
+		sourceColumn: Termination Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Reason'
+		dataType: string
+		lineageTag: 78e229bf-5e71-48e2-b873-c679a348835f
+		summarizeBy: none
+		sourceColumn: Termination Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Regrettable or non- regrettable'
+		dataType: string
+		lineageTag: c13221f6-4b05-4d12-8d81-afbafa7718be
+		summarizeBy: none
+		sourceColumn: Regrettable or non- regrettable
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Title'
+		dataType: string
+		lineageTag: 60d74148-2866-40a7-a700-f8d4927e2f19
+		summarizeBy: none
+		sourceColumn: Job Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'McLeod User Code'
+		dataType: string
+		lineageTag: c81540e9-c6be-4aa3-836a-fba1ccf42ec2
+		summarizeBy: none
+		sourceColumn: McLeod User Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'McLeod Salesperson Code'
+		dataType: string
+		lineageTag: 0e735583-4262-499c-b19a-84672c840f75
+		summarizeBy: none
+		sourceColumn: McLeod Salesperson Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work Email'
+		dataType: string
+		lineageTag: e5dbb213-47b3-4353-8266-edb40184b7c8
+		summarizeBy: none
+		sourceColumn: Work Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Devision
+		dataType: string
+		lineageTag: 4d6c4c6b-6d1f-44d7-98a5-5ec5de9d914a
+		summarizeBy: none
+		sourceColumn: Devision
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 2efcedc2-d656-421d-a76e-544713965e6d
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	partition employees = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Bamboo/Employees.xlsx"), null, true),
+				    employees_Table = Source{[Item="employees",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(employees_Table,{{"ID", Int64.Type}, {"Name", type text}, {"Prefered Name", type text}, {"Hire Date", type date}, {"Termination Date", type any}, {"Reporting to", type text}, {"Termination Type", type text}, {"Termination Reason", type text}, {"Regrettable or non- regrettable", type text}, {"Job Title", type text}, {"McLeod User Code", type text}, {"McLeod Salesperson Code", type text}, {"Work Email", type text}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "Name", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), {"Name.1", "Name.2"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Name.1", type text}, {"Name.2", type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type1",{{"Name.2", Text.Trim, type text}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Trimmed Text", "First Name", each if [Prefered Name] = null then [Name.2] else [Prefered Name]),
+				    #"Merged Columns" = Table.CombineColumns(#"Added Conditional Column",{"First Name", "Name.1"},Combiner.CombineTextByDelimiter(" ", QuoteStyle.None),"Name"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Merged Columns",{"Name.2", "Prefered Name"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","0000-00-00","",Replacer.ReplaceValue,{"Termination Date"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Value",{{"Termination Date", type date}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_ResultType = Table
+
