@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.57\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":1,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "config": "{\"version\":\"5.57\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":5,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -25,6 +25,77 @@
   "sections": [
     {
       "config": "{}",
+      "displayName": "Missed Check Calls",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "62df4a754b0282255752",
+      "ordinal": 5,
+      "visualContainers": [],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
+      "displayName": "Duplicate of NFM",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "93e56067ad2166e1000e",
+      "ordinal": 3,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"36de2583b112c2d53033\",\"layouts\":[{\"id\":0,\"position\":{\"x\":480,\"y\":0,\"z\":1000,\"width\":448,\"height\":112,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2023-11-01T00:00:00'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2023-11-01T00:00:00'\"}}}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 112.00,
+          "width": 448.00,
+          "x": 480.00,
+          "y": 0.00,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"3bc7510044785884c6c4\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":128,\"z\":0,\"width\":1072,\"height\":592,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"orders.id\"},{\"queryRef\":\"measures_.Total Revenue\"},{\"queryRef\":\"Sum(orders.order_value)\"},{\"queryRef\":\"measures_.Count of Orders\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Total Revenue\"},\"Name\":\"measures_.Total Revenue\",\"NativeReferenceName\":\"Total Revenue\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"id\"},\"Name\":\"orders.id\",\"NativeReferenceName\":\"id\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"order_value\"}},\"Function\":0},\"Name\":\"Sum(orders.order_value)\",\"NativeReferenceName\":\"Sum of order_value\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Orders\"},\"Name\":\"measures_.Count of Orders\",\"NativeReferenceName\":\"Count of Orders\"}]},\"drillFilterOtherVisuals\":true,\"filterSortOrder\":3}}",
+          "filters": "[{\"name\":\"575da062347b8ccc6c07\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"orders\"}},\"Property\":\"commodity\"}},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{\"general\":[{\"properties\":{\"isInvertedSelectionMode\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]},\"isHiddenInViewMode\":false,\"ordinal\":0},{\"name\":\"229d6fc36b41e4979240\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"orders\"}},\"Property\":\"commodity_id\"}},\"type\":\"Categorical\",\"howCreated\":1,\"isHiddenInViewMode\":false,\"ordinal\":1},{\"name\":\"c60f5db063a68574a196\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"orders\"}},\"Property\":\"id\"}},\"type\":\"Categorical\",\"howCreated\":0,\"isHiddenInViewMode\":false,\"ordinal\":2},{\"name\":\"cbe1bab4b44d241cc020\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Count of Orders\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Orders\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":0,\"ordinal\":3},{\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"NFM\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"NFM\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":1,\"isHiddenInViewMode\":false}]",
+          "height": 592.00,
+          "width": 1072.00,
+          "x": 16.00,
+          "y": 128.00,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
+      "displayName": "NFM",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "aaa42deab9d2ae672893",
+      "ordinal": 2,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"c4ff4530541406e60dad\",\"layouts\":[{\"id\":0,\"position\":{\"x\":480,\"y\":0,\"z\":1000,\"width\":448,\"height\":112,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2023-11-01T00:00:00'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2023-11-01T00:00:00'\"}}}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 112.00,
+          "width": 448.00,
+          "x": 480.00,
+          "y": 0.00,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"e4ca07d93714b67a0302\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":128,\"z\":0,\"width\":1072,\"height\":592,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"orders.commodity_id\"},{\"queryRef\":\"orders.commodity\"},{\"queryRef\":\"measures_.Count of Orders\"},{\"queryRef\":\"measures_.Total Revenue\"},{\"queryRef\":\"measures_.NFM\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"commodity\"},\"Name\":\"orders.commodity\",\"NativeReferenceName\":\"commodity\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"commodity_id\"},\"Name\":\"orders.commodity_id\",\"NativeReferenceName\":\"commodity_id\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Orders\"},\"Name\":\"measures_.Count of Orders\",\"NativeReferenceName\":\"Count of Orders\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Total Revenue\"},\"Name\":\"measures_.Total Revenue\",\"NativeReferenceName\":\"Total Revenue\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"NFM\"},\"Name\":\"measures_.NFM\",\"NativeReferenceName\":\"NFM\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"NFM\"}}}]},\"drillFilterOtherVisuals\":true,\"filterSortOrder\":3}}",
+          "filters": "[{\"name\":\"575da062347b8ccc6c07\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"orders\"}},\"Property\":\"commodity\"}},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{\"general\":[{\"properties\":{\"isInvertedSelectionMode\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]},\"isHiddenInViewMode\":false,\"ordinal\":0},{\"name\":\"229d6fc36b41e4979240\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"orders\"}},\"Property\":\"commodity_id\"}},\"type\":\"Categorical\",\"howCreated\":0,\"isHiddenInViewMode\":false,\"ordinal\":1},{\"name\":\"c60f5db063a68574a196\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"orders\"}},\"Property\":\"id\"}},\"type\":\"Categorical\",\"howCreated\":1,\"isHiddenInViewMode\":false,\"ordinal\":2},{\"name\":\"cbe1bab4b44d241cc020\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Count of Orders\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Orders\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":0,\"ordinal\":3},{\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"NFM\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"NFM\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":0,\"isHiddenInViewMode\":false}]",
+          "height": 592.00,
+          "width": 1072.00,
+          "x": 16.00,
+          "y": 128.00,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
       "displayName": "Page 2",
       "displayOption": 1,
       "filters": "[]",
@@ -46,6 +117,36 @@
     },
     {
       "config": "{}",
+      "displayName": "Tracking",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "e1a6b96252a805572e8d",
+      "ordinal": 4,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"3f9d50a82bad1735a09e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112,\"z\":0,\"width\":416,\"height\":608,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Category\":[{\"queryRef\":\"employees.Name\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of Trackable Movements\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#FCB714'\"}}}}}}}],\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 608.00,
+          "width": 416.00,
+          "x": 0.00,
+          "y": 112.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"d532124d79cb0b91b558\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112,\"z\":1000,\"width\":416,\"height\":608,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Category\":[{\"queryRef\":\"employees.Name\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"}],\"Tooltips\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"},{\"queryRef\":\"measures_.Count of Trackable Movements\"},{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of movements with 3 or more pings\"},\"Name\":\"measures_.Count of movements with 3 or more pings\",\"NativeReferenceName\":\"Count of movements with 3 or more pings\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"},\"Name\":\"measures_.Percentage Of movement with 3 or more pings\",\"NativeReferenceName\":\"Percentage Of movement with 3 or more pings\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#227DD8'\"}}}}},\"fillTransparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}],\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"100D\"}}}}}],\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 608.00,
+          "width": 416.00,
+          "x": 0.00,
+          "y": 112.00,
+          "z": 1000.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
       "displayName": "Page 1",
       "displayOption": 1,
       "filters": "[]",
@@ -53,10 +154,10 @@
       "name": "f308d4b798d09440899c",
       "visualContainers": [
         {
-          "config": "{\"name\":\"da0aaf3222e04b856a18\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112,\"z\":0,\"width\":1088,\"height\":608,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"employees.Name\"},{\"queryRef\":\"measures_.Count of Movements Booked\"},{\"queryRef\":\"job_history.Job Start Date\"},{\"queryRef\":\"job_history.Job End Date\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"j\",\"Entity\":\"job_history\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Movements Booked\"},\"Name\":\"measures_.Count of Movements Booked\",\"NativeReferenceName\":\"Count of Movements Booked\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job Start Date\"},\"Name\":\"job_history.Job Start Date\",\"NativeReferenceName\":\"Job Start Date\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job End Date\"},\"Name\":\"job_history.Job End Date\",\"NativeReferenceName\":\"Job End Date\"}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"da0aaf3222e04b856a18\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112,\"z\":0,\"width\":672,\"height\":240,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"employees.Name\"},{\"queryRef\":\"measures_.Count of Movements Booked\"},{\"queryRef\":\"job_history.Job Start Date\"},{\"queryRef\":\"job_history.Job End Date\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"j\",\"Entity\":\"job_history\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Movements Booked\"},\"Name\":\"measures_.Count of Movements Booked\",\"NativeReferenceName\":\"Count of Movements Booked\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job Start Date\"},\"Name\":\"job_history.Job Start Date\",\"NativeReferenceName\":\"Job Start Date\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job End Date\"},\"Name\":\"job_history.Job End Date\",\"NativeReferenceName\":\"Job End Date\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[{\"name\":\"005744e26beadba0a073\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Current Carrier Booking Team\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Carrier Booking Team\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":1}]",
-          "height": 608.00,
-          "width": 1088.00,
+          "height": 240.00,
+          "width": 672.00,
           "x": 0.00,
           "y": 112.00,
           "z": 0.00

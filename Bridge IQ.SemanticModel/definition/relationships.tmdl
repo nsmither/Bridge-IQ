@@ -162,27 +162,21 @@ relationship 0f6ed619-f10e-89b5-6047-9c7b87b6393e
 	fromColumn: employees.'McLeod User Code'
 	toColumn: movements.dispatcher_user_id
 
-relationship 097ad856-9351-46aa-b401-0f8f89534195
-	joinOnDateBehavior: datePartOnly
-	fromColumn: parade_orders.created_at
-	toColumn: LocalDateTable_1597a8f1-96f6-4a2b-a857-77839b7b4a1c.Date
+relationship 8714dc3c-4744-58cf-30fd-cc1bd116d520
+	isActive: false
+	fromColumn: callins.entered_date
+	toColumn: Calendar.Date
 
-relationship c77e1805-0e8d-40fc-bd42-713e4db26dd9
-	joinOnDateBehavior: datePartOnly
-	fromColumn: parade_orders.archived_at
-	toColumn: LocalDateTable_c8f1405c-b7f6-4839-9069-8149e1cde346.Date
+relationship 9c9f9ee7-aadc-8abf-19fa-be24e4230ebf
+	fromColumn: callins.movement_id
+	toColumn: movements.id
 
-relationship 5566dd3a-ee1f-4176-a92b-c7aeee8c4529
-	joinOnDateBehavior: datePartOnly
-	fromColumn: parade_orders.src_date
-	toColumn: LocalDateTable_b667b19a-6034-4038-803d-3ee895c62605.Date
+relationship abba11bd-b68c-b7d9-b958-9f2db5bacd1f
+	fromColumn: overdue_check_calls.'Movement ID'
+	toColumn: movements.id
 
-relationship fbd3dd6c-f41c-4a4f-bdd7-fca190be9a60
-	joinOnDateBehavior: datePartOnly
-	fromColumn: parade_orders.dst_date
-	toColumn: LocalDateTable_6c1135c2-bb71-4f52-b967-ff64807a396e.Date
-
-relationship AutoDetected_3ef9aa58-30b8-4fb4-b0b5-805ab17fe2cf
-	fromColumn: parade_orders.customer_id
-	toColumn: customer.id
+relationship c40037d6-e2b6-dcf7-3efd-bb935c17f1ee
+	isActive: false
+	fromColumn: overdue_check_calls.'Check Call Date'
+	toColumn: Calendar.Date
 

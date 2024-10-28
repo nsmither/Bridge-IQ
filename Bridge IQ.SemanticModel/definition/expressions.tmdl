@@ -106,9 +106,11 @@ expression pcs_orders =
 		    #"Renamed Columns2" = Table.RenameColumns(#"Expanded customer",{{"customer.id", "customer.id_old"}}),
 		    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns2", "customer_id", each if [pcs_customers.EntCode] = "V11634" then "PARIDUIA" else [customer.id_old]),
 		    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"customer.id_old", "BillToID", "pcs_customers.EntCode"}),
-		    #"Added Custom" = Table.AddColumn(#"Removed Columns2", "status", each "D")
+		    #"Added Custom" = Table.AddColumn(#"Removed Columns2", "status", each "D"),
+		    #"Inserted First Characters" = Table.AddColumn(#"Added Custom", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
+		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text)
 		in
-		    #"Added Custom"
+		    #"Inserted First Characters1"
 	lineageTag: 4f815021-5764-4bb3-8b46-a88a5802f2ae
 	queryGroup: 'Historic Tables'
 
@@ -136,9 +138,11 @@ expression mcleod_historic_orders =
 		    #"Merged stop table consignee" = Table.NestedJoin(#"Renamed shipper data", {"consignee_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
 		    #"Expanded stop1" = Table.ExpandTableColumn(#"Merged stop table consignee", "stop", {"city_id", "city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_id", "stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
 		    //End add shipper and consignee data
-		    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}})
+		    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
+		    #"Inserted First Characters" = Table.AddColumn(#"Renamed consignee data", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text)
 		in
-		    #"Renamed consignee data"
+		    #"Inserted First Characters1"
 	lineageTag: ecc7d6f2-89e7-440c-8625-c2621e2e918e
 	queryGroup: 'Historic Tables'
 
@@ -318,12 +322,12 @@ expression 'Sample File' =
 
 expression 'Transform File' =
 		let
-		    Source = (Parameter1) => let
-		        Source = Excel.Workbook(Parameter1, null, true),
-		        Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
-		        #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
-		    in
-		        #"Promoted Headers"
+		    Source = (Parameter1 as binary) => let
+		    Source = Excel.Workbook(Parameter1, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
 		in
 		    Source
 	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File""}" ]
@@ -366,12 +370,12 @@ expression 'Sample File (2)' =
 
 expression 'Transform File (2)' =
 		let
-		    Source = (Parameter2) => let
-		        Source = Excel.Workbook(Parameter2, null, true),
-		        Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
-		        #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
-		    in
-		        #"Promoted Headers"
+		    Source = (Parameter2 as binary) => let
+		    Source = Excel.Workbook(Parameter2, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
 		in
 		    Source
 	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (2)""}" ]
@@ -402,6 +406,66 @@ expression historic_parade_orders =
 		    #"Filtered orders before RefreshCutOffDate"
 	lineageTag: 95446394-12c9-44d4-bfbc-ea7f8fb2d92d
 	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression historic_callins =
+		let
+		    Source = Sql.Database("bl-appdb", "lme"),
+		    dbo_callin = Source{[Schema="dbo",Item="callin"]}[Data],
+		    #"Removed Other Columns" = Table.SelectColumns(dbo_callin,{"entered_by", "entered_date", "movement_status", "payee_id", "initiated_type", "movement_id"}),
+		    #"Filtered callins before RefreshCutOffDate" = Table.SelectRows(#"Removed Other Columns", each [entered_date] < RefreshCutOffDate),
+		    #"Inserted Time" = Table.AddColumn(#"Filtered callins before RefreshCutOffDate", "Time", each DateTime.Time([entered_date]), type time),
+		    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}}),
+		    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}})
+		in
+		    #"Extracted Date"
+	lineageTag: 56bd229e-e47a-4149-814e-6b72b080d909
+	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression parade_orders =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each Text.Contains([Folder Path], "02 BL-Areas/bridge_iq/Data Sets/Parade/parade_orders_api_files")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    #"Filtered Hidden Files2" = Table.SelectRows(#"Filtered Hidden Files1", each [Attributes]?[Hidden]? <> true),
+		    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files2", "Transform File (2)", each #"Transform File (2)"([Content])),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File (2)"}),
+		    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (2)", Table.ColumnNames(#"Transform File (2)"(#"Sample File (2)"))),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"id", Int64.Type}, {"reference_id", type text}, {"created_at", type datetime}, {"archived_at", type datetime}, {"src_city", type text}, {"src_state", type text}, {"src_date", type date}, {"src_postal_code", type text}, {"dst_city", type text}, {"dst_state", type text}, {"dst_date", type date}, {"dst_postal_code", type text}, {"num_stops", Int64.Type}, {"equipment", type text}, {"trailer_type", type text}, {"rate_customer", type number}, {"first_load", type logical}, {"customer_id", type text}, {"revenue_code", Int64.Type}, {"team_name", type any}, {"rep_email", type text}, {"rep_name", type text}, {"carrier_manager", type text}, {"category", type text}, {"conversion_category", type text}, {"partner", type text}, {"margin_amount", type number}, {"margin_pct", type number}, {"carrier_name", type text}, {"dot_number", Int64.Type}, {"mc_number", Int64.Type}, {"carrier_rate", type number}}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"rate_customer", Currency.Type}, {"margin_amount", Currency.Type}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type1",{{"reference_id", Order.Ascending}}),
+		    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Sorted Rows", {{"reference_id", each Text.AfterDelimiter(_, "-"), type text}}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Extracted Text After Delimiter", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"reference_id", "movement_id"}}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([category] <> "outside_parade") and ([conversion_category] <> "Manually Assigned")),
+		    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows1", {"id"}),
+		    #"Filtered Orders on or after RefreshCutOffDate" = Table.SelectRows(#"Removed Duplicates", each [created_at] >= RefreshCutOffDate),
+		    #"Appended Query" = Table.Combine({#"Filtered Orders on or after RefreshCutOffDate", historic_parade_orders})
+		in
+		    #"Appended Query"
+	lineageTag: 5688bae6-26cc-4f19-8378-f368a98c4b01
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dnc =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/DNC/DNC.xlsx"), null, true),
+		    dnc_Table = Source{[Item="dnc",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(dnc_Table,{{"DNC", type text}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type")
+		in
+		    #"Removed Duplicates"
+	lineageTag: 404f9e09-a9e5-41cf-8435-ee73acb35e66
 
 	annotation PBI_NavigationStepName = Navigation
 

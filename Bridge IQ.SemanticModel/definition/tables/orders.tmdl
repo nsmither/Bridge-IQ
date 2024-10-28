@@ -487,6 +487,22 @@ table orders
 
 		annotation UnderlyingDateTimeDataType = Time
 
+	column shipper_3_digit_zip_code
+		dataType: string
+		lineageTag: cd907732-0003-496f-8c3e-cad726c16e70
+		summarizeBy: none
+		sourceColumn: shipper_3_digit_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_3_digit_zip_code
+		dataType: string
+		lineageTag: 3a0c6f92-1467-4124-b194-dc824374dc66
+		summarizeBy: none
+		sourceColumn: consignee_3_digit_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
 	partition orders = m
 		mode: import
 		source =
@@ -510,7 +526,9 @@ table orders
 				    #"Expanded stop1" = Table.ExpandTableColumn(#"Merged stop table consignee", "stop", {"city_id", "city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_id", "stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
 				    //End add shipper and consignee data
 				    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
-				    #"Appended Query" = Table.Combine({#"Renamed consignee data", mcleod_historic_orders, pcs_orders})
+				    #"Inserted First Characters" = Table.AddColumn(#"Renamed consignee data", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+				    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
+				    #"Appended Query" = Table.Combine({#"Inserted First Characters1", mcleod_historic_orders, pcs_orders})
 				in
 				    #"Appended Query"
 

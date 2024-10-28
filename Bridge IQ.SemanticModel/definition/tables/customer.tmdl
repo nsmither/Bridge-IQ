@@ -12,7 +12,7 @@ table customer
 	column average_pay_days
 		dataType: double
 		lineageTag: cbc3ba3d-6291-49ff-870c-15f96efe8933
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: average_pay_days
 
 		annotation SummarizationSetBy = Automatic
@@ -23,7 +23,7 @@ table customer
 		dataType: int64
 		formatString: 0
 		lineageTag: 35353f72-9792-472a-a60e-ad7993b70c17
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: bill_due_days
 
 		annotation SummarizationSetBy = Automatic
@@ -40,7 +40,7 @@ table customer
 		dataType: int64
 		formatString: 0
 		lineageTag: ee772063-c592-457f-aa6b-4afef607f479
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: city_id
 
 		annotation SummarizationSetBy = Automatic
@@ -48,7 +48,7 @@ table customer
 	column credit_limit
 		dataType: double
 		lineageTag: 88053ca8-8607-4de6-b5f1-f400fc8cd0b5
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: credit_limit
 
 		annotation SummarizationSetBy = Automatic
@@ -117,7 +117,7 @@ table customer
 	column latitude
 		dataType: double
 		lineageTag: 8190aad3-fae7-4f38-8aa3-1d1836e0e17d
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: latitude
 
 		annotation SummarizationSetBy = Automatic
@@ -127,7 +127,7 @@ table customer
 	column longitude
 		dataType: double
 		lineageTag: 8cd09e1a-840c-485b-9d66-026f44c1e69b
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: longitude
 
 		annotation SummarizationSetBy = Automatic

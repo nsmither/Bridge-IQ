@@ -154,6 +154,23 @@ table movements
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'dnc.DNC'
+		dataType: string
+		lineageTag: ac116524-89be-44ce-aa9b-94b064a02884
+		summarizeBy: none
+		sourceColumn: dnc.DNC
+
+		annotation SummarizationSetBy = Automatic
+
+	column dnc
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 751a058d-ec39-485f-a40d-f9fcda0b3d14
+		summarizeBy: none
+		sourceColumn: dnc
+
+		annotation SummarizationSetBy = Automatic
+
 	partition movements = m
 		mode: import
 		source =
@@ -170,9 +187,18 @@ table movements
 				    #"Merged Queries" = Table.NestedJoin(#"Trimmed Text", {"id"}, movement_order, {"movement_id"}, "movement_order", JoinKind.LeftOuter),
 				    #"Expanded movement_order" = Table.ExpandTableColumn(#"Merged Queries", "movement_order", {"order_id", "sequence"}, {"order_id", "sequence"}),
 				    #"Appended Query1" = Table.Combine({#"Expanded movement_order", pcs_movements}),
-				    #"Changed Type2" = Table.TransformColumnTypes(#"Appended Query1",{{"invoice_recv_date", type date}, {"xfer2settle_date", type date}, {"target_pay", Currency.Type}, {"override_targetpay", Currency.Type}, {"override_pay_amt", Currency.Type}, {"max_buy", Currency.Type}})
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Appended Query1",{{"invoice_recv_date", type date}, {"xfer2settle_date", type date}, {"target_pay", Currency.Type}, {"override_targetpay", Currency.Type}, {"override_pay_amt", Currency.Type}, {"max_buy", Currency.Type}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Changed Type2", {"id"}, parade_orders, {"movement_id"}, "parade_orders", JoinKind.LeftOuter),
+				    #"Expanded parade_orders" = Table.ExpandTableColumn(#"Merged Queries1", "parade_orders", {"id"}, {"parade_orders.id"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded parade_orders",{{"dispatcher_user_id", "dispatcher_user_id_old"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "dispatcher_user_id", each if [parade_orders.id] = null then [dispatcher_user_id_old] else "parade"),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column",{"parade_orders.id", "dispatcher_user_id_old"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Removed Columns1", {"id"}, dnc, {"DNC"}, "dnc", JoinKind.LeftOuter),
+				    #"Expanded dnc" = Table.ExpandTableColumn(#"Merged Queries2", "dnc", {"DNC"}, {"dnc.DNC"}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Expanded dnc", "dnc", each if [dnc.DNC] = null then false else true),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Conditional Column1",{{"dnc", type logical}})
 				in
-				    #"Changed Type2"
+				    #"Changed Type3"
 
 	annotation PBI_NavigationStepName = Navigation
 
