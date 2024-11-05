@@ -503,9 +503,17 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
+	column lane
+		dataType: string
+		lineageTag: 277452ed-3e1e-495b-9fc0-6c0ad261a194
+		summarizeBy: none
+		sourceColumn: lane
+
+		annotation SummarizationSetBy = Automatic
+
 	partition orders = m
 		mode: import
-		source =
+		source = ```
 				let
 				    Source = Sql.Databases("bl-appdb"),
 				    lme = Source{[Name="lme"]}[Data],
@@ -526,13 +534,27 @@ table orders
 				    #"Expanded stop1" = Table.ExpandTableColumn(#"Merged stop table consignee", "stop", {"city_id", "city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_id", "stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
 				    //End add shipper and consignee data
 				    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
+				    //Start add 3 digit zip
 				    #"Inserted First Characters" = Table.AddColumn(#"Renamed consignee data", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+				    //End add 3 digit zip
 				    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
-				    #"Appended Query" = Table.Combine({#"Inserted First Characters1", mcleod_historic_orders, pcs_orders})
+				    //Start Add Lane
+				    #"Trimmed Text" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text", "shipper_city_name", "shipper_city_name - Copy"),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
+				    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
+				    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
+				    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
+				    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
+				    //End Add Lane
+				    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane"),
+				    
+				    #"Appended Query" = Table.Combine({#"Merged Columns2", mcleod_historic_orders, pcs_orders})
 				in
 				    #"Appended Query"
+				```
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 

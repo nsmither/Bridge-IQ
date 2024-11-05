@@ -397,7 +397,7 @@ table measures_
 		formatString: 0
 		lineageTag: 9a92c758-8ba8-4423-a380-55402b47cdf1
 
-	measure 'Count of Orders' =
+	measure 'Count of Orders within date range' =
 			
 			CALCULATE(
 			    DISTINCTCOUNT(orders[id]),
@@ -481,6 +481,45 @@ table measures_
 		lineageTag: 06663e34-2ac5-4c2d-b23e-2f4cdab296d3
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Overdue Check Call' =
+			
+			CALCULATE(
+			    COUNTROWS(overdue_check_calls),
+			    FILTER(overdue_check_calls,overdue_check_calls[Check Call Date]>=MIN('Calendar'[Date])),
+			    FILTER(overdue_check_calls,overdue_check_calls[Check Call Date]<=MAX('Calendar'[Date]))
+			)
+		formatString: 0
+		lineageTag: 2df9d954-b218-472b-b5c9-66cf04dec2ff
+
+	measure 'Date Diff order_entered_date vs shipper_sched_early_date' =
+			
+			//CALCULATE(
+			    DATEDIFF(MIN(orders[order_entered_date]),MIN(orders[shipper_sched_early_date]),DAY)//,
+			    //FILTER(orders,orders[order_entered_date]>=MIN('Calendar'[Date])),
+			    //ILTER(orders,orders[order_entered_date]<=MAX('Calendar'[Date]))
+			//)
+		formatString: 0
+		lineageTag: 1859b08e-036c-4f3d-9186-8e213722335d
+
+	measure 'Date Diff Avail time vs shipper_sched_early_date' = DATEDIFF(MIN(CRT_DATA[Avail Time]),MIN(orders[shipper_sched_early_date]),DAY)
+		formatString: 0
+		lineageTag: a19ead59-399d-4cc4-81fd-897c3024e0b9
+
+	measure 'Median Days Between enterd date and ship datea' = MEDIANX(orders,[Date Diff order_entered_date vs shipper_sched_early_date])
+		lineageTag: bf444e09-38a4-4f81-8c72-1f59b76f2e49
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Movements Passed During Date Range' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(CRT_DATA[Movement ID]),
+			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
+			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			)
+		formatString: 0
+		lineageTag: ddd39222-cbdb-4e56-b194-734028683608
 
 	column Column
 		dataType: int64

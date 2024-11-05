@@ -5,7 +5,7 @@
       "ordinal": 0,
       "scrollPosition": {
         "x": 0,
-        "y": 743.75
+        "y": 0
       },
       "nodes": [
         {
@@ -42,7 +42,7 @@
           "nodeIndex": "orders",
           "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
           "size": {
-            "height": 300,
+            "height": 332.5,
             "width": 234
           },
           "zIndex": 10
@@ -97,7 +97,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 1
+          "zIndex": 2
         },
         {
           "location": {
@@ -110,7 +110,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 2
+          "zIndex": 3
         },
         {
           "location": {
@@ -123,7 +123,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 3
+          "zIndex": 4
         },
         {
           "location": {
@@ -135,7 +135,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 4
+          "zIndex": 5
         },
         {
           "location": {
@@ -159,6 +159,32 @@
           "nodeLineageTag": "73748e9d-e1aa-4e29-8ff2-44f74b188960",
           "size": {
             "height": 176,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1296.4884172763041,
+            "y": 1709.5367945560492
+          },
+          "nodeIndex": "CRT_DATA",
+          "nodeLineageTag": "6fb9b42f-de18-477c-8b98-344a1312204f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1181.7384172763041,
+            "y": 476.51839727802462
+          },
+          "nodeIndex": "lane",
+          "nodeLineageTag": "7bc0b0c0-f527-406e-9f68-57b6dddde0c5",
+          "size": {
+            "height": 104,
             "width": 234
           },
           "zIndex": 0

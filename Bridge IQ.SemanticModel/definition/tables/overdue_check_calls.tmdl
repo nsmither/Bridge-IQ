@@ -49,9 +49,10 @@ table overdue_check_calls
 				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type", {"Check Call Time"}),
 				    #"Inserted Time" = Table.AddColumn(#"Removed Errors", "Time", each DateTime.Time([Check Call Time]), type time),
 				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Check Call Time", "Check Call Date"}, {"Time", "Check Call Time"}}),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns",{{"Check Call Date", type date}})
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns",{{"Check Call Date", type date}}),
+				    #"Calculated Start of Hour" = Table.TransformColumns(#"Changed Type1",{{"Check Call Time", Time.StartOfHour, type time}})
 				in
-				    #"Changed Type1"
+				    #"Calculated Start of Hour"
 
 	annotation PBI_NavigationStepName = Navigation
 

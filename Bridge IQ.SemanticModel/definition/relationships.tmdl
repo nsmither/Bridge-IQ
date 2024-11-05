@@ -180,3 +180,37 @@ relationship c40037d6-e2b6-dcf7-3efd-bb935c17f1ee
 	fromColumn: overdue_check_calls.'Check Call Date'
 	toColumn: Calendar.Date
 
+relationship fe94c6fe-a585-40a4-20ea-f103928fcb09
+	crossFilteringBehavior: bothDirections
+	fromColumn: CRT_DATA.'Movement ID'
+	toColumn: movements.id
+
+relationship fc5fc8e4-1849-d3ac-b3fe-598abd29f064
+	isActive: false
+	fromColumn: CRT_DATA.'Avail Time'
+	toColumn: Calendar.Date
+
+relationship 9add36d8-90b6-034d-1044-57c66973ec3b
+	isActive: false
+	fromColumn: CRT_DATA.'Covered Time'
+	toColumn: Calendar.Date
+
+relationship dd525f85-0cde-3300-3159-dc880be07c34
+	isActive: false
+	fromColumn: CRT_DATA.'Give Back Time '
+	toColumn: Calendar.Date
+
+relationship 761c2141-951b-0a3d-6e7c-70396138b4a2
+	isActive: false
+	fromColumn: CRT_DATA.'Load Board Time'
+	toColumn: Calendar.Date
+
+relationship f84bceea-6db2-2507-b712-d1cba07d870b
+	fromColumn: orders.lane
+	toColumn: lane.lane
+
+relationship 7de0ad41-c2eb-d29c-91b4-6eeba6627d01
+	isActive: false
+	fromColumn: CRT_DATA.'Order ID'
+	toColumn: orders.id
+

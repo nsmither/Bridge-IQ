@@ -108,9 +108,19 @@ expression pcs_orders =
 		    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"customer.id_old", "BillToID", "pcs_customers.EntCode"}),
 		    #"Added Custom" = Table.AddColumn(#"Removed Columns2", "status", each "D"),
 		    #"Inserted First Characters" = Table.AddColumn(#"Added Custom", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
-		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text)
+		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+		    //Start Add Lane
+		    #"Trimmed Text1" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text1", "shipper_city_name", "shipper_city_name - Copy"),
+		    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
+		    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
+		    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
+		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
+		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
+		    //End Add Lane
+		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
 		in
-		    #"Inserted First Characters1"
+		    #"Merged Columns2"
 	lineageTag: 4f815021-5764-4bb3-8b46-a88a5802f2ae
 	queryGroup: 'Historic Tables'
 
@@ -140,9 +150,19 @@ expression mcleod_historic_orders =
 		    //End add shipper and consignee data
 		    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
 		    #"Inserted First Characters" = Table.AddColumn(#"Renamed consignee data", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
-		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text)
+		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
+		    //Start Add Lane
+		    #"Trimmed Text" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text", "shipper_city_name", "shipper_city_name - Copy"),
+		    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
+		    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
+		    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
+		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
+		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
+		    //End Add Lane
+		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
 		in
-		    #"Inserted First Characters1"
+		    #"Merged Columns2"
 	lineageTag: ecc7d6f2-89e7-440c-8625-c2621e2e918e
 	queryGroup: 'Historic Tables'
 
