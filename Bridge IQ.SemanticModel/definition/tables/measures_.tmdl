@@ -56,7 +56,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure Margin = [Total Revenue]-[Total Carrier Pay]
+	measure Margin = CALCULATE([Total Revenue]-[Total Carrier Pay],movements[status]<>"A")
 		lineageTag: 3491f4d3-9764-45b7-a60b-c17891311500
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -502,7 +502,7 @@ table measures_
 		formatString: 0
 		lineageTag: 1859b08e-036c-4f3d-9186-8e213722335d
 
-	measure 'Date Diff Avail time vs shipper_sched_early_date' = DATEDIFF(MIN(CRT_DATA[Avail Time]),MIN(orders[shipper_sched_early_date]),DAY)
+	measure 'Date Diff Avail time vs shipper_sched_early_date' = DATEDIFF(MIN(crt_movement_data[Avail Time]),MIN(orders[shipper_sched_early_date]),DAY)
 		formatString: 0
 		lineageTag: a19ead59-399d-4cc4-81fd-897c3024e0b9
 
@@ -514,12 +514,19 @@ table measures_
 	measure 'Movements Passed During Date Range' =
 			
 			CALCULATE(
-			    DISTINCTCOUNT(CRT_DATA[Movement ID]),
+			    DISTINCTCOUNT(crt_movement_data[Movement ID]),
 			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
 			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
 			)
 		formatString: 0
 		lineageTag: ddd39222-cbdb-4e56-b194-734028683608
+
+	measure 'Margin Goal' = SUM(margin_load_count_goals[Margin Goal])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 55363ec6-7790-4d0d-8a43-73c298dc5628
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	column Column
 		dataType: int64

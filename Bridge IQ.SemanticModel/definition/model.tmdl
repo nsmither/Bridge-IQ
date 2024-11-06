@@ -31,7 +31,7 @@ queryGroup 'Transform File from historic_parade_orders\Helper Queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
-annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","overdue_check_calls","dnc","stop","customer","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_callins","movements","driver_extra_pay","Calendar","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","CRT_DATA","lane"]
+annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_callins","movements","driver_extra_pay","Calendar","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","crt_movement_data","lane","daily_number_override","wolf_pack"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -55,8 +55,13 @@ ref table job_history
 ref table salesperson_key
 ref table callins
 ref table overdue_check_calls
-ref table CRT_DATA
+ref table crt_movement_data
 ref table lane
+ref table margin_load_count_goals
+ref table daily_number_override
+ref table LocalDateTable_1079eecc-82a9-4100-9db0-4cfb5a51a4a2
+ref table rev_codes
+ref table wolf_pack
 
 ref cultureInfo en-US
 

@@ -3,7 +3,7 @@ table Calendar
 
 	column Date
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 8c8cd0ec-bc3a-497c-8890-727a55c10611
 		summarizeBy: none
 		sourceColumn: Date

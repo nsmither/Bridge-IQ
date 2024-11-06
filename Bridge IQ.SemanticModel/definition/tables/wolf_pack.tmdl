@@ -1,0 +1,26 @@
+table wolf_pack
+	lineageTag: 958b89fd-1535-4e40-a583-7db4a312b458
+
+	column 'Wolf Pack'
+		dataType: string
+		lineageTag: c5bae443-8e86-4ca6-bbe7-068eb49100ba
+		summarizeBy: none
+		sourceColumn: Wolf Pack
+
+		annotation SummarizationSetBy = Automatic
+
+	partition wolf_pack = m
+		mode: import
+		source =
+				let
+				    Source = rev_codes,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Wolf Pack"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Removed Blank Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -182,27 +182,27 @@ relationship c40037d6-e2b6-dcf7-3efd-bb935c17f1ee
 
 relationship fe94c6fe-a585-40a4-20ea-f103928fcb09
 	crossFilteringBehavior: bothDirections
-	fromColumn: CRT_DATA.'Movement ID'
+	fromColumn: crt_movement_data.'Movement ID'
 	toColumn: movements.id
 
 relationship fc5fc8e4-1849-d3ac-b3fe-598abd29f064
 	isActive: false
-	fromColumn: CRT_DATA.'Avail Time'
+	fromColumn: crt_movement_data.'Avail Time'
 	toColumn: Calendar.Date
 
 relationship 9add36d8-90b6-034d-1044-57c66973ec3b
 	isActive: false
-	fromColumn: CRT_DATA.'Covered Time'
+	fromColumn: crt_movement_data.'Covered Time'
 	toColumn: Calendar.Date
 
 relationship dd525f85-0cde-3300-3159-dc880be07c34
 	isActive: false
-	fromColumn: CRT_DATA.'Give Back Time '
+	fromColumn: crt_movement_data.'Give Back Time '
 	toColumn: Calendar.Date
 
 relationship 761c2141-951b-0a3d-6e7c-70396138b4a2
 	isActive: false
-	fromColumn: CRT_DATA.'Load Board Time'
+	fromColumn: crt_movement_data.'Load Board Time'
 	toColumn: Calendar.Date
 
 relationship f84bceea-6db2-2507-b712-d1cba07d870b
@@ -211,6 +211,23 @@ relationship f84bceea-6db2-2507-b712-d1cba07d870b
 
 relationship 7de0ad41-c2eb-d29c-91b4-6eeba6627d01
 	isActive: false
-	fromColumn: CRT_DATA.'Order ID'
+	fromColumn: crt_movement_data.'Order ID'
 	toColumn: orders.id
+
+relationship a7804ea9-83e9-4dc2-80c4-110de2aa952a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: daily_number_override.Month
+	toColumn: LocalDateTable_1079eecc-82a9-4100-9db0-4cfb5a51a4a2.Date
+
+relationship c8de8f41-77b3-7a78-50c4-d71de15d7c08
+	fromColumn: margin_load_count_goals.Month
+	toColumn: Calendar.Date
+
+relationship 0a840ca3-82a7-107f-ba07-a21e792bf8cd
+	fromColumn: margin_load_count_goals.'Salesperson Name'
+	toColumn: salesperson_key.Name
+
+relationship AutoDetected_a86b030c-b450-4086-b70a-155d7f9a858f
+	fromColumn: rev_codes.'Wolf Pack'
+	toColumn: wolf_pack.'Wolf Pack'
 
