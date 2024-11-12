@@ -1,28 +1,28 @@
 table rev_codes
 	lineageTag: 3cdc5a80-c6b4-41b3-9dbd-2c2e43274b14
 
-	column 'Rev Code'
+	column rev_code_id
 		dataType: int64
 		formatString: 0
-		lineageTag: ca238b44-3bae-47f8-a900-8975360dbd88
-		summarizeBy: count
-		sourceColumn: Rev Code
+		lineageTag: 2230ad6f-cfb5-49a1-bf18-467e042069f9
+		summarizeBy: none
+		sourceColumn: rev_code_id
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Lead Ops'
+	column account_rep
 		dataType: string
-		lineageTag: a441d509-068b-499d-a252-1cd8d0c2b3ec
+		lineageTag: db0ff67e-b1df-4476-bec0-edbcf640fc55
 		summarizeBy: none
-		sourceColumn: Lead Ops
+		sourceColumn: account_rep
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Wolf Pack'
+	column wolf_pack
 		dataType: string
-		lineageTag: 1db6568e-cc66-4601-967e-136a6e8d258a
+		lineageTag: 2ad6eb3c-3623-4b2f-8b63-c360fa9b8131
 		summarizeBy: none
-		sourceColumn: Wolf Pack
+		sourceColumn: wolf_pack
 
 		annotation SummarizationSetBy = Automatic
 
@@ -32,7 +32,7 @@ table rev_codes
 				let
 				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Teams.xlsx"), null, true),
 				    rev_codes_Table = Source{[Item="rev_codes",Kind="Table"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(rev_codes_Table,{{"Rev Code", Int64.Type}, {"Lead Ops", type text}, {"Wolf Pack", type text}})
+				    #"Changed Type" = Table.TransformColumnTypes(rev_codes_Table,{{"rev_code_id", Int64.Type}, {"account_rep", type text}, {"wolf_pack", type text}})
 				in
 				    #"Changed Type"
 

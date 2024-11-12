@@ -8,11 +8,6 @@ table daily_number_override
 		summarizeBy: none
 		sourceColumn: Month
 
-		variation Variation
-			isDefault
-			relationship: a7804ea9-83e9-4dc2-80c4-110de2aa952a
-			defaultHierarchy: LocalDateTable_1079eecc-82a9-4100-9db0-4cfb5a51a4a2.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date

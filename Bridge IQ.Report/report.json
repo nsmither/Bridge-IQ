@@ -194,22 +194,31 @@
       "config": "{}",
       "displayName": "Page 1",
       "displayOption": 1,
-      "filters": "[]",
+      "filters": "[{\"name\":\"e8278e34269317fb70d3\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"movements\"}},\"Property\":\"status\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"movements\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"status\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'C'\"}}],[{\"Literal\":{\"Value\":\"'D'\"}}],[{\"Literal\":{\"Value\":\"'P'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
       "height": 720.00,
       "name": "e28d790973b5019286a2",
       "ordinal": 4,
       "visualContainers": [
         {
-          "config": "{\"name\":\"58a2414731b3a8b0c076\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1,\"width\":736,\"height\":128,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year\",\"active\":true},{\"queryRef\":\"Calendar.Month Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"},\"Name\":\"Calendar.Year\",\"NativeReferenceName\":\"Year\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"},\"Name\":\"Calendar.Month Name\",\"NativeReferenceName\":\"Month Name\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendar.Year\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendar.Month Name\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"2024L\"}}],\"isToggled\":true}]}}],\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2024L\"}},{\"Literal\":{\"Value\":\"'October'\"}}]]}}}]}}}}]},\"filterExpressionMetadata\":{\"expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}}],\"cachedValueItems\":[{\"identities\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2024L\"}}}}},{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}},\"Right\":{\"Literal\":{\"Value\":\"'October'\"}}}}}],\"valueMap\":{\"0\":\"2024\",\"1\":\"October\"}}]}}}",
+          "config": "{\"name\":\"58a2414731b3a8b0c076\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":432,\"height\":128,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year\",\"active\":true},{\"queryRef\":\"Calendar.Month Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"},\"Name\":\"Calendar.Year\",\"NativeReferenceName\":\"Year\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"},\"Name\":\"Calendar.Month Name\",\"NativeReferenceName\":\"Month Name\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendar.Year\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendar.Month Name\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"2024L\"}}],\"isToggled\":true}]}}],\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2024L\"}},{\"Literal\":{\"Value\":\"'October'\"}}]]}}}]}}}}]},\"filterExpressionMetadata\":{\"expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}}],\"cachedValueItems\":[{\"identities\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2024L\"}}}}},{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}},\"Right\":{\"Literal\":{\"Value\":\"'October'\"}}}}}],\"valueMap\":{\"0\":\"2024\",\"1\":\"October\"}}]}}}",
           "filters": "[]",
           "height": 128.00,
-          "width": 736.00,
+          "width": 432.00,
           "x": 0.00,
           "y": 0.00,
-          "z": 1.00
+          "z": 1000.00
         },
         {
-          "config": "{\"name\":\"c621b9bcc9d3db6c0319\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":352,\"z\":0,\"width\":992,\"height\":352,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"lineStackedColumnComboChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Margin\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"827d4558ad6b46c888c1\",\"layouts\":[{\"id\":0,\"position\":{\"x\":432,\"y\":0,\"z\":2001,\"width\":192,\"height\":80,\"tabOrder\":2001}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Brian Soloria'\"}}]]}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 80.00,
+          "width": 192.00,
+          "x": 432.00,
+          "y": 0.00,
+          "z": 2001.00
+        },
+        {
+          "config": "{\"name\":\"c621b9bcc9d3db6c0319\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":352,\"z\":0,\"width\":992,\"height\":352,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"lineStackedColumnComboChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Margin\"}],\"Y2\":[{\"queryRef\":\"measures_.Margin per day Goal\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin per day Goal\"},\"Name\":\"measures_.Margin per day Goal\",\"NativeReferenceName\":\"Margin per day Goal\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"valueAxis\":[{\"properties\":{\"start\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}},\"secStart\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}]}}}",
           "filters": "[]",
           "height": 352.00,
           "width": 992.00,
@@ -218,13 +227,31 @@
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"cb01841e1909ad12a027\",\"layouts\":[{\"id\":0,\"position\":{\"x\":544,\"y\":160,\"z\":2,\"width\":736,\"height\":144,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"gauge\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Margin\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "config": "{\"name\":\"c9c53d2af2f000ab4c1e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":0,\"z\":2002,\"width\":192,\"height\":80,\"tabOrder\":2002}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"rev_codes.rev_code_id\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"r\",\"Entity\":\"rev_codes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"r\"}},\"Property\":\"rev_code_id\"},\"Name\":\"rev_codes.rev_code_id\",\"NativeReferenceName\":\"rev_code_id\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
           "filters": "[]",
-          "height": 144.00,
-          "width": 736.00,
-          "x": 544.00,
-          "y": 160.00,
-          "z": 2.00
+          "height": 80.00,
+          "width": 192.00,
+          "x": 640.00,
+          "y": 0.00,
+          "z": 2002.00
+        },
+        {
+          "config": "{\"name\":\"cb01841e1909ad12a027\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":80,\"z\":2000,\"width\":416,\"height\":192,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"gauge\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Margin\"}],\"TargetValue\":[{\"queryRef\":\"measures_.Margin Goal\"}],\"MaxValue\":[{\"queryRef\":\"measures_.Margin vs Margin Goal Gauge Max\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin Goal\"},\"Name\":\"measures_.Margin Goal\",\"NativeReferenceName\":\"Margin Goal\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin vs Margin Goal Gauge Max\"},\"Name\":\"measures_.Margin vs Margin Goal Gauge Max\",\"NativeReferenceName\":\"Margin vs Margin Goal Gauge Max\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 192.00,
+          "width": 416.00,
+          "x": 0.00,
+          "y": 80.00,
+          "z": 2000.00
+        },
+        {
+          "config": "{\"name\":\"cf69d576dc330fd03662\",\"layouts\":[{\"id\":0,\"position\":{\"x\":832,\"y\":0,\"z\":2003,\"width\":192,\"height\":80,\"tabOrder\":2003}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"wolf_pack.wolf_pack\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"w\",\"Entity\":\"wolf_pack\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"w\"}},\"Property\":\"wolf_pack\"},\"Name\":\"wolf_pack.wolf_pack\",\"NativeReferenceName\":\"wolf_pack\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 80.00,
+          "width": 192.00,
+          "x": 832.00,
+          "y": 0.00,
+          "z": 2003.00
         }
       ],
       "width": 1280.00

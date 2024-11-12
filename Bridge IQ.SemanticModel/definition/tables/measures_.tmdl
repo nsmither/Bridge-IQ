@@ -521,12 +521,76 @@ table measures_
 		formatString: 0
 		lineageTag: ddd39222-cbdb-4e56-b194-734028683608
 
-	measure 'Margin Goal' = SUM(margin_load_count_goals[Margin Goal])
+	measure 'Margin Goal' = ```
+			CALCULATE(
+			    SUM(margin_load_count_goals[Margin Goal]),
+			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
+			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			)
+			
+			```
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Sales Measures\Sales Goals\Margin
 		lineageTag: 55363ec6-7790-4d0d-8a43-73c298dc5628
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Margin per day Goal' = ```
+			
+			Var workingdays = 
+			    NETWORKDAYS(
+			        STARTOFMONTH('Calendar'[Date]),
+			        ENDOFMONTH('Calendar'[Date]),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('calendar'[Date]))
+			Var override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('calendar'[Date]))
+			Var mpd = DIVIDE(months_margin_goal,workingdays)
+			
+			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
+			
+			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			
+			Return
+			mpdg
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 3c153d48-ca5a-4d48-985d-cdb795469f1a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Override margin goal' = SUM(daily_number_override[Margin Number])
+		formatString: 0
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 58b95798-7025-4b5f-b506-d04cbc04c4ea
+
+	measure 'Best Margin Month Ever' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('calendar','calendar'[Month / Year]),
+			        [Margin]),
+			        REMOVEFILTERS('calendar'[Year]),
+			        REMOVEFILTERS('calendar'[Month Name]),
+			         FILTER(orders,orders[shipper_sched_early_date]>=DATE(2023,01,01))
+			)
+		lineageTag: daef51bf-c98d-4a88-b79f-8f3c7b345729
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin vs Margin Goal Gauge Max' =
+			
+			IF(
+			    [Margin Goal]>[Best Margin Month Ever],
+			    [Margin Goal],
+			    [Best Margin Month Ever]
+			    )
+		lineageTag: 745cec3f-21ab-43c5-b78f-9f250e7f422a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		dataType: int64

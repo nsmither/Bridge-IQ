@@ -10,8 +10,8 @@ table Calendar
 
 		variation Variation
 			isDefault
-			relationship: 08fa2927-2f8e-48ca-8a72-3ea43a0556f4
-			defaultHierarchy: LocalDateTable_a9a14777-adcf-4e3f-a893-277fc966819d.'Date Hierarchy'
+			relationship: 637ca1f2-2edc-451e-ab79-fdb2847dbc89
+			defaultHierarchy: LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8.'Date Hierarchy'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -64,6 +64,9 @@ table Calendar
 		lineageTag: 8287fd0f-b28c-4d24-bb40-08429d66461a
 		summarizeBy: none
 		sourceColumn: Month Name
+		sortByColumn: MonthNmb
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 

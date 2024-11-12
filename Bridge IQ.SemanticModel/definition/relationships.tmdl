@@ -26,11 +26,6 @@ relationship 779f5544-eab0-74a9-bad6-7588d81e623d
 	fromColumn: orders.consignee_stop_id
 	toColumn: stop.id
 
-relationship 08fa2927-2f8e-48ca-8a72-3ea43a0556f4
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Calendar.Date
-	toColumn: LocalDateTable_a9a14777-adcf-4e3f-a893-277fc966819d.Date
-
 relationship 53388cc1-2c8e-449a-8c25-8743119bd22f
 	joinOnDateBehavior: datePartOnly
 	fromColumn: Calendar.'Start of Month'
@@ -214,11 +209,6 @@ relationship 7de0ad41-c2eb-d29c-91b4-6eeba6627d01
 	fromColumn: crt_movement_data.'Order ID'
 	toColumn: orders.id
 
-relationship a7804ea9-83e9-4dc2-80c4-110de2aa952a
-	joinOnDateBehavior: datePartOnly
-	fromColumn: daily_number_override.Month
-	toColumn: LocalDateTable_1079eecc-82a9-4100-9db0-4cfb5a51a4a2.Date
-
 relationship c8de8f41-77b3-7a78-50c4-d71de15d7c08
 	fromColumn: margin_load_count_goals.Month
 	toColumn: Calendar.Date
@@ -227,7 +217,33 @@ relationship 0a840ca3-82a7-107f-ba07-a21e792bf8cd
 	fromColumn: margin_load_count_goals.'Salesperson Name'
 	toColumn: salesperson_key.Name
 
-relationship AutoDetected_a86b030c-b450-4086-b70a-155d7f9a858f
-	fromColumn: rev_codes.'Wolf Pack'
-	toColumn: wolf_pack.'Wolf Pack'
+relationship AutoDetected_ffb25b36-3a06-40b9-af10-7aad726e1ec8
+	fromColumn: rev_codes.account_rep
+	toColumn: account_rep.account_rep
+
+relationship AutoDetected_abefa4b7-b384-4af1-a7e0-a9bdd0b3cc3d
+	fromColumn: account_rep.wolf_pack
+	toColumn: wolf_pack.wolf_pack
+
+relationship 991719b6-837f-b38c-bffb-f9fd5d5742fd
+	fromColumn: orders.revenue_code_id
+	toColumn: rev_codes.rev_code_id
+
+relationship 328ffb62-6ce8-4861-9f4b-2ef8226436f6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: observed_holidays.'Observed Holidays'
+	toColumn: LocalDateTable_ed26f4c3-9c62-405b-8c3b-c81747750938.Date
+
+relationship 67d7b0ce-f052-2db3-febd-64c18d2d5c79
+	fromColumn: orders.salesperson_id
+	toColumn: salesperson_key.'McLeod Salesperson Code'
+
+relationship 637ca1f2-2edc-451e-ab79-fdb2847dbc89
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Date
+	toColumn: LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8.Date
+
+relationship 260fb3f0-b8a2-161b-022b-537a60bcbdf7
+	fromColumn: daily_number_override.Month
+	toColumn: Calendar.Date
 
