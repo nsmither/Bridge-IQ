@@ -99,15 +99,31 @@ table crt_movement_data
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Ship date at Avail'
+		dataType: string
+		lineageTag: 94100550-fe9c-4957-a3a6-8a5ac841f0d6
+		summarizeBy: none
+		sourceColumn: Ship date at Avail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hand over'
+		dataType: string
+		lineageTag: 1c7d0730-ceb7-4ff6-b56a-ccedbfdce394
+		summarizeBy: none
+		sourceColumn: Hand over
+
+		annotation SummarizationSetBy = Automatic
+
 	partition crt_movement_data = m
 		mode: import
 		source =
 				let
 				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Carrier_Dispatch_Movement_data_New/Carrier_Dispatch_Movement_data_New.xlsx"), null, true),
 				    CRT_DATA_Table = Source{[Item="CRT_DATA",Kind="Table"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(CRT_DATA_Table,{{"Order ID", type text}, {"Movement ID", type text}, {"Avail #", Int64.Type}, {"Avail Time", type datetime}, {"Load Board Time", type datetime}, {"Give Back Time ", type datetime}, {"Covered Time", type datetime}, {"Start Max Pay", type number}, {"End Max Pay", Int64.Type}, {"Carrier Offers before LB", Int64.Type}, {"Carrier Offers", Int64.Type}, {"Number Count", type text}}),
+				    #"Changed Type" = Table.TransformColumnTypes(CRT_DATA_Table,{{"Order ID", type text}, {"Movement ID", type text}, {"Avail #", Int64.Type}, {"Avail Time", type datetime}, {"Load Board Time", type datetime}, {"Give Back Time ", type datetime}, {"Covered Time", type datetime}, {"Start Max Pay", type number}, {"End Max Pay", Int64.Type}, {"Carrier Offers before LB", Int64.Type}, {"Carrier Offers", Int64.Type}, {"Unique ID", type text}}),
 				    #"Added Prefix" = Table.TransformColumns(#"Changed Type", {{"Order ID", each "0" & _, type text}}),
-				    #"Removed Columns" = Table.RemoveColumns(#"Added Prefix",{"Number Count"})
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Prefix",{"Unique ID"})
 				in
 				    #"Removed Columns"
 

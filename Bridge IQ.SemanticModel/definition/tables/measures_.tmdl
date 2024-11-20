@@ -5,9 +5,10 @@ table measures_
 			
 			CALCULATE(
 			    SUM(orders[freight_charge]),
-			    orders[shipper_sched_early_date]>=MIN('Calendar'[Date]),
-			    orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Revenue Measures
 		lineageTag: 89d17990-2077-45c7-af5c-49710ca0fdc8
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
@@ -16,15 +17,17 @@ table measures_
 			
 			CALCULATE(
 			    SUM(orders[other_charges_total]),
-			    orders[shipper_sched_early_date]>=MIN('Calendar'[Date]),
-			    orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Revenue Measures
 		lineageTag: 5f9abf81-2be6-48b2-9799-922feb050f30
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	measure 'Total Revenue' = [Sum of freight_charges]+[Sum of other_charges]
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Revenue Measures
 		lineageTag: 39ae93b5-50d6-453e-80c8-dbbb58f43df7
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
@@ -33,9 +36,9 @@ table measures_
 			
 			CALCULATE(
 			    SUM(movements[override_pay_amt]),
-			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
-			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			)
+		displayFolder: Pay Measures
 		lineageTag: 4afe6d8c-348c-4f5f-9fa1-593d24fa27a4
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -44,22 +47,22 @@ table measures_
 			
 			CALCULATE(
 			    SUM(driver_extra_pay[amount]),
-			    orders[shipper_sched_early_date]>=MIN('Calendar'[Date]),
-			    orders[shipper_sched_early_date]<=MAX('Calendar'[Date])
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			)
+		displayFolder: Pay Measures
 		lineageTag: 6be686a6-e220-4dff-91a4-141b0da5ca73
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Total Carrier Pay' = [Sum of driver_extra_pay]+[Sum of override_pay_amt]
+		displayFolder: Pay Measures
 		lineageTag: c7c5f213-a346-4367-8717-3924d6ef52da
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure Margin = CALCULATE([Total Revenue]-[Total Carrier Pay],movements[status]<>"A")
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		lineageTag: 3491f4d3-9764-45b7-a60b-c17891311500
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	/// Counts the Rows of the Employee Table whose termination date are >= min(date), termination date <= max(date), and termination date are not blank
 	measure 'Staff Turnover' =
@@ -67,8 +70,9 @@ table measures_
 			CALCULATE(
 			    COUNTROWS(employees),
 			    FILTER(VALUES(employees[Termination Date]),employees[Termination Date]>=MIN('calendar'[Date])),
-			    employees[Termination Date]<>BLANK(),
-			    FILTER(employees,employees[Termination Date]<=MAX('calendar'[Date])))
+			    FILTER(employees,employees[Termination Date]<=MAX('calendar'[Date])),
+			    employees[Termination Date]<>BLANK()
+			)
 		formatString: 0
 		displayFolder: HR
 		lineageTag: 3f85f56a-a39f-40ee-82a3-6960eea53eb9
@@ -127,10 +131,9 @@ table measures_
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Avg Monthly Turnover Rate' = DIVIDE([Avg Monthly Staff Turnover],[Avg Monthy Head Count])
+		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: HR
 		lineageTag: 02a7ca5f-d396-4f11-884c-fe49f1305636
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Average Monthly Turnover Rate 12 Months Prior' = CALCULATE([Avg Monthly Turnover Rate],DATEADD('Calendar'[Date],-12,MONTH))
 		formatString: 0.00%;-0.00%;0.00%
@@ -397,15 +400,16 @@ table measures_
 		formatString: 0
 		lineageTag: 9a92c758-8ba8-4423-a380-55402b47cdf1
 
-	measure 'Count of Orders within date range' =
+	measure 'Count of Orders Covered' =
 			
 			CALCULATE(
 			    DISTINCTCOUNT(orders[id]),
-			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
-			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			        FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
+			        FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date])),
+			        FILTER(movements,movements[status]<>"A")
 			    )
 		formatString: 0
-		displayFolder: Movement Measures\Callins Measures
+		displayFolder: Operations Measures
 		lineageTag: ebc9309e-c0e2-478d-8534-2f3bb96fc500
 
 	measure NFM =
@@ -556,7 +560,7 @@ table measures_
 			Return
 			mpdg
 			```
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Sales Goals\Margin
 		lineageTag: 3c153d48-ca5a-4d48-985d-cdb795469f1a
 
@@ -574,32 +578,320 @@ table measures_
 			        GROUPBY('calendar','calendar'[Month / Year]),
 			        [Margin]),
 			        REMOVEFILTERS('calendar'[Year]),
-			        REMOVEFILTERS('calendar'[Month Name]),
-			         FILTER(orders,orders[shipper_sched_early_date]>=DATE(2023,01,01))
+			        REMOVEFILTERS('calendar'[Month Name])
 			)
 		lineageTag: daef51bf-c98d-4a88-b79f-8f3c7b345729
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Margin vs Margin Goal Gauge Max' =
-			
-			IF(
-			    [Margin Goal]>[Best Margin Month Ever],
-			    [Margin Goal],
-			    [Best Margin Month Ever]
-			    )
+	measure 'Margin vs Margin Goal Gauge Max' = [Margin Vs Margin Goal Target]*1.2
 		lineageTag: 745cec3f-21ab-43c5-b78f-9f250e7f422a
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Margin Vs Margin Goal Target' = ```
+			
+			Var workingdays = 
+			    NETWORKDAYS(
+			        STARTOFMONTH('Calendar'[Date]),
+			        ENDOFMONTH('Calendar'[Date]),
+			        1,
+			        observed_holidays)
+			Var months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('calendar'[Date]))
+			Var override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('calendar'[Date]))
+			Var mpd = DIVIDE(months_margin_goal,workingdays)
+			
+			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
+			
+			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			Var margin_vs_margin_goal_taget = mpdg*workingdays
+			
+			Return
+			margin_vs_margin_goal_taget
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 966f15fa-987f-4b97-9482-70a30dd385aa
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Load Count Goal' = ```
+			
+			Var margin_per_order_LM = CALCULATE([Margin Per Order],DATEADD('calendar'[Date],-  1,MONTH))
+			Var load_count_goal = DIVIDE([Margin Goal],margin_per_order_LM)
+			Var ifs= 
+			    IF(margin_per_order_LM=0,5,load_count_goal)
+			
+			Return 
+			ifs
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals
+		lineageTag: 2a86da4e-c9e9-4e86-9b72-e31c6127ff29
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Margin Per Order' = DIVIDE([Margin], [Count of Orders Covered])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures
+		lineageTag: 1e92098d-807f-401d-8b48-026cdf35c733
+
+	measure 'Load Count Vs Load Count Goal Target' = ```
+			
+			Var margin_per_order_LM = CALCULATE([Margin Per Order],DATEADD('calendar'[Date],-  1,MONTH))
+			Var load_count_goal = DIVIDE([Margin Vs Margin Goal Target],margin_per_order_LM)
+			Var ifs= 
+			    IF(margin_per_order_LM=0,5,load_count_goal)
+			
+			Return 
+			ifs
+			```
+		formatString: 0
+		displayFolder: Sales Measures\Sales Goals
+		lineageTag: 704d7233-1d7c-45f8-bfcf-191b95d7ba85
+
+	measure 'Load Count Vs Load Count Goal Guage Max' = [Load Count Vs Load Count Goal Target]*1.2
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures\Sales Goals
+		lineageTag: 9db04751-8d6c-420e-94b4-920d257f54ae
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Margin Per Order Goal' = AVERAGE(margin_load_count_goals[Margin Per Order Goal])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures
+		lineageTag: 63a8de8b-8087-47f7-a15c-70f504db55bb
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Margin Per Order Vs Margin Per Order Guage Max' = [Margin Per Order Goal]*1.2
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Sales Measures
+		lineageTag: 6aba0cbd-4108-449d-b002-60f0d64d4642
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Margin %' = DIVIDE([Margin],[Total Revenue])
+		formatString: 0%;-0%;0%
+		lineageTag: 60d83be5-356c-48e2-afb8-950ca6a8f0d6
+
+	measure 'Avg Margin % Goal' = AVERAGE(margin_load_count_goals[Margin % Goal])
+		displayFolder: Sales Measures\Sales Goals
+		lineageTag: 25b26eda-8482-4b31-b474-39dd05f20b67
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % vs Margin % Gaol Guage Max' = [Avg Margin % Goal]*1.2
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Sales Goals
+		lineageTag: 52135639-0ea4-4a21-b50b-d3cda46d34ab
+
+	measure 'Count of Behaviors' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(behaviors[id]),
+			    USERELATIONSHIP(behaviors[Behavior Date],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Behavior Measures
+		lineageTag: 508c3248-8bb5-49b4-aa0b-b1b8441be78a
+
+	measure 'Behavior Goal' =
+			
+			CALCULATE(
+			    SUM(behavior_goals[Goal]),
+			    USERELATIONSHIP(behaviors[Behavior Date],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Behavior Measures
+		lineageTag: d9fa1a26-27a0-4cdf-91c4-74dae6b80875
+
+	measure 'Behavior Progress' = ```
+			
+			VAR behavior_progress = DIVIDE([Count of Behaviors],[Behavior Goal])
+			VAR ifs = 
+			    IF(behavior_progress=0,0,
+			    IF(behavior_progress>=1,1,
+			    behavior_progress)
+			    )   
+			
+			RETURN
+			ifs
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Behavior Measures
+		lineageTag: 9425cfaf-692b-4c97-be0b-9419a7facb61
+
+	measure 'Customer Margin Goal' =
+			
+			CALCULATE(
+			    SUM(customer_margin_goal[Margin Goal]),
+			    FILTER(customer_margin_goal,customer_margin_goal[Month]>=MIN('Calendar'[Date])),
+			    FILTER(customer_margin_goal,customer_margin_goal[Month]<=MAX('Calendar'[Date]))
+			)
+		formatString: 0
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 8a792569-588e-4c4e-bd17-d3cb5ef75342
+
+	measure 'Customer Margin vs Customer Margin Goal Variance' = if([Customer Margin Goal]<=0,BLANK(),[Margin]-[Customer Margin Goal])
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 438d88b1-8efa-4ed8-bfa5-327e8f10a2b2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Last Ship Date' =
+			
+			CALCULATE(
+			    MAX(orders[shipper_sched_early_date]),
+			    FILTER(movements,movements[status]<>"A")
+			)
+		formatString: Short Date
+		displayFolder: Operations Measures
+		lineageTag: 4ddeeb99-9208-43d3-9de0-e78a3a002678
+
+	measure 'Days Since Last Shipment' = DATEDIFF([Last Ship Date],TODAY(),DAY)
+		formatString: 0
+		displayFolder: Operations Measures
+		lineageTag: cd2518a5-1971-4101-b5d5-a517690f5c58
+
+	measure 'Days since Last Stage Update' = ```
+			
+			 DATEDIFF(
+			    MAX(crm[Last Stage Change]),TODAY(),DAY)
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: ecc086f7-a6d4-4e6c-b109-8712f700c70f
+
+	measure 'Last Behavior Date' = MAX(behaviors[Behavior Date])
+		formatString: Short Date
+		displayFolder: CRM Measures
+		lineageTag: 9de3f64a-8161-47da-8c52-3bc6064fa7f6
+
+	measure 'Days since last Behaivor' = DATEDIFF([Last Behavior Date],TODAY(),DAY)
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: 939bbb4f-4255-422a-8b62-c12028881045
+
+	measure 'Days Over Due' = ```
+			
+			Var next_behavior_deadline = MAX(crm[activity_date_deadline])
+			Var days_over_due = DATEDIFF(next_behavior_deadline,TODAY(),DAY)
+			
+			Return 
+			days_over_due
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: b3661191-11ac-461a-a125-be02d2b1eafa
+
+	measure 'Days since Last Shipment is over 120' = ```
+			
+			Var at_risk = IF([Days Since Last Shipment]>120,1,0)
+			Var ifs = 
+			    IF(MIN(crm[Stage])="Customer",at_risk,
+			    IF(MIN(crm[Stage])="1-3 Loads",at_risk,0))
+			
+			
+			return
+			ifs
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: 3793a2a6-a34b-4e02-85bd-cbb0c0bb76e4
+
+	measure 'Days since last stage update is one of the reasons at risk reason' = ```
+			
+			Var prospect_at_risk = if([Days since Last Stage Update]>90,1,0)
+			Var pipeline_at_risk = IF([Days since Last Stage Update]>60,1,0)
+			Var ifs = 
+			    IF(MIN(crm[Stage])="Customer",0,
+			    IF(MIN(crm[Stage])="Working",prospect_at_risk,
+			    IF(MIN(crm[Stage])="No For Now",prospect_at_risk,
+			    IF(MIN(crm[Stage])="Qualified",pipeline_at_risk,
+			    IF(MIN(crm[Stage])="Quoted",pipeline_at_risk,
+			    IF(MIN(crm[Stage])="Credit App",pipeline_at_risk,
+			    IF(MIN(crm[Stage])="1-3 Loads",pipeline_at_risk,0)))))))
+			
+			Return
+			ifs
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: 42d46d32-f0e6-41df-b84d-8c3cfdc8b2a9
+
+	measure 'Days Since Last Behavior is one of the reason for at risk' = ```
+			
+			Var opportunity_at_risk = IF([Days since last Behaivor]>60,1,0)
+			Var working_at_risk = IF([Days since last Behaivor]>60,1,0)
+			Var no_for_now_at_risk = IF([Days since last Behaivor]>90,1,0)
+			
+			Var Ifs = 
+			    IF(MIN(crm[Stage])="Qualified",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Quoted",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Credit App", opportunity_at_risk,
+			    IF(MIN(crm[Stage])="1-3 Loads",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Customer",opportunity_at_risk,
+			    IF(MIN(crm[Stage])="Working",working_at_risk,
+			    IF(MIN(crm[Stage])="No For Now",no_for_now_at_risk,0)))))))
+			
+			Return
+			Ifs
+			```
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: d2fccc3b-65d6-4647-81ff-6908557e9873
+
+	measure 'Days since last Salesperson Update' = DATEDIFF(MAX(crm[date_open]),TODAY(),DAY)
+		formatString: 0
+		displayFolder: CRM Measures
+		lineageTag: cfbd7a5c-e9af-4629-a9f9-e6c37a23dfdc
+
+	measure 'Count at Risk (inactive relationship)' =
+			
+			VAR filter_inactive =
+			CALCULATE(
+			    COUNTA(crm[id]),
+			    USERELATIONSHIP(crm[user_id],salesperson_key[Name]),
+			    FILTER(crm,crm[At Risk]="TRUE"),
+			    FILTER(crm,crm[user_id]<>BLANK())
+			)
+			
+			
+			RETURN
+			filter_inactive
+		formatString: 0
+		displayFolder: CRM Measures\At Risk Measures
+		lineageTag: 81759a22-7856-45de-82cd-a68019cf40d6
+
+	measure 'Count CRM Ids (inactive relationship)' =
+			
+			VAR filter_inactive =
+			CALCULATE(
+			    COUNTA(crm[id]),
+			    USERELATIONSHIP(crm[user_id],salesperson_key[Name]),
+			    FILTER(crm,crm[user_id]<>BLANK())
+			)
+			
+			
+			RETURN
+			filter_inactive
+		formatString: 0
+		displayFolder: CRM Measures
+		lineageTag: 19e37e8b-c64b-48e0-b627-934b7174ffa5
+
+	measure 'Healthy Pipeline Goal' = SUM(healthy_pipeline_goals[Healthy #])
+		formatString: 0
+		displayFolder: CRM Measures
+		lineageTag: e0a10483-e230-4010-bcb6-233162a58619
+
 	column Column
-		dataType: int64
 		isHidden
 		formatString: 0
 		lineageTag: 746e082c-433f-4c69-8ea2-18b07c8517b2
 		summarizeBy: sum
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Column]
 
 		annotation SummarizationSetBy = Automatic

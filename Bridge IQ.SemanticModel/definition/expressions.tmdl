@@ -491,3 +491,98 @@ expression dnc =
 
 	annotation PBI_ResultType = Table
 
+expression Parameter3 = #"Sample File (3)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (3)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: c5b8bf0c-fa84-413d-a472-27c7814f3c56
+	queryGroup: 'Transform File from behaviors\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (3)' =
+		let
+		    Source = Excel.Workbook(Parameter3, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 04305715-2431-48aa-84c3-4fffc150748a
+	queryGroup: 'Transform File from behaviors'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File (3)' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Folder Path], "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/02 BL-Areas/bridge_iq/Data Sets/behaviors_api_files/")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: fc6fe0e2-27aa-48a4-8d3b-f19ba57636e6
+	queryGroup: 'Transform File from behaviors\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform File (3)' =
+		let
+		    Source = (Parameter3 as binary) => let
+		    Source = Excel.Workbook(Parameter3, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (3)""}" ]
+	lineageTag: b594b25c-1827-4acd-ae47-d19aae6df491
+	queryGroup: 'Transform File from behaviors\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter4 = #"Sample File (4)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (4)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 50f5d478-8d0f-4752-923f-22e5b5b84184
+	queryGroup: 'Transform File from historic_behaviors\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (4)' =
+		let
+		    Source = Excel.Workbook(Parameter4, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 40157f7e-dcc8-4409-9d8f-b835b60dc51f
+	queryGroup: 'Transform File from historic_behaviors'
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File (4)' =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Folder Path], "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/02 BL-Areas/bridge_iq/Data Sets/behaviors_api_files/")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    Navigation1 = #"Filtered Hidden Files1"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 6c753d56-0e08-4fa7-8bde-cdf69a56d0ac
+	queryGroup: 'Transform File from historic_behaviors\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform File (4)' =
+		let
+		    Source = (Parameter4 as binary) => let
+		    Source = Excel.Workbook(Parameter4, null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (4)""}" ]
+	lineageTag: 96187a1f-dd5c-48bf-9faa-843e6b5cd850
+	queryGroup: 'Transform File from historic_behaviors\Helper Queries'
+
+	annotation PBI_ResultType = Function
+

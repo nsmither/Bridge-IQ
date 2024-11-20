@@ -19953,10 +19953,151 @@ cultureInfo en-US
 			          "ConceptualProperty": "Count of Overdue Check Call"
 			        }
 			      },
+			      "State": "Generated"
+			    },
+			    "measures_.bws_behaviors": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "BWS Behaviors"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.sales_bws_behavior_progress": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Sales BWS Behavior Progress"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.behavior_pace": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Behavior Pace"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "crm.name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "name"
+			        }
+			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Count": {
+			          "Company Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crm.user_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "user_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Salesperson": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crm.x_studio_mcleod_code": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "x_studio_mcleod_code"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "McLeod Code": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crm.activity_date_deadline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "activity_date_deadline"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Next Behavior Deadline": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crm.date_open": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "date_open"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Last Salesperson Change": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.count_of_orders_covered": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Count of Orders Covered"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Load Count": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

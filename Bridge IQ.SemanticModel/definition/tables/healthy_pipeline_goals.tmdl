@@ -1,9 +1,9 @@
-table HealthyPipelineGoals
-	lineageTag: 139732e1-7a05-4d8e-9aa5-5bbda2259786
+table healthy_pipeline_goals
+	lineageTag: cb9522ca-5231-4a40-836b-34657a1cbc76
 
 	column 'Saleperson Name'
 		dataType: string
-		lineageTag: c4d67f57-6c8b-4fdb-b03a-a408fb1c01f2
+		lineageTag: fc79a5be-df43-4aa1-b9e0-96180bf1b1f9
 		summarizeBy: none
 		sourceColumn: Saleperson Name
 
@@ -11,7 +11,7 @@ table HealthyPipelineGoals
 
 	column Stage
 		dataType: string
-		lineageTag: 61c59c93-2fdb-406a-9628-66a5293826d6
+		lineageTag: 8b188823-885a-4dc1-aea2-6f91d83edd20
 		summarizeBy: none
 		sourceColumn: Stage
 
@@ -20,13 +20,13 @@ table HealthyPipelineGoals
 	column 'Healthy #'
 		dataType: int64
 		formatString: 0
-		lineageTag: fafa56ef-24d4-4b41-911f-78c0d2a4dea4
+		lineageTag: 45182cbb-d26f-4661-b1a2-25dea23ecdbb
 		summarizeBy: sum
 		sourceColumn: Healthy #
 
 		annotation SummarizationSetBy = Automatic
 
-	partition HealthyPipelineGoals = m
+	partition healthy_pipeline_goals = m
 		mode: import
 		source =
 				let
@@ -35,6 +35,8 @@ table HealthyPipelineGoals
 				    #"Changed Type" = Table.TransformColumnTypes(HealthyPipelineGoals_Table,{{"Saleperson Name", type text}, {"Stage", type text}, {"Healthy #", Int64.Type}})
 				in
 				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 

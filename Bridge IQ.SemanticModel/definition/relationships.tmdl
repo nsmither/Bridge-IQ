@@ -247,3 +247,101 @@ relationship 260fb3f0-b8a2-161b-022b-537a60bcbdf7
 	fromColumn: daily_number_override.Month
 	toColumn: Calendar.Date
 
+relationship 118a5bae-93a2-48f1-b4c4-a8207cda138d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: historic_behaviors.'Behavior Date'
+	toColumn: LocalDateTable_23b5ad18-06e5-4a69-8f54-e0a26338828e.Date
+
+relationship AutoDetected_4fbcf0da-778d-42c0-b6de-b0fa0815d61f
+	fromColumn: behaviors.mail_activity_type_id
+	toColumn: behavior_key.mail_activity_type_id
+
+relationship AutoDetected_3ee21050-e296-4e90-a215-d4952bee9f16
+	fromColumn: historic_behaviors.mail_activity_type_id
+	toColumn: behavior_key.mail_activity_type_id
+
+relationship 79d43f6d-21f5-48c0-7149-f61c8dec3df9
+	fromColumn: behavior_goals.BehaviorID
+	toColumn: behavior_key.mail_activity_type_id
+
+relationship 17e42020-4ded-1485-8b71-a2518685d1c0
+	isActive: false
+	fromColumn: behaviors.'Behavior Date'
+	toColumn: Calendar.Date
+
+relationship 61279972-cef0-62c0-7673-008ec56b0e64
+	fromColumn: behavior_goals.Month
+	toColumn: Calendar.Date
+
+relationship 30fc2257-db24-5b7f-69f4-4cac84f7474f
+	fromColumn: behavior_goals.Salesperson
+	toColumn: salesperson_key.Name
+
+relationship 4356cecc-3a49-50e0-30e2-1296be23ba81
+	fromColumn: behaviors.author_id
+	toColumn: salesperson_key.Name
+
+relationship aacf4ff0-fc3e-0beb-269b-ca474916397a
+	crossFilteringBehavior: bothDirections
+	fromColumn: behaviors.res_id
+	toColumn: crm.id
+
+relationship 8577c885-ec16-806b-b3e5-2a66ee2d2afe
+	fromColumn: customer_margin_goal.Month
+	toColumn: Calendar.Date
+
+relationship 0e539d6e-244b-340b-1d2e-74a2accdfa2e
+	fromColumn: customer_margin_goal.'Customer Code'
+	toColumn: customer.id
+
+relationship a2468aca-e09d-24fe-5861-daa212106492
+	fromColumn: customer_margin_goal.Salesperson
+	toColumn: salesperson_key.Name
+
+relationship 28b151d4-c83b-5fe6-ab8c-8f34c0ad096f
+	isActive: false
+	fromColumn: crm.activity_date_deadline
+	toColumn: Calendar.Date
+
+relationship 76fb1e35-dc97-f164-745b-f66ec570a22f
+	isActive: false
+	fromColumn: crm.date_open
+	toColumn: Calendar.Date
+
+relationship d26e925d-6b05-aa7c-ddcb-180058c0aaf4
+	isActive: false
+	fromColumn: crm.'Last Stage Change'
+	toColumn: Calendar.Date
+
+relationship 56caf45c-1117-2555-3eda-f162db8d9344
+	isActive: false
+	fromColumn: crm.x_studio_enrichment_date
+	toColumn: Calendar.Date
+
+relationship f0f2a2f2-b854-9a5b-1dc6-62d04c401f02
+	isActive: false
+	fromColumn: crm.x_studio_lead_passed_date
+	toColumn: Calendar.Date
+
+relationship a618527b-370a-28ff-869a-7bf805376b00
+	crossFilteringBehavior: bothDirections
+	fromColumn: crm.x_studio_mcleod_code
+	toColumn: customer.id
+
+relationship 3be77349-822b-ab27-80a0-d0554fb998c8
+	isActive: false
+	fromColumn: crm.user_id
+	toColumn: salesperson_key.Name
+
+relationship d1dd21a1-19d0-3131-e3b1-c2400b27bd0c
+	fromColumn: crm.Stage
+	toColumn: crm_stages.'Stage Name'
+
+relationship AutoDetected_8e587438-2a6b-4588-b4c6-9e458e209910
+	fromColumn: healthy_pipeline_goals.Stage
+	toColumn: crm_stages.'Stage Name'
+
+relationship 3e8afa0a-dbfe-d267-4bad-71cf3030a35c
+	fromColumn: healthy_pipeline_goals.'Saleperson Name'
+	toColumn: salesperson_key.Name
+

@@ -1,9 +1,9 @@
 table customer_margin_goal
-	lineageTag: d57599c3-dce4-4678-b8ca-90b35adbe878
+	lineageTag: 0f9a6602-f51b-4faf-8f34-4c900a783ae6
 
 	column 'Customer Name'
 		dataType: string
-		lineageTag: 10c23fb1-4ba3-4af1-9f92-4f4baa0805fd
+		lineageTag: ef2e0f62-e615-4966-8a62-0cbd8478e489
 		summarizeBy: none
 		sourceColumn: Customer Name
 
@@ -11,7 +11,7 @@ table customer_margin_goal
 
 	column 'Customer Code'
 		dataType: string
-		lineageTag: 6be97065-5a61-4943-8a9e-b4973908c250
+		lineageTag: 9a6ad13e-aaaf-4d66-8838-743810a398aa
 		summarizeBy: none
 		sourceColumn: Customer Code
 
@@ -19,7 +19,7 @@ table customer_margin_goal
 
 	column Salesperson
 		dataType: string
-		lineageTag: 981ba796-62cb-4b83-ba2c-f568ec9f8232
+		lineageTag: f043f0b3-d6ca-4dbb-9756-c54f431901b0
 		summarizeBy: none
 		sourceColumn: Salesperson
 
@@ -28,7 +28,7 @@ table customer_margin_goal
 	column Month
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 3c5bdea7-8817-4824-b211-e1e7b06aabb4
+		lineageTag: 8b660e38-c8fa-4f86-9975-277f1d79ce7d
 		summarizeBy: none
 		sourceColumn: Month
 
@@ -39,7 +39,7 @@ table customer_margin_goal
 	column 'Margin Goal'
 		dataType: int64
 		formatString: 0
-		lineageTag: 79622e2e-171d-4dc1-9077-4efe88cd2bfd
+		lineageTag: d2657af3-1095-4fab-bfed-372cf2d5dd3e
 		summarizeBy: sum
 		sourceColumn: Margin Goal
 
@@ -47,7 +47,7 @@ table customer_margin_goal
 
 	column 'Margin % Goal'
 		dataType: double
-		lineageTag: e5ba74cf-a198-4c2f-9879-844e5013cf2a
+		lineageTag: 589c88d0-8df7-445a-801b-1f2305d072e8
 		summarizeBy: sum
 		sourceColumn: Margin % Goal
 
@@ -67,6 +67,8 @@ table customer_margin_goal
 				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Customer.1", "Customer Name"}, {"Customer.2", "Customer Code"}})
 				in
 				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 

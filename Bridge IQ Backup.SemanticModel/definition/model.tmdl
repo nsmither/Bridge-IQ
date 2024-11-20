@@ -7,106 +7,63 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-queryGroup 'Transform File from Old Callins'
+queryGroup Parameters
 
 	annotation PBI_QueryGroupOrder = 0
 
-queryGroup 'Transform File from Old Callins\Helper Queries Old Callins'
+queryGroup 'Historic Tables'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 'Transform File from parade_orders'
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup 'Transform File from parade_orders\Helper Queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
-/// Contains Shipper and Consignee Zip Code Tables
-queryGroup 'Zip Codes'
+queryGroup 'Transform File from historic_parade_orders'
 
-	annotation PBI_QueryGroupOrder = 13
+	annotation PBI_QueryGroupOrder = 2
 
-queryGroup 'Transform File from overdue_check_calls'
-
-	annotation PBI_QueryGroupOrder = 8
-
-queryGroup 'Transform File from overdue_check_calls\Helper Queries'
+queryGroup 'Transform File from historic_parade_orders\Helper Queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
-queryGroup 'Transform File from behaviors_crm_new'
+annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_callins","movements","driver_extra_pay","Calendar","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","crt_movement_data","lane","daily_number_override","wolf_pack","account_rep","observed_holidays"]
 
-	annotation PBI_QueryGroupOrder = 11
+annotation __PBI_TimeIntelligenceEnabled = 1
 
-queryGroup 'Transform File from behaviors_crm_new\Helper Queries'
-
-	annotation PBI_QueryGroupOrder = 0
-
-queryGroup 'Transform File from callins_new'
-
-	annotation PBI_QueryGroupOrder = 13
-
-queryGroup 'Transform File from callins_new\Helper Queries'
-
-	annotation PBI_QueryGroupOrder = 0
-
-queryGroup 'Transform File from parade_orders_new'
-
-	annotation PBI_QueryGroupOrder = 13
-
-queryGroup 'Transform File from parade_orders_new\Helper Queries'
-
-	annotation PBI_QueryGroupOrder = 0
-
-annotation PBI_QueryOrder = ["behavior_key","behavior_goals","bws_behaviors","carrier_key","contacts_module","contacts_parent","crm","customer_key","crm_stages","customer_duns","customer_margin_goal","daily_numbers","daily_number_override","dispatcher_key","dnc","HealthyPipelineGoals","lanes","lead_ops","margin_load_count_goals","movements","observed_holidays","Old Callins","orders","overdue_check_calls","parent_customer_key","pcs_loads","recruiter_key","calendar","recruitment","recruitment_goals","Parameter6","Transform Sample File (6)","Sample File (6)","Transform File (6)","rev_codes","salesperson_change","sdr_key","sop_issues","wolf_pack","Parameter5","Transform Sample File (5)","Sample File (5)","Transform File (5)","shipper_zips","shipper_three_digit_zips","consignee_zip_codes","consignee_three_digit_zip_codes","payments_received","avereage_days_to_pay","carrier_dispatch_movement_data","check_call_roller","highway_onboarded","pay_schedule","job_history","employees","salesperson_key","behaviors_crm","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","callins","Parameter7","Transform Sample File (7)","Sample File (7)","Transform File (7)","parade_orders","Parameter1","Transform Sample File","Sample File","Transform File","CRT Movement Data"]
-
-annotation __PBI_TimeIntelligenceEnabled = 0
-
-annotation PBIDesktopVersion = 2.136.1478.0 (24.09)
+annotation PBIDesktopVersion = 2.137.1102.0 (24.10)
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table calendar
-ref table crm
-ref table recruitment
-ref table recruitment_goals
-ref table recruiter_key
-ref table measures_
-ref table movements
+ref table DateTableTemplate_e2c46345-9a3a-40bb-ae4b-e3de83b68f6a
+ref table stop
+ref table customer
 ref table orders
-ref table customer_key
-ref table dispatcher_key
-ref table margin_load_count_goals
+ref table movements
+ref table driver_extra_pay
+ref table Calendar
+ref table LocalDateTable_75a92ebd-fc59-41d4-9bbd-0eab7041c40b
+ref table LocalDateTable_8cd7490a-0c9d-45ae-9b87-d190d0e8c13a
+ref table measures_
+ref table employees
+ref table job_history
+ref table salesperson_key
+ref table callins
 ref table overdue_check_calls
-ref table behavior_goals
-ref table carrier_key
-ref table crm_stages
-ref table observed_holidays
-ref table parent_customer_key
-ref table lead_ops
+ref table crt_movement_data
+ref table lane
+ref table margin_load_count_goals
+ref table daily_number_override
 ref table rev_codes
 ref table wolf_pack
-ref table sdr_key
-ref table daily_numbers
-ref table behavior_key
-ref table contacts_module
-ref table contacts_parent
-ref table bws_behaviors
-ref table HealthyPipelineGoals
-ref table customer_margin_goal
-ref table lanes
-ref table daily_number_override
-ref table pcs_loads
-ref table shipper_zips
-ref table shipper_three_digit_zips
-ref table consignee_zip_codes
-ref table consignee_three_digit_zip_codes
-ref table sop_issues
-ref table payments_received
-ref table carrier_dispatch_movement_data
-ref table check_call_roller
-ref table highway_onboarded
-ref table pay_schedule
-ref table job_history
-ref table employees
-ref table salesperson_key
-ref table behaviors_crm
-ref table callins
-ref table 'CRT Movement Data'
+ref table account_rep
+ref table observed_holidays
+ref table LocalDateTable_ed26f4c3-9c62-405b-8c3b-c81747750938
+ref table LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8
 
 ref cultureInfo en-US
 

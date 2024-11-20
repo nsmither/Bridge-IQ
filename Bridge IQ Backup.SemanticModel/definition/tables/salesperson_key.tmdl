@@ -1,18 +1,18 @@
 table salesperson_key
-	lineageTag: dc38fb35-7721-42f3-9170-246236066562
+	lineageTag: b6d941d5-ebfa-4572-8487-a51694d36762
 
 	column ID
 		dataType: int64
 		formatString: 0
-		lineageTag: 3cd80c87-6c63-46b1-95c8-c9e3a659b69e
-		summarizeBy: none
+		lineageTag: 9604a2b2-aa41-4174-b3da-154975a1be4a
+		summarizeBy: count
 		sourceColumn: ID
 
 		annotation SummarizationSetBy = Automatic
 
 	column Name
 		dataType: string
-		lineageTag: e4704ffb-b723-43e9-9673-ff4cfe3dc2bf
+		lineageTag: 98419ef0-1280-485f-a37b-86cce530e3dd
 		summarizeBy: none
 		sourceColumn: Name
 
@@ -21,7 +21,7 @@ table salesperson_key
 	column 'Hire Date'
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 49aa5e0a-6522-4ddb-ad65-131436c6561d
+		lineageTag: e30b5f3b-2efd-4427-bf8f-0ad6da3d97e6
 		summarizeBy: none
 		sourceColumn: Hire Date
 
@@ -32,7 +32,7 @@ table salesperson_key
 	column 'Termination Date'
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: ae39ea18-535c-4e51-860a-3a57b5d37fe5
+		lineageTag: b9fb98dc-f51e-4be0-afe7-2e4ae29dd4fe
 		summarizeBy: none
 		sourceColumn: Termination Date
 
@@ -42,7 +42,7 @@ table salesperson_key
 
 	column 'Reporting to'
 		dataType: string
-		lineageTag: 9f42f50a-1cf8-4ef9-9bfb-017feea0cb08
+		lineageTag: cf9be6b8-0cae-483b-9c08-fe8d9c90ced8
 		summarizeBy: none
 		sourceColumn: Reporting to
 
@@ -50,7 +50,7 @@ table salesperson_key
 
 	column 'Termination Type'
 		dataType: string
-		lineageTag: 1629ec25-3408-440d-80d4-d88a7055720c
+		lineageTag: 2ca1f297-005f-4438-a607-77aed72456e0
 		summarizeBy: none
 		sourceColumn: Termination Type
 
@@ -58,7 +58,7 @@ table salesperson_key
 
 	column 'Termination Reason'
 		dataType: string
-		lineageTag: 18d45931-0c3f-485c-9a05-eb1aa917ed22
+		lineageTag: e132bfff-7656-4049-9f03-189e7f9aaeed
 		summarizeBy: none
 		sourceColumn: Termination Reason
 
@@ -66,7 +66,7 @@ table salesperson_key
 
 	column 'Regrettable or non- regrettable'
 		dataType: string
-		lineageTag: f9503f62-1907-419a-bb8e-8d8e04e6ba8a
+		lineageTag: cda6b0af-31a6-4209-92ed-03e3180dfa32
 		summarizeBy: none
 		sourceColumn: Regrettable or non- regrettable
 
@@ -74,7 +74,7 @@ table salesperson_key
 
 	column 'Job Title'
 		dataType: string
-		lineageTag: fb41b9bc-a8df-4774-9077-43865b0680a7
+		lineageTag: 27e0e1bd-38f0-46e3-b253-17db0af75503
 		summarizeBy: none
 		sourceColumn: Job Title
 
@@ -82,7 +82,7 @@ table salesperson_key
 
 	column 'McLeod User Code'
 		dataType: string
-		lineageTag: a467783f-9ddf-4296-ba04-9ceeb0fb4f97
+		lineageTag: cc442f1d-9ccf-4dca-b83f-b282a82c03f7
 		summarizeBy: none
 		sourceColumn: McLeod User Code
 
@@ -90,7 +90,7 @@ table salesperson_key
 
 	column 'McLeod Salesperson Code'
 		dataType: string
-		lineageTag: 01465035-2dce-4684-be04-8b09422e3de7
+		lineageTag: 53a4c289-8979-4760-8edb-e8bea9870eda
 		summarizeBy: none
 		sourceColumn: McLeod Salesperson Code
 
@@ -98,7 +98,7 @@ table salesperson_key
 
 	column 'Work Email'
 		dataType: string
-		lineageTag: 56ec310b-83b3-4799-8701-cbf92a5ba571
+		lineageTag: 2e1cabe6-f81b-4f46-8a9f-3a277c5b8f28
 		summarizeBy: none
 		sourceColumn: Work Email
 
@@ -106,7 +106,7 @@ table salesperson_key
 
 	column Devision
 		dataType: string
-		lineageTag: 49fb8c54-e90e-457a-a887-7dcec44c33e7
+		lineageTag: f54f8a60-a70f-409e-bc33-6b53d881d415
 		summarizeBy: none
 		sourceColumn: Devision
 
@@ -114,7 +114,7 @@ table salesperson_key
 
 	column Department
 		dataType: string
-		lineageTag: 8c2554d9-e45d-4b3e-b306-edcae7aef530
+		lineageTag: e8eb0d92-3391-4e01-8dc2-51c7b5075c4e
 		summarizeBy: none
 		sourceColumn: Department
 
@@ -128,6 +128,8 @@ table salesperson_key
 				    #"Filtered Rows" = Table.SelectRows(Source, each ([McLeod Salesperson Code] <> null))
 				in
 				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 

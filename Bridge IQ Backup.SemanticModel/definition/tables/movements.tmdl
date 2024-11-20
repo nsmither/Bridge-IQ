@@ -1,263 +1,173 @@
 table movements
-	lineageTag: cae9df8f-1cd9-408a-8fa4-aab0f7d1154d
+	lineageTag: 4d68b890-a71e-49b5-b4ab-a9a72c28eef7
 
-	column 'Brokerage Status'
+	column brokerage_status
 		dataType: string
-		lineageTag: ea49bc2b-7634-4de6-af0d-d23cd04d7e89
+		lineageTag: c04d5d89-981a-499e-9e4c-9526b4364e19
 		summarizeBy: none
-		sourceColumn: Brokerage Status
+		sourceColumn: brokerage_status
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Delivery Actual Arrival Date'
+	column dest_stop_id
+		dataType: string
+		lineageTag: 51838280-c0c9-41e4-b588-c1f572284b38
+		summarizeBy: none
+		sourceColumn: dest_stop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column dispatcher_user_id
+		dataType: string
+		lineageTag: 2a012ce0-7317-42a0-a02e-a2bacae5a258
+		summarizeBy: none
+		sourceColumn: dispatcher_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: 6982983d-8e5c-4ef1-81dc-399a58169917
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_recv_date
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: c2a9b9d8-e393-47a1-b98e-007579abf8aa
+		lineageTag: 80cdb262-6904-4b05-97ad-3d39f04399c3
 		summarizeBy: none
-		sourceColumn: Delivery Actual Arrival Date
+		sourceColumn: invoice_recv_date
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column 'Delivery Actual Arrival Date Time'
-		dataType: dateTime
-		formatString: Long Time
-		lineageTag: 5b27ea37-5b17-4bcd-8ced-8201c0db89ca
-		summarizeBy: none
-		sourceColumn: Delivery Actual Arrival Date Time
+	column max_buy
+		dataType: decimal
+		lineageTag: e808aa27-9356-4003-9c04-4010d6d2603c
+		summarizeBy: sum
+		sourceColumn: max_buy
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation UnderlyingDateTimeDataType = Time
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	column 'Delivery Actual Departure Date'
+	column move_distance
+		dataType: double
+		lineageTag: f3d49253-18e9-4a53-ac52-5ce4a17c2048
+		summarizeBy: sum
+		sourceColumn: move_distance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column origin_stop_id
+		dataType: string
+		lineageTag: b3855a3d-ff5c-4ec3-9b6e-693829c2f15b
+		summarizeBy: none
+		sourceColumn: origin_stop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column override_pay_amt
+		dataType: decimal
+		lineageTag: a43b099e-4dca-4c78-8ca7-f937511c001b
+		summarizeBy: sum
+		sourceColumn: override_pay_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column override_payee_id
+		dataType: string
+		lineageTag: 96b618d5-96c2-445b-be68-224136aec231
+		summarizeBy: none
+		sourceColumn: override_payee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column override_targetpay
+		dataType: decimal
+		lineageTag: 4e60199c-c1b0-44cf-8a27-0dff23b32ec3
+		summarizeBy: sum
+		sourceColumn: override_targetpay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column override_type
+		dataType: string
+		lineageTag: ad8b12df-f0ad-4535-b38c-15b8db9d830d
+		summarizeBy: none
+		sourceColumn: override_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 3f103b99-a5b7-48f0-bb60-13a6b75812bd
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column target_pay
+		dataType: decimal
+		lineageTag: 528d4647-afa8-4918-a35c-f05269eb57a9
+		summarizeBy: sum
+		sourceColumn: target_pay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column xfer2settle_date
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 86ab6059-c350-4ff4-8ad4-b9cb021b3a4f
+		lineageTag: 3d02172a-c0e9-442d-9766-324cef059eea
 		summarizeBy: none
-		sourceColumn: Delivery Actual Departure Date
+		sourceColumn: xfer2settle_date
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column 'Delivery Actual Departure Date Time'
-		dataType: dateTime
-		formatString: Long Time
-		lineageTag: ba46cf7e-ba54-4f9a-b531-6393cb48c399
-		summarizeBy: none
-		sourceColumn: Delivery Actual Departure Date Time
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Time
-
-	column 'Move Status'
+	column order_id
 		dataType: string
-		lineageTag: 35924aa3-592a-456f-8b0b-4bffff5931d2
+		lineageTag: 8c84edc2-64e7-41b7-bfa6-1e333c258c1f
 		summarizeBy: none
-		sourceColumn: Move Status
+		sourceColumn: order_id
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Movement ID'
+	column sequence
 		dataType: int64
 		formatString: 0
-		lineageTag: c3f310e7-68d3-4e64-9411-36c7525db9f1
-		summarizeBy: none
-		sourceColumn: Movement ID
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Order ID'
-		dataType: string
-		lineageTag: 86732f5e-75d0-43c9-b50e-7b300bdaf8e3
-		summarizeBy: none
-		sourceColumn: Order ID
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Ship Actual Arrival Date'
-		dataType: dateTime
-		formatString: Long Date
-		lineageTag: 84910b8d-7ee4-4a63-875c-11dabd5ef0b0
-		summarizeBy: none
-		sourceColumn: Ship Actual Arrival Date
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
-	column 'Ship Actual Arrival Date Time'
-		dataType: dateTime
-		formatString: Long Time
-		lineageTag: b12373c6-e271-4107-8846-4c5ebdd992eb
-		summarizeBy: none
-		sourceColumn: Ship Actual Arrival Date Time
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Time
-
-	column 'Ship Actual Departure Date'
-		dataType: dateTime
-		formatString: Long Date
-		lineageTag: b18a5a68-b65a-429c-9878-59eb5b088ee8
-		summarizeBy: none
-		sourceColumn: Ship Actual Departure Date
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
-	column 'Ship Actual Departure Date Time'
-		dataType: dateTime
-		formatString: Long Time
-		lineageTag: 20b6ff09-7dc2-41b1-9b2b-9536a2d38b1a
-		summarizeBy: none
-		sourceColumn: Ship Actual Departure Date Time
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Time
-
-	column 'Carrier ID'
-		dataType: string
-		lineageTag: bbae78c8-1097-4bbd-9290-f714df0ba2bf
-		summarizeBy: none
-		sourceColumn: Carrier ID
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Projected Total Carrier Pay'
-		dataType: double
-		lineageTag: cec8dfcf-0224-49f5-9d29-9e917d665669
+		lineageTag: eb3c47e8-42ed-471b-b37c-3b21657577cf
 		summarizeBy: sum
-		sourceColumn: Projected Total Carrier Pay
+		sourceColumn: sequence
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	column 'Consignee City'
+	column 'dnc.DNC'
 		dataType: string
-		lineageTag: 8bce8dfe-a7a5-4fb6-ab5e-682d47f63a1a
+		lineageTag: ac116524-89be-44ce-aa9b-94b064a02884
 		summarizeBy: none
-		sourceColumn: Consignee City
+		sourceColumn: dnc.DNC
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Consignee State'
-		dataType: string
-		lineageTag: bef42537-3c48-4d5c-82c4-bd44e75f02d8
-		summarizeBy: none
-		sourceColumn: Consignee State
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Consignee Zip'
-		dataType: string
-		lineageTag: f204b303-1c32-45c9-ad6c-5f76c29258e4
-		summarizeBy: none
-		sourceColumn: Consignee Zip
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Shipper City'
-		dataType: string
-		lineageTag: 057d3803-af11-49f8-8b2c-566dec84f89d
-		summarizeBy: none
-		sourceColumn: Shipper City
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Shipper State'
-		dataType: string
-		lineageTag: c19b1ffc-e85c-4c6c-9556-38277143699a
-		summarizeBy: none
-		sourceColumn: Shipper State
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Shipper Zip'
-		dataType: string
-		lineageTag: e4dd531c-3bb7-4ae9-833c-df016b3168ca
-		summarizeBy: none
-		sourceColumn: Shipper Zip
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Consignee 3 Digit Zip'
-		dataType: string
-		lineageTag: 84a0e297-2139-4751-9a5c-9975e2980f66
-		summarizeBy: none
-		sourceColumn: Consignee 3 Digit Zip
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Shipper 3 Digit Zip'
-		dataType: string
-		lineageTag: 506e7b8a-24af-4fbd-975c-12a50ea931cc
-		summarizeBy: none
-		sourceColumn: Shipper 3 Digit Zip
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Max Pay'
-		dataType: double
-		lineageTag: ad84a0d5-6338-4426-a4bc-c7dc80b7f4a2
-		summarizeBy: sum
-		sourceColumn: Max Pay
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	column 'Projected Freight Carrier Pay'
-		dataType: double
-		lineageTag: 0326689d-0b60-4b97-a44d-b0c683d976d5
-		summarizeBy: sum
-		sourceColumn: Projected Freight Carrier Pay
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	column 'Projected Other Carrier Pay'
-		dataType: double
-		lineageTag: e0ffefe6-9f0c-4a0d-b663-5986aa276120
-		summarizeBy: sum
-		sourceColumn: Projected Other Carrier Pay
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	column 'Target Pay'
-		dataType: double
-		lineageTag: ceed4756-6382-4ed3-a359-99ec977d0172
-		summarizeBy: sum
-		sourceColumn: Target Pay
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	column 'Dispatcher Id'
-		dataType: string
-		lineageTag: 0802d286-e142-4336-bbd6-93589e459fbb
-		summarizeBy: none
-		sourceColumn: Dispatcher Id
-
-		annotation SummarizationSetBy = Automatic
-
-	column DNC
+	column dnc
 		dataType: boolean
 		formatString: """TRUE"";""TRUE"";""FALSE"""
-		lineageTag: e8e9b516-094a-4927-bca0-9f120c9c20c0
+		lineageTag: 751a058d-ec39-485f-a40d-f9fcda0b3d14
 		summarizeBy: none
-		sourceColumn: DNC
+		sourceColumn: dnc
 
 		annotation SummarizationSetBy = Automatic
 
@@ -265,43 +175,32 @@ table movements
 		mode: import
 		source =
 				let
-				    Source = AnalysisServices.Databases("bl-mcbiserver", [TypedMeasureColumns=true, Implementation="2.0"]),
-				    McLeodIQ_2019_Powerbroker = Source{[Name="McLeodIQ_2019_Powerbroker"]}[Data],
-				    McLeodIQ_Powerbroker1 = McLeodIQ_2019_Powerbroker{[Id="McLeodIQ_Powerbroker"]}[Data],
-				    McLeodIQ_Powerbroker2 = McLeodIQ_Powerbroker1{[Id="McLeodIQ_Powerbroker"]}[Data],
-				    #"Added Items" = Cube.Transform(McLeodIQ_Powerbroker2,
-				        {
-				            {Cube.AddAndExpandDimensionColumn, "[Order]", {"[Order].[Brokerage Status].[Brokerage Status]", "[Order].[Delivery Actual Arrival Date].[Delivery Actual Arrival Date]", "[Order].[Delivery Actual Arrival Date Time].[Delivery Actual Arrival Date Time]", "[Order].[Delivery Actual Departure Date].[Delivery Actual Departure Date]", "[Order].[Delivery Actual Departure Date Time].[Delivery Actual Departure Date Time]", "[Order].[Dispatcher].[Dispatcher]", "[Order].[Move Status].[Move Status]", "[Order].[Movement ID].[Movement ID]", "[Order].[Order ID].[Order ID]", "[Order].[Ship Actual Arrival Date].[Ship Actual Arrival Date]", "[Order].[Ship Actual Arrival Date Time].[Ship Actual Arrival Date Time]", "[Order].[Ship Actual Departure Date].[Ship Actual Departure Date]", "[Order].[Ship Actual Departure Date Time].[Ship Actual Departure Date Time]"}, {"Order.Brokerage Status", "Order.Delivery Actual Arrival Date", "Order.Delivery Actual Arrival Date Time", "Order.Delivery Actual Departure Date", "Order.Delivery Actual Departure Date Time", "Order.Dispatcher", "Order.Move Status", "Order.Movement ID", "Order.Order ID", "Order.Ship Actual Arrival Date", "Order.Ship Actual Arrival Date Time", "Order.Ship Actual Departure Date", "Order.Ship Actual Departure Date Time"}},
-				            {Cube.AddAndExpandDimensionColumn, "[Carrier]", {"[Carrier].[Carrier ID].[Carrier ID]"}, {"Carrier.Carrier ID"}},
-				            {Cube.AddMeasureColumn, "Projected Total Carrier Pay", "[Measures].[Projected Total Carrier Pay]"},
-				            {Cube.AddAndExpandDimensionColumn, "[Consignee]", {"[Consignee].[Consignee.Location City].[Consignee.Location City]", "[Consignee].[Consignee.Location State].[Consignee.Location State]", "[Consignee].[Consignee.Location Zip].[Consignee.Location Zip]"}, {"Consignee.Consignee.Location City", "Consignee.Consignee.Location State", "Consignee.Consignee.Location Zip"}},
-				            {Cube.AddAndExpandDimensionColumn, "[Shipper]", {"[Shipper].[Shipper.Location City].[Shipper.Location City]", "[Shipper].[Shipper.Location State].[Shipper.Location State]", "[Shipper].[Shipper.Location Zip].[Shipper.Location Zip]"}, {"Shipper.Shipper.Location City", "Shipper.Shipper.Location State", "Shipper.Shipper.Location Zip"}},
-				            {Cube.AddMeasureColumn, "Max Pay", "[Measures].[Max Pay]"},
-				            {Cube.AddMeasureColumn, "Projected Freight Carrier Pay", "[Measures].[Projected Freight Carrier Pay]"},
-				            {Cube.AddMeasureColumn, "Projected Other Carrier Pay", "[Measures].[Projected Other Carrier Pay]"},
-				            {Cube.AddMeasureColumn, "Target Pay", "[Measures].[Target Pay]"}
-				        }),
-				    #"Renamed Columns" = Table.RenameColumns(#"Added Items",{{"Order.Brokerage Status", "Brokerage Status"}, {"Order.Delivery Actual Arrival Date", "Delivery Actual Arrival Date"}, {"Order.Delivery Actual Arrival Date Time", "Delivery Actual Arrival Date Time"}, {"Order.Delivery Actual Departure Date", "Delivery Actual Departure Date"}, {"Order.Delivery Actual Departure Date Time", "Delivery Actual Departure Date Time"}, {"Order.Dispatcher", "Dispatcher"}, {"Order.Move Status", "Move Status"}, {"Order.Movement ID", "Movement ID"}, {"Order.Order ID", "Order ID"}, {"Order.Ship Actual Arrival Date", "Ship Actual Arrival Date"}, {"Order.Ship Actual Arrival Date Time", "Ship Actual Arrival Date Time"}, {"Order.Ship Actual Departure Date", "Ship Actual Departure Date"}, {"Order.Ship Actual Departure Date Time", "Ship Actual Departure Date Time"}, {"Carrier.Carrier ID", "Carrier ID"}, {"Consignee.Consignee.Location City", "Consignee City"}, {"Consignee.Consignee.Location State", "Consignee State"}, {"Consignee.Consignee.Location Zip", "Consignee Zip"}, {"Shipper.Shipper.Location City", "Shipper City"}, {"Shipper.Shipper.Location State", "Shipper State"}, {"Shipper.Shipper.Location Zip", "Shipper Zip"}}),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Delivery Actual Arrival Date", type date}, {"Delivery Actual Arrival Date Time", type time}, {"Delivery Actual Departure Date", type date}, {"Delivery Actual Departure Date Time", type time}, {"Ship Actual Arrival Date", type date}, {"Ship Actual Arrival Date Time", type time}, {"Ship Actual Departure Date", type date}, {"Ship Actual Departure Date Time", type time}}),
-				    #"Inserted First Characters" = Table.AddColumn(#"Changed Type", "First Characters", each Text.Start([Consignee Zip], 3), type text),
-				    #"Renamed Columns1" = Table.RenameColumns(#"Inserted First Characters",{{"First Characters", "Consignee 3 Digit Zip"}}),
-				    #"Inserted First Characters1" = Table.AddColumn(#"Renamed Columns1", "First Characters", each Text.Start([Shipper Zip], 3), type text),
-				    #"Renamed Columns2" = Table.RenameColumns(#"Inserted First Characters1",{{"First Characters", "Shipper 3 Digit Zip"}}),
-				    #"Changed Type2" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Movement ID", Int64.Type}}),
-				    #"Merged Queries" = Table.NestedJoin(#"Changed Type2", {"Movement ID"}, parade_orders, {"movement_id"}, "parade_orders", JoinKind.LeftOuter),
-				    #"Expanded parade_orders" = Table.ExpandTableColumn(#"Merged Queries", "parade_orders", {"id"}, {"parade_orders.id"}),
-				    #"Added Conditional Column" = Table.AddColumn(#"Expanded parade_orders", "Dispatcher Id", each if [parade_orders.id] = null then [Dispatcher] else "parade"),
-				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"Dispatcher", "parade_orders.id"}),
-				    #"Merged Queries1" = Table.NestedJoin(#"Removed Columns", {"Movement ID"}, dnc, {"DNC"}, "dnc", JoinKind.LeftOuter),
-				    #"Expanded dnc" = Table.ExpandTableColumn(#"Merged Queries1", "dnc", {"DNC"}, {"dnc.DNC"}),
-				    #"Added Conditional Column1" = Table.AddColumn(#"Expanded dnc", "DNC", each if [dnc.DNC] = null then false else true),
-				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column1",{"dnc.DNC"}),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns1",{{"DNC", type logical}}),
-				    #"Removed Duplicates" = Table.Distinct(#"Changed Type1", {"Movement ID"})
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_movement = Source{[Schema="dbo",Item="movement"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_movement,{{"id", type number}}),
+				    #"filtered movements >= MovmentCuttOFfNumber" = Table.SelectRows(#"Changed Type", each [id] >= MovementCutOffNumber),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"filtered movements >= MovmentCuttOFfNumber",{{"id", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"company_id", "authorized", "average_broker_rating", "booking_no", "br_details_link", "br_status_link", "br_track_interval", "br_track_status", "br_tracking_id", "br_vendor", "broker_avail_tract", "brokerage", "carrier_contact", "carrier_email", "carrier_fuel_pay_rate_id", "carrier_lane_rate_id", "carrier_override_user", "carrier_phone", "carrier_rate_id", "chassis", "checkcall_sched_id", "container", "container_returned", "container_status", "controlling_carrier_code", "dedicated_order_id", "est_tolls", "est_tolls_c", "est_tolls_d", "est_tolls_n", "est_tolls_r", "exclude_movement", "fleet_manager", "freight_matching_override", "fuel_distance_um", "fuel_tax_exempt", "hubtran_approved_inv_date", "hubtran_ok2pay_date", "integrated_carrier_search", "is_container", "is_dray", "is_local_mile", "linked_id", "linked_sequence", "loaded", "locked_user_id", "ltl", "ltl_staging_wrs_uid", "macropoint_status", "manifest_empty_distance", "manifest_estimated_arrival", "manifest_estimated_depart", "manifest_id", "manifest_loaded_distance", "manifest_reg_uid", "manifest_spots_capacity", "manifest_spots_consumed", "manifest_weight_capacity", "manifest_weight_consumed", "max_buy_c", "max_buy_d", "max_buy_n", "max_buy_r", "max_pay_method", "max_pay_units", "missed_call_sent", "fuel_distance", "move_distance_um", "movement_type", "must_respond_by", "next_sched_call", "operational_status", "operations_user", "override_crny_type", "override_driver_id", "override_driver_nm", "override_drvr_cell", "override_drvr_email", "override_max_pay", "override_max_pay_c", "override_max_pay_d", "override_max_pay_n", "override_max_pay_r", "override_pay_amt_c", "override_pay_amt_d", "override_pay_amt_n", "override_pay_amt_r", "override_paye_rate", "override_targetpay_c", "override_targetpay_d", "override_targetpay_n", "override_targetpay_r", "override_unit_desc", "override_units", "pay_distance", "pay_distance_um", "placard_required", "priority", "pro_nbr", "rate_alert_basis", "rate_alert_date", "rate_alert_days", "rate_alert_hours", "rate_alert_minutes", "rate_confirm_template", "rate_confirmation_sent_date", "rate_confirmation_status", "rate_expiration_basis", "rate_expiration_date", "rate_expiration_days", "rate_expiration_hours", "rate_expiration_minutes", "rdy_pickup_date", "recurring_movement_id", "reminder_sent", "required_vendor", "reserved", "return_date", "seg_alloc_code", "ss_location_id", "target_extra_stop_pay", "target_extra_stop_pay_c", "target_extra_stop_pay_d", "target_extra_stop_pay_n", "target_extra_stop_pay_r", "target_fuel_surcharge_pay", "target_pay_c", "target_pay_d", "target_pay_n", "target_pay_r", "target_pay_method", "target_pay_units", "target_rate_id", "time_to_send_msg", "tracking_request_status", "trailer_rent_pct", "trip_lease", "trip_mgt_recalc_datetime", "trip_mgt_tracking_id", "triumphpay_exclude", "trp_uid", "unlock_time", "waterfall_flood_time", "waterfall_in_progress", "xferred2fueltax", "xferred2fueltaxdt", "xmit_accepted", "xmitted2driver", "zmit_trip", "require_tracking", "ts_borrowing_company", "ts_commodity", "ts_movement_id", "tracking_duration_ext", "tracking_notify_email", "shpmt_ident_type", "shpmt_ident_value", "override_driver2_nm", "ic_company_to", "load_booking_source", "override_drvr2_email", "track_start_date", "br_track_vehicle_id", "br_track_status_desc", "pending_carrier_type", "shipper_email", "carrier_override_carrier", "pending_carrier_name", "override_driver2_id", "carrier_empty_from_city_id", "shipper_notify_frequency", "pending_carrier_nbr", "ic_order_to", "digital_booking", "is_intercompany", "override_drvr2_cell", "carrier_tractor", "carrier_trailer", "equipment_group_id", "empty2next_order", "eform_rate_confirmation", "override_pay_rate", "preassign_sequence", "carrier_trailer_type", "pending_payee_id"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each ([status] <> "V")),
+				    #"Appended Query" = Table.Combine({#"Filtered Rows", mcleod_historic_movement}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Appended Query",{{"id", Text.Trim, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Trimmed Text", {"id"}, movement_order, {"movement_id"}, "movement_order", JoinKind.LeftOuter),
+				    #"Expanded movement_order" = Table.ExpandTableColumn(#"Merged Queries", "movement_order", {"order_id", "sequence"}, {"order_id", "sequence"}),
+				    #"Appended Query1" = Table.Combine({#"Expanded movement_order", pcs_movements}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Appended Query1",{{"invoice_recv_date", type date}, {"xfer2settle_date", type date}, {"target_pay", Currency.Type}, {"override_targetpay", Currency.Type}, {"override_pay_amt", Currency.Type}, {"max_buy", Currency.Type}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Changed Type2", {"id"}, parade_orders, {"movement_id"}, "parade_orders", JoinKind.LeftOuter),
+				    #"Expanded parade_orders" = Table.ExpandTableColumn(#"Merged Queries1", "parade_orders", {"id"}, {"parade_orders.id"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded parade_orders",{{"dispatcher_user_id", "dispatcher_user_id_old"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "dispatcher_user_id", each if [parade_orders.id] = null then [dispatcher_user_id_old] else "parade"),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column",{"parade_orders.id", "dispatcher_user_id_old"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Removed Columns1", {"id"}, dnc, {"DNC"}, "dnc", JoinKind.LeftOuter),
+				    #"Expanded dnc" = Table.ExpandTableColumn(#"Merged Queries2", "dnc", {"DNC"}, {"dnc.DNC"}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Expanded dnc", "dnc", each if [dnc.DNC] = null then false else true),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Conditional Column1",{{"dnc", type logical}})
 				in
-				    #"Removed Duplicates"
-
-	annotation PBI_ResultType = Table
+				    #"Changed Type3"
 
 	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
 

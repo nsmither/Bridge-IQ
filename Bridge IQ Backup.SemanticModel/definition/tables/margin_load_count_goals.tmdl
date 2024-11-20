@@ -1,9 +1,9 @@
 table margin_load_count_goals
-	lineageTag: 2df3ab1a-6f5c-4bca-a24d-86d23e0977ab
+	lineageTag: 9b67fda5-3b12-423b-9032-0dd4db6d6344
 
 	column 'Salesperson Name'
 		dataType: string
-		lineageTag: a5f32b6a-bc6a-484e-b530-4a99e3b77f0b
+		lineageTag: 980dc038-a26d-4d78-84a9-ac722f14846a
 		summarizeBy: none
 		sourceColumn: Salesperson Name
 
@@ -12,7 +12,7 @@ table margin_load_count_goals
 	column Month
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 8b376bdf-f542-4208-bf1b-56ad3ee9507a
+		lineageTag: bc068d44-af09-4ceb-9ec8-47e9316bd4fe
 		summarizeBy: none
 		sourceColumn: Month
 
@@ -22,17 +22,19 @@ table margin_load_count_goals
 
 	column 'Margin Goal'
 		dataType: decimal
-		formatString: 0
-		lineageTag: 64222b01-cead-46b2-ba52-affa3f44d520
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 61fc996b-901b-4f4b-96b6-5ca0ccad3f84
 		summarizeBy: sum
 		sourceColumn: Margin Goal
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
 	column 'Load Count Goal'
 		dataType: int64
 		formatString: 0
-		lineageTag: 6c7fe682-eee1-4e10-84d6-a4dba7e20ffa
+		lineageTag: cdb9c0ee-a3a7-4d49-b8da-718ebe85070f
 		summarizeBy: sum
 		sourceColumn: Load Count Goal
 
@@ -41,7 +43,7 @@ table margin_load_count_goals
 	column 'Margin Per Order Goal'
 		dataType: decimal
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
-		lineageTag: b53df584-aa91-4c96-abcb-f49790a111e8
+		lineageTag: cbe6a68d-f97d-4b7b-851b-751c2543a3c6
 		summarizeBy: sum
 		sourceColumn: Margin Per Order Goal
 
@@ -51,7 +53,7 @@ table margin_load_count_goals
 
 	column 'Margin % Goal'
 		dataType: double
-		lineageTag: 96ee1ac6-add9-4522-89c4-8c9778e3ceef
+		lineageTag: 61f4b55e-9a63-4aba-991f-d4ce778c4008
 		summarizeBy: sum
 		sourceColumn: Margin % Goal
 
@@ -72,6 +74,8 @@ table margin_load_count_goals
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Uppercased Text1",{{"Margin Goal", Currency.Type}, {"Margin Per Order Goal", Currency.Type}, {"Margin % Goal", Percentage.Type}})
 				in
 				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 

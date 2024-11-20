@@ -1,81 +1,84 @@
 table callins
-	lineageTag: f8ce91d6-2304-4ad3-9cd9-62100b1227a4
+	lineageTag: c3b14ccd-e8ea-4e24-b354-916b8bbb278e
 
-	column 'Entered date'
+	column entered_by
+		dataType: string
+		lineageTag: 7192a89e-e73f-449d-be09-d34f7e396979
+		summarizeBy: none
+		sourceColumn: entered_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column entered_date
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 016787e3-5c7f-4d6a-9e39-d6038e056844
+		lineageTag: 64ebbfeb-8149-4837-8189-06880901d32f
 		summarizeBy: none
-		sourceColumn: Entered date
+		sourceColumn: entered_date
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column 'Entered by'
+	column movement_status
 		dataType: string
-		lineageTag: 30864c19-dc23-4f3d-ab50-c403cccb156a
+		lineageTag: b2c52169-1c2f-44ab-80c7-c248371922a7
 		summarizeBy: none
-		sourceColumn: Entered by
+		sourceColumn: movement_status
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Callin type'
+	column payee_id
 		dataType: string
-		lineageTag: 2286da3a-f302-44b3-b51a-afba842b31d8
+		lineageTag: 2b2c3a56-f074-450c-bca7-405ef3c5b9e4
 		summarizeBy: none
-		sourceColumn: Callin type
+		sourceColumn: payee_id
 
 		annotation SummarizationSetBy = Automatic
 
-	column Movement
-		dataType: int64
-		formatString: 0
-		lineageTag: 67539b2a-ed4d-4a8f-a2ca-c09b60a09b3c
-		summarizeBy: sum
-		sourceColumn: Movement
-
-		annotation SummarizationSetBy = Automatic
-
-	column Carrier
+	column initiated_type
 		dataType: string
-		lineageTag: fa2ea8fd-d2f0-41d1-8663-e324dc05d0d4
+		lineageTag: 7212ceae-b271-428e-8741-f7aa7630c2ea
 		summarizeBy: none
-		sourceColumn: Carrier
+		sourceColumn: initiated_type
 
 		annotation SummarizationSetBy = Automatic
 
-	column Time
+	column entered_time
 		dataType: dateTime
 		formatString: Long Time
-		lineageTag: a0d17078-cb14-4481-8a6d-637c5a37ea8b
+		lineageTag: defe8dc0-a917-400e-8017-5c5347c3fb4e
 		summarizeBy: none
-		sourceColumn: Time
+		sourceColumn: entered_time
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Time
 
+	column movement_id
+		dataType: string
+		lineageTag: 3ac4c678-3d1c-4c3b-945d-92cdff20c650
+		summarizeBy: none
+		sourceColumn: movement_id
+
+		annotation SummarizationSetBy = Automatic
+
 	partition callins = m
 		mode: import
 		source =
 				let
-				    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
-				    #"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/bridge_iq/Data Sets/Callins/2024/")),
-				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
-				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (7)", each #"Transform File (7)"([Content])),
-				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
-				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (7)"}),
-				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (7)", Table.ColumnNames(#"Transform File (7)"(#"Sample File (7)"))),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"call_date_time", type datetimezone}, {"entered_by", type text}, {"initiated_type", type text}, {"movement_id", Int64.Type}, {"payee_id", type text}, {"id", type text}}),
-				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Source.Name", "id"}),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"call_date_time", type datetime}}),
-				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"payee_id", "Carrier"}, {"movement_id", "Movement"}, {"initiated_type", "Callin type"}, {"entered_by", "Entered by"}, {"call_date_time", "Entered date"}}),
-				    #"Inserted Time" = Table.AddColumn(#"Renamed Columns", "Time", each DateTime.Time([Entered date]), type time),
-				    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{"Entered date", DateTime.Date, type date}}),
-				    #"Appended Query" = Table.Combine({#"Extracted Date", #"Old Callins"})
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_callin = Source{[Schema="dbo",Item="callin"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_callin,{"entered_by", "entered_date", "movement_status", "payee_id", "initiated_type", "movement_id"}),
+				    #"Filtered callins on or after RefreshCutOffDate" = Table.SelectRows(#"Removed Other Columns", each [entered_date] >= RefreshCutOffDate),
+				    #"Inserted Time" = Table.AddColumn(#"Filtered callins on or after RefreshCutOffDate", "Time", each DateTime.Time([entered_date]), type time),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}}),
+				    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}}),
+				    #"Appended Query" = Table.Combine({#"Extracted Date", historic_callins})
 				in
 				    #"Appended Query"
+
+	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 

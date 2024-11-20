@@ -1,0 +1,101 @@
+table historic_behaviors
+	lineageTag: 082fe851-a013-4ff7-8f67-c5c9a930a0ae
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: f7957b97-d316-4d90-96c8-7b5c08783822
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Behavior Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 61b1c140-f253-4318-9bc8-3627f6a99608
+		summarizeBy: none
+		sourceColumn: Behavior Date
+
+		variation Variation
+			isDefault
+			relationship: 118a5bae-93a2-48f1-b4c4-a8207cda138d
+			defaultHierarchy: LocalDateTable_23b5ad18-06e5-4a69-8f54-e0a26338828e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column author_id
+		dataType: string
+		lineageTag: cce54d96-41f3-49fb-a47e-e6d7f8fb2317
+		summarizeBy: none
+		sourceColumn: author_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mail_activity_type_id
+		dataType: string
+		lineageTag: 46cc35c3-d975-490b-82a8-5baf21f422b8
+		summarizeBy: none
+		sourceColumn: mail_activity_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column model
+		dataType: string
+		lineageTag: 6b95ffbf-cec0-4102-aab3-8b39c4610d39
+		summarizeBy: none
+		sourceColumn: model
+
+		annotation SummarizationSetBy = Automatic
+
+	column res_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ee8a678b-0608-4f45-b33e-0e104c17e957
+		summarizeBy: sum
+		sourceColumn: res_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Behavior Time'
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: fb830868-899b-4534-863b-14a0223f4cea
+		summarizeBy: none
+		sourceColumn: Behavior Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition historic_behaviors = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Folder Path], "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/02 BL-Areas/bridge_iq/Data Sets/behaviors_api_files/")),
+				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+				    #"Filtered Hidden Files2" = Table.SelectRows(#"Filtered Hidden Files1", each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files2", "Transform File (4)", each #"Transform File (4)"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (4)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (4)", Table.ColumnNames(#"Transform File (4)"(#"Sample File (4)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"id", Int64.Type}, {"date", type datetime}, {"author_id", type any}, {"mail_activity_type_id", type text}, {"model", type text}, {"res_id", Int64.Type}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Changed Type", each true),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"Source.Name"}),
+				    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Removed Columns", {{"author_id", each Text.BetweenDelimiters(_, "'", "'"), type text}, {"mail_activity_type_id", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Extracted Text Between Delimiters", {{"author_id", null}}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Replaced Errors", each ([model] <> "gamification.badge.user") and ([author_id] <> null and [author_id] <> "OdooBot" and [author_id] <> "Portal User Template")),
+				    #"Inserted Time" = Table.AddColumn(#"Filtered Rows2", "Time", each DateTime.Time([date]), type time),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Inserted Time",{{"date", "Behavior Date"}, {"Time", "Behavior Time"}}),
+				    #"Filtered Rows3" = Table.SelectRows(#"Renamed Columns2", each [Behavior Date] < RefreshCutOffDate),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows3",{{"Behavior Date", type date}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

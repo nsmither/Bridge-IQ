@@ -1,17 +1,25 @@
 table crm
-	lineageTag: 374853d7-fcbf-4947-a402-2244d828387e
+	lineageTag: d01f0c30-7638-4790-9321-156b67073a2b
 
 	column id
 		dataType: string
-		lineageTag: 0392bdc5-ae96-4380-8590-4ee557fcc7d7
+		lineageTag: 670c2b00-410a-4f0b-ba56-ea882c236e78
 		summarizeBy: none
 		sourceColumn: id
 
 		annotation SummarizationSetBy = Automatic
 
+	column partner_id
+		dataType: string
+		lineageTag: c7c85075-49fc-4907-95b5-bba58fc867a2
+		summarizeBy: none
+		sourceColumn: partner_id
+
+		annotation SummarizationSetBy = Automatic
+
 	column name
 		dataType: string
-		lineageTag: e3d59652-8d17-4e8f-99e7-cd11d6133ff6
+		lineageTag: bb090e43-3b26-4d53-9d8b-5d58daf9c87b
 		summarizeBy: none
 		sourceColumn: name
 
@@ -19,7 +27,7 @@ table crm
 
 	column x_studio_mcleod_code
 		dataType: string
-		lineageTag: 06b3114b-04b7-4ab1-abfc-b4d01c1b20e7
+		lineageTag: cc38dc54-a22d-4bfb-8859-914030ce54aa
 		summarizeBy: none
 		sourceColumn: x_studio_mcleod_code
 
@@ -27,7 +35,7 @@ table crm
 
 	column user_id
 		dataType: string
-		lineageTag: cb657696-dca4-442b-a82c-e96069514a3d
+		lineageTag: cf632617-887f-4b7a-a7d0-876a1a51a008
 		summarizeBy: none
 		sourceColumn: user_id
 
@@ -35,7 +43,7 @@ table crm
 
 	column x_studio_sdr
 		dataType: string
-		lineageTag: d8d50d78-1855-4258-9e65-6afac0af5505
+		lineageTag: bb50e29e-a7ca-4335-80b1-5f6ff3b968da
 		summarizeBy: none
 		sourceColumn: x_studio_sdr
 
@@ -44,7 +52,7 @@ table crm
 	column activity_date_deadline
 		dataType: dateTime
 		formatString: Short Date
-		lineageTag: eb635af0-efc3-4adb-82d6-9079476b2ea9
+		lineageTag: 8e9fd55b-76b5-4e22-a598-159d095d47c1
 		summarizeBy: none
 		sourceColumn: activity_date_deadline
 
@@ -55,7 +63,7 @@ table crm
 	column date_open
 		dataType: dateTime
 		formatString: Short Date
-		lineageTag: ff18e01b-ed93-4f15-b1d1-06191ace71db
+		lineageTag: 7d0eb0dc-ea1d-486b-9cd2-4c470b2a723b
 		summarizeBy: none
 		sourceColumn: date_open
 
@@ -63,17 +71,9 @@ table crm
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column partner_id
-		dataType: string
-		lineageTag: 060012db-948f-49b0-9c6c-538b7f86ae7a
-		summarizeBy: none
-		sourceColumn: partner_id
-
-		annotation SummarizationSetBy = Automatic
-
 	column x_studio_do_not_move
 		dataType: string
-		lineageTag: 2b904698-69c6-47cf-b79a-3738304012e6
+		lineageTag: 79791bb1-54c9-448a-bd91-8e7362b041b6
 		summarizeBy: none
 		sourceColumn: x_studio_do_not_move
 
@@ -81,7 +81,7 @@ table crm
 
 	column x_studio_lead_type
 		dataType: string
-		lineageTag: ba3b1ae8-5517-4872-99fa-a178a6cf5a6e
+		lineageTag: d055850b-618f-42d7-93bb-e1ae8b75ca02
 		summarizeBy: none
 		sourceColumn: x_studio_lead_type
 
@@ -89,7 +89,7 @@ table crm
 
 	column x_studio_originally_passed_to
 		dataType: string
-		lineageTag: 8257e263-b7b2-4b88-87be-5e00b8bfa533
+		lineageTag: fd189add-4221-435f-8e2e-72f0c51c6af0
 		summarizeBy: none
 		sourceColumn: x_studio_originally_passed_to
 
@@ -97,8 +97,8 @@ table crm
 
 	column x_studio_lead_passed_date
 		dataType: dateTime
-		formatString: Short Date
-		lineageTag: 72ee5a04-b3ab-4471-8b88-0977189c204a
+		formatString: Long Date
+		lineageTag: fa58afa3-60ce-48fc-86cb-0bc1403a5b61
 		summarizeBy: none
 		sourceColumn: x_studio_lead_passed_date
 
@@ -108,8 +108,8 @@ table crm
 
 	column x_studio_enrichment_date
 		dataType: dateTime
-		formatString: Short Date
-		lineageTag: 696e9156-b04f-44c2-a021-ee31b02512cf
+		formatString: Long Date
+		lineageTag: 68822cfd-960f-483c-887e-adcdbbf0d743
 		summarizeBy: none
 		sourceColumn: x_studio_enrichment_date
 
@@ -119,7 +119,7 @@ table crm
 
 	column city
 		dataType: string
-		lineageTag: 61d2e49a-a37c-4e71-95b4-2fcd413bb40a
+		lineageTag: 9673b817-dda1-4c13-bb1f-bc3ec479e068
 		summarizeBy: none
 		sourceColumn: city
 
@@ -127,7 +127,7 @@ table crm
 
 	column x_studio_revenue_range
 		dataType: string
-		lineageTag: 24fa1024-338a-47b9-8a83-fff10b6ad02c
+		lineageTag: 1500e821-5ba5-459f-ace2-f288927cc9c2
 		summarizeBy: none
 		sourceColumn: x_studio_revenue_range
 
@@ -135,7 +135,7 @@ table crm
 
 	column x_studio_primary_industry
 		dataType: string
-		lineageTag: ac9a9140-c05c-4be8-98e8-fce9e8ad9d90
+		lineageTag: 9767e576-2426-40fd-bb54-52555cb72a0a
 		summarizeBy: none
 		sourceColumn: x_studio_primary_industry
 
@@ -143,7 +143,7 @@ table crm
 
 	column state_id
 		dataType: string
-		lineageTag: 13f83aa8-fb7e-4cea-a974-0ed412cd596a
+		lineageTag: d98bfe8d-0d73-45af-a454-6f2647ee29c8
 		summarizeBy: none
 		sourceColumn: state_id
 
@@ -151,7 +151,7 @@ table crm
 
 	column phone
 		dataType: string
-		lineageTag: bcb22193-a954-429f-abc2-e46c2fd14cdb
+		lineageTag: 97ecdc6a-8ae4-43bb-9db6-290958ca910e
 		summarizeBy: none
 		sourceColumn: phone
 
@@ -159,15 +159,23 @@ table crm
 
 	column type
 		dataType: string
-		lineageTag: 23e267f2-0bbb-4e28-8c49-4ec4c930fc7e
+		lineageTag: baaa6696-2546-4995-ba47-d4e43f02d973
 		summarizeBy: none
 		sourceColumn: type
 
 		annotation SummarizationSetBy = Automatic
 
+	column user_login
+		dataType: string
+		lineageTag: b461cc2c-c03a-4211-bdef-420b4457371b
+		summarizeBy: none
+		sourceColumn: user_login
+
+		annotation SummarizationSetBy = Automatic
+
 	column Stage
 		dataType: string
-		lineageTag: 18cdc1c5-a6e2-4d97-a99b-45727cc2c309
+		lineageTag: 539d2186-2edf-4262-8759-27aa10e44812
 		summarizeBy: none
 		sourceColumn: Stage
 
@@ -176,7 +184,7 @@ table crm
 	column 'Last Stage Change'
 		dataType: dateTime
 		formatString: Short Date
-		lineageTag: 4b0aff3a-e167-46bb-ada1-23b093153882
+		lineageTag: faa235ff-97dc-45aa-9c02-63e85b4fcc4c
 		summarizeBy: none
 		sourceColumn: Last Stage Change
 
@@ -257,10 +265,8 @@ table crm
 			Return
 			AtRisk
 			```
-		dataType: string
-		lineageTag: 507fd75a-9439-49af-bb78-eed961a86964
+		lineageTag: b548f0ba-b25d-4924-866f-7af29065654b
 		summarizeBy: none
-		isDataTypeInferred
 
 		annotation SummarizationSetBy = Automatic
 
@@ -268,7 +274,7 @@ table crm
 		mode: import
 		source =
 				let
-				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/CRM/CRM_api.xlsx"), null, true),
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/CRM/crm.xlsx"), null, true),
 				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
 				    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
 				    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Promoted Headers", {{"user_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}, {"stage_id", each Text.BetweenDelimiters(_, "'", "'"), type text}, {"x_studio_primary_industry", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}, {"state_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}, {"x_stage_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
@@ -285,6 +291,8 @@ table crm
 				    #"Changed Type2" = Table.TransformColumnTypes(#"Extracted Text Between Delimiters2",{{"x_studio_lead_passed_date", type date}})
 				in
 				    #"Changed Type2"
+
+	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 

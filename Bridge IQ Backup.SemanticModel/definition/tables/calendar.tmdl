@@ -1,64 +1,33 @@
-table calendar
-	lineageTag: fce9a9ae-211f-4e89-b504-aa0ddde156ec
-	dataCategory: Time
-
-	/// This Measure calculates the number of working days between the minimum date in your filter context and the max date in your filter context.
-	measure 'Working Days' = ```
-			
-			    NETWORKDAYS(
-			        MIN('calendar'[Date]),
-			        MAX('calendar'[Date]),
-			        1,
-			        observed_holidays)
-			```
-		formatString: 0
-		displayFolder: Calendar Measures
-		lineageTag: 8c102c07-e4b9-42e2-9136-bec68cb20f95
-
-	/// This measure Calculates the number of working days from the minimum date in your filter context and the current date minus 1.
-	/// 
-	measure 'Working days Elapsed' =
-			
-			If(DAY(TODAY())=1,0,
-			    NETWORKDAYS(
-			        MIN('Calendar'[Date]),
-			        TODAY()-1,
-			        1,
-			        observed_holidays))
-		formatString: 0
-		displayFolder: Calendar Measures
-		lineageTag: 1d241d9b-f183-49c9-97b9-c6fc0122166a
-
-	measure ** = "*"
-		displayFolder: ***Undocumented***
-		lineageTag: 008f7130-708a-4f40-9518-cd40f419fcb3
-
-	/// If the week of the month number is equal to the week of the month number of today this measure will output 1 if not 0
-	/// 
-	measure 'Week Number Equals this Week' =
-			
-			IF(
-			    MIN('calendar'[Week of Year])=WEEKNUM(TODAY()),
-			    1,
-			    0
-			)
-		formatString: 0
-		displayFolder: Calendar Measures
-		lineageTag: 290137a1-174e-463e-b3f9-a989e04db338
-
-	measure 'Callendar Date SK' = MIN('calendar'[Date])*1
-		displayFolder: Calendar Measures
-		lineageTag: 9d2954ab-746c-459f-aeeb-870e5084856d
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+table Calendar
+	lineageTag: c583c9ce-20dd-43b3-818e-c9d8da9a588a
 
 	column Date
 		dataType: dateTime
-		isKey
 		formatString: Short Date
-		lineageTag: 3f507b7d-235c-4066-a087-d3bc2f84407d
+		lineageTag: 8c8cd0ec-bc3a-497c-8890-727a55c10611
 		summarizeBy: none
 		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 637ca1f2-2edc-451e-ab79-fdb2847dbc89
+			defaultHierarchy: LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ebb95aa5-5e0f-4c35-92d8-0fafa766588b
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		variation Variation
+			isDefault
+			relationship: 53388cc1-2c8e-449a-8c25-8743119bd22f
+			defaultHierarchy: LocalDateTable_75a92ebd-fc59-41d4-9bbd-0eab7041c40b.'Date Hierarchy'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -67,15 +36,32 @@ table calendar
 	column Year
 		dataType: int64
 		formatString: 0
-		lineageTag: 651a7c89-640c-4906-8b4b-e67c87597462
+		lineageTag: 1fc3964d-1c86-48a9-8188-68259c733be2
 		summarizeBy: sum
 		sourceColumn: Year
 
 		annotation SummarizationSetBy = Automatic
 
+	column Quarter
+		dataType: string
+		lineageTag: f47f69c1-ff67-4e2f-89d8-5290e3b12366
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuarterNmb
+		dataType: int64
+		formatString: 0
+		lineageTag: 24fe33b4-7940-4d34-a726-e55a50ba02eb
+		summarizeBy: sum
+		sourceColumn: QuarterNmb
+
+		annotation SummarizationSetBy = Automatic
+
 	column 'Month Name'
 		dataType: string
-		lineageTag: cfbabec9-aae5-4792-af9a-80e471da8154
+		lineageTag: 8287fd0f-b28c-4d24-bb40-08429d66461a
 		summarizeBy: none
 		sourceColumn: Month Name
 		sortByColumn: MonthNmb
@@ -86,7 +72,7 @@ table calendar
 
 	column MonthAbv
 		dataType: string
-		lineageTag: 2cb6f642-75fb-4a6d-b4d7-600ec7adcfb9
+		lineageTag: 4e97bbfd-3c3e-4fda-b6f9-d12336fca1ef
 		summarizeBy: none
 		sourceColumn: MonthAbv
 		sortByColumn: MonthNmb
@@ -98,137 +84,85 @@ table calendar
 	column MonthNmb
 		dataType: int64
 		formatString: 0
-		lineageTag: 714a7d82-cb49-46e7-b4d7-18fbb6f3533d
+		lineageTag: 9e2df293-236d-4167-aa97-27899fa85f79
 		summarizeBy: sum
 		sourceColumn: MonthNmb
-
-		annotation SummarizationSetBy = Automatic
-
-	column Quarter
-		dataType: string
-		lineageTag: 39fb850e-3f75-443c-81b1-a40eee62f1e1
-		summarizeBy: none
-		sourceColumn: Quarter
-		sortByColumn: QuarterNmb
-
-		changedProperty = SortByColumn
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Week of Month'
-		dataType: int64
-		formatString: 0
-		lineageTag: 51d8ea38-3fe1-49ad-bcd8-2e4c2a8c65b3
-		summarizeBy: sum
-		sourceColumn: Week of Month
-
-		annotation SummarizationSetBy = Automatic
-
-	/// Date is in the past
-	column 'Is Past'
-		dataType: boolean
-		formatString: """TRUE"";""TRUE"";""FALSE"""
-		lineageTag: 5e6fbd22-3068-4124-b885-600aa91b4918
-		summarizeBy: none
-		sourceColumn: Is Past
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Day of Month'
-		dataType: int64
-		formatString: 0
-		lineageTag: d1859176-4e69-4f06-9a25-669ed741f2e5
-		summarizeBy: sum
-		sourceColumn: Day of Month
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Start of Month'
-		dataType: dateTime
-		formatString: Long Date
-		lineageTag: d881b6a5-f0c7-4c77-b817-c45b4bed1680
-		summarizeBy: none
-		sourceColumn: Start of Month
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
-	column QuarterNmb
-		dataType: int64
-		formatString: 0
-		lineageTag: 8cf8146f-97a6-4697-be3d-bd1f20abbb98
-		summarizeBy: sum
-		sourceColumn: QuarterNmb
 
 		annotation SummarizationSetBy = Automatic
 
 	column 'Week of Year'
 		dataType: int64
 		formatString: 0
-		lineageTag: 39f328a6-5424-41fb-a9af-c5ec77343a71
+		lineageTag: e6153bd8-2b9c-4f9e-8481-d0b1e326eee3
 		summarizeBy: sum
 		sourceColumn: Week of Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week of Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: ec41ace3-8053-410f-b7e1-a0aa2140a693
+		summarizeBy: sum
+		sourceColumn: Week of Month
 
 		annotation SummarizationSetBy = Automatic
 
 	column 'Day of Year'
 		dataType: int64
 		formatString: 0
-		lineageTag: b8792d7a-b021-4f5b-9438-4ac23439f5a8
+		lineageTag: 82e401e4-81e2-40eb-90cd-427d900bca55
 		summarizeBy: sum
 		sourceColumn: Day of Year
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Day Name'
-		dataType: string
-		lineageTag: 7bc81a08-84e2-4a8c-a6ad-2998b40a400b
-		summarizeBy: none
-		sourceColumn: Day Name
-		sortByColumn: 'Day of Week'
-
-		changedProperty = SortByColumn
+	column 'Day of Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: 997f426f-f5ce-43a5-8ef2-8850a375bd30
+		summarizeBy: sum
+		sourceColumn: Day of Month
 
 		annotation SummarizationSetBy = Automatic
 
 	column 'Day of Week'
 		dataType: int64
 		formatString: 0
-		lineageTag: 8d6893eb-cc6e-47e7-b20e-8666e71ff2d9
+		lineageTag: ccc72e4a-d3ac-464d-ac0b-84de114d234d
 		summarizeBy: sum
 		sourceColumn: Day of Week
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Month / Year'
+	column 'Day Name'
 		dataType: string
-		lineageTag: 17e578cf-1f51-4ecd-b766-0cfd52409b8d
+		lineageTag: 9da35ee3-b43a-45a0-9a4e-af097f1575fe
 		summarizeBy: none
-		sourceColumn: Month / Year
-		sortByColumn: 'Start of Month'
-
-		changedProperty = SortByColumn
+		sourceColumn: Day Name
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Is Working Day' =
-			
-			Var is_working_day = IF([Working Days]=1,TRUE(),FALSE())
-			
-			Return
-			is_working_day
+	column 'Is Past'
 		dataType: boolean
 		formatString: """TRUE"";""TRUE"";""FALSE"""
-		lineageTag: c3cee918-b51b-4446-b055-0bb99e2213b3
+		lineageTag: 6d1b380f-221b-4d89-aaf7-b3bc2dbd9e53
 		summarizeBy: none
-		isDataTypeInferred
+		sourceColumn: Is Past
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month / Year'
+		dataType: string
+		lineageTag: 18f8eb3b-bc2c-4a60-88cd-5c27079058e7
+		summarizeBy: none
+		sourceColumn: Month / Year
 
 		annotation SummarizationSetBy = Automatic
 
 	column 'Day of Quarter'
 		dataType: string
-		lineageTag: 51b3b2c8-9710-40bc-bf38-f621dcf2795e
+		lineageTag: a8a73e23-6bcf-4cf0-84ca-5f0ae725ac1a
 		summarizeBy: none
 		sourceColumn: Day of Quarter
 
@@ -236,54 +170,29 @@ table calendar
 
 	column 'Week / Year'
 		dataType: string
-		lineageTag: d16d19a5-acab-4860-8869-c978a0bef28c
+		lineageTag: a34020b1-473b-4db1-b090-a14e7fcca899
 		summarizeBy: none
 		sourceColumn: Week / Year
-		sortByColumn: 'Start of Week'
-
-		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 
 	column 'Start of Week'
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 9db66bf6-3f9c-4136-a390-d5bcaa341e60
+		lineageTag: 600e226d-a54e-4344-b9f4-7773fea19639
 		summarizeBy: none
 		sourceColumn: Start of Week
+
+		variation Variation
+			isDefault
+			relationship: d3812500-0550-4145-957b-d4623116eb84
+			defaultHierarchy: LocalDateTable_8cd7490a-0c9d-45ae-9b87-d190d0e8c13a.'Date Hierarchy'
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	hierarchy 'Year Hierarchy'
-		lineageTag: ef7a8ed7-9ad4-4576-b05a-e4ae3b1d836d
-
-		level Year
-			lineageTag: 73eb8ff3-53b4-4068-9b95-aecc65077636
-			column: Year
-
-		level Quarter
-			lineageTag: ff610923-2ca4-43a0-8bb5-fc0c1d14eecc
-			column: Quarter
-
-		level 'Month Name'
-			lineageTag: 9dc47c8d-742d-4276-aee5-95c3b105d26c
-			column: 'Month Name'
-
-		level 'Week of Year'
-			lineageTag: 5d9b25d8-9357-4487-aa40-aa5d8fba623e
-			column: 'Week of Year'
-
-		level 'Week of Month'
-			lineageTag: 627f7431-ed11-4837-8ae2-45b381e0940a
-			column: 'Week of Month'
-
-		level 'Day Name'
-			lineageTag: 3f76aa0b-88e5-4446-9820-9c0421a41b36
-			column: 'Day Name'
-
-	partition calendar = m
+	partition Calendar = m
 		mode: import
 		source =
 				let
@@ -321,6 +230,8 @@ table calendar
 				    #"Inserted Start of Week" = Table.AddColumn(#"Merged Columns", "Start of Week", each Date.StartOfWeek([Date]), type date)
 				in
 				    #"Inserted Start of Week"
+
+	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 
