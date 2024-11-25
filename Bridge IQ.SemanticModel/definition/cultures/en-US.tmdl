@@ -19964,15 +19964,6 @@ cultureInfo en-US
 			      },
 			      "State": "Generated"
 			    },
-			    "measures_.sales_bws_behavior_progress": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "measures_",
-			          "ConceptualProperty": "Sales BWS Behavior Progress"
-			        }
-			      },
-			      "State": "Generated"
-			    },
 			    "measures_.behavior_pace": {
 			      "Definition": {
 			        "Binding": {
@@ -20010,19 +20001,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "user_id"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Salesperson": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "crm.x_studio_mcleod_code": {
 			      "Definition": {
@@ -20091,7 +20070,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "measures_",
-			          "ConceptualProperty": "Count of Orders Covered"
+			          "ConceptualProperty": "Count of orders covered"
 			        }
 			      },
 			      "State": "Generated",

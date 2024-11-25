@@ -125,9 +125,10 @@ table salesperson_key
 		source =
 				let
 				    Source = employees,
-				    #"Filtered Rows" = Table.SelectRows(Source, each ([McLeod Salesperson Code] <> null))
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([McLeod Salesperson Code] <> null)),
+				    #"Trimmed Text" = Table.TransformColumns(#"Filtered Rows",{{"Name", Text.Trim, type text}})
 				in
-				    #"Filtered Rows"
+				    #"Trimmed Text"
 
 	annotation PBI_NavigationStepName = Navigation
 

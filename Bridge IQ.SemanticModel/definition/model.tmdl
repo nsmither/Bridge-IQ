@@ -47,11 +47,11 @@ queryGroup 'Transform File from historic_behaviors\Helper Queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
-annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","behaviors","behavior_goals","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer_margin_goal","customer","healthy_pipeline_goals","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_callins","movements","driver_extra_pay","Calendar","crm_stages","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","crt_movement_data","lane","daily_number_override","wolf_pack","account_rep","observed_holidays","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","historic_behaviors","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","behavior_key","crm"]
+annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","behaviors","behavior_goals","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer_margin_goal","customer","healthy_pipeline_goals","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_behaviors","historic_callins","movements","driver_extra_pay","Calendar","crm_stages","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","crt_movement_data","lane","daily_number_override","wolf_pack","account_rep","observed_holidays","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","behavior_key","crm"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBIDesktopVersion = 2.138.782.0 (24.11)
+annotation PBIDesktopVersion = 2.138.1004.0 (24.11)
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -81,8 +81,6 @@ ref table observed_holidays
 ref table LocalDateTable_ed26f4c3-9c62-405b-8c3b-c81747750938
 ref table LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8
 ref table behaviors
-ref table historic_behaviors
-ref table LocalDateTable_23b5ad18-06e5-4a69-8f54-e0a26338828e
 ref table behavior_key
 ref table crm
 ref table behavior_goals

@@ -586,3 +586,33 @@ expression 'Transform File (4)' =
 
 	annotation PBI_ResultType = Function
 
+expression historic_behaviors =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Folder Path], "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/02 BL-Areas/bridge_iq/Data Sets/behaviors_api_files/")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    #"Filtered Hidden Files2" = Table.SelectRows(#"Filtered Hidden Files1", each [Attributes]?[Hidden]? <> true),
+		    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files2", "Transform File (4)", each #"Transform File (4)"([Content])),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (4)"}),
+		    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (4)", Table.ColumnNames(#"Transform File (4)"(#"Sample File (4)"))),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"id", Int64.Type}, {"date", type datetime}, {"author_id", type any}, {"mail_activity_type_id", type text}, {"model", type text}, {"res_id", Int64.Type}}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Changed Type", each true),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"Source.Name"}),
+		    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Removed Columns", {{"author_id", each Text.BetweenDelimiters(_, "'", "'"), type text}, {"mail_activity_type_id", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+		    #"Replaced Errors" = Table.ReplaceErrorValues(#"Extracted Text Between Delimiters", {{"author_id", null}}),
+		    #"Filtered Rows2" = Table.SelectRows(#"Replaced Errors", each ([model] <> "gamification.badge.user") and ([author_id] <> null and [author_id] <> "OdooBot" and [author_id] <> "Portal User Template")),
+		    #"Inserted Time" = Table.AddColumn(#"Filtered Rows2", "Time", each DateTime.Time([date]), type time),
+		    #"Renamed Columns2" = Table.RenameColumns(#"Inserted Time",{{"date", "Behavior Date"}, {"Time", "Behavior Time"}}),
+		    #"Filtered Rows3" = Table.SelectRows(#"Renamed Columns2", each [Behavior Date] < RefreshCutOffDate),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows3",{{"Behavior Date", type date}}),
+		    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date)
+		in
+		    #"Inserted Start of Month"
+	lineageTag: 797f4845-cadf-4720-8f56-c0abeae60b99
+	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

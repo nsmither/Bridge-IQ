@@ -65,6 +65,17 @@ table behaviors
 
 		annotation UnderlyingDateTimeDataType = Time
 
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 15107117-0e45-4d66-8667-9adc52a0af8e
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	partition behaviors = m
 		mode: import
 		source =
@@ -86,7 +97,8 @@ table behaviors
 				    #"Renamed Columns2" = Table.RenameColumns(#"Inserted Time",{{"date", "Behavior Date"}, {"Time", "Behavior Time"}}),
 				    #"Filtered Rows3" = Table.SelectRows(#"Renamed Columns2", each [Behavior Date] >= RefreshCutOffDate),
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows3",{{"Behavior Date", type date}}),
-				    #"Appended Query" = Table.Combine({#"Changed Type1", historic_behaviors})
+				    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date),
+				    #"Appended Query" = Table.Combine({#"Inserted Start of Month", historic_behaviors})
 				in
 				    #"Appended Query"
 

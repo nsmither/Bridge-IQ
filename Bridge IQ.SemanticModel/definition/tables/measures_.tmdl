@@ -25,7 +25,14 @@ table measures_
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
-	measure 'Total Revenue' = [Sum of freight_charges]+[Sum of other_charges]
+	measure 'Total Revenue' = ```
+			
+			CALCULATE(
+			    [Sum of freight_charges]+[Sum of other_charges],
+			    FILTER(movements,movements[status]<>"A")
+			)
+			
+			```
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Revenue Measures
 		lineageTag: 39ae93b5-50d6-453e-80c8-dbbb58f43df7
@@ -60,7 +67,13 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure Margin = CALCULATE([Total Revenue]-[Total Carrier Pay],movements[status]<>"A")
+	measure Margin =
+			
+			CALCULATE(
+			    [Total Revenue]-[Total Carrier Pay],
+			    movements[status]<>"A"
+			    ,USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		lineageTag: 3491f4d3-9764-45b7-a60b-c17891311500
 
@@ -400,14 +413,12 @@ table measures_
 		formatString: 0
 		lineageTag: 9a92c758-8ba8-4423-a380-55402b47cdf1
 
-	measure 'Count of Orders Covered' =
+	measure 'Count of orders covered' =
 			
 			CALCULATE(
-			    DISTINCTCOUNT(orders[id]),
-			        FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
-			        FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date])),
-			        FILTER(movements,movements[status]<>"A")
-			    )
+			    [Count of Orders Covered (HIDE)],
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
 		formatString: 0
 		displayFolder: Operations Measures
 		lineageTag: ebc9309e-c0e2-478d-8534-2f3bb96fc500
@@ -584,7 +595,9 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Margin vs Margin Goal Gauge Max' = [Margin Vs Margin Goal Target]*1.2
+	measure 'Margin vs Margin Goal Gauge Max' =
+			
+			[Margin Vs Margin Goal Target]*1.2
 		lineageTag: 745cec3f-21ab-43c5-b78f-9f250e7f422a
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -618,7 +631,7 @@ table measures_
 
 	measure 'Load Count Goal' = ```
 			
-			Var margin_per_order_LM = CALCULATE([Margin Per Order],DATEADD('calendar'[Date],-  1,MONTH))
+			Var margin_per_order_LM = CALCULATE([Margin Per Order],DATEADD('calendar'[Date],-1,MONTH))
 			Var load_count_goal = DIVIDE([Margin Goal],margin_per_order_LM)
 			Var ifs= 
 			    IF(margin_per_order_LM=0,5,load_count_goal)
@@ -626,13 +639,13 @@ table measures_
 			Return 
 			ifs
 			```
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: \$#,0;(\$#,0);\$#,0
 		displayFolder: Sales Measures\Sales Goals
 		lineageTag: 2a86da4e-c9e9-4e86-9b72-e31c6127ff29
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
-	measure 'Margin Per Order' = DIVIDE([Margin], [Count of Orders Covered])
+	measure 'Margin Per Order' = DIVIDE([Margin], [Count of orders covered])
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures
 		lineageTag: 1e92098d-807f-401d-8b48-026cdf35c733
@@ -651,12 +664,17 @@ table measures_
 		displayFolder: Sales Measures\Sales Goals
 		lineageTag: 704d7233-1d7c-45f8-bfcf-191b95d7ba85
 
-	measure 'Load Count Vs Load Count Goal Guage Max' = [Load Count Vs Load Count Goal Target]*1.2
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+	measure 'Load Count Vs Load Count Goal Guage Max' =
+			
+			IF(
+			    [Best Count of Orders Month Ever]<=[Load Count Vs Load Count Goal Target],
+			    [Load Count Vs Load Count Goal Target],
+			    [Best Count of Orders Month Ever]
+			)
 		displayFolder: Sales Measures\Sales Goals
 		lineageTag: 9db04751-8d6c-420e-94b4-920d257f54ae
 
-		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Margin Per Order Goal' = AVERAGE(margin_load_count_goals[Margin Per Order Goal])
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
@@ -672,7 +690,12 @@ table measures_
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
-	measure 'Margin %' = DIVIDE([Margin],[Total Revenue])
+	measure 'Margin %' =
+			
+			CALCULATE(
+			    DIVIDE([Margin],[Total Revenue]),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
 		formatString: 0%;-0%;0%
 		lineageTag: 60d83be5-356c-48e2-afb8-950ca6a8f0d6
 
@@ -687,11 +710,12 @@ table measures_
 		displayFolder: Sales Measures\Sales Goals
 		lineageTag: 52135639-0ea4-4a21-b50b-d3cda46d34ab
 
-	measure 'Count of Behaviors' =
+	measure 'Count of Behaviors (Start of Month)' =
 			
 			CALCULATE(
 			    DISTINCTCOUNT(behaviors[id]),
-			    USERELATIONSHIP(behaviors[Behavior Date],'Calendar'[Date])
+			    USERELATIONSHIP(behaviors[Start of Month],'Calendar'[Date]),
+			    USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
 			)
 		formatString: 0
 		displayFolder: Behavior Measures
@@ -709,7 +733,12 @@ table measures_
 
 	measure 'Behavior Progress' = ```
 			
-			VAR behavior_progress = DIVIDE([Count of Behaviors],[Behavior Goal])
+			VAR behavior_progress = 
+			CALCULATE(
+			    DIVIDE([Count of Behaviors (Start of Month)],[Behavior Goal]),
+			    USERELATIONSHIP(behaviors[Behavior Date],'Calendar'[Date]),
+			    USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			)
 			VAR ifs = 
 			    IF(behavior_progress=0,0,
 			    IF(behavior_progress>=1,1,
@@ -848,35 +877,26 @@ table measures_
 		displayFolder: CRM Measures
 		lineageTag: cfbd7a5c-e9af-4629-a9f9-e6c37a23dfdc
 
-	measure 'Count at Risk (inactive relationship)' =
+	measure 'Count at Risk (inactive relationship)' = ```
 			
-			VAR filter_inactive =
 			CALCULATE(
-			    COUNTA(crm[id]),
-			    USERELATIONSHIP(crm[user_id],salesperson_key[Name]),
+			    DISTINCTCOUNT(crm[id]),
 			    FILTER(crm,crm[At Risk]="TRUE"),
-			    FILTER(crm,crm[user_id]<>BLANK())
+			    FILTER(crm,crm[user_id]<>BLANK()),
+			    USERELATIONSHIP(crm[user_id],salesperson_key[Name])
 			)
 			
-			
-			RETURN
-			filter_inactive
+			```
 		formatString: 0
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: 81759a22-7856-45de-82cd-a68019cf40d6
 
 	measure 'Count CRM Ids (inactive relationship)' =
 			
-			VAR filter_inactive =
 			CALCULATE(
-			    COUNTA(crm[id]),
-			    USERELATIONSHIP(crm[user_id],salesperson_key[Name]),
-			    FILTER(crm,crm[user_id]<>BLANK())
+			    DISTINCTCOUNT(crm[id]),
+			    USERELATIONSHIP(crm[user_id],salesperson_key[Name])
 			)
-			
-			
-			RETURN
-			filter_inactive
 		formatString: 0
 		displayFolder: CRM Measures
 		lineageTag: 19e37e8b-c64b-48e0-b627-934b7174ffa5
@@ -885,6 +905,419 @@ table measures_
 		formatString: 0
 		displayFolder: CRM Measures
 		lineageTag: e0a10483-e230-4010-bcb6-233162a58619
+
+	measure 'Count of Orders Covered (HIDE)' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[id]),
+			    movements[status]<>"A"
+			)
+		formatString: 0
+		isHidden
+		displayFolder: Operations Measures
+		lineageTag: e6a5154b-2339-47a9-a627-437a0b58cbcd
+
+	measure 'Margin MTD' =
+			
+			CALCULATE(
+			    TOTALMTD(
+			    [Margin],
+			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    )
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: e2f3473a-04fe-48ca-9ca3-788630877152
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered MTD' =
+			
+			CALCULATE(
+			    TOTALMTD(
+			    [Count of orders covered],
+			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date
+		lineageTag: 02f71283-e287-4086-8bc8-d6c66a160475
+
+	measure 'Count of Orders Covered MTD 1MA' =
+			
+			CALCULATE(
+			    [Count of Orders Covered MTD],
+			    DATEADD('Calendar'[Date],-1,MONTH)
+			)
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date\Months Ago
+		lineageTag: 3395a581-5b2a-4bcf-b3e0-e332ab68d6f6
+
+	measure 'Margin MTD 1MA' =
+			
+			CALCULATE(
+			    [Margin MTD],
+			    DATEADD('Calendar'[Date],-1,MONTH)
+			)
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Months Ago
+		lineageTag: 6a78951f-d159-4bf4-88c0-ec8a055e80fb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered MTD MOM diff' = [Count of Orders Covered MTD]-[Count of Orders Covered MTD 1MA]
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month over Month
+		lineageTag: 98c65d90-b4d4-4af1-bcfe-02d7f06db6c1
+
+	measure 'Margin MTD MOM Variance' = [Margin MTD]-[Margin MTD 1MA]
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Month over Month
+		lineageTag: b7ea4c06-ed51-4878-8892-8289c5f07532
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Customers Served' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[customer_id]),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			    FILTER(movements,movements[status]<>"A")
+			)
+		formatString: 0
+		displayFolder: Behavior Measures
+		lineageTag: 8937494c-6a1b-4e84-aa53-089ae43da266
+
+	measure 'Customer Served 90 days before max date' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[customer_id]),
+			    FILTER(movements,movements[status]<>"A"),
+			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date])),
+			    FILTER(orders,orders[shipper_sched_early_date]>=(MAX('Calendar'[Date])-90))
+			)
+		formatString: 0
+		displayFolder: Behavior Measures
+		lineageTag: 3be00b8e-0192-495c-83db-113ec47d3dfb
+
+	measure 'Margin MTD 1YA' =
+			
+			CALCULATE(
+			    [Margin MTD],
+			    DATEADD('Calendar'[Date],-1,YEAR)
+			)
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Years Ago
+		lineageTag: 7d3c9624-3107-4862-844d-9cf3817805e9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered MTD 1YA' =
+			
+			CALCULATE(
+			    [Count of Orders Covered MTD],
+			    DATEADD('Calendar'[Date],-1,YEAR)
+			)
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date\Years Ago
+		lineageTag: 611ccfe9-33a5-44e9-84f7-8adc0ae062a4
+
+	measure 'Margin QTD' = ```
+			
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			VAR margin_qtd = 
+			    TOTALQTD(
+			        [Margin],
+			        'Calendar'[Date],
+			        'Calendar'[Day of Quarter]<today_doq
+			    )
+			
+			RETURN
+			margin_qtd
+			```
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date
+		lineageTag: ee10562b-be25-4017-81db-38b25e35defa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered QTD' = ```
+			
+			Var today_doq = 
+			    CALCULATE(
+			        MIN('calendar'[Day of Quarter]),
+			        'calendar'[Date]=TODAY()
+			    )
+			
+			Var load_count_qtd = 
+			    TOTALQTD(
+			        [Count of Orders Covered],
+			        'calendar'[Date],
+			        'calendar'[Day of Quarter]<today_doq
+			    )
+			
+			Return 
+			load_count_qtd
+			```
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date
+		lineageTag: 558e2a81-0e76-4f52-8cea-67309659d92f
+
+	measure 'Count of Orders Covered QTD 1QA' =
+			
+			CALCULATE(
+			    [Count of Orders Covered QTD],
+			    DATEADD('calendar'[Date],
+			    -1,
+			    QUARTER)
+			)
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
+		lineageTag: 8cb0ba1f-3282-46bc-9ed7-808320879c6d
+
+	measure 'Count of Orders Covered QTD 4QA' =
+			
+			CALCULATE(
+			    [Count of Orders Covered QTD],
+			    DATEADD(
+			        'calendar'[Date],
+			        -4,
+			        QUARTER)
+			)
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
+		lineageTag: f10af020-daac-40fe-a4de-39f4b82dad2c
+
+	measure 'Margin QTD 1QA' =
+			
+			CALCULATE(
+			    [Margin QTD],
+			    DATEADD('calendar'[Date],-1,QUARTER)
+			)
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
+		lineageTag: fa414730-b854-417c-8ca2-d272873b7212
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin QTD 4QA' =
+			
+			CALCULATE(
+			    [Margin QTD],
+			    DATEADD('calendar'[Date],-4,QUARTER)
+			)
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
+		lineageTag: 2bc66d87-9e99-4447-b996-c8b492e70d0d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin QTD QOQ Variance' = [Margin QTD]-[Margin QTD 1QA]
+		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Years over Year
+		lineageTag: 4f7d0439-0e1f-43d4-9a23-4141be5697b7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered QTD QOQ diff' = [Count of Orders Covered QTD]-[Count of Orders Covered QTD 1QA]
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarter over Quarter
+		lineageTag: eaec4336-bee2-4f26-96c2-b39111bb8949
+
+	measure 'Margin YTD' = ```
+			
+			Var today_doy = 
+			    CALCULATE(
+			        MIN('calendar'[Day of Year]),
+			        'calendar'[Date]=TODAY()
+			    )
+			
+			Var margin_ytd = 
+			    TOTALYTD(
+			        [Margin],
+			        'calendar'[Date],'calendar'[Day of Year]<today_doy
+			    )
+			
+			Return
+			margin_ytd
+			```
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date
+		lineageTag: 1d0e2f56-6933-40e9-99e1-045825ad447d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin YTD 1YA' = CALCULATE([Margin YTD],DATEADD('calendar'[Date],-1,YEAR))
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Years Ago
+		lineageTag: 9aab8f33-2937-4a2d-9ae3-114d1d16dec9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin YTD YOY Variance' = ```
+			[Margin YTD]-[Margin YTD 1YA] 
+			```
+		displayFolder: Sales Measures\Margin\To Date Measures\Year To Date\Year over Year
+		lineageTag: 8716c284-daf4-47db-980f-f24010fd28ee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered YTD 1YA' =
+			
+			CALCULATE(
+			    [Count of Orders Covered YTD],
+			    DATEADD('calendar'[Date],-1,YEAR))
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date\Years Ago
+		lineageTag: 1e3a88fc-c1c7-43b6-968e-5fdf0d31b3b8
+
+	measure 'Count of Orders Covered YTD' = ```
+			
+			Var today_doy = 
+			    CALCULATE(
+			        MIN('calendar'[Day of Year]),'calendar'[Date]=TODAY())
+			
+			Var load_count_ytd = 
+			    TOTALYTD([Count of Orders Covered],
+			    'calendar'[Date],'calendar'[Day of Year]<today_doy)
+			
+			Return
+			load_count_ytd
+			```
+		formatString: 0
+		displayFolder: Operations Measures\Count of Orders\To Date Measures\Year To Date
+		lineageTag: 3f3d7cef-9b5d-4cf5-987f-7fab625bbb96
+
+	measure 'Working Days' = ```
+			
+			    NETWORKDAYS(
+			        MIN('calendar'[Date]),
+			        MAX('calendar'[Date]),
+			        1,
+			        observed_holidays)
+			```
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: d70e9109-84ce-476d-8bd6-0e54ffa3d32c
+
+	measure 'Working days Elapsed' =
+			
+			If(DAY(TODAY())=1,0,
+			    NETWORKDAYS(
+			        MIN('Calendar'[Date]),
+			        TODAY()-1,
+			        1,
+			        observed_holidays))
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: d3c241c2-0579-48e7-88dd-48fb8c0c0bef
+
+	measure 'Working Day Of Month' = ```
+			
+			VAR start_of_month = STARTOFMONTH('Calendar'[Date])
+			
+			VAR working_day_of_month = 
+			    NETWORKDAYS(start_of_month,MIN('Calendar'[Date]),1,observed_holidays)
+			
+			RETURN
+			working_day_of_month
+			```
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 3dfc50b0-8122-4d21-9f46-a8b74b093e65
+
+	measure 'Avg Behavior Progress' = AVERAGEX(behavior_goals,[Behavior Progress])
+		displayFolder: Behavior Measures
+		lineageTag: 5a7365af-9f5b-4554-af04-b12bda13cd22
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Behavior Points' = ```
+			
+			VAR max_points_pre_july24 = 30
+			
+			var behavior_points_pre_july_24 = 
+			    IF([Avg Behavior Progress]=0,0,
+			    IF([Avg Behavior Progress]>=1,max_points_pre_july24,
+			    [Avg Behavior Progress]*max_points_pre_july24
+			    ))
+			
+			var max_points_post_after_july24 = 20
+			
+			var behavior_points_after_july24 = 
+			    IF([Avg Behavior Progress]=0,0,
+			    IF([Avg Behavior Progress]>=1,max_points_post_after_july24,
+			    [Avg Behavior Progress]*max_points_post_after_july24
+			    ))
+			
+			var behavior_points = 
+			    IF(MIN('calendar'[Date])>=45474,behavior_points_after_july24,behavior_points_pre_july_24)
+			
+			return
+			behavior_points
+			```
+		displayFolder: BWS\Sales
+		lineageTag: d5d7311d-0c6e-443a-a358-862de785a164
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales Margin Points' = ```
+			
+			
+			VAR max_points_pre_july24 = 30
+			VAR max_points_after_july_24 = 80
+			VAR margin_progress = 
+			    DIVIDE(
+			        [Margin],
+			        [Margin Goal]
+			    )
+			VAR margin_points_pre_july24 =
+			IF(margin_progress=0,0,
+			    IF(margin_progress>=1,max_points_pre_july24,
+			    margin_progress*max_points_pre_july24)
+			)
+			VAR margin_points_after_july24 =
+			IF(margin_progress=0,0,
+			    IF(margin_progress>=1,max_points_after_july_24,
+			    margin_progress*max_points_after_july_24)
+			)
+			VAR margin_points = 
+			IF(
+			    MIN(
+			        'calendar'[Date])>=45474,
+			        margin_points_after_july24,
+			        margin_points_pre_july24
+			)
+			RETURN
+			margin_points
+			```
+		displayFolder: BWS\Sales
+		lineageTag: 366d5a3d-12a2-4d90-a7fa-49cd1c2a1174
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Sales BWS' = [Behavior Points]+[Sales Margin Points]
+		displayFolder: BWS\Sales
+		lineageTag: f4bce828-460a-4b85-bd63-dbd1d5cf8925
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Sales BWS' =
+			
+			AVERAGEX(
+			    GROUPBY(
+			        salesperson_key,salesperson_key[Name]),
+			        [Total Sales BWS]
+			)
+		displayFolder: BWS\Sales
+		lineageTag: e044a4d4-e160-491b-999a-542cc460a39c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Best Count of Orders Month Ever' =
+			
+			CALCULATE(
+			    MAXX(
+			        GROUPBY('calendar','calendar'[Month / Year]),
+			        [Count of Orders Covered]),
+			        REMOVEFILTERS('calendar'[Year]),
+			        REMOVEFILTERS('calendar'[Month Name])
+			)
+		formatString: 0
+		lineageTag: af59b05b-5558-4cb4-998d-ac18cbb73e75
 
 	column Column
 		isHidden

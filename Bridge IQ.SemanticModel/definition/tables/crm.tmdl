@@ -288,9 +288,10 @@ table crm
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"Last Stage Change", type date}, {"x_studio_enrichment_date", type date}, {"date_open", type date}, {"activity_date_deadline", type date}}),
 				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type1", {"partner_id"}),
 				    #"Extracted Text Between Delimiters2" = Table.TransformColumns(#"Removed Errors", {{"x_studio_sdr", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
-				    #"Changed Type2" = Table.TransformColumnTypes(#"Extracted Text Between Delimiters2",{{"x_studio_lead_passed_date", type date}})
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Extracted Text Between Delimiters2",{{"x_studio_lead_passed_date", type date}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type2",{{"user_id", Text.Trim, type text}})
 				in
-				    #"Changed Type2"
+				    #"Trimmed Text"
 
 	annotation PBI_NavigationStepName = Navigation
 

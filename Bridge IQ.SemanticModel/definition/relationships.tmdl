@@ -247,17 +247,8 @@ relationship 260fb3f0-b8a2-161b-022b-537a60bcbdf7
 	fromColumn: daily_number_override.Month
 	toColumn: Calendar.Date
 
-relationship 118a5bae-93a2-48f1-b4c4-a8207cda138d
-	joinOnDateBehavior: datePartOnly
-	fromColumn: historic_behaviors.'Behavior Date'
-	toColumn: LocalDateTable_23b5ad18-06e5-4a69-8f54-e0a26338828e.Date
-
 relationship AutoDetected_4fbcf0da-778d-42c0-b6de-b0fa0815d61f
 	fromColumn: behaviors.mail_activity_type_id
-	toColumn: behavior_key.mail_activity_type_id
-
-relationship AutoDetected_3ee21050-e296-4e90-a215-d4952bee9f16
-	fromColumn: historic_behaviors.mail_activity_type_id
 	toColumn: behavior_key.mail_activity_type_id
 
 relationship 79d43f6d-21f5-48c0-7149-f61c8dec3df9
@@ -282,7 +273,6 @@ relationship 4356cecc-3a49-50e0-30e2-1296be23ba81
 	toColumn: salesperson_key.Name
 
 relationship aacf4ff0-fc3e-0beb-269b-ca474916397a
-	crossFilteringBehavior: bothDirections
 	fromColumn: behaviors.res_id
 	toColumn: crm.id
 
@@ -344,4 +334,9 @@ relationship AutoDetected_8e587438-2a6b-4588-b4c6-9e458e209910
 relationship 3e8afa0a-dbfe-d267-4bad-71cf3030a35c
 	fromColumn: healthy_pipeline_goals.'Saleperson Name'
 	toColumn: salesperson_key.Name
+
+relationship e7de55f3-7932-fa99-43dd-f343443de0d7
+	isActive: false
+	fromColumn: behaviors.'Start of Month'
+	toColumn: Calendar.Date
 
