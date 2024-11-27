@@ -5,7 +5,7 @@
       "ordinal": 0,
       "scrollPosition": {
         "x": 0,
-        "y": 5
+        "y": 0
       },
       "nodes": [
         {
@@ -357,7 +357,7 @@
         }
       ],
       "name": "All tables",
-      "zoomValue": 50,
+      "zoomValue": 28.688094626609349,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
@@ -922,6 +922,6 @@
       "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 6",
+  "selectedDiagram": "All tables",
   "defaultDiagram": "All tables"
 }

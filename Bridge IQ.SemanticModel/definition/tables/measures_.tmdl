@@ -29,7 +29,8 @@ table measures_
 			
 			CALCULATE(
 			    [Sum of freight_charges]+[Sum of other_charges],
-			    FILTER(movements,movements[status]<>"A")
+			    FILTER(movements,movements[status]<>"A"),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			)
 			
 			```
@@ -61,7 +62,12 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Carrier Pay' = [Sum of driver_extra_pay]+[Sum of override_pay_amt]
+	measure 'Total Carrier Pay' =
+			
+			CALCULATE(
+			    [Sum of driver_extra_pay]+[Sum of override_pay_amt],
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
 		displayFolder: Pay Measures
 		lineageTag: c7c5f213-a346-4367-8717-3924d6ef52da
 
@@ -1318,6 +1324,10 @@ table measures_
 			)
 		formatString: 0
 		lineageTag: af59b05b-5558-4cb4-998d-ac18cbb73e75
+
+	measure 'ship_scheduled_early_date use filter' = CALCULATE(MIN(orders[shipper_sched_early_date]),USERELATIONSHIP('orders'[shipper_sched_early_date],'Calendar'[Date]))
+		formatString: General Date
+		lineageTag: 8ef32bc1-e416-4a0c-a8aa-1b54a4e5e03a
 
 	column Column
 		isHidden
