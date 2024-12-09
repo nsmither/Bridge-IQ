@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.60\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":4,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
+  "config": "{\"version\":\"5.60\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":9,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
   "layoutOptimization": 0,
   "publicCustomVisuals": [
     "BoxandWhiskerByMAQ1823AD39DT234AB532063E128AX",
@@ -29,6 +29,45 @@
   "sections": [
     {
       "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "1ca5b0e48d17ec8b1400",
+      "ordinal": 9,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"32926ae45565cd9e6349\",\"layouts\":[{\"id\":0,\"position\":{\"x\":512,\"y\":0,\"z\":2,\"width\":432,\"height\":720,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"job_history.Division\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"j\",\"Entity\":\"job_history\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Division\"},\"Name\":\"job_history.Division\",\"NativeReferenceName\":\"Division\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Basic'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 720.00,
+          "width": 432.00,
+          "x": 512.00,
+          "y": 0.00,
+          "z": 2.00
+        },
+        {
+          "config": "{\"name\":\"80d838dfe16a52ec4451\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":32,\"z\":0,\"width\":496,\"height\":688,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\"},{\"queryRef\":\"measures_.Current Sales\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Sales\"},\"Name\":\"measures_.Current Sales\",\"NativeReferenceName\":\"Current Sales\"}]},\"queryOptions\":{\"keepProjectionOrder\":true},\"showAllRoles\":[\"Values\"],\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 688.00,
+          "width": 496.00,
+          "x": 0.00,
+          "y": 32.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"fb41e799e09ea4a77711\",\"layouts\":[{\"id\":0,\"position\":{\"x\":944,\"y\":16,\"z\":1,\"width\":336,\"height\":240,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}}}}]}}}}]}}}",
+          "filters": "[]",
+          "height": 240.00,
+          "width": 336.00,
+          "x": 944.00,
+          "y": 16.00,
+          "z": 1.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
       "displayName": "Order History",
       "displayOption": 1,
       "filters": "[]",
@@ -37,13 +76,13 @@
       "ordinal": 8,
       "visualContainers": [
         {
-          "config": "{\"name\":\"1c97ddd8ad55f6849978\",\"layouts\":[{\"id\":0,\"position\":{\"x\":848.0000000000001,\"y\":0,\"z\":2,\"width\":432,\"height\":80,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"textFilter25A4896A83E0487089E2B90C9AE57C8A\",\"projections\":{\"field\":[{\"queryRef\":\"customer.name\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"name\"},\"Name\":\"customer.name\",\"NativeReferenceName\":\"name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Contains\":{\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"name\"}},\"Right\":{\"Literal\":{\"Value\":\"'vistech'\"}}}}}]}}}}]}}}",
+          "config": "{\"name\":\"1c97ddd8ad55f6849978\",\"layouts\":[{\"id\":0,\"position\":{\"x\":848.0000000000001,\"y\":0,\"z\":2000,\"width\":432,\"height\":80,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"textFilter25A4896A83E0487089E2B90C9AE57C8A\",\"projections\":{\"field\":[{\"queryRef\":\"customer.name\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"name\"},\"Name\":\"customer.name\",\"NativeReferenceName\":\"name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Contains\":{\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"name\"}},\"Right\":{\"Literal\":{\"Value\":\"'vistech'\"}}}}}]}}}}]}}}",
           "filters": "[]",
           "height": 80.00,
           "width": 432.00,
           "x": 848.00,
           "y": 0.00,
-          "z": 2.00
+          "z": 2000.00
         },
         {
           "config": "{\"name\":\"52526799a27661c25e9e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":128,\"z\":0,\"width\":1280,\"height\":592,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"customer.name\"},{\"queryRef\":\"orders.id\"},{\"queryRef\":\"orders.shipper_city_name\"},{\"queryRef\":\"orders.shipper_state\"},{\"queryRef\":\"orders.consignee_city_name\"},{\"queryRef\":\"orders.shipper_sched_early_date\"},{\"queryRef\":\"measures_.Total Revenue\"},{\"queryRef\":\"measures_.Total Carrier Pay\"},{\"queryRef\":\"measures_.Margin\"},{\"queryRef\":\"measures_.Count of orders covered\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"customer\",\"Type\":0},{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"name\"},\"Name\":\"customer.name\",\"NativeReferenceName\":\"name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"id\"},\"Name\":\"orders.id\",\"NativeReferenceName\":\"id\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Total Revenue\"},\"Name\":\"measures_.Total Revenue\",\"NativeReferenceName\":\"Total Revenue\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Total Carrier Pay\"},\"Name\":\"measures_.Total Carrier Pay\",\"NativeReferenceName\":\"Total Carrier Pay\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_city_name\"},\"Name\":\"orders.shipper_city_name\",\"NativeReferenceName\":\"shipper_city_name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_state\"},\"Name\":\"orders.shipper_state\",\"NativeReferenceName\":\"shipper_state\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"consignee_city_name\"},\"Name\":\"orders.consignee_city_name\",\"NativeReferenceName\":\"consignee_city_name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of orders covered\"},\"Name\":\"measures_.Count of orders covered\",\"NativeReferenceName\":\"Count of orders covered\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_sched_early_date\"},\"Name\":\"orders.shipper_sched_early_date\",\"NativeReferenceName\":\"shipper_sched_early_date\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Total Revenue\"}}}]},\"drillFilterOtherVisuals\":true}}",
@@ -55,22 +94,22 @@
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"6154d8e81384e7e23f96\",\"layouts\":[{\"id\":0,\"position\":{\"x\":432,\"y\":0,\"z\":3,\"width\":304,\"height\":80,\"tabOrder\":3}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
+          "config": "{\"name\":\"6154d8e81384e7e23f96\",\"layouts\":[{\"id\":0,\"position\":{\"x\":432,\"y\":0,\"z\":3000,\"width\":304,\"height\":80,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
           "filters": "[]",
           "height": 80.00,
           "width": 304.00,
           "x": 432.00,
           "y": 0.00,
-          "z": 3.00
+          "z": 3000.00
         },
         {
-          "config": "{\"name\":\"7cbb57fec13b507ef0a5\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":0,\"z\":1,\"width\":416,\"height\":96,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"orders.shipper_sched_early_date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_sched_early_date\"},\"Name\":\"orders.shipper_sched_early_date\",\"NativeReferenceName\":\"shipper_sched_early_date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_sched_early_date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2022-07-14T00:53:31.118'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_sched_early_date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2022-07-14T00:00:00'\"}}}}}]}}}}]}}}",
+          "config": "{\"name\":\"7cbb57fec13b507ef0a5\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":0,\"z\":1000,\"width\":416,\"height\":96,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"orders.shipper_sched_early_date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_sched_early_date\"},\"Name\":\"orders.shipper_sched_early_date\",\"NativeReferenceName\":\"shipper_sched_early_date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_sched_early_date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2022-07-14T00:53:31.118'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"shipper_sched_early_date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2022-07-14T00:00:00'\"}}}}}]}}}}]}}}",
           "filters": "[]",
           "height": 96.00,
           "width": 416.00,
           "x": 16.00,
           "y": 0.00,
-          "z": 1.00
+          "z": 1000.00
         }
       ],
       "width": 1280.00
@@ -257,6 +296,27 @@
     },
     {
       "config": "{}",
+      "displayName": "Page 2",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "9fe18279ac3e03012bdd",
+      "ordinal": 10,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"10d166c6ecec4697db79\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":0,\"z\":0,\"width\":976,\"height\":592,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\"},{\"queryRef\":\"job_history.Division\"},{\"queryRef\":\"job_history.Job Start Date\"},{\"queryRef\":\"job_history.Job End Date\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0},{\"Name\":\"j\",\"Entity\":\"job_history\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Division\"},\"Name\":\"job_history.Division\",\"NativeReferenceName\":\"Division\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job Start Date\"},\"Name\":\"job_history.Job Start Date\",\"NativeReferenceName\":\"Job Start Date\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job End Date\"},\"Name\":\"job_history.Job End Date\",\"NativeReferenceName\":\"Job End Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"194.9230769230769D\"}}}},\"selector\":{\"metadata\":\"job_history.Division\"}}]}}}",
+          "filters": "[{\"name\":\"8d45bf5fc89500c4e215\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"salesperson_key\"}},\"Property\":\"Name\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Not\":{\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"null\"}}]]}}}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{\"general\":[{\"properties\":{\"isInvertedSelectionMode\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]},\"isHiddenInViewMode\":false},{\"name\":\"a374778709b05e256c3b\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"job_history\"}},\"Property\":\"Division\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"j\",\"Entity\":\"job_history\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Division\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Development Team'\"}}],[{\"Literal\":{\"Value\":\"'Development Team Sales'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false}]",
+          "height": 592.00,
+          "width": 976.00,
+          "x": 16.00,
+          "y": 0.00,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
       "displayName": "NFM",
       "displayOption": 1,
       "filters": "[]",
@@ -436,7 +496,7 @@
         },
         {
           "config": "{\"name\":\"827d4558ad6b46c888c1\",\"layouts\":[{\"id\":0,\"position\":{\"x\":432,\"y\":0,\"z\":3000,\"width\":192,\"height\":80,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"}]},\"syncGroup\":{\"groupName\":\"Name\",\"fieldChanges\":true,\"filterChanges\":false},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
-          "filters": "[{\"name\":\"182cbab1b9614c6c9e2f\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Current Staff\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Staff\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":1}]",
+          "filters": "[{\"name\":\"182cbab1b9614c6c9e2f\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Current Staff\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Staff\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":1},{\"name\":\"860cb81f60631a20a38a\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"employees\"}},\"Property\":\"Department\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Department\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Sales'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
           "height": 80.00,
           "width": 192.00,
           "x": 432.00,

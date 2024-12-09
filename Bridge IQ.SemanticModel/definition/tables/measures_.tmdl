@@ -1329,6 +1329,42 @@ table measures_
 		formatString: General Date
 		lineageTag: 8ef32bc1-e416-4a0c-a8aa-1b54a4e5e03a
 
+	measure 'Current Sales' = ```
+			
+			
+			Var current_sales = 
+			CALCULATE(
+			    COUNTROWS(job_history),
+			    FILTER(VALUES(job_history[Job Start Date]),job_history[Job Start Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(job_history[Job End Date]), OR(job_history[Job End Date] >= MIN('calendar'[Date]), ISBLANK(job_history[Job End Date])))
+			)
+			
+			Var current_d_team = 
+			CALCULATE(
+			    COUNTROWS(job_history),
+			    FILTER(VALUES(job_history[Job Start Date]),job_history[Job Start Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(job_history[Job End Date]), OR(job_history[Job End Date] >= MIN('calendar'[Date]), ISBLANK(job_history[Job End Date]))),
+			    CONTAINSSTRING(job_history[Division],"Development Team")
+			)
+			
+			Var current_logistics_advisor = 
+			CALCULATE(
+			    COUNTROWS(job_history),
+			    FILTER(VALUES(job_history[Job Start Date]),job_history[Job Start Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(job_history[Job End Date]), OR(job_history[Job End Date] >= MIN('calendar'[Date]), ISBLANK(job_history[Job End Date]))),
+			    FILTER(job_history,job_history[Division]="Logistics Advisor Sales (Formerly Henry)")
+			)
+			
+			Var devision_d_team = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division])="Development Team Sales",current_d_team,current_logistics_advisor)
+			Var devision_blank = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division])=BLANK(),current_sales,current_d_team)
+			
+			RETURN
+			devision_blank
+			```
+		formatString: 0
+		displayFolder: HR
+		lineageTag: 8c52c57f-8be2-4a63-bb16-583ee6d08bcc
+
 	column Column
 		isHidden
 		formatString: 0
