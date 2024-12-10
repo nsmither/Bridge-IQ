@@ -1,0 +1,77 @@
+table driver_extra_pay
+	lineageTag: 2ebdc404-318f-4cf1-accc-1504a5c41207
+
+	column amount
+		dataType: double
+		lineageTag: c45fddd7-bf52-42f4-b281-4501e5d8718a
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column deduct_code_id
+		dataType: string
+		lineageTag: cad87a6f-65b6-4f27-8931-b9b7ac9147da
+		summarizeBy: none
+		sourceColumn: deduct_code_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column entered_user_id
+		dataType: string
+		lineageTag: 603048e4-4c69-4c42-bb41-a7ceb8b03014
+		summarizeBy: none
+		sourceColumn: entered_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: 2e4cab39-5a0f-497b-ac4f-9744f5c59126
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column movement_id
+		dataType: string
+		lineageTag: 4a636f33-44fb-417f-8e47-7c46767d602b
+		summarizeBy: none
+		sourceColumn: movement_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payee_id
+		dataType: string
+		lineageTag: 85b660ed-4389-4fa6-98d5-c3960ee67c2a
+		summarizeBy: none
+		sourceColumn: payee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column short_desc
+		dataType: string
+		lineageTag: fd0fc931-98ba-4ff7-a54b-deec305f9951
+		summarizeBy: none
+		sourceColumn: short_desc
+
+		annotation SummarizationSetBy = Automatic
+
+	partition driver_extra_pay = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_driver_extra_pay = Source{[Schema="dbo",Item="driver_extra_pay"]}[Data],
+				    #"Filtered Pay post RefreshCutOfDate" = Table.SelectRows(dbo_driver_extra_pay, each [amount_d] >= RefreshCutOffDate),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Pay post RefreshCutOfDate",{"company_id", "amount_c", "amount_d", "amount_n", "amount_r", "carrier_rate_id", "descr", "detention_hist_pay_id", "driver_id", "fuel_surcharge_pay", "jag_rate_id", "order_id", "rate", "reference_no", "rev_uid", "transaction_date", "units"}),
+				    #"Appended Query" = Table.Combine({#"Removed Columns", mcleod_historic_driver_extra_pay})
+				in
+				    #"Appended Query"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

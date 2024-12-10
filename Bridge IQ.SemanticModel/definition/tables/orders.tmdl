@@ -1,0 +1,560 @@
+table orders
+	lineageTag: 616850d9-b6a2-4b0e-99f2-f3ebcab5b217
+
+	column bill_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 19c8c8d1-414d-4777-afb3-afe8e8ac0cf4
+		summarizeBy: none
+		sourceColumn: bill_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column bill_distance
+		dataType: double
+		lineageTag: cd0b7e33-599c-4223-b831-792339ac1362
+		summarizeBy: sum
+		sourceColumn: bill_distance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column billing_user_id
+		dataType: string
+		lineageTag: dddd2300-6977-4d12-8fc2-73a17faad6c3
+		summarizeBy: none
+		sourceColumn: billing_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_po
+		dataType: string
+		lineageTag: 9a62a3bd-20f0-48c0-abe3-a02c955850a2
+		summarizeBy: none
+		sourceColumn: customer_po
+
+		annotation SummarizationSetBy = Automatic
+
+	column bol_received
+		dataType: string
+		lineageTag: aec9fb56-65ea-40db-bd9b-63ffdea76b14
+		summarizeBy: none
+		sourceColumn: bol_received
+
+		annotation SummarizationSetBy = Automatic
+
+	column commodity
+		dataType: string
+		lineageTag: d7acb004-e01d-4766-a097-e9fabcf24a4f
+		summarizeBy: none
+		sourceColumn: commodity
+
+		annotation SummarizationSetBy = Automatic
+
+	column commodity_id
+		dataType: string
+		lineageTag: 19d6fe85-d8c4-418c-8047-dfb5c982e25f
+		summarizeBy: none
+		sourceColumn: commodity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column bol
+		dataType: string
+		lineageTag: 9d3dc956-e392-4b3c-bf5d-a2f8b579a141
+		summarizeBy: none
+		sourceColumn: bol
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_stop_id
+		dataType: string
+		lineageTag: 0a885f73-200b-4372-b95f-857be338fc75
+		summarizeBy: none
+		sourceColumn: consignee_stop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: a389d148-0c96-4c67-a170-9853c3955508
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column entered_user_id
+		dataType: string
+		lineageTag: 279e38e3-9eae-4e4d-8a17-21eb5ed9d914
+		summarizeBy: none
+		sourceColumn: entered_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column equipment_type_id
+		dataType: string
+		lineageTag: 843075e8-bf8a-48ef-a5c0-d20cdb5bf2d6
+		summarizeBy: none
+		sourceColumn: equipment_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column extra_deliveries
+		dataType: int64
+		formatString: 0
+		lineageTag: cd596653-d7b6-4e0e-a54d-c3a6ded9a29e
+		summarizeBy: sum
+		sourceColumn: extra_deliveries
+
+		annotation SummarizationSetBy = Automatic
+
+	column extra_pickups
+		dataType: int64
+		formatString: 0
+		lineageTag: 52b57ad3-2a00-4072-ae93-a0b46184f926
+		summarizeBy: sum
+		sourceColumn: extra_pickups
+
+		annotation SummarizationSetBy = Automatic
+
+	column freight_charge
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 721c0cee-da14-477d-ac49-a38b8c34c3b9
+		summarizeBy: sum
+		sourceColumn: freight_charge
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column hazmat
+		dataType: string
+		lineageTag: 094a66d8-43de-42f3-9204-bbd7cda021f0
+		summarizeBy: none
+		sourceColumn: hazmat
+
+		annotation SummarizationSetBy = Automatic
+
+	column hazmat_code
+		dataType: string
+		lineageTag: d80b6e92-703b-48f3-ad85-91fc22706e9c
+		summarizeBy: none
+		sourceColumn: hazmat_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: a6067274-d93c-481e-9248-e2fb8d480f7f
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_hold
+		dataType: string
+		lineageTag: e82559aa-6b31-4560-b852-4f186d7c03ef
+		summarizeBy: none
+		sourceColumn: on_hold
+
+		annotation SummarizationSetBy = Automatic
+
+	column operations_user
+		dataType: string
+		lineageTag: ab0c9eec-ff05-4521-9cd9-c72121526898
+		summarizeBy: none
+		sourceColumn: operations_user
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_type_id
+		dataType: string
+		lineageTag: 21a4a619-7413-47d5-ac64-5e6985983238
+		summarizeBy: none
+		sourceColumn: order_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_value
+		dataType: double
+		lineageTag: 0db44e6f-bce6-4c6b-b725-c23f330ff00b
+		summarizeBy: sum
+		sourceColumn: order_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_entered_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6308c6ae-434c-42be-865d-44cf9a7a7922
+		summarizeBy: none
+		sourceColumn: order_entered_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column other_charges_total
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ae28246c-66ca-4b52-8639-09304efac25e
+		summarizeBy: sum
+		sourceColumn: other_charges_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column pieces
+		dataType: double
+		lineageTag: 37c4e511-4f1f-499c-805b-89f9cb2693f9
+		summarizeBy: sum
+		sourceColumn: pieces
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue_code_id
+		dataType: string
+		lineageTag: c523dabb-a0d1-4050-8f06-42d821cbe67e
+		summarizeBy: none
+		sourceColumn: revenue_code_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column round_trip
+		dataType: string
+		lineageTag: 9c0a91ac-cb67-4e78-972e-d9d66e06c35d
+		summarizeBy: none
+		sourceColumn: round_trip
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_stop_id
+		dataType: string
+		lineageTag: 50703542-3555-4232-b830-9422d7d7392a
+		summarizeBy: none
+		sourceColumn: shipper_stop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: db059299-f288-4c03-ac92-ddbd2c74a1b1
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column subject_order_number
+		dataType: string
+		lineageTag: dd7c2755-13c9-43f4-bb58-a4fd2af765cd
+		summarizeBy: none
+		sourceColumn: subject_order_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column temperature_max
+		dataType: double
+		lineageTag: 64082df9-8725-48e2-9948-c73ff825ab80
+		summarizeBy: sum
+		sourceColumn: temperature_max
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column temperature_min
+		dataType: double
+		lineageTag: 1b20e0ef-c84d-49c9-bac9-a82215a79167
+		summarizeBy: sum
+		sourceColumn: temperature_min
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weight
+		dataType: double
+		lineageTag: 568038e4-4c69-4f36-a9f4-63891bd81542
+		summarizeBy: sum
+		sourceColumn: weight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_tonu
+		dataType: string
+		lineageTag: 6e8235a6-4c90-4323-9067-9d00747bebf6
+		summarizeBy: none
+		sourceColumn: is_tonu
+
+		annotation SummarizationSetBy = Automatic
+
+	column notify_when_covered
+		dataType: string
+		lineageTag: aea1a36c-4afb-43c4-b7bd-afe7d9d2ee18
+		summarizeBy: none
+		sourceColumn: notify_when_covered
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesperson_id
+		dataType: string
+		lineageTag: 21fce3f1-f25f-40f1-a041-771bd1cd12bd
+		summarizeBy: none
+		sourceColumn: salesperson_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_entered_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 2e46c30c-d580-4752-853e-1606eacf7ad2
+		summarizeBy: none
+		sourceColumn: order_entered_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column shipper_city_name
+		dataType: string
+		lineageTag: 0480828e-28b9-48ba-bfe0-f2afb352f63b
+		summarizeBy: none
+		sourceColumn: shipper_city_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_location_name
+		dataType: string
+		lineageTag: bbb71902-1efc-4dd0-81df-56926517c566
+		summarizeBy: none
+		sourceColumn: shipper_location_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_sched_early_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 597c5c6b-67c0-4e83-af5e-35a3c066afd4
+		summarizeBy: none
+		sourceColumn: shipper_sched_early_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column shipper_sched_late_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fa2c7349-7227-48bd-ba4f-0390562db6d1
+		summarizeBy: none
+		sourceColumn: shipper_sched_late_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column shipper_state
+		dataType: string
+		lineageTag: 108d5112-70f3-40ac-abca-96c94f9e34d6
+		summarizeBy: none
+		sourceColumn: shipper_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_zip_code
+		dataType: string
+		lineageTag: 349b3c2f-9f80-47d7-9e13-6eedf85f4e4c
+		summarizeBy: none
+		sourceColumn: shipper_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_sched_early_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 360123df-4f90-4e32-b59a-5f8830a286a4
+		summarizeBy: none
+		sourceColumn: shipper_sched_early_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column shipper_sched_late_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: c9b31a67-2385-4d30-bc4c-17f8ec0c9cd3
+		summarizeBy: none
+		sourceColumn: shipper_sched_late_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column consignee_city_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b45041d8-e36f-4201-bc3a-266910745efb
+		summarizeBy: sum
+		sourceColumn: consignee_city_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_city_name
+		dataType: string
+		lineageTag: 358eefa8-57ae-444c-a755-20d529475d99
+		summarizeBy: none
+		sourceColumn: consignee_city_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_location_name
+		dataType: string
+		lineageTag: 1f9b5455-2755-4305-af03-09168ca94a44
+		summarizeBy: none
+		sourceColumn: consignee_location_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_sched_early_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4f89daa2-5d28-4b04-9ff9-07ea39716239
+		summarizeBy: none
+		sourceColumn: consignee_sched_early_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column consignee_sched_late_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 58875f0a-4cc3-40fd-9177-0ad9069ec8bc
+		summarizeBy: none
+		sourceColumn: consignee_sched_late_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column consignee_state
+		dataType: string
+		lineageTag: 768b74e2-6bf5-4f04-a57a-a443ce44a309
+		summarizeBy: none
+		sourceColumn: consignee_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_zip_code
+		dataType: string
+		lineageTag: 9d568ea3-9585-4ae0-92e4-4f9c6c39ca69
+		summarizeBy: none
+		sourceColumn: consignee_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_sched_early_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 6c4583d1-3cf9-4dda-8f1f-afb92533e941
+		summarizeBy: none
+		sourceColumn: consignee_sched_early_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column consignee_sched_late_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 77829831-f6d3-4f22-affc-4c850673ec6c
+		summarizeBy: none
+		sourceColumn: consignee_sched_late_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column shipper_3_digit_zip_code
+		dataType: string
+		lineageTag: cd907732-0003-496f-8c3e-cad726c16e70
+		summarizeBy: none
+		sourceColumn: shipper_3_digit_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_3_digit_zip_code
+		dataType: string
+		lineageTag: 3a0c6f92-1467-4124-b194-dc824374dc66
+		summarizeBy: none
+		sourceColumn: consignee_3_digit_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column lane
+		dataType: string
+		lineageTag: 277452ed-3e1e-495b-9fc0-6c0ad261a194
+		summarizeBy: none
+		sourceColumn: lane
+
+		annotation SummarizationSetBy = Automatic
+
+	partition orders = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Databases("bl-appdb"),
+				    lme = Source{[Name="lme"]}[Data],
+				    dbo_orders = lme{[Schema="dbo",Item="orders"]}[Data],
+				    #"Filtered Orders on or after RefreshCutOFfDate" = Table.SelectRows(dbo_orders, each [ordered_date] >= RefreshCutOffDate),
+				    //Start General Data Transformation
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Orders on or after RefreshCutOFfDate",{"company_id", "actual_reefer_profile", "agency_id", "agent_payee_id", "allow_relay", "autorate_status", "booking_no", "booking_number", "brk_qual_profile", "broker_location_id", "brokerage_workflow_id", "cbp_crossing_date", "cbp_crossing_location_id", "cbp_crossing_reason", "cbsa_crossing_date", "cbsa_crossing_location_id", "cbsa_crossing_reason", "cc_fuel_revenue", "cc_fuel_revenue_c", "cc_fuel_revenue_d", "cc_fuel_revenue_n", "cc_fuel_revenue_r", "cc_net_revenue", "cc_net_revenue_c", "cc_net_revenue_d", "cc_net_revenue_n", "cc_net_revenue_r", "cc_pro_nbr", "cobroker_location_id", "collection_method", "com_setpnt_temp", "com_setpnt_temp_um", "commitment_id", "container", "container_planned", "container_type_id", "controlling_carrier_code", "copy_from_company", "copy_from_order_id", "copy_to_company", "copy_to_order_id", "ctrl_party_id", "cube", "curr_movement_id", "cust_order_no", "declared_val", "def_move_type", "default_match_id", "dim_height", "dim_length", "dim_surcharge", "dim_surcharge_c", "dim_surcharge_d", "dim_surcharge_n", "dim_surcharge_r", "dim_width", "dispatch_opt", "dl_team_reqd", "dray_del_date", "dray_del_pay", "dray_del_pay_c", "dray_del_pay_d", "dray_del_pay_n", "dray_del_pay_r", "dray_del_payee", "dray_del_xfer_dt", "dray_pu_date", "dray_pu_pay", "dray_pu_pay_c", "dray_pu_pay_d", "dray_pu_pay_n", "dray_pu_pay_r", "dray_pu_payee", "dray_pu_xfer_dt", "eir1_no", "eir2_no", "est_tolls", "est_tolls_c", "est_tolls_d", "est_tolls_n", "est_tolls_r", "excise_disable_update", "excise_taxable", "excisetax_total", "excisetax_total_c", "excisetax_total_d", "excisetax_total_n", "excisetax_total_r", "force_assign", "forwd_location_id", "free_days", "freight_charge_c", "freight_charge_d", "freight_charge_r", "high_value", "hold_reason", "image_is_present", "import_export", "include_split_point", "intelliset", "invoice_recv_date", "is_autorate_dist", "is_container", "is_dedicated", "is_local_mile", "is_requested", "jag_carrier_id", "jag_cost_rate_id", "ldport_location_id", "linear_feet_avail", "loadboard", "ltl", "markup_flat", "markup_flat_c", "markup_flat_d", "markup_flat_n", "markup_flat_r", "markup_percent", "master_order_id", "master_sequence", "next_rebill", "nte_lp_num", "nte_lp_qual", "operational_status", "optiset", "optimize", "order_mode", "order_value_c", "order_value_d", "order_value_n", "order_value_r", "orig_dest_rate_id", "otherchargetotal_c", "otherchargetotal_d", "otherchargetotal_n", "otherchargetotal_r", "pallets_how_many", "pallets_required", "pay_gross_d", "pay_gross_n", "pay_gross_r", "planning_comment", "pnn_callback", "pnn_comment", "pnn_comment2", "pnn_post_type", "pnn_rate", "pay_gross", "pay_gross_c", "pick_up_no", "pnn_rate_type", "pnn_trailer_length", "pnn_trailer_width", "ponum", "port", "port_of_discharge", "preload_trailer_id", "preloaded", "rate_currency_type", "rate_id", "rate_min_weight", "rate_min_weight_um", "rate_unit_desc", "recurring_order_id", "reply_transmitted", "requesting_company", "return_temp", "return_temp_um", "return_temp_var", "return_temp_var_um", "revenue_share_method", "sail_date", "seal_number", "seg_alloc_code", "setpoint_temp", "setpoint_temp_um", "setpoint_var", "setpoint_var_um", "ship_status_to_edi", "shipment_id", "shipstatus2edi_dt", "ss_location_id", "subject_order_status", "subject_order_void_date", "swap", "teams_required", "temperature_max_um", "temperature_min_um", "total_charge_c", "total_charge_d", "total_charge_n", "total_charge_r", "totalcharge_and_excisetax_c", "totalcharge_and_excisetax_d", "totalcharge_and_excisetax_n", "totalcharge_and_excisetax_r", "tractor_type", "vessel", "vessel_cutoff_date", "bill_distance_um", "billing_empty_distance", "billing_empty_distance_um", "billing_loaded_distance", "billing_loaded_distance_um", "bol_note", "bol_recv_date", "external_invoiceno", "freight_charge_n", "load_date", "ordered_by", "ordered_method", "placard_required", "rate", "rate_type", "rate_units", "ready_to_bill", "totalcharge_and_excisetax", "weight_um", "xferred2billing", "xferred2billing_dt", "lock_miles", "is_auto_tonu", "floor_loaded_freight", "equipment_type_options", "ic_movement_from", "ic_company_from", "is_intercompany", "rate_source", "ic_order_from", "ordered_by_id", "pnn_loadboard_user_id", "voided_load_transmitted_dt", "voided_load_transmitted", "total_charge"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"blnum", "customer_po"}, {"consignee_refno", "bol"}, {"ordered_date", "order_entered_date"}, {"otherchargetotal", "other_charges_total"}, {"salesperson", "salesperson_id"}}),
+				    #"Inserted order_entered_time" = Table.AddColumn(#"Renamed Columns", "order_entered_time", each DateTime.Time([order_entered_date]), type time),
+				    //End General Data Transformation
+				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted order_entered_time",{{"bill_date", type date}, {"freight_charge", Currency.Type}, {"order_entered_date", type date}, {"other_charges_total", Currency.Type}}),
+				    //Start add shipper and consignee data
+				    #"Merged stop table shipper" = Table.NestedJoin(#"Changed Type", {"shipper_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
+				    #"Expanded stop" = Table.ExpandTableColumn(#"Merged stop table shipper", "stop", {"city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
+				    #"Renamed shipper data" = Table.RenameColumns(#"Expanded stop",{{"stop.city_name", "shipper_city_name"}, {"stop.location_name", "shipper_location_name"}, {"stop.sched_arrive_early", "shipper_sched_early_date"}, {"stop.sched_arrive_late", "shipper_sched_late_date"}, {"stop.state", "shipper_state"}, {"stop.zip_code", "shipper_zip_code"}, {"stop.sched_arrive_early_time", "shipper_sched_early_time"}, {"stop.sched_arrive_late_time", "shipper_sched_late_time"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed shipper data", each ([status] <> "V")),
+				    #"Merged stop table consignee" = Table.NestedJoin(#"Filtered Rows", {"consignee_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
+				    #"Expanded stop1" = Table.ExpandTableColumn(#"Merged stop table consignee", "stop", {"city_id", "city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_id", "stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
+				    //End add shipper and consignee data
+				    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
+				    //Start add 3 digit zip
+				    #"Inserted First Characters" = Table.AddColumn(#"Renamed consignee data", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+				    //End add 3 digit zip
+				    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
+				    //Start Add Lane
+				    #"Trimmed Text" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text", "shipper_city_name", "shipper_city_name - Copy"),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
+				    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
+				    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
+				    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
+				    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
+				    //End Add Lane
+				    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane"),
+				    
+				    #"Appended Query" = Table.Combine({#"Merged Columns2", mcleod_historic_orders, pcs_orders})
+				in
+				    #"Appended Query"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
