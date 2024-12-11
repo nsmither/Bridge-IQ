@@ -134,9 +134,10 @@ table employees
 				    #"Merged Columns" = Table.CombineColumns(#"Added Conditional Column",{"First Name", "Name.1"},Combiner.CombineTextByDelimiter(" ", QuoteStyle.None),"Name"),
 				    #"Removed Columns" = Table.RemoveColumns(#"Merged Columns",{"Name.2", "Prefered Name"}),
 				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","0000-00-00","",Replacer.ReplaceValue,{"Termination Date"}),
-				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Value",{{"Termination Date", type date}})
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Value",{{"Termination Date", type date}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Changed Type2","Development Team Sales","Development Team",Replacer.ReplaceText,{"Devision"})
 				in
-				    #"Changed Type2"
+				    #"Replaced Value1"
 
 	annotation PBI_NavigationStepName = Navigation
 
