@@ -135,9 +135,11 @@ table employees
 				    #"Removed Columns" = Table.RemoveColumns(#"Merged Columns",{"Name.2", "Prefered Name"}),
 				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","0000-00-00","",Replacer.ReplaceValue,{"Termination Date"}),
 				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Value",{{"Termination Date", type date}}),
-				    #"Replaced Value1" = Table.ReplaceValue(#"Changed Type2","Development Team Sales","Development Team",Replacer.ReplaceText,{"Devision"})
+				    #"Replaced Value1" = Table.ReplaceValue(#"Changed Type2","Development Team Sales","Development Team",Replacer.ReplaceText,{"Devision"}),
+				    #"Trimmed Text1" = Table.TransformColumns(#"Replaced Value1",{{"McLeod User Code", Text.Trim, type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text1",{{"McLeod User Code", Text.Upper, type text}})
 				in
-				    #"Replaced Value1"
+				    #"Uppercased Text"
 
 	annotation PBI_NavigationStepName = Navigation
 

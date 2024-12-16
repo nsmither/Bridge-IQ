@@ -202,7 +202,9 @@ table movements
 				    #"Replaced Value16" = Table.ReplaceValue(#"Replaced Value15","cdispatch","parade",Replacer.ReplaceText,{"dispatcher_user_id"}),
 				    //end replace teams with parade
 				    #"Replaced Value17" = Table.ReplaceValue(#"Replaced Value16","cbt","parade",Replacer.ReplaceText,{"dispatcher_user_id"}),
-				    #"Appended Query" = Table.Combine({#"Replaced Value17", mcleod_historic_movement}),
+				    #"Trimmed Text1" = Table.TransformColumns(#"Replaced Value17",{{"dispatcher_user_id", Text.Trim, type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text1",{{"dispatcher_user_id", Text.Upper, type text}}),
+				    #"Appended Query" = Table.Combine({#"Uppercased Text", mcleod_historic_movement}),
 				    #"Trimmed Text" = Table.TransformColumns(#"Appended Query",{{"id", Text.Trim, type text}}),
 				    #"Merged Queries" = Table.NestedJoin(#"Trimmed Text", {"id"}, movement_order, {"movement_id"}, "movement_order", JoinKind.LeftOuter),
 				    #"Expanded movement_order" = Table.ExpandTableColumn(#"Merged Queries", "movement_order", {"order_id", "sequence"}, {"order_id", "sequence"}),

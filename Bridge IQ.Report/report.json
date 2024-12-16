@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.60\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":2,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
+  "config": "{\"version\":\"5.60\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":10,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
   "layoutOptimization": 0,
   "publicCustomVisuals": [
     "BoxandWhiskerByMAQ1823AD39DT234AB532063E128AX",
@@ -29,51 +29,12 @@
   "sections": [
     {
       "config": "{}",
-      "displayName": "Page 1",
-      "displayOption": 1,
-      "filters": "[]",
-      "height": 720.00,
-      "name": "1ca5b0e48d17ec8b1400",
-      "ordinal": 9,
-      "visualContainers": [
-        {
-          "config": "{\"name\":\"32926ae45565cd9e6349\",\"layouts\":[{\"id\":0,\"position\":{\"x\":496,\"y\":0,\"z\":2000,\"width\":448,\"height\":720,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"job_history.Division\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"j\",\"Entity\":\"job_history\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Division\"},\"Name\":\"job_history.Division\",\"NativeReferenceName\":\"Division\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Basic'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
-          "filters": "[]",
-          "height": 720.00,
-          "width": 448.00,
-          "x": 496.00,
-          "y": 0.00,
-          "z": 2000.00
-        },
-        {
-          "config": "{\"name\":\"80d838dfe16a52ec4451\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":32,\"z\":0,\"width\":496,\"height\":688,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\"},{\"queryRef\":\"measures_.Current Sales\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Sales\"},\"Name\":\"measures_.Current Sales\",\"NativeReferenceName\":\"Current Sales\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Sales\"}}}]},\"queryOptions\":{\"keepProjectionOrder\":true},\"showAllRoles\":[\"Values\"],\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"182.74418916174358D\"}}}},\"selector\":{\"metadata\":\"salesperson_key.Name\"}},{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"138.76745024283113D\"}}}},\"selector\":{\"metadata\":\"measures_.Current Sales\"}}]}}}",
-          "filters": "[]",
-          "height": 688.00,
-          "width": 496.00,
-          "x": 0.00,
-          "y": 32.00,
-          "z": 0.00
-        },
-        {
-          "config": "{\"name\":\"fb41e799e09ea4a77711\",\"layouts\":[{\"id\":0,\"position\":{\"x\":944,\"y\":16,\"z\":1000,\"width\":336,\"height\":240,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}}}}]}}}}]}}}",
-          "filters": "[]",
-          "height": 240.00,
-          "width": 336.00,
-          "x": 944.00,
-          "y": 16.00,
-          "z": 1000.00
-        }
-      ],
-      "width": 1280.00
-    },
-    {
-      "config": "{}",
       "displayName": "Order History",
       "displayOption": 1,
       "filters": "[]",
       "height": 720.00,
       "name": "36ed21db446a3dca19b0",
-      "ordinal": 8,
+      "ordinal": 7,
       "visualContainers": [
         {
           "config": "{\"name\":\"1c97ddd8ad55f6849978\",\"layouts\":[{\"id\":0,\"position\":{\"x\":848.0000000000001,\"y\":0,\"z\":2000,\"width\":432,\"height\":80,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"textFilter25A4896A83E0487089E2B90C9AE57C8A\",\"projections\":{\"field\":[{\"queryRef\":\"customer.name\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"name\"},\"Name\":\"customer.name\",\"NativeReferenceName\":\"name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Contains\":{\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"name\"}},\"Right\":{\"Literal\":{\"Value\":\"'vistech'\"}}}}}]}}}}]}}}",
@@ -121,7 +82,7 @@
       "filters": "[]",
       "height": 720.00,
       "name": "62df4a754b0282255752",
-      "ordinal": 3,
+      "ordinal": 2,
       "visualContainers": [
         {
           "config": "{\"name\":\"102342d257d7c2087e30\",\"layouts\":[{\"id\":0,\"position\":{\"x\":480,\"y\":0,\"z\":6000,\"width\":288,\"height\":112,\"tabOrder\":6000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"orders.revenue_code_id\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"orders\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"revenue_code_id\"},\"Name\":\"orders.revenue_code_id\",\"NativeReferenceName\":\"revenue_code_id\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
@@ -196,7 +157,7 @@
       "filters": "[]",
       "height": 1250.00,
       "name": "73f0f86a4c435565ed6d",
-      "ordinal": 6,
+      "ordinal": 5,
       "visualContainers": [
         {
           "config": "{\"name\":\"07e621dfe200fe793b19\",\"layouts\":[{\"id\":0,\"position\":{\"x\":352,\"y\":0,\"z\":2000,\"width\":336,\"height\":160,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Quarter\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Quarter\"},\"Name\":\"Calendar.Quarter\",\"NativeReferenceName\":\"Quarter\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Quarter\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Q4'\"}}]]}}}]}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
@@ -296,27 +257,6 @@
     },
     {
       "config": "{}",
-      "displayName": "Page 2",
-      "displayOption": 1,
-      "filters": "[]",
-      "height": 720.00,
-      "name": "9fe18279ac3e03012bdd",
-      "ordinal": 10,
-      "visualContainers": [
-        {
-          "config": "{\"name\":\"10d166c6ecec4697db79\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":0,\"z\":0,\"width\":944,\"height\":480,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\"},{\"queryRef\":\"job_history.Division\"},{\"queryRef\":\"job_history.Job Start Date\"},{\"queryRef\":\"job_history.Job End Date\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0},{\"Name\":\"j\",\"Entity\":\"job_history\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Division\"},\"Name\":\"job_history.Division\",\"NativeReferenceName\":\"Division\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job Start Date\"},\"Name\":\"job_history.Job Start Date\",\"NativeReferenceName\":\"Job Start Date\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job End Date\"},\"Name\":\"job_history.Job End Date\",\"NativeReferenceName\":\"Job End Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"j\"}},\"Property\":\"Job End Date\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"194.9230769230769D\"}}}},\"selector\":{\"metadata\":\"job_history.Division\"}}]}}}",
-          "filters": "[{\"name\":\"8d45bf5fc89500c4e215\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"salesperson_key\"}},\"Property\":\"Name\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Braden Sargent'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{\"general\":[{\"properties\":{}}]},\"isHiddenInViewMode\":false}]",
-          "height": 480.00,
-          "width": 944.00,
-          "x": 16.00,
-          "y": 0.00,
-          "z": 0.00
-        }
-      ],
-      "width": 1280.00
-    },
-    {
-      "config": "{}",
       "displayName": "NFM",
       "displayOption": 1,
       "filters": "[]",
@@ -346,12 +286,114 @@
     },
     {
       "config": "{}",
+      "displayName": "SOP",
+      "displayOption": 1,
+      "filters": "[{\"name\":\"e3ab110148809948aa9c\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"movements\"}},\"Property\":\"status\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"movements\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"status\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'C'\"}}],[{\"Literal\":{\"Value\":\"'D'\"}}],[{\"Literal\":{\"Value\":\"'P'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
+      "height": 850.00,
+      "name": "ce1ef1aaa0e474c0dcc2",
+      "ordinal": 9,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"1e75ac7c50d51c040d5b\",\"layouts\":[{\"id\":0,\"position\":{\"x\":288,\"y\":112,\"z\":2000,\"width\":352,\"height\":384,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Category\":[{\"queryRef\":\"employees.Name\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of SOPCAR Issues\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPCAR Issues\"},\"Name\":\"measures_.Count of SOPCAR Issues\",\"NativeReferenceName\":\"Count of SOPCAR Issues\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPCAR Issues\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[{\"name\":\"38899647a50c907ecc7a\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"employees\"}},\"Property\":\"McLeod User Code\"}},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{\"general\":[{\"properties\":{\"isInvertedSelectionMode\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}]",
+          "height": 384.00,
+          "width": 352.00,
+          "x": 288.00,
+          "y": 112.00,
+          "z": 2000.00
+        },
+        {
+          "config": "{\"name\":\"3bbfab5530603503918e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":992,\"y\":112,\"z\":2006,\"width\":288,\"height\":688,\"tabOrder\":2006}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Count of SOPP Issues\"},{\"queryRef\":\"measures_.Count of SOPD Issues\"}],\"Category\":[{\"queryRef\":\"dispatcher_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dispatcher_key\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPP Issues\"},\"Name\":\"measures_.Count of SOPP Issues\",\"NativeReferenceName\":\"Count of SOPP Issues\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Name\"},\"Name\":\"dispatcher_key.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPD Issues\"},\"Name\":\"measures_.Count of SOPD Issues\",\"NativeReferenceName\":\"Count of SOPD Issues\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPP Issues\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 688.00,
+          "width": 288.00,
+          "x": 992.00,
+          "y": 112.00,
+          "z": 2006.00
+        },
+        {
+          "config": "{\"name\":\"3d5422f29c63a0bae0d7\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":112,\"z\":2005,\"width\":352,\"height\":384,\"tabOrder\":2005}}],\"singleVisual\":{\"visualType\":\"gauge\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Count of SOPP Issues\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPP Issues\"},\"Name\":\"measures_.Count of SOPP Issues\",\"NativeReferenceName\":\"Count of SOPP Issues\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPP Issues\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 384.00,
+          "width": 352.00,
+          "x": 640.00,
+          "y": 112.00,
+          "z": 2005.00
+        },
+        {
+          "config": "{\"name\":\"7ed32f71bb11d1469448\",\"layouts\":[{\"id\":0,\"position\":{\"x\":288,\"y\":16,\"z\":2002,\"width\":448,\"height\":80,\"tabOrder\":2002}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"employees.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 80.00,
+          "width": 448.00,
+          "x": 288.00,
+          "y": 16.00,
+          "z": 2002.00
+        },
+        {
+          "config": "{\"name\":\"803668020b2651ee50c1\",\"layouts\":[{\"id\":0,\"position\":{\"x\":8,\"y\":0,\"z\":0,\"width\":280,\"height\":120,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}},\"endDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2024-12-31T00:00:00'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"And\":{\"Left\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}}},\"Right\":{\"Comparison\":{\"ComparisonKind\":3,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2025-01-01T00:00:00'\"}}}}}}}]}}}}]}}}",
+          "filters": "[{\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Date\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"DateSpan\":{\"Expression\":{\"Literal\":{\"Value\":\"datetime'2024-01-01T00:00:00'\"}},\"TimeUnit\":5}}}}}]},\"type\":\"Advanced\",\"howCreated\":0,\"isHiddenInViewMode\":false},{\"name\":\"f75657b2148803da0b5b\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"movements\"}},\"Property\":\"status\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"movements\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"status\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'C'\"}}],[{\"Literal\":{\"Value\":\"'D'\"}}],[{\"Literal\":{\"Value\":\"'P'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
+          "height": 120.00,
+          "width": 280.00,
+          "x": 8.00,
+          "y": 0.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"88b09a1d502e1e3c4a01\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1056,\"y\":0,\"z\":2004,\"width\":224,\"height\":64,\"tabOrder\":2004}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"wolf_pack.wolf_pack\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"w\",\"Entity\":\"wolf_pack\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"w\"}},\"Property\":\"wolf_pack\"},\"Name\":\"wolf_pack.wolf_pack\",\"NativeReferenceName\":\"wolf_pack\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 64.00,
+          "width": 224.00,
+          "x": 1056.00,
+          "y": 0.00,
+          "z": 2004.00
+        },
+        {
+          "config": "{\"name\":\"8ed13f8aa2de5281e0d8\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":120,\"z\":1000,\"width\":280,\"height\":152,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"gauge\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Count of SOPCAR Issues\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPCAR Issues\"},\"Name\":\"measures_.Count of SOPCAR Issues\",\"NativeReferenceName\":\"Count of SOPCAR Issues\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPCAR Issues\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 152.00,
+          "width": 280.00,
+          "x": 0.00,
+          "y": 120.00,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"9f8a022338c3408592e6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":720,\"y\":0,\"z\":2003,\"width\":224,\"height\":64,\"tabOrder\":2003}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"rev_codes.rev_code_id\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"r\",\"Entity\":\"rev_codes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"r\"}},\"Property\":\"rev_code_id\"},\"Name\":\"rev_codes.rev_code_id\",\"NativeReferenceName\":\"rev_code_id\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 64.00,
+          "width": 224.00,
+          "x": 720.00,
+          "y": 0.00,
+          "z": 2003.00
+        },
+        {
+          "config": "{\"name\":\"cb662c553035480090de\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":496,\"width\":352,\"height\":224,\"z\":2007,\"tabOrder\":2007}}],\"singleVisual\":{\"visualType\":\"gauge\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Count of SOPD Issues\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPD Issues\"},\"Name\":\"measures_.Count of SOPD Issues\",\"NativeReferenceName\":\"Count of SOPD Issues\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPD Issues\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 224.00,
+          "width": 352.00,
+          "x": 640.00,
+          "y": 496.00,
+          "z": 2007.00
+        },
+        {
+          "config": "{\"name\":\"dcc88be4d270b417e25e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":496,\"z\":2001,\"width\":640,\"height\":224,\"tabOrder\":2001}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of SOPCAR Issues\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of SOPCAR Issues\"},\"Name\":\"measures_.Count of SOPCAR Issues\",\"NativeReferenceName\":\"Count of SOPCAR Issues\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 224.00,
+          "width": 640.00,
+          "x": 0.00,
+          "y": 496.00,
+          "z": 2001.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
       "displayName": "BWS",
       "displayOption": 1,
       "filters": "[]",
       "height": 720.00,
       "name": "d57ab939ff0fe475acee",
-      "ordinal": 7,
+      "ordinal": 6,
       "visualContainers": [
         {
           "config": "{\"name\":\"15b4de23f53022d18825\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":128,\"z\":0,\"width\":944,\"height\":336,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Values\":[{\"queryRef\":\"measures_.Behavior Points\"},{\"queryRef\":\"measures_.Sales Margin Points\"},{\"queryRef\":\"measures_.Total Sales BWS\"}],\"Rows\":[{\"queryRef\":\"salesperson_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Behavior Points\"},\"Name\":\"measures_.Behavior Points\",\"NativeReferenceName\":\"Behavior Points\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Sales Margin Points\"},\"Name\":\"measures_.Sales Margin Points\",\"NativeReferenceName\":\"Sales Margin Points\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Total Sales BWS\"},\"Name\":\"measures_.Total Sales BWS\",\"NativeReferenceName\":\"Total Sales BWS\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"subTotals\":[{\"properties\":{\"rowSubtotals\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#484545'\"}}}}}}}]}}}",
@@ -363,7 +405,7 @@
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"196385282a65a9b655a3\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":432,\"height\":128,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year\",\"active\":true},{\"queryRef\":\"Calendar.Month Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"},\"Name\":\"Calendar.Year\",\"NativeReferenceName\":\"Year\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"},\"Name\":\"Calendar.Month Name\",\"NativeReferenceName\":\"Month Name\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendar.Year\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendar.Month Name\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"2024L\"}}],\"isToggled\":true}]}}],\"syncGroup\":{\"groupName\":\"Year\",\"fieldChanges\":true,\"filterChanges\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2024L\"}},{\"Literal\":{\"Value\":\"'November'\"}}]]}}}]}}}}]},\"filterExpressionMetadata\":{\"expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}}],\"cachedValueItems\":[{\"identities\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2024L\"}}}}},{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}},\"Right\":{\"Literal\":{\"Value\":\"'November'\"}}}}}],\"valueMap\":{\"0\":\"2024\",\"1\":\"November\"}}]}}}",
+          "config": "{\"name\":\"196385282a65a9b655a3\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":432,\"height\":128,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year\",\"active\":true},{\"queryRef\":\"Calendar.Month Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"},\"Name\":\"Calendar.Year\",\"NativeReferenceName\":\"Year\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"},\"Name\":\"Calendar.Month Name\",\"NativeReferenceName\":\"Month Name\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendar.Year\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendar.Month Name\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"2024L\"}}],\"isToggled\":true}]}}],\"syncGroup\":{\"groupName\":\"Year\",\"fieldChanges\":true,\"filterChanges\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2024L\"}},{\"Literal\":{\"Value\":\"'December'\"}}]]}}}]}}}}]},\"filterExpressionMetadata\":{\"expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}}],\"cachedValueItems\":[{\"identities\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2024L\"}}}}},{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}},\"Right\":{\"Literal\":{\"Value\":\"'December'\"}}}}}],\"valueMap\":{\"0\":\"2024\",\"1\":\"December\"}}]}}}",
           "filters": "[{\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2023L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":0,\"isHiddenInViewMode\":false}]",
           "height": 128.00,
           "width": 432.00,
@@ -408,7 +450,7 @@
       "filters": "[]",
       "height": 720.00,
       "name": "e1a6b96252a805572e8d",
-      "ordinal": 2,
+      "ordinal": 8,
       "visualContainers": [
         {
           "config": "{\"name\":\"3f9d50a82bad1735a09e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112,\"z\":0,\"width\":416,\"height\":608,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Category\":[{\"queryRef\":\"employees.Name\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of Trackable Movements\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"queryOptions\":{\"keepProjectionOrder\":true},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#FCB714'\"}}}}}}}],\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"end\":{\"expr\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Max Trackable Movements Grouped by dispatcher\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
@@ -420,7 +462,52 @@
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"d532124d79cb0b91b558\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112.00000000000001,\"z\":1000,\"width\":416,\"height\":608,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Category\":[{\"queryRef\":\"employees.Name\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"}],\"Tooltips\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"},{\"queryRef\":\"measures_.Count of Trackable Movements\"},{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of movements with 3 or more pings\"},\"Name\":\"measures_.Count of movements with 3 or more pings\",\"NativeReferenceName\":\"Count of movements with 3 or more pings\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"},\"Name\":\"measures_.Percentage Of movement with 3 or more pings\",\"NativeReferenceName\":\"Percentage Of movement with 3 or more pings\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"queryOptions\":{\"keepProjectionOrder\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#227DD8'\"}}}}},\"fillTransparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}],\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"end\":{\"expr\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Max Trackable Movements Grouped by dispatcher\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"100D\"}}}}}],\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "config": "{\"name\":\"4889021d816a2db400bb\",\"layouts\":[{\"id\":0,\"position\":{\"x\":736,\"y\":0,\"z\":3000,\"width\":544,\"height\":112,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"movements.dnc\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"movements\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"dnc\"},\"Name\":\"movements.dnc\",\"NativeReferenceName\":\"dnc\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Basic'\"}}}}}],\"general\":[{\"properties\":{\"orientation\":{\"expr\":{\"Literal\":{\"Value\":\"1D\"}}},\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"movements\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"dnc\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"false\"}}]]}}}]}}}}]}}}",
+          "filters": "[{\"name\":\"55fc15c6de35e70eecb6\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"movements\"}},\"Property\":\"dnc\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"movements\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Not\":{\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"dnc\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"null\"}}]]}}}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{\"general\":[{\"properties\":{\"isInvertedSelectionMode\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]},\"isHiddenInViewMode\":false}]",
+          "height": 112.00,
+          "width": 544.00,
+          "x": 736.00,
+          "y": 0.00,
+          "z": 3000.00
+        },
+        {
+          "config": "{\"name\":\"630555d9d1b0b7100a3d\",\"layouts\":[{\"id\":0,\"position\":{\"x\":416,\"y\":0,\"z\":5000,\"width\":336,\"height\":64,\"tabOrder\":5000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"rev_codes.rev_code_id\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"r\",\"Entity\":\"rev_codes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"r\"}},\"Property\":\"rev_code_id\"},\"Name\":\"rev_codes.rev_code_id\",\"NativeReferenceName\":\"rev_code_id\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"orientation\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 64.00,
+          "width": 336.00,
+          "x": 416.00,
+          "y": 0.00,
+          "z": 5000.00
+        },
+        {
+          "config": "{\"name\":\"ace9beaca70dcec1e4cc\",\"layouts\":[{\"id\":0,\"position\":{\"x\":496,\"y\":384,\"z\":8500,\"width\":784,\"height\":336,\"tabOrder\":7000}}],\"singleVisual\":{\"visualType\":\"lineStackedColumnComboChart\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"}],\"Tooltips\":[{\"queryRef\":\"measures_.Count of Trackable Movements\"}],\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}],\"Y2\":[{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of movements with 3 or more pings\"},\"Name\":\"measures_.Count of movements with 3 or more pings\",\"NativeReferenceName\":\"Count of movements with 3 or more pings\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"},\"Name\":\"measures_.Percentage Of movement with 3 or more pings\",\"NativeReferenceName\":\"Percentage Of movement with 3 or more pings\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"queryOptions\":{\"keepProjectionOrder\":true},\"showAllRoles\":[\"Category\"],\"drillFilterOtherVisuals\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#227DD8'\"}}}}},\"fillTransparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}},{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}}},\"selector\":{\"metadata\":\"measures_.Percentage Of movement with 3 or more pings\"}}],\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"end\":{\"expr\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Max Trackable Movements Grouped by dispatcher\"}}},\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"legend\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"categoryAxis\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"100D\"}}}}}],\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 336.00,
+          "width": 784.00,
+          "x": 496.00,
+          "y": 384.00,
+          "z": 8500.00
+        },
+        {
+          "config": "{\"name\":\"beb4e88a16c8c9a7864a\",\"layouts\":[{\"id\":0,\"position\":{\"x\":416,\"y\":128,\"z\":4000,\"width\":784,\"height\":256,\"tabOrder\":4000}}],\"singleVisual\":{\"visualType\":\"cardVisual\",\"projections\":{\"Data\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"},{\"queryRef\":\"measures_.Count of Trackable Movements\"},{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of movements with 3 or more pings\"},\"Name\":\"measures_.Count of movements with 3 or more pings\",\"NativeReferenceName\":\"Count of movements with 3 or more pings\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"},\"Name\":\"measures_.Percentage Of movement with 3 or more pings\",\"NativeReferenceName\":\"Percentage Of movement with 3 or more pings\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of movements with 3 or more pings\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"value\":[{\"properties\":{\"labelDisplayUnits\":{\"expr\":{\"Literal\":{\"Value\":\"1D\"}}}},\"selector\":{\"metadata\":\"measures_.Count of movements with 3 or more pings\"}},{\"properties\":{\"labelDisplayUnits\":{\"expr\":{\"Literal\":{\"Value\":\"1D\"}}}},\"selector\":{\"metadata\":\"measures_.Count of Trackable Movements\"}}]}}}",
+          "filters": "[]",
+          "height": 256.00,
+          "width": 784.00,
+          "x": 416.00,
+          "y": 128.00,
+          "z": 4000.00
+        },
+        {
+          "config": "{\"name\":\"cbbc3e890ab8626d05c8\",\"layouts\":[{\"id\":0,\"position\":{\"x\":496,\"y\":384,\"z\":8000,\"width\":784,\"height\":336,\"tabOrder\":8000}}],\"singleVisual\":{\"visualType\":\"lineStackedColumnComboChart\",\"projections\":{\"Tooltips\":[{\"queryRef\":\"measures_.Count of Trackable Movements\"},{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}],\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of Trackable Movements\"}],\"Y2\":[{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"},\"Name\":\"measures_.Percentage Of movement with 3 or more pings\",\"NativeReferenceName\":\"Percentage Of movement with 3 or more pings\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"queryOptions\":{\"keepProjectionOrder\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#FCB714'\"}}}}},\"fillTransparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}},{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}}},\"selector\":{\"metadata\":\"measures_.Percentage Of movement with 3 or more pings\"}}],\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"end\":{\"expr\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Max Trackable Movements Grouped by dispatcher\"}}}}}],\"lineStyles\":[{\"properties\":{\"strokeShow\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"legend\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"100D\"}}}}}],\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 336.00,
+          "width": 784.00,
+          "x": 496.00,
+          "y": 384.00,
+          "z": 8000.00
+        },
+        {
+          "config": "{\"name\":\"d532124d79cb0b91b558\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112,\"z\":1000,\"width\":416,\"height\":608,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Category\":[{\"queryRef\":\"employees.Name\",\"active\":true}],\"Tooltips\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"},{\"queryRef\":\"measures_.Count of Trackable Movements\"},{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}],\"Y\":[{\"queryRef\":\"measures_.Count of movements with 3 or more pings\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of movements with 3 or more pings\"},\"Name\":\"measures_.Count of movements with 3 or more pings\",\"NativeReferenceName\":\"Count of movements with 3 or more pings\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"},\"Name\":\"measures_.Percentage Of movement with 3 or more pings\",\"NativeReferenceName\":\"Percentage Of movement with 3 or more pings\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"queryOptions\":{\"keepProjectionOrder\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#227DD8'\"}}}}},\"fillTransparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}],\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"end\":{\"expr\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Max Trackable Movements Grouped by dispatcher\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"100D\"}}}}}],\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
           "filters": "[]",
           "height": 608.00,
           "width": 416.00,
@@ -429,22 +516,13 @@
           "z": 1000.00
         },
         {
-          "config": "{\"name\":\"d8bac74a023c90d1d03c\",\"layouts\":[{\"id\":0,\"position\":{\"x\":880,\"y\":80,\"z\":4000,\"width\":368,\"height\":256,\"tabOrder\":4000}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"measures_.Count of Trackable Movements\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"},\"Name\":\"measures_.Count of Trackable Movements\",\"NativeReferenceName\":\"Count of Trackable Movements\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Trackable Movements\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "config": "{\"name\":\"da3b6623b9c08315add6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":416,\"y\":64,\"z\":6000,\"width\":336,\"height\":80,\"tabOrder\":6000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"employees.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Name\"},\"Name\":\"employees.Name\",\"NativeReferenceName\":\"Name\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}]}}}",
           "filters": "[]",
-          "height": 256.00,
-          "width": 368.00,
-          "x": 880.00,
-          "y": 80.00,
-          "z": 4000.00
-        },
-        {
-          "config": "{\"name\":\"dfc12b73d879087804e9\",\"layouts\":[{\"id\":0,\"position\":{\"x\":448,\"y\":80,\"z\":3000,\"width\":368,\"height\":256,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"measures_.Percentage Of movement with 3 or more pings\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"},\"Name\":\"measures_.Percentage Of movement with 3 or more pings\",\"NativeReferenceName\":\"Percentage Of movement with 3 or more pings\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Percentage Of movement with 3 or more pings\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
-          "filters": "[]",
-          "height": 256.00,
-          "width": 368.00,
-          "x": 448.00,
-          "y": 80.00,
-          "z": 3000.00
+          "height": 80.00,
+          "width": 336.00,
+          "x": 416.00,
+          "y": 64.00,
+          "z": 6000.00
         },
         {
           "config": "{\"name\":\"e844c74c240c832c2cb9\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":2000,\"width\":416,\"height\":96,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2024-11-01T00:00:00'\"}}},\"endDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2024-11-30T00:00:00'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"And\":{\"Left\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2024-11-01T00:00:00'\"}}}},\"Right\":{\"Comparison\":{\"ComparisonKind\":3,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}}}}}}]}}}}]}}}",
@@ -465,7 +543,7 @@
       "filters": "[{\"name\":\"e8278e34269317fb70d3\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"movements\"}},\"Property\":\"status\"}},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
       "height": 1200.00,
       "name": "e28d790973b5019286a2",
-      "ordinal": 4,
+      "ordinal": 3,
       "visualContainers": [
         {
           "config": "{\"name\":\"0a5fab5c62be3a7c4daf\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":864,\"z\":10000,\"width\":320,\"height\":336,\"tabOrder\":10000}}],\"singleVisual\":{\"visualType\":\"pieChart\",\"projections\":{\"Y\":[{\"queryRef\":\"measures_.Margin\"}],\"Category\":[{\"queryRef\":\"customer.name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0},{\"Name\":\"c1\",\"Entity\":\"customer\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c1\"}},\"Property\":\"name\"},\"Name\":\"customer.name\",\"NativeReferenceName\":\"name\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"legend\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"labels\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Customer Diversity'\"}}}}}],\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#484545'\"}}}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}]}}}",
@@ -486,7 +564,7 @@
           "z": 7000.00
         },
         {
-          "config": "{\"name\":\"58a2414731b3a8b0c076\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":432,\"height\":128,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year\",\"active\":true},{\"queryRef\":\"Calendar.Month Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"},\"Name\":\"Calendar.Year\",\"NativeReferenceName\":\"Year\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"},\"Name\":\"Calendar.Month Name\",\"NativeReferenceName\":\"Month Name\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendar.Year\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendar.Month Name\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"2024L\"}}],\"isToggled\":true}]}}],\"syncGroup\":{\"groupName\":\"Year\",\"fieldChanges\":true,\"filterChanges\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2024L\"}},{\"Literal\":{\"Value\":\"'November'\"}}]]}}}]}}}}]},\"filterExpressionMetadata\":{\"expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}}],\"cachedValueItems\":[{\"identities\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2024L\"}}}}},{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}},\"Right\":{\"Literal\":{\"Value\":\"'November'\"}}}}}],\"valueMap\":{\"0\":\"2024\",\"1\":\"November\"}}]}}}",
+          "config": "{\"name\":\"58a2414731b3a8b0c076\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":432,\"height\":128,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year\",\"active\":true},{\"queryRef\":\"Calendar.Month Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"},\"Name\":\"Calendar.Year\",\"NativeReferenceName\":\"Year\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"},\"Name\":\"Calendar.Month Name\",\"NativeReferenceName\":\"Month Name\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendar.Year\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendar.Month Name\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"2024L\"}}],\"isToggled\":true}]}}],\"syncGroup\":{\"groupName\":\"Year\",\"fieldChanges\":true,\"filterChanges\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2024L\"}},{\"Literal\":{\"Value\":\"'December'\"}}]]}}}]}}}}]},\"filterExpressionMetadata\":{\"expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}}],\"cachedValueItems\":[{\"identities\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2024L\"}}}}},{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}},\"Right\":{\"Literal\":{\"Value\":\"'December'\"}}}}}],\"valueMap\":{\"0\":\"2024\",\"1\":\"December\"}}]}}}",
           "filters": "[{\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2023L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":0,\"isHiddenInViewMode\":false}]",
           "height": 128.00,
           "width": 432.00,
@@ -523,7 +601,7 @@
         },
         {
           "config": "{\"name\":\"827d4558ad6b46c888c1\",\"layouts\":[{\"id\":0,\"position\":{\"x\":432,\"y\":0,\"z\":3000,\"width\":192,\"height\":80,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"}]},\"syncGroup\":{\"groupName\":\"Name\",\"fieldChanges\":true,\"filterChanges\":false},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
-          "filters": "[{\"name\":\"182cbab1b9614c6c9e2f\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Current Staff\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Staff\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":1},{\"name\":\"860cb81f60631a20a38a\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"employees\"}},\"Property\":\"Department\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Department\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Sales'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
+          "filters": "[{\"name\":\"182cbab1b9614c6c9e2f\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Current Staff\"}},\"type\":\"Advanced\",\"howCreated\":1},{\"name\":\"860cb81f60631a20a38a\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"employees\"}},\"Property\":\"Department\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"employees\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Department\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Sales'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}},{\"name\":\"9a5b9a0dcc4063eaa099\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Current Sales\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Sales\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":1}]",
           "height": 80.00,
           "width": 192.00,
           "x": 432.00,
@@ -559,7 +637,7 @@
         },
         {
           "config": "{\"name\":\"c621b9bcc9d3db6c0319\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":288,\"z\":0,\"width\":1008,\"height\":336,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"lineStackedColumnComboChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Margin\"}],\"Y2\":[{\"queryRef\":\"measures_.Margin per day Goal\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin per day Goal\"},\"Name\":\"measures_.Margin per day Goal\",\"NativeReferenceName\":\"Margin per day Goal\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"valueAxis\":[{\"properties\":{\"start\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}},\"secStart\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}]}}}",
-          "filters": "[]",
+          "filters": "[{\"name\":\"c53b0047b075092d0aac\",\"expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"measures_\"}},\"Property\":\"Current Sales\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Current Sales\"}},\"Right\":{\"Literal\":{\"Value\":\"1L\"}}}}}]},\"type\":\"Advanced\",\"howCreated\":1}]",
           "height": 336.00,
           "width": 1008.00,
           "x": 0.00,
@@ -607,12 +685,78 @@
     },
     {
       "config": "{}",
+      "displayName": "Overdue Check Calls",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 850.00,
+      "name": "f9c59360ee24924609a3",
+      "ordinal": 10,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"357b59749a61824523e3\",\"layouts\":[{\"id\":0,\"position\":{\"x\":592,\"y\":0,\"z\":5,\"width\":256,\"height\":96,\"tabOrder\":5}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"rev_codes.rev_code_id\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"r\",\"Entity\":\"rev_codes\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"r\"}},\"Property\":\"rev_code_id\"},\"Name\":\"rev_codes.rev_code_id\",\"NativeReferenceName\":\"rev_code_id\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 96.00,
+          "width": 256.00,
+          "x": 592.00,
+          "y": 0.00,
+          "z": 5.00
+        },
+        {
+          "config": "{\"name\":\"e1a11dd00bec50e37d86\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":0,\"z\":0,\"width\":480,\"height\":112,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"data\":[{\"properties\":{\"startDate\":{\"expr\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}},\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Between'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"Literal\":{\"Value\":\"datetime'2024-12-01T00:00:00'\"}}}}}]}}}}]}}}",
+          "filters": "[{\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Date\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"DateSpan\":{\"Expression\":{\"Literal\":{\"Value\":\"datetime'2024-01-01T00:00:00'\"}},\"TimeUnit\":5}}}}}]},\"type\":\"Advanced\",\"howCreated\":0,\"isHiddenInViewMode\":false}]",
+          "height": 112.00,
+          "width": 480.00,
+          "x": 16.00,
+          "y": 0.00,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"efbf9004ce0c8cc04d0e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":656,\"y\":96,\"z\":3,\"width\":336,\"height\":336,\"tabOrder\":3}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"overdue_check_calls.Check Call Time\",\"active\":true}],\"Values\":[{\"queryRef\":\"measures_.Count of Overdue Check Calls\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"overdue_check_calls\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"Check Call Time\"},\"Name\":\"overdue_check_calls.Check Call Time\",\"NativeReferenceName\":\"Check Call Time\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Overdue Check Calls\"},\"Name\":\"measures_.Count of Overdue Check Calls\",\"NativeReferenceName\":\"Count of Overdue Check Calls\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[{\"name\":\"43cb43e9510e91511eb1\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"overdue_check_calls\"}},\"Property\":\"Status\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"overdue_check_calls\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"Status\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'P'\"}}],[{\"Literal\":{\"Value\":\"'D'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
+          "height": 336.00,
+          "width": 336.00,
+          "x": 656.00,
+          "y": 96.00,
+          "z": 3.00
+        },
+        {
+          "config": "{\"name\":\"f4b4b0aa0025002b56ab\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":512,\"z\":4,\"width\":720,\"height\":336,\"tabOrder\":4}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"measures_.Count of Overdue Check Calls\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Overdue Check Calls\"},\"Name\":\"measures_.Count of Overdue Check Calls\",\"NativeReferenceName\":\"Count of Overdue Check Calls\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 336.00,
+          "width": 720.00,
+          "x": 16.00,
+          "y": 512.00,
+          "z": 4.00
+        },
+        {
+          "config": "{\"name\":\"f4d59d57054404c9c492\",\"layouts\":[{\"id\":0,\"position\":{\"x\":320,\"y\":96,\"z\":2,\"width\":336,\"height\":336,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"overdue_check_calls.Check Call Time\",\"active\":true}],\"Values\":[{\"queryRef\":\"measures_.Count of Overdue Check Calls\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"overdue_check_calls\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"Check Call Time\"},\"Name\":\"overdue_check_calls.Check Call Time\",\"NativeReferenceName\":\"Check Call Time\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Overdue Check Calls\"},\"Name\":\"measures_.Count of Overdue Check Calls\",\"NativeReferenceName\":\"Count of Overdue Check Calls\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[{\"name\":\"19d229ca6808335cd306\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"overdue_check_calls\"}},\"Property\":\"Status\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"overdue_check_calls\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"Status\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'C'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
+          "height": 336.00,
+          "width": 336.00,
+          "x": 320.00,
+          "y": 96.00,
+          "z": 2.00
+        },
+        {
+          "config": "{\"name\":\"fc65736fb4537ddcba57\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":112,\"z\":1,\"width\":320,\"height\":336,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"overdue_check_calls.Check Call Time\",\"active\":true}],\"Values\":[{\"queryRef\":\"measures_.Count of Overdue Check Calls\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"overdue_check_calls\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"Check Call Time\"},\"Name\":\"overdue_check_calls.Check Call Time\",\"NativeReferenceName\":\"Check Call Time\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Count of Overdue Check Calls\"},\"Name\":\"measures_.Count of Overdue Check Calls\",\"NativeReferenceName\":\"Count of Overdue Check Calls\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 336.00,
+          "width": 320.00,
+          "x": 0.00,
+          "y": 112.00,
+          "z": 1.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
       "displayName": "Pipeline Health",
       "displayOption": 1,
       "filters": "[]",
       "height": 720.00,
       "name": "fa4c74fbea8f7264c88a",
-      "ordinal": 5,
+      "ordinal": 4,
       "visualContainers": [
         {
           "config": "{\"name\":\"0037019abbac22001fda\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":2000,\"width\":192,\"height\":80,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"}]},\"syncGroup\":{\"groupName\":\"Name\",\"fieldChanges\":true,\"filterChanges\":true},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{}}]}}}",

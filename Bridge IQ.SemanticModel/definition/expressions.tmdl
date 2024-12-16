@@ -228,9 +228,11 @@ expression pcs_movements =
 		    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"order_id"}, pcs_orders_dispatchers, {"LoadID"}, "pcs_orders_dispatchers", JoinKind.LeftOuter),
 		    #"Expanded pcs_orders_dispatchers" = Table.ExpandTableColumn(#"Merged Queries", "pcs_orders_dispatchers", {"DispUser"}, {"DispUser"}),
 		    #"Renamed Columns1" = Table.RenameColumns(#"Expanded pcs_orders_dispatchers",{{"DispUser", "dispatcher_user_id"}}),
-		    #"Added Custom" = Table.AddColumn(#"Renamed Columns1", "status", each "D")
+		    #"Added Custom" = Table.AddColumn(#"Renamed Columns1", "status", each "D"),
+		    #"Trimmed Text" = Table.TransformColumns(#"Added Custom",{{"dispatcher_user_id", Text.Trim, type text}}),
+		    #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text",{{"dispatcher_user_id", Text.Upper, type text}})
 		in
-		    #"Added Custom"
+		    #"Uppercased Text"
 	lineageTag: 56cf4560-8d4b-40d6-953a-3445982b331f
 	queryGroup: 'Historic Tables'
 
@@ -266,9 +268,11 @@ expression mcleod_historic_movement =
 		    #"Replaced Value15" = Table.ReplaceValue(#"Replaced Value14","team1","parade",Replacer.ReplaceText,{"dispatcher_user_id"}),
 		    #"Replaced Value16" = Table.ReplaceValue(#"Replaced Value15","cdispatch","parade",Replacer.ReplaceText,{"dispatcher_user_id"}),
 		    //end replace teams with parade
-		    #"Replaced Value17" = Table.ReplaceValue(#"Replaced Value16","cbt","parade",Replacer.ReplaceText,{"dispatcher_user_id"})
+		    #"Replaced Value17" = Table.ReplaceValue(#"Replaced Value16","cbt","parade",Replacer.ReplaceText,{"dispatcher_user_id"}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Replaced Value17",{{"dispatcher_user_id", Text.Trim, type text}}),
+		    #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text",{{"dispatcher_user_id", Text.Upper, type text}})
 		in
-		    #"Replaced Value17"
+		    #"Uppercased Text"
 	lineageTag: 913af15e-8ef1-470b-a516-92c5e6d44a04
 	queryGroup: 'Historic Tables'
 

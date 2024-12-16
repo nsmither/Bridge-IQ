@@ -114,7 +114,8 @@ table measures_
 			CALCULATE(
 			    COUNTROWS(employees),
 			    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= MAX('calendar'[Date])),
-			    FILTER(VALUES(employees[Termination Date]), OR(employees[Termination Date] >= MIN('calendar'[Date]), ISBLANK(employees[Termination Date]))))
+			    FILTER(VALUES(employees[Termination Date]), OR(employees[Termination Date] >= MIN('calendar'[Date]), ISBLANK(employees[Termination Date])))
+			)
 		formatString: 0
 		displayFolder: HR
 		lineageTag: 7f4fea41-84eb-4da1-a4e5-10b82bc756e7
@@ -463,7 +464,8 @@ table measures_
 			        movements[status]<>"A",
 			        orders[order_type_id]="FTL",
 			        orders[bill_distance]>50,
-			        USERELATIONSHIP(orders[consignee_sched_early_date],'Calendar'[Date])
+			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			    )
 			Var count_bw = 
 			    CALCULATE(
@@ -471,7 +473,8 @@ table measures_
 			        movements[status]<>"A",
 			        orders[order_type_id]="BW",
 			        orders[bill_distance]>50,
-			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			    )
 			        
 			Var count_partials =
@@ -480,7 +483,8 @@ table measures_
 			        movements[status]<>"A",
 			        orders[order_type_id]="PARTIAL",
 			        orders[bill_distance]>50,
-			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			    )
 			
 			Var count_of_trackable_movements = count_ftl+count_bw+count_partials
@@ -498,8 +502,9 @@ table measures_
 			CALCULATE(
 			    DISTINCTCOUNT(callins[movement_id]),
 			    FILTER(GROUPBY(callins,callins[movement_id]),[Count of tracking pings]>=3),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code]
+			))
 		formatString: 0
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: df5754d3-b223-4231-bb8a-39def543c971
@@ -519,16 +524,6 @@ table measures_
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: 06663e34-2ac5-4c2d-b23e-2f4cdab296d3
-
-	measure 'Count of Overdue Check Call' =
-			
-			CALCULATE(
-			    COUNTROWS(overdue_check_calls),
-			    FILTER(overdue_check_calls,overdue_check_calls[Check Call Date]>=MIN('Calendar'[Date])),
-			    FILTER(overdue_check_calls,overdue_check_calls[Check Call Date]<=MAX('Calendar'[Date]))
-			)
-		formatString: 0
-		lineageTag: 2df9d954-b218-472b-b5c9-66cf04dec2ff
 
 	measure 'Date Diff order_entered_date vs shipper_sched_early_date' =
 			
@@ -1390,6 +1385,75 @@ table measures_
 		formatString: 0
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: 8f162413-852d-402c-9d25-253c72ef8813
+
+	measure 'Max trackable Movements grouped by day' = ```
+			
+			    CALCULATE(
+			        MAXX(
+			            GROUPBY('calendar','calendar'[Date]),
+			            [Count of Trackable Movements]))
+			```
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 826c46a5-8a6c-4fe0-ad2e-727c2254d6b2
+
+	measure 'Count of SOPCAR Issues' =
+			
+			CALCULATE(
+			    COUNTROWS(sop_issues),
+			    sop_issues[Movement ID],
+			    sop_issues[SOP Type]= "SOPCAR",
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 06099b06-b567-4df5-ac37-307c760a22b6
+
+	measure 'Count of SOPP Issues' =
+			
+			CALCULATE(
+			    COUNTROWS(sop_issues),
+			    sop_issues[Movement ID],
+			    sop_issues[SOP Type]= "SOPP",
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date]),
+			    USERELATIONSHIP(orders[entered_user_id],dispatcher_key[McLeod User Code])
+			)
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 958dcfad-b5a3-4618-a8f1-c2e4c598c810
+
+	measure 'Count of movements with 3 or more pings test' =
+			
+			CALCULATE(
+			    COUNTAX(
+			    callins,
+			    DISTINCTCOUNT(callins[movement_id])),
+			    callins[entered_by]="loadmaster")
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 4941b666-49d4-47e0-8193-4752cf31b7aa
+
+	measure 'Count of SOPD Issues' =
+			
+			CALCULATE(
+			    COUNTROWS(sop_issues),
+			    sop_issues[Movement ID],
+			    sop_issues[SOP Type]= "SOPD",
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date]),
+			    USERELATIONSHIP(orders[entered_user_id],dispatcher_key[McLeod User Code]))
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 106146c5-55dc-453b-ab38-14b62ff74db1
+
+	measure 'Count of Overdue Check Calls' =
+			
+			CALCULATE(
+			    COUNTROWS(overdue_check_calls),
+			    USERELATIONSHIP(overdue_check_calls[Check Call Date],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Operations Measures
+		lineageTag: 743224af-0c45-4273-8398-82d1cc673e7c
 
 	column Column
 		isHidden

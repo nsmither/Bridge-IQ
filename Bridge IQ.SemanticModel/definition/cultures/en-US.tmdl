@@ -7239,15 +7239,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "measures_.count_of_overdue_check_call": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "measures_",
-			          "ConceptualProperty": "Count of Overdue Check Call"
-			        }
-			      },
-			      "State": "Generated"
-			    },
 			    "movement": {
 			      "Definition": {
 			        "Binding": {
