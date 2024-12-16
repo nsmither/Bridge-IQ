@@ -413,8 +413,9 @@ table measures_
 			
 			CALCULATE(
 			    DISTINCTCOUNT(movements[id]),
-			    FILTER(movements,movements[status]<>"A"),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    movements[status]<>"A",
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			)
 		formatString: 0
 		lineageTag: 9a92c758-8ba8-4423-a380-55402b47cdf1
@@ -515,7 +516,13 @@ table measures_
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: d3d0a73b-eeb1-4a55-9c16-c4d20e38a90e
 
-	measure 'Count of Callins' = COUNTROWS(callins)
+	measure 'Count of Callins' =
+			
+			CALCULATE(
+			    COUNTROWS(callins),
+			    USERELATIONSHIP(callins[entered_date],'Calendar'[Date]),
+			    USERELATIONSHIP(callins[entered_by],dispatcher_key[McLeod User Code])
+			)
 		formatString: 0
 		lineageTag: 745f6c52-bce7-4aed-a430-abd1d9155a54
 
@@ -1454,6 +1461,52 @@ table measures_
 		formatString: 0
 		displayFolder: Operations Measures
 		lineageTag: 743224af-0c45-4273-8398-82d1cc673e7c
+
+	measure 'Current Carrier Tracking Team' =
+			
+			CALCULATE(
+			    COUNTROWS(job_history),
+			    FILTER(VALUES(job_history[Job Start Date]),job_history[Job Start Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(job_history[Job End Date]), OR(job_history[Job End Date] >= MIN('calendar'[Date]), ISBLANK(job_history[Job End Date]))),
+			    FILTER(job_history,job_history[Division]="CRT-Track and Trace"))
+		formatString: 0
+		lineageTag: 71cd02e2-6da4-4121-977d-e41a58ebf14b
+
+	measure 'Margin per Dispatcher' =
+			
+			CALCULATE(
+			    [Margin],
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code]))
+		displayFolder: Operations Measures
+		lineageTag: 45a905e5-9524-4417-8991-3362af84ecc1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin per Order (Dispatcher)' =
+			
+			CALCULATE(
+			    [Margin Per Order],
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			    )
+		displayFolder: Operations Measures
+		lineageTag: 562c8d18-0a35-470c-9078-900cd3f084b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % per Dispatcher' =
+			
+			CALCULATE(
+			    [Margin %],
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Operations Measures
+		lineageTag: 4e428cdd-0f19-4d35-83bd-c0d27bbf5aab
+
+	measure 'Overdue Check Calls vs Count of Check Calls' = DIVIDE([Count of Overdue Check Calls],[Count of Callins])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Operations Measures
+		lineageTag: 578a3e5e-bf61-4a2d-bf8b-3ae093d1c9d7
 
 	column Column
 		isHidden

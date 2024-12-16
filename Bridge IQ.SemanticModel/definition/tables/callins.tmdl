@@ -74,7 +74,8 @@ table callins
 				    #"Inserted Time" = Table.AddColumn(#"Filtered callins on or after RefreshCutOffDate", "Time", each DateTime.Time([entered_date]), type time),
 				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}}),
 				    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}}),
-				    #"Appended Query" = Table.Combine({#"Extracted Date", historic_callins})
+				    #"Calculated Start of Hour" = Table.TransformColumns(#"Extracted Date",{{"entered_time", Time.StartOfHour, type time}}),
+				    #"Appended Query" = Table.Combine({#"Calculated Start of Hour", historic_callins})
 				in
 				    #"Appended Query"
 

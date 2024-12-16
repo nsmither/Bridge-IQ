@@ -373,3 +373,13 @@ relationship f4b6e82a-2bfa-abb2-305e-7bbc5143fe43
 	fromColumn: orders.entered_user_id
 	toColumn: dispatcher_key.'McLeod User Code'
 
+relationship e5251930-485b-f0d0-4926-3302f3aa7a0a
+	isActive: false
+	fromColumn: callins.entered_by
+	toColumn: dispatcher_key.'McLeod User Code'
+
+relationship fadb546c-038f-7c1d-63cf-70dbeb142463
+	isActive: false
+	fromColumn: customer.salesperson_id
+	toColumn: salesperson_key.'McLeod Salesperson Code'
+

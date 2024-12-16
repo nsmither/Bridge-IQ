@@ -588,13 +588,13 @@
       "ordinal": 4,
       "scrollPosition": {
         "x": 0,
-        "y": 12
+        "y": 0
       },
       "nodes": [
         {
           "location": {
-            "x": 475,
-            "y": 554
+            "x": 174,
+            "y": 487
           },
           "nodeIndex": "orders",
           "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
@@ -663,8 +663,49 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 5,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 274,
+            "y": 69
+          },
+          "nodeIndex": "customer",
+          "nodeLineageTag": "ac556894-2d76-4b17-a7fb-97f07f433a0e",
+          "size": {
+            "height": 463,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 932,
+            "y": 24
+          },
+          "nodeIndex": "salesperson_key",
+          "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 5",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 4",
+  "selectedDiagram": "Layout 5",
   "defaultDiagram": "All tables"
 }

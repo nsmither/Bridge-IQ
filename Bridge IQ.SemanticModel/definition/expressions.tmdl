@@ -463,9 +463,10 @@ expression historic_callins =
 		    #"Filtered callins before RefreshCutOffDate" = Table.SelectRows(#"Removed Other Columns", each [entered_date] < RefreshCutOffDate),
 		    #"Inserted Time" = Table.AddColumn(#"Filtered callins before RefreshCutOffDate", "Time", each DateTime.Time([entered_date]), type time),
 		    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}}),
-		    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}})
+		    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}}),
+		    #"Calculated Start of Hour" = Table.TransformColumns(#"Extracted Date",{{"entered_time", Time.StartOfHour, type time}})
 		in
-		    #"Extracted Date"
+		    #"Calculated Start of Hour"
 	lineageTag: 56bd229e-e47a-4149-814e-6b72b080d909
 	queryGroup: 'Historic Tables'
 
