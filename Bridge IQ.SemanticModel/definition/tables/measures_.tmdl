@@ -1523,6 +1523,7 @@ table measures_
 			ifs
 			```
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: c9b4ce9d-b212-41d3-8b92-8640f89d3c41
 
@@ -1539,6 +1540,7 @@ table measures_
 			    DATEADD('Calendar'[Date],-1,MONTH)
 			)
 			```
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: badea8ac-28cc-460b-a63e-6565293c1147
 
@@ -1551,6 +1553,7 @@ table measures_
 			    DATEADD('Calendar'[Date],-2,MONTH)
 			)
 			```
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: bd03f181-fcb7-4159-a884-b0f22ca9120d
 
@@ -1563,6 +1566,7 @@ table measures_
 			    DATEADD('Calendar'[Date],-3,MONTH)
 			)
 			```
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: 859ed77a-a9f4-47cf-8d90-c0e605509945
 
@@ -1577,6 +1581,7 @@ table measures_
 			    )))
 			```
 		formatString: 0
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: 9dd2a6a1-196e-440d-98f0-051f14a34a0d
 
@@ -1584,6 +1589,7 @@ table measures_
 			
 			[Commission Rate]-[Standard Commission Rate]
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: 682e22f9-9fba-446e-a8af-6f98fd661e0c
 
@@ -1598,6 +1604,7 @@ table measures_
 			    IF([Margin]>=10000,400+(([Margin]-9999)*.105),
 			    IF([Margin]>=5000,(([Margin]-4999)*.08),BLANK()
 			))))))))
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: 3a6d5e4e-dee1-482e-ae8a-c2f5f1e2d3ea
 
@@ -1614,6 +1621,7 @@ table measures_
 			    IF([Margin]>=10000,350+(([Margin]-9999)*.095),
 			    IF([Margin]>=5000,(([Margin]-4999)*.07),BLANK()
 			))))))))
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: 44a287f0-0edd-4fd5-9f43-6b7afba79847
 
@@ -1631,6 +1639,7 @@ table measures_
 			    IF([Margin]>=5000,(([Margin]-4999)*.05),BLANK()
 			))))))))
 			```
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: cabdbae3-add5-48f2-8a1d-09951fbaa9da
 
@@ -1649,6 +1658,7 @@ table measures_
 			    ))))))))
 			```
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
 		displayFolder: Comission Measures
 		lineageTag: a456ebca-df22-469c-8fc2-7f49c5e4cbb3
 
