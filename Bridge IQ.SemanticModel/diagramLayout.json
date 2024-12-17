@@ -374,6 +374,16 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "pay_schedule",
+          "nodeLineageTag": "443d23cd-1878-4ce2-b1f0-cb97d81400f1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
@@ -730,8 +740,49 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 6,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 178,
+            "y": 777
+          },
+          "nodeIndex": "pay_schedule",
+          "nodeLineageTag": "443d23cd-1878-4ce2-b1f0-cb97d81400f1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 498,
+            "y": 200
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "c583c9ce-20dd-43b3-818e-c9d8da9a588a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 6",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 5",
+  "selectedDiagram": "Layout 6",
   "defaultDiagram": "All tables"
 }

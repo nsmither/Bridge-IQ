@@ -232,11 +232,6 @@ relationship 67d7b0ce-f052-2db3-febd-64c18d2d5c79
 	fromColumn: orders.salesperson_id
 	toColumn: salesperson_key.'McLeod Salesperson Code'
 
-relationship 637ca1f2-2edc-451e-ab79-fdb2847dbc89
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Calendar.Date
-	toColumn: LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8.Date
-
 relationship 260fb3f0-b8a2-161b-022b-537a60bcbdf7
 	fromColumn: daily_number_override.Month
 	toColumn: Calendar.Date
@@ -377,4 +372,27 @@ relationship fadb546c-038f-7c1d-63cf-70dbeb142463
 	isActive: false
 	fromColumn: customer.salesperson_id
 	toColumn: salesperson_key.'McLeod Salesperson Code'
+
+relationship 14e715b2-e8b7-477d-bad8-c42bd7a42ed5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: pay_schedule.'Commission Month'
+	toColumn: LocalDateTable_5204cc32-7744-4162-bd7a-37c8843dcd5c.Date
+
+relationship 5e94ac41-9664-4dd5-8b2a-ee99b5b474b1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: pay_schedule.'Pay Date'
+	toColumn: LocalDateTable_984f2224-97c9-4ff5-8864-d5ee44b7d514.Date
+
+relationship b0b1455c-2476-6b04-ba9a-c6e74e62876a
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: pay_schedule.'Commission Month'
+
+relationship 7862f466-b445-a26d-b65e-f39667eca0f3
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: pay_schedule.'Pay Date'
 

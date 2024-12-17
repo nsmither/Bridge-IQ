@@ -11,11 +11,6 @@ table Calendar
 		summarizeBy: none
 		sourceColumn: Date
 
-		variation Variation
-			isDefault
-			relationship: 637ca1f2-2edc-451e-ab79-fdb2847dbc89
-			defaultHierarchy: LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
