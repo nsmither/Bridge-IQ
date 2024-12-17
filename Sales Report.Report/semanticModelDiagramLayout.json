@@ -378,6 +378,16 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "pay_schedule",
+          "nodeLineageTag": "443d23cd-1878-4ce2-b1f0-cb97d81400f1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
@@ -391,7 +401,7 @@
       "ordinal": 1,
       "scrollPosition": {
         "x": 0,
-        "y": 343.52628632960585
+        "y": 102.02641213679482
       },
       "nodes": [
         {
