@@ -1508,6 +1508,150 @@ table measures_
 		displayFolder: Operations Measures
 		lineageTag: 578a3e5e-bf61-4a2d-bf8b-3ae093d1c9d7
 
+	measure 'Commission Rate' = ```
+			
+			VAR new_commission =  
+			IF([Margin Vs Margin Goal Variance]>=0,[Standard Commission Rate],
+			    IF([Margin Vs Margin Goal 1MA]>=0,[Strike One Commissions],
+			    IF([Margin Vs Margin Goal 2MA]>=0,[Strike Two Commissions],
+			    [Strike Three Commissions]
+			)))
+			
+			VAR ifs = IF(MIN('Calendar'[Date])<45688,[Standard Commission Rate],new_commission)
+			
+			RETURN
+			ifs
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Comission Measures
+		lineageTag: c9b4ce9d-b212-41d3-8b92-8640f89d3c41
+
+	measure 'Margin Vs Margin Goal Variance' = [Margin]-[Margin Goal]
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 2361c828-7356-4d14-8a9c-b6835eee2164
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Vs Margin Goal 1MA' = ```
+			
+			CALCULATE( 
+			    [Margin Vs Margin Goal Variance],
+			    DATEADD('Calendar'[Date],-1,MONTH)
+			)
+			```
+		displayFolder: Comission Measures
+		lineageTag: badea8ac-28cc-460b-a63e-6565293c1147
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Vs Margin Goal 2MA' = ```
+			
+			CALCULATE( 
+			    [Margin Vs Margin Goal Variance],
+			    DATEADD('Calendar'[Date],-2,MONTH)
+			)
+			```
+		displayFolder: Comission Measures
+		lineageTag: bd03f181-fcb7-4159-a884-b0f22ca9120d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Vs Margin Goal 3MA' = ```
+			
+			CALCULATE( 
+			    [Margin Vs Margin Goal Variance],
+			    DATEADD('Calendar'[Date],-3,MONTH)
+			)
+			```
+		displayFolder: Comission Measures
+		lineageTag: 859ed77a-a9f4-47cf-8d90-c0e605509945
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Commission Stikes' = ```
+			
+			    IF([Margin Vs Margin Goal Variance]>=0,BLANK(),
+			    IF([Margin Vs Margin Goal 1MA]>=0,1,
+			    IF([Margin Vs Margin Goal 2MA]>=0,2,
+			    3
+			    )))
+			```
+		formatString: 0
+		displayFolder: Comission Measures
+		lineageTag: 9dd2a6a1-196e-440d-98f0-051f14a34a0d
+
+	measure 'Commission Deductions' =
+			
+			[Commission Rate]-[Standard Commission Rate]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Comission Measures
+		lineageTag: 682e22f9-9fba-446e-a8af-6f98fd661e0c
+
+	measure 'Strike One Commissions' =
+			
+			IF([Margin]>=200000,40726+(([Margin]-199999)*.28),
+			    IF([Margin]>=150000,27976+(([Margin]-149999)*.255),
+			    IF([Margin]>=100000,16476+(([Margin]-99999)*.23),
+			    IF([Margin]>=50000,6225+(([Margin]-49999)*.205),
+			    IF([Margin]>=20000,1575+(([Margin]-19999)*.155),
+			    IF([Margin]>=15000,925+(([Margin]-14999)*.13),
+			    IF([Margin]>=10000,400+(([Margin]-9999)*.105),
+			    IF([Margin]>=5000,(([Margin]-4999)*.08),BLANK()
+			))))))))
+		displayFolder: Comission Measures
+		lineageTag: 3a6d5e4e-dee1-482e-ae8a-c2f5f1e2d3ea
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Strike Two Commissions' =
+			
+			IF([Margin]>=200000,3877++(([Margin]-199999)*.27),
+			    IF([Margin]>=150000,26526+(([Margin]-149999)*.245),
+			    IF([Margin]>=100000,15526+(([Margin]-99999)*.22),
+			    IF([Margin]>=50000,5775+(([Margin]-49999)*.195),
+			    IF([Margin]>=20000,1425+(([Margin]-19999)*.145),
+			    IF([Margin]>=15000,825+(([Margin]-14999)*.12),
+			    IF([Margin]>=10000,350+(([Margin]-9999)*.095),
+			    IF([Margin]>=5000,(([Margin]-4999)*.07),BLANK()
+			))))))))
+		displayFolder: Comission Measures
+		lineageTag: 44a287f0-0edd-4fd5-9f43-6b7afba79847
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Strike Three Commissions' = ```
+			
+			    IF([Margin]>=200000,34876+(([Margin]-199999)*.25),
+			    IF([Margin]>=150000,23626+(([Margin]-149999)*.225),
+			    IF([Margin]>=100000,13626+(([Margin]-99999)*.20),
+			    IF([Margin]>=50000,4875+(([Margin]-49999)*.175),
+			    IF([Margin]>=20000,1125+(([Margin]-19999)*.125),
+			    IF([Margin]>=15000,625+(([Margin]-14999)*.1),
+			    IF([Margin]>=10000,250+(([Margin]-9999)*.075),
+			    IF([Margin]>=5000,(([Margin]-4999)*.05),BLANK()
+			))))))))
+			```
+		displayFolder: Comission Measures
+		lineageTag: cabdbae3-add5-48f2-8a1d-09951fbaa9da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Standard Commission Rate' = ```
+			
+			    IF([Margin]>=200000,44626+(([Margin]-199999)*.3),
+			    IF([Margin]>=150000,30876+(([Margin]-149999)*.275),
+			    IF([Margin]>=100000,18376+(([Margin]-99999)*.25),
+			    IF([Margin]>=50000,7126+(([Margin]-49999)*.225),
+			    IF([Margin]>=20000,1875+(([Margin]-19999)*.175),
+			    IF([Margin]>=15000,1125+(([Margin]-14999)*.15),
+			    IF([Margin]>=10000,500+(([Margin]-9999)*.125),
+			    IF([Margin]>=5000,(([Margin]-4999)*.1),BLANK()
+			    ))))))))
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Comission Measures
+		lineageTag: a456ebca-df22-469c-8fc2-7f49c5e4cbb3
+
 	column Column
 		isHidden
 		formatString: 0

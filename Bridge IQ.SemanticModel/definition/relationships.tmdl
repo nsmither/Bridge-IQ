@@ -358,11 +358,6 @@ relationship AutoDetected_10b6f6c7-cb12-43a1-9141-501dae8dddae
 	fromColumn: employees.'McLeod User Code'
 	toColumn: dispatcher_key.'McLeod User Code'
 
-relationship AutoDetected_ea43a8cd-7f54-42b9-96b6-9c6bee4e0370
-	isActive: false
-	fromColumn: dispatcher_key.'McLeod Salesperson Code'
-	toColumn: salesperson_key.'McLeod Salesperson Code'
-
 relationship 1f5bca13-1055-607a-5967-aaf6ba56bc12
 	isActive: false
 	fromColumn: movements.dispatcher_user_id

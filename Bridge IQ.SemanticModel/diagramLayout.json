@@ -673,26 +673,52 @@
       "nodes": [
         {
           "location": {
-            "x": 274,
-            "y": 69
+            "x": 621,
+            "y": 709
           },
-          "nodeIndex": "customer",
-          "nodeLineageTag": "ac556894-2d76-4b17-a7fb-97f07f433a0e",
+          "nodeIndex": "salesperson_key",
+          "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
           "size": {
-            "height": 463,
+            "height": 300,
             "width": 234
           },
           "zIndex": 0
         },
         {
           "location": {
-            "x": 932,
-            "y": 24
+            "x": 897,
+            "y": 502
           },
-          "nodeIndex": "salesperson_key",
-          "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
+          "nodeIndex": "job_history",
+          "nodeLineageTag": "0d8addef-5917-4ed8-92a6-3a017ca615e0",
+          "size": {
+            "height": 295,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 454,
+            "y": 0
+          },
+          "nodeIndex": "employees",
+          "nodeLineageTag": "0af26c3a-e69f-4de1-a4d5-3c1431c72fc3",
           "size": {
             "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 70,
+            "y": 385
+          },
+          "nodeIndex": "dispatcher_key",
+          "nodeLineageTag": "ff69ace9-66a1-4c1b-b797-0305f2b98a1b",
+          "size": {
+            "height": 438,
             "width": 234
           },
           "zIndex": 0
