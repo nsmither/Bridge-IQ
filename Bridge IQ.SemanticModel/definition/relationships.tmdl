@@ -396,3 +396,8 @@ relationship 7862f466-b445-a26d-b65e-f39667eca0f3
 	fromColumn: Calendar.Date
 	toColumn: pay_schedule.'Pay Date'
 
+relationship 26351e92-ac9c-f1e9-1b84-ceb0f89e403c
+	isActive: false
+	fromColumn: crm.x_studio_originally_passed_to
+	toColumn: salesperson_key.Name
+

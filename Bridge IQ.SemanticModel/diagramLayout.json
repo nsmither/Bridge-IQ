@@ -781,8 +781,49 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 7,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 346,
+            "y": 66
+          },
+          "nodeIndex": "crm",
+          "nodeLineageTag": "d01f0c30-7638-4790-9321-156b67073a2b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 900,
+            "y": 0
+          },
+          "nodeIndex": "salesperson_key",
+          "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 7",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 6",
+  "selectedDiagram": "Layout 7",
   "defaultDiagram": "All tables"
 }
