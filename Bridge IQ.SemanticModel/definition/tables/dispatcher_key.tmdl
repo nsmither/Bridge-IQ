@@ -130,6 +130,14 @@ table dispatcher_key
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'users.revenue_code_id'
+		dataType: string
+		lineageTag: 671118c3-d10c-474e-97e0-9e6cbabf1ef7
+		summarizeBy: none
+		sourceColumn: users.revenue_code_id
+
+		annotation SummarizationSetBy = Automatic
+
 	partition dispatcher_key = m
 		mode: import
 		source =

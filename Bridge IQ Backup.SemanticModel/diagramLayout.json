@@ -925,7 +925,7 @@
       "ordinal": 7,
       "scrollPosition": {
         "x": 0,
-        "y": 0
+        "y": 189
       },
       "nodes": [
         {
@@ -987,8 +987,101 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 8,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 337.1799170979391,
+            "y": 412.29846645826137
+          },
+          "nodeIndex": "crm",
+          "nodeLineageTag": "d01f0c30-7638-4790-9321-156b67073a2b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 625.32056410139819,
+            "y": 506.42439130423634
+          },
+          "nodeIndex": "behaviors",
+          "nodeLineageTag": "0efa026f-8530-438d-a169-afe186397b78",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 352.09484176092258,
+            "y": 0
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "c583c9ce-20dd-43b3-818e-c9d8da9a588a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10,
+            "y": 710.77864844466
+          },
+          "nodeIndex": "customer",
+          "nodeLineageTag": "ac556894-2d76-4b17-a7fb-97f07f433a0e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 65.501137710088415,
+            "y": 10.555560747467212
+          },
+          "nodeIndex": "salesperson_key",
+          "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 824.37104836912249,
+            "y": -10
+          },
+          "nodeIndex": "crm_stages",
+          "nodeLineageTag": "3fe647cf-f0e9-4ca1-931e-2f3de372b7cb",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 8",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 7",
+  "selectedDiagram": "Layout 8",
   "defaultDiagram": "All tables"
 }

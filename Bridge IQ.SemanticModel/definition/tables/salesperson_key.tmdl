@@ -120,15 +120,24 @@ table salesperson_key
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'users.revenue_code_id'
+		dataType: string
+		lineageTag: 4e601ddc-2e98-43d2-b236-7af85d2515c8
+		summarizeBy: none
+		sourceColumn: users.revenue_code_id
+
+		annotation SummarizationSetBy = Automatic
+
 	partition salesperson_key = m
 		mode: import
 		source =
 				let
 				    Source = employees,
 				    #"Filtered Rows" = Table.SelectRows(Source, each ([McLeod Salesperson Code] <> null)),
-				    #"Trimmed Text" = Table.TransformColumns(#"Filtered Rows",{{"Name", Text.Trim, type text}})
+				    #"Trimmed Text" = Table.TransformColumns(#"Filtered Rows",{{"Name", Text.Trim, type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text",{{"Name", Text.Upper, type text}, {"Reporting to", Text.Upper, type text}})
 				in
-				    #"Trimmed Text"
+				    #"Uppercased Text"
 
 	annotation PBI_NavigationStepName = Navigation
 

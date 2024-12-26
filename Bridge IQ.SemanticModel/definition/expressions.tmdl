@@ -641,3 +641,20 @@ expression historic_behaviors =
 
 	annotation PBI_ResultType = Table
 
+expression users =
+		let
+		    Source = Sql.Database("bl-appdb", "lme"),
+		    dbo_users = Source{[Schema="dbo",Item="users"]}[Data],
+		    #"Filtered Rows" = Table.SelectRows(dbo_users, each ([web_user_type] = "U")),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"revenue_code_id", "id"}),
+		    #"Uppercased Text" = Table.TransformColumns(#"Removed Other Columns",{{"id", Text.Upper, type text}}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Uppercased Text",{{"id", Text.Trim, type text}}),
+		    #"Cleaned Text" = Table.TransformColumns(#"Trimmed Text",{{"id", Text.Clean, type text}})
+		in
+		    #"Cleaned Text"
+	lineageTag: b0d9ea90-2639-4ad1-97d0-43f2699756a9
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

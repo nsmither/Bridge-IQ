@@ -1669,6 +1669,10 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Margin MTD Goal'
+		displayFolder: Sales Measures\Sales Goals
+		lineageTag: 797239d8-1e2c-4255-952b-497e5063d0fb
+
 	column Column
 		isHidden
 		formatString: 0

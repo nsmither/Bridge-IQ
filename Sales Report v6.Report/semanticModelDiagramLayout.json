@@ -401,7 +401,7 @@
       "ordinal": 1,
       "scrollPosition": {
         "x": 0,
-        "y": 102.02641213679482
+        "y": 23.544556646952653
       },
       "nodes": [
         {
@@ -445,8 +445,8 @@
         },
         {
           "location": {
-            "x": 179.80932078855494,
-            "y": 628.67820375614531
+            "x": 1012.8381583450225,
+            "y": 118.54614307217116
           },
           "nodeIndex": "salesperson_key",
           "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
@@ -463,6 +463,19 @@
           },
           "nodeIndex": "movements",
           "nodeLineageTag": "4d68b890-a71e-49b5-b4ab-a9a72c28eef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1122.0104947727862,
+            "y": 546.3088762884247
+          },
+          "nodeIndex": "orders",
+          "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
           "size": {
             "height": 300,
             "width": 234
