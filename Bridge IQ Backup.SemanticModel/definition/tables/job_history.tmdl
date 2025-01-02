@@ -107,9 +107,10 @@ table job_history
 				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"End Date", "TerminationDate"}),
 				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","0000-00-00","",Replacer.ReplaceValue,{"Job End Date"}),
 				    #"Removed Columns1" = Table.RemoveColumns(#"Replaced Value",{"Name", "Prefered Name"}),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns1",{{"Job End Date", type date}})
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns1",{{"Job End Date", type date}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Changed Type1","Development Team Sales","Development Team",Replacer.ReplaceText,{"Division"})
 				in
-				    #"Changed Type1"
+				    #"Replaced Value1"
 
 	annotation PBI_NavigationStepName = Navigation
 

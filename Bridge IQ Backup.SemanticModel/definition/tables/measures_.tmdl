@@ -114,7 +114,8 @@ table measures_
 			CALCULATE(
 			    COUNTROWS(employees),
 			    FILTER(VALUES(employees[Hire Date]),employees[Hire Date] <= MAX('calendar'[Date])),
-			    FILTER(VALUES(employees[Termination Date]), OR(employees[Termination Date] >= MIN('calendar'[Date]), ISBLANK(employees[Termination Date]))))
+			    FILTER(VALUES(employees[Termination Date]), OR(employees[Termination Date] >= MIN('calendar'[Date]), ISBLANK(employees[Termination Date])))
+			)
 		formatString: 0
 		displayFolder: HR
 		lineageTag: 7f4fea41-84eb-4da1-a4e5-10b82bc756e7
@@ -412,11 +413,12 @@ table measures_
 			
 			CALCULATE(
 			    DISTINCTCOUNT(movements[id]),
-			    FILTER(movements,movements[status]<>"Available"),
-			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
-			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date])
-			))
+			    movements[status]<>"A",
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			)
 		formatString: 0
+		displayFolder: Movement Measures
 		lineageTag: 9a92c758-8ba8-4423-a380-55402b47cdf1
 
 	measure 'Count of orders covered' =
@@ -459,19 +461,36 @@ table measures_
 	measure 'Count of Trackable Movements' = ```
 			
 			Var count_ftl = 
-			    CALCULATE([Count of Movements Booked],
+			    CALCULATE(
+			        DISTINCTCOUNT(movements[id]),
+			        movements[status]<>"A",
 			        orders[order_type_id]="FTL",
-			        orders[bill_distance]>50)
+			        orders[bill_distance]>50,
+			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			    )
 			Var count_bw = 
-			    CALCULATE([Count of Movements Booked],
+			    CALCULATE(
+			        DISTINCTCOUNT(movements[id]),
+			        movements[status]<>"A",
 			        orders[order_type_id]="BW",
-			        orders[bill_distance]>50)
+			        orders[bill_distance]>50,
+			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			    )
 			        
 			Var count_partials =
-			    CALCULATE([Count of Movements Booked],
+			    CALCULATE(
+			        DISTINCTCOUNT(movements[id]),
+			        movements[status]<>"A",
 			        orders[order_type_id]="PARTIAL",
-			        orders[bill_distance]>50)
+			        orders[bill_distance]>50,
+			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			    )
+			
 			Var count_of_trackable_movements = count_ftl+count_bw+count_partials
+			
 			RETURN
 			count_of_trackable_movements
 			```
@@ -482,8 +501,13 @@ table measures_
 	/// The distinct count of callin movements that were entered by loadmaster and has at least one tracking ping
 	measure 'Count of movements with 3 or more pings' =
 			
-			CALCULATE(DISTINCTCOUNT(callins[movement_id]),
-			FILTER(GROUPBY(callins,callins[movement_id]),[Count of tracking pings]>=3))
+			CALCULATE(
+			    DISTINCTCOUNT(callins[movement_id]),
+			    FILTER(GROUPBY(callins,callins[movement_id]),[Count of tracking pings]>=3),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code]
+			))
+		formatString: 0
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: df5754d3-b223-4231-bb8a-39def543c971
 
@@ -493,26 +517,21 @@ table measures_
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: d3d0a73b-eeb1-4a55-9c16-c4d20e38a90e
 
-	measure 'Count of Callins' = COUNTROWS(callins)
+	measure 'Count of Callins' =
+			
+			CALCULATE(
+			    COUNTROWS(callins),
+			    USERELATIONSHIP(callins[entered_date],'Calendar'[Date]),
+			    USERELATIONSHIP(callins[entered_by],dispatcher_key[McLeod User Code])
+			)
 		formatString: 0
 		lineageTag: 745f6c52-bce7-4aed-a430-abd1d9155a54
 
 	/// Divides count of movements with 3 or more ping by count of trackable movements
 	measure 'Percentage Of movement with 3 or more pings' = DIVIDE([Count of movements with 3 or more pings],[Count of Trackable Movements])
+		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: 06663e34-2ac5-4c2d-b23e-2f4cdab296d3
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Count of Overdue Check Call' =
-			
-			CALCULATE(
-			    COUNTROWS(overdue_check_calls),
-			    FILTER(overdue_check_calls,overdue_check_calls[Check Call Date]>=MIN('Calendar'[Date])),
-			    FILTER(overdue_check_calls,overdue_check_calls[Check Call Date]<=MAX('Calendar'[Date]))
-			)
-		formatString: 0
-		lineageTag: 2df9d954-b218-472b-b5c9-66cf04dec2ff
 
 	measure 'Date Diff order_entered_date vs shipper_sched_early_date' =
 			
@@ -546,8 +565,7 @@ table measures_
 	measure 'Margin Goal' = ```
 			CALCULATE(
 			    SUM(margin_load_count_goals[Margin Goal]),
-			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
-			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
+			    USERELATIONSHIP(margin_load_count_goals[Month],'Calendar'[Date])
 			)
 			
 			```
@@ -1363,6 +1381,347 @@ table measures_
 		formatString: 0
 		displayFolder: HR
 		lineageTag: 8c52c57f-8be2-4a63-bb16-583ee6d08bcc
+
+	measure 'Max Trackable Movements Grouped by dispatcher' = ```
+			
+			    CALCULATE(
+			        MAXX(
+			            GROUPBY(employees,employees[Name]),
+			            [Count of Trackable Movements])
+			)
+			```
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 8f162413-852d-402c-9d25-253c72ef8813
+
+	measure 'Max trackable Movements grouped by day' = ```
+			
+			    CALCULATE(
+			        MAXX(
+			            GROUPBY('calendar','calendar'[Date]),
+			            [Count of Trackable Movements]))
+			```
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 826c46a5-8a6c-4fe0-ad2e-727c2254d6b2
+
+	measure 'Count of SOPCAR Issues' =
+			
+			CALCULATE(
+			    COUNTROWS(sop_issues),
+			    sop_issues[Movement ID],
+			    sop_issues[SOP Type]= "SOPCAR",
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 06099b06-b567-4df5-ac37-307c760a22b6
+
+	measure 'Count of SOPP Issues' =
+			
+			CALCULATE(
+			    COUNTROWS(sop_issues),
+			    sop_issues[Movement ID],
+			    sop_issues[SOP Type]= "SOPP",
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date]),
+			    USERELATIONSHIP(orders[entered_user_id],dispatcher_key[McLeod User Code])
+			)
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 958dcfad-b5a3-4618-a8f1-c2e4c598c810
+
+	measure 'Count of movements with 3 or more pings test' =
+			
+			CALCULATE(
+			    COUNTAX(
+			    callins,
+			    DISTINCTCOUNT(callins[movement_id])),
+			    callins[entered_by]="loadmaster")
+		formatString: 0
+		displayFolder: Movement Measures\Callins Measures
+		lineageTag: 4941b666-49d4-47e0-8193-4752cf31b7aa
+
+	measure 'Count of SOPD Issues' =
+			
+			CALCULATE(
+			    COUNTROWS(sop_issues),
+			    sop_issues[Movement ID],
+			    sop_issues[SOP Type]= "SOPD",
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date]),
+			    USERELATIONSHIP(orders[entered_user_id],dispatcher_key[McLeod User Code]))
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 106146c5-55dc-453b-ab38-14b62ff74db1
+
+	measure 'Count of Overdue Check Calls' =
+			
+			CALCULATE(
+			    COUNTROWS(overdue_check_calls),
+			    USERELATIONSHIP(overdue_check_calls[Check Call Date],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Operations Measures
+		lineageTag: 743224af-0c45-4273-8398-82d1cc673e7c
+
+	measure 'Current Carrier Tracking Team' =
+			
+			CALCULATE(
+			    COUNTROWS(job_history),
+			    FILTER(VALUES(job_history[Job Start Date]),job_history[Job Start Date] <= MAX('calendar'[Date])),
+			    FILTER(VALUES(job_history[Job End Date]), OR(job_history[Job End Date] >= MIN('calendar'[Date]), ISBLANK(job_history[Job End Date]))),
+			    FILTER(job_history,job_history[Division]="CRT-Track and Trace"))
+		formatString: 0
+		lineageTag: 71cd02e2-6da4-4121-977d-e41a58ebf14b
+
+	measure 'Margin per Dispatcher' =
+			
+			CALCULATE(
+			    [Margin],
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code]))
+		displayFolder: Operations Measures
+		lineageTag: 45a905e5-9524-4417-8991-3362af84ecc1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin per Order (Dispatcher)' =
+			
+			CALCULATE(
+			    [Margin Per Order],
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			    )
+		displayFolder: Operations Measures
+		lineageTag: 562c8d18-0a35-470c-9078-900cd3f084b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % per Dispatcher' =
+			
+			CALCULATE(
+			    [Margin %],
+			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Operations Measures
+		lineageTag: 4e428cdd-0f19-4d35-83bd-c0d27bbf5aab
+
+	measure 'Overdue Check Calls vs Count of Check Calls' = DIVIDE([Count of Overdue Check Calls],[Count of Callins])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Operations Measures
+		lineageTag: 578a3e5e-bf61-4a2d-bf8b-3ae093d1c9d7
+
+	measure 'Commission Rate' = ```
+			
+			VAR new_commission =  
+			IF([Margin Vs Margin Goal Variance]>=0,[Standard Commission Rate],
+			    IF([Margin Vs Margin Goal 1MA]>=0,[Strike One Commissions],
+			    IF([Margin Vs Margin Goal 2MA]>=0,[Strike Two Commissions],
+			    [Strike Three Commissions]
+			)))
+			
+			VAR ifs = IF(MIN('Calendar'[Date])<45688,[Standard Commission Rate],new_commission)
+			
+			RETURN
+			ifs
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: c9b4ce9d-b212-41d3-8b92-8640f89d3c41
+
+	measure 'Margin Vs Margin Goal Variance' = [Margin]-[Margin Goal]
+		displayFolder: Sales Measures\Sales Goals\Margin
+		lineageTag: 2361c828-7356-4d14-8a9c-b6835eee2164
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Vs Margin Goal 1MA' = ```
+			
+			CALCULATE( 
+			    [Margin Vs Margin Goal Variance],
+			    DATEADD('Calendar'[Date],-1,MONTH)
+			)
+			```
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: badea8ac-28cc-460b-a63e-6565293c1147
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Vs Margin Goal 2MA' = ```
+			
+			CALCULATE( 
+			    [Margin Vs Margin Goal Variance],
+			    DATEADD('Calendar'[Date],-2,MONTH)
+			)
+			```
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: bd03f181-fcb7-4159-a884-b0f22ca9120d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Vs Margin Goal 3MA' = ```
+			
+			CALCULATE( 
+			    [Margin Vs Margin Goal Variance],
+			    DATEADD('Calendar'[Date],-3,MONTH)
+			)
+			```
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: 859ed77a-a9f4-47cf-8d90-c0e605509945
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Commission Stikes' = ```
+			
+			    IF([Margin Vs Margin Goal Variance]>=0,BLANK(),
+			    IF([Margin Vs Margin Goal 1MA]>=0,1,
+			    IF([Margin Vs Margin Goal 2MA]>=0,2,
+			    3
+			    )))
+			```
+		formatString: 0
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: 9dd2a6a1-196e-440d-98f0-051f14a34a0d
+
+	measure 'Commission Deductions' =
+			
+			[Commission Rate]-[Standard Commission Rate]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: 682e22f9-9fba-446e-a8af-6f98fd661e0c
+
+	measure 'Strike One Commissions' =
+			
+			IF([Margin]>=200000,40726+(([Margin]-199999)*.28),
+			    IF([Margin]>=150000,27976+(([Margin]-149999)*.255),
+			    IF([Margin]>=100000,16476+(([Margin]-99999)*.23),
+			    IF([Margin]>=50000,6225+(([Margin]-49999)*.205),
+			    IF([Margin]>=20000,1575+(([Margin]-19999)*.155),
+			    IF([Margin]>=15000,925+(([Margin]-14999)*.13),
+			    IF([Margin]>=10000,400+(([Margin]-9999)*.105),
+			    IF([Margin]>=5000,(([Margin]-4999)*.08),BLANK()
+			))))))))
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: 3a6d5e4e-dee1-482e-ae8a-c2f5f1e2d3ea
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Strike Two Commissions' =
+			
+			IF([Margin]>=200000,3877++(([Margin]-199999)*.27),
+			    IF([Margin]>=150000,26526+(([Margin]-149999)*.245),
+			    IF([Margin]>=100000,15526+(([Margin]-99999)*.22),
+			    IF([Margin]>=50000,5775+(([Margin]-49999)*.195),
+			    IF([Margin]>=20000,1425+(([Margin]-19999)*.145),
+			    IF([Margin]>=15000,825+(([Margin]-14999)*.12),
+			    IF([Margin]>=10000,350+(([Margin]-9999)*.095),
+			    IF([Margin]>=5000,(([Margin]-4999)*.07),BLANK()
+			))))))))
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: 44a287f0-0edd-4fd5-9f43-6b7afba79847
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Strike Three Commissions' = ```
+			
+			    IF([Margin]>=200000,34876+(([Margin]-199999)*.25),
+			    IF([Margin]>=150000,23626+(([Margin]-149999)*.225),
+			    IF([Margin]>=100000,13626+(([Margin]-99999)*.20),
+			    IF([Margin]>=50000,4875+(([Margin]-49999)*.175),
+			    IF([Margin]>=20000,1125+(([Margin]-19999)*.125),
+			    IF([Margin]>=15000,625+(([Margin]-14999)*.1),
+			    IF([Margin]>=10000,250+(([Margin]-9999)*.075),
+			    IF([Margin]>=5000,(([Margin]-4999)*.05),BLANK()
+			))))))))
+			```
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: cabdbae3-add5-48f2-8a1d-09951fbaa9da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Standard Commission Rate' = ```
+			
+			    IF([Margin]>=200000,44626+(([Margin]-199999)*.3),
+			    IF([Margin]>=150000,30876+(([Margin]-149999)*.275),
+			    IF([Margin]>=100000,18376+(([Margin]-99999)*.25),
+			    IF([Margin]>=50000,7126+(([Margin]-49999)*.225),
+			    IF([Margin]>=20000,1875+(([Margin]-19999)*.175),
+			    IF([Margin]>=15000,1125+(([Margin]-14999)*.15),
+			    IF([Margin]>=10000,500+(([Margin]-9999)*.125),
+			    IF([Margin]>=5000,(([Margin]-4999)*.1),BLANK()
+			    ))))))))
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: a456ebca-df22-469c-8fc2-7f49c5e4cbb3
+
+	measure '10% Commission' = [Margin]*.1
+		isHidden
+		displayFolder: Comission Measures
+		lineageTag: a841ab9d-e69e-4100-82e5-e7cdf98e2bc9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin MTD Goal'
+		displayFolder: Sales Measures\Sales Goals
+		lineageTag: 797239d8-1e2c-4255-952b-497e5063d0fb
+
+	measure 'Count of SOPP and SOPD' = ```
+			
+			VAR count_sop = 
+			CALCULATE(
+			    [Count of SOPD Issues]+[Count of SOPP Issues],
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
+			
+			VAR ifs = 
+			IF(count_sop>=1,count_sop,0)
+			
+			RETURN
+			ifs
+			```
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 336b0fed-4a4b-4f02-baf1-b8a6a12114d7
+
+	measure 'Count of DNC' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(movements[id]),
+			    movements[dnc]=TRUE(),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Operations Measures\DNC
+		lineageTag: d44ba655-752c-4034-a726-23641e6a4bea
+
+	measure 'DNC %' =
+			
+			DIVIDE(
+			    [Count of DNC],
+			    [Count of Movements Booked]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Operations Measures\DNC
+		lineageTag: 49a1de4f-0a01-4e1d-96fb-e678577e4301
+
+	measure 'Count of Movements Booked All Time' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(movements[id]),
+			    movements[status]<>"A"
+			    )
+		formatString: 0
+		displayFolder: Movement Measures
+		lineageTag: 43bbf707-aa19-44e8-b5f0-a73ff1c88905
 
 	column Column
 		isHidden

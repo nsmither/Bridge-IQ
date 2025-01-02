@@ -396,3 +396,7 @@ relationship 5bcae216-568f-9183-68ca-54fcb10620d3
 	fromColumn: crm.x_studio_lead_passed_date
 	toColumn: Calendar.Date
 
+relationship 5ecbe4d8-a96b-f32b-3c0f-b5a97190a921
+	fromColumn: movements.override_payee_id
+	toColumn: carrier_key.id
+

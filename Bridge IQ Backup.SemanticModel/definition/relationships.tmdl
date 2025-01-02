@@ -151,12 +151,6 @@ relationship 4a96cf76-d46c-91c7-0346-12330f400b79
 	fromColumn: salesperson_key.'Termination Date'
 	toColumn: Calendar.Date
 
-relationship 0f6ed619-f10e-89b5-6047-9c7b87b6393e
-	crossFilteringBehavior: bothDirections
-	toCardinality: many
-	fromColumn: employees.'McLeod User Code'
-	toColumn: movements.dispatcher_user_id
-
 relationship 8714dc3c-4744-58cf-30fd-cc1bd116d520
 	isActive: false
 	fromColumn: callins.entered_date
@@ -225,10 +219,6 @@ relationship AutoDetected_abefa4b7-b384-4af1-a7e0-a9bdd0b3cc3d
 	fromColumn: account_rep.wolf_pack
 	toColumn: wolf_pack.wolf_pack
 
-relationship 991719b6-837f-b38c-bffb-f9fd5d5742fd
-	fromColumn: orders.revenue_code_id
-	toColumn: rev_codes.rev_code_id
-
 relationship 328ffb62-6ce8-4861-9f4b-2ef8226436f6
 	joinOnDateBehavior: datePartOnly
 	fromColumn: observed_holidays.'Observed Holidays'
@@ -237,11 +227,6 @@ relationship 328ffb62-6ce8-4861-9f4b-2ef8226436f6
 relationship 67d7b0ce-f052-2db3-febd-64c18d2d5c79
 	fromColumn: orders.salesperson_id
 	toColumn: salesperson_key.'McLeod Salesperson Code'
-
-relationship 637ca1f2-2edc-451e-ab79-fdb2847dbc89
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Calendar.Date
-	toColumn: LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8.Date
 
 relationship 260fb3f0-b8a2-161b-022b-537a60bcbdf7
 	fromColumn: daily_number_override.Month
@@ -272,10 +257,6 @@ relationship 4356cecc-3a49-50e0-30e2-1296be23ba81
 	fromColumn: behaviors.author_id
 	toColumn: salesperson_key.Name
 
-relationship aacf4ff0-fc3e-0beb-269b-ca474916397a
-	fromColumn: behaviors.res_id
-	toColumn: crm.id
-
 relationship 8577c885-ec16-806b-b3e5-2a66ee2d2afe
 	fromColumn: customer_margin_goal.Month
 	toColumn: Calendar.Date
@@ -288,45 +269,6 @@ relationship a2468aca-e09d-24fe-5861-daa212106492
 	fromColumn: customer_margin_goal.Salesperson
 	toColumn: salesperson_key.Name
 
-relationship 28b151d4-c83b-5fe6-ab8c-8f34c0ad096f
-	isActive: false
-	fromColumn: crm.activity_date_deadline
-	toColumn: Calendar.Date
-
-relationship 76fb1e35-dc97-f164-745b-f66ec570a22f
-	isActive: false
-	fromColumn: crm.date_open
-	toColumn: Calendar.Date
-
-relationship d26e925d-6b05-aa7c-ddcb-180058c0aaf4
-	isActive: false
-	fromColumn: crm.'Last Stage Change'
-	toColumn: Calendar.Date
-
-relationship 56caf45c-1117-2555-3eda-f162db8d9344
-	isActive: false
-	fromColumn: crm.x_studio_enrichment_date
-	toColumn: Calendar.Date
-
-relationship f0f2a2f2-b854-9a5b-1dc6-62d04c401f02
-	isActive: false
-	fromColumn: crm.x_studio_lead_passed_date
-	toColumn: Calendar.Date
-
-relationship a618527b-370a-28ff-869a-7bf805376b00
-	crossFilteringBehavior: bothDirections
-	fromColumn: crm.x_studio_mcleod_code
-	toColumn: customer.id
-
-relationship 3be77349-822b-ab27-80a0-d0554fb998c8
-	isActive: false
-	fromColumn: crm.user_id
-	toColumn: salesperson_key.Name
-
-relationship d1dd21a1-19d0-3131-e3b1-c2400b27bd0c
-	fromColumn: crm.Stage
-	toColumn: crm_stages.'Stage Name'
-
 relationship AutoDetected_8e587438-2a6b-4588-b4c6-9e458e209910
 	fromColumn: healthy_pipeline_goals.Stage
 	toColumn: crm_stages.'Stage Name'
@@ -338,5 +280,119 @@ relationship 3e8afa0a-dbfe-d267-4bad-71cf3030a35c
 relationship e7de55f3-7932-fa99-43dd-f343443de0d7
 	isActive: false
 	fromColumn: behaviors.'Start of Month'
+	toColumn: Calendar.Date
+
+relationship 887cd992-832e-9981-0f13-f18c3c4a0adf
+	crossFilteringBehavior: bothDirections
+	fromColumn: sop_issues.'Movement ID'
+	toColumn: movements.id
+
+relationship 6a4aa77d-52ca-87fc-c347-8193c089f98a
+	isActive: false
+	fromColumn: sop_issues.Date_time
+	toColumn: Calendar.Date
+
+relationship 22881cbf-eb4e-4f66-afd5-a0ec21a1eb7c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dispatcher_key.'Hire Date'
+	toColumn: LocalDateTable_602d0dc9-a979-4162-a15e-cf937935b0b7.Date
+
+relationship 89783f8c-5a09-40cd-8fe0-005c7da2b54b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dispatcher_key.'Termination Date'
+	toColumn: LocalDateTable_7e773c2c-a1bd-4f2f-b9f7-efdc6b4a7c73.Date
+
+relationship AutoDetected_10b6f6c7-cb12-43a1-9141-501dae8dddae
+	fromColumn: employees.'McLeod User Code'
+	toColumn: dispatcher_key.'McLeod User Code'
+
+relationship 1f5bca13-1055-607a-5967-aaf6ba56bc12
+	isActive: false
+	fromColumn: movements.dispatcher_user_id
+	toColumn: dispatcher_key.'McLeod User Code'
+
+relationship f4b6e82a-2bfa-abb2-305e-7bbc5143fe43
+	isActive: false
+	fromColumn: orders.entered_user_id
+	toColumn: dispatcher_key.'McLeod User Code'
+
+relationship e5251930-485b-f0d0-4926-3302f3aa7a0a
+	isActive: false
+	fromColumn: callins.entered_by
+	toColumn: dispatcher_key.'McLeod User Code'
+
+relationship fadb546c-038f-7c1d-63cf-70dbeb142463
+	isActive: false
+	fromColumn: customer.salesperson_id
+	toColumn: salesperson_key.'McLeod Salesperson Code'
+
+relationship 14e715b2-e8b7-477d-bad8-c42bd7a42ed5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: pay_schedule.'Commission Month'
+	toColumn: LocalDateTable_5204cc32-7744-4162-bd7a-37c8843dcd5c.Date
+
+relationship 5e94ac41-9664-4dd5-8b2a-ee99b5b474b1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: pay_schedule.'Pay Date'
+	toColumn: LocalDateTable_984f2224-97c9-4ff5-8864-d5ee44b7d514.Date
+
+relationship b0b1455c-2476-6b04-ba9a-c6e74e62876a
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: pay_schedule.'Commission Month'
+
+relationship 7862f466-b445-a26d-b65e-f39667eca0f3
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: pay_schedule.'Pay Date'
+
+relationship 646c1a80-76eb-d026-541d-f24cb7513861
+	fromColumn: salesperson_key.'users.revenue_code_id'
+	toColumn: rev_codes.rev_code_id
+
+relationship f5de2138-734f-d1f0-c3e9-1e4db079f31c
+	isActive: false
+	fromColumn: crm.user_id
+	toColumn: salesperson_key.Name
+
+relationship 82c544f0-1454-b8bc-6636-53d24c9c968d
+	fromColumn: behaviors.res_id
+	toColumn: crm.id
+
+relationship 0f21aa1b-6b85-8918-e339-9d77cc645f4e
+	crossFilteringBehavior: bothDirections
+	fromColumn: crm.x_studio_mcleod_code
+	toColumn: customer.id
+
+relationship 505e4f7a-91da-3795-4f6c-0ce71fe9a849
+	fromColumn: crm.Stage
+	toColumn: crm_stages.'Stage Name'
+
+relationship 3b1e061c-a5ff-e2d1-f792-0655bae1a0fe
+	isActive: false
+	fromColumn: crm.activity_date_deadline
+	toColumn: Calendar.Date
+
+relationship e3d150d3-95a8-be74-fb25-f8dbed528f15
+	isActive: false
+	fromColumn: crm.date_open
+	toColumn: Calendar.Date
+
+relationship 381bfd96-8b6a-75a1-cbd3-a66ebf4bc532
+	isActive: false
+	fromColumn: crm.'Last Stage Change'
+	toColumn: Calendar.Date
+
+relationship f0de3666-daea-391d-95c0-9e626b3fd4ac
+	isActive: false
+	fromColumn: crm.x_studio_enrichment_date
+	toColumn: Calendar.Date
+
+relationship 5bcae216-568f-9183-68ca-54fcb10620d3
+	isActive: false
+	fromColumn: crm.x_studio_lead_passed_date
 	toColumn: Calendar.Date
 

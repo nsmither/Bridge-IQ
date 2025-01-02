@@ -1,17 +1,15 @@
 table Calendar
 	lineageTag: c583c9ce-20dd-43b3-818e-c9d8da9a588a
 
+	measure 'Calendar General' = FORMAT(MIN('Calendar'[Date]),"General Number")
+		lineageTag: 060c64c1-9345-4648-a1bf-10a163a011b3
+
 	column Date
 		dataType: dateTime
 		formatString: Short Date
 		lineageTag: 8c8cd0ec-bc3a-497c-8890-727a55c10611
 		summarizeBy: none
 		sourceColumn: Date
-
-		variation Variation
-			isDefault
-			relationship: 637ca1f2-2edc-451e-ab79-fdb2847dbc89
-			defaultHierarchy: LocalDateTable_0b8d9d91-11f0-4259-aceb-9ddd27705fc8.'Date Hierarchy'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -198,7 +196,7 @@ table Calendar
 				let
 				    //Variables
 				    StartDate = #date(2001,1,1),
-				    EndDate = #date(2024,12,31),
+				    EndDate = #date(2025,12,31),
 				    Duration = Duration.Days(Duration.From(EndDate-StartDate))+1,
 				    Today = DateTime.Date(DateTime.LocalNow()),
 				

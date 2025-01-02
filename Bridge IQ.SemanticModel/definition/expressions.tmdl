@@ -170,7 +170,7 @@ expression mcleod_historic_orders =
 
 	annotation PBI_ResultType = Table
 
-expression RefreshCutOffDate = #datetime(2024, 6, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+expression RefreshCutOffDate = #datetime(2024, 9, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: af39c097-cda3-4307-8194-af7487559d9a
 	queryGroup: Parameters
 
@@ -178,7 +178,7 @@ expression RefreshCutOffDate = #datetime(2024, 6, 1, 0, 0, 0) meta [IsParameterQ
 
 	annotation PBI_ResultType = DateTime
 
-expression MovementCutOffNumber = 132899 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
+expression MovementCutOffNumber = 147110 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
 	lineageTag: 7b1d95af-7d84-440e-87b8-e089fa08fe15
 	queryGroup: Parameters
 

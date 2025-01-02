@@ -418,6 +418,7 @@ table measures_
 			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			)
 		formatString: 0
+		displayFolder: Movement Measures
 		lineageTag: 9a92c758-8ba8-4423-a380-55402b47cdf1
 
 	measure 'Count of orders covered' =
@@ -1672,6 +1673,55 @@ table measures_
 	measure 'Margin MTD Goal'
 		displayFolder: Sales Measures\Sales Goals
 		lineageTag: 797239d8-1e2c-4255-952b-497e5063d0fb
+
+	measure 'Count of SOPP and SOPD' = ```
+			
+			VAR count_sop = 
+			CALCULATE(
+			    [Count of SOPD Issues]+[Count of SOPP Issues],
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
+			
+			VAR ifs = 
+			IF(count_sop>=1,count_sop,0)
+			
+			RETURN
+			ifs
+			```
+		formatString: 0
+		displayFolder: Operations Measures\SOP
+		lineageTag: 336b0fed-4a4b-4f02-baf1-b8a6a12114d7
+
+	measure 'Count of DNC' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(movements[id]),
+			    movements[dnc]=TRUE(),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
+		formatString: 0
+		displayFolder: Operations Measures\DNC
+		lineageTag: d44ba655-752c-4034-a726-23641e6a4bea
+
+	measure 'DNC %' =
+			
+			DIVIDE(
+			    [Count of DNC],
+			    [Count of Movements Booked]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Operations Measures\DNC
+		lineageTag: 49a1de4f-0a01-4e1d-96fb-e678577e4301
+
+	measure 'Count of Movements Booked All Time' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(movements[id]),
+			    movements[status]<>"A"
+			    )
+		formatString: 0
+		displayFolder: Movement Measures
+		lineageTag: 43bbf707-aa19-44e8-b5f0-a73ff1c88905
 
 	column Column
 		isHidden
