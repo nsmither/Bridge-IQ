@@ -400,3 +400,12 @@ relationship 5ecbe4d8-a96b-f32b-3c0f-b5a97190a921
 	fromColumn: movements.override_payee_id
 	toColumn: carrier_key.id
 
+relationship AutoDetected_c95c3e67-b4b1-4b4b-8a21-220baa5e0198
+	fromColumn: job_history.Division
+	toColumn: division_key.Division
+
+relationship 74d5951a-5976-dd47-ee9d-179d8dafcd2f
+	isActive: false
+	fromColumn: salesperson_key.Devision
+	toColumn: division_key.Division
+

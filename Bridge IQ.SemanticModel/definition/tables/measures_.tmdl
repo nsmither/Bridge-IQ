@@ -1371,9 +1371,9 @@ table measures_
 			    FILTER(job_history,job_history[Division]="Sr. Logistics Advisor Sales")
 			)
 			
-			Var devision_logistics_advisor = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division]) = ("Logistics Advisor Sales (Formerly Henry)"),current_logistics_advisor,current_Sr_logistics_advisor)
-			Var devision_d_team = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division]) IN {"Development Team","Development Team Sales"},current_d_team,devision_logistics_advisor)
-			Var devision_blank = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division])=BLANK(),current_sales,devision_d_team)
+			Var devision_logistics_advisor = SWITCH(TRUE(),SELECTEDVALUE(division_key[Division]) = ("Logistics Advisor Sales (Formerly Henry)"),current_logistics_advisor,current_Sr_logistics_advisor)
+			Var devision_d_team = SWITCH(TRUE(),SELECTEDVALUE(division_key[Division]) IN {"Development Team","Development Team Sales"},current_d_team,devision_logistics_advisor)
+			Var devision_blank = SWITCH(TRUE(),SELECTEDVALUE(division_key[Division])=BLANK(),current_sales,devision_d_team)
 			
 			RETURN
 			devision_blank
@@ -1670,7 +1670,28 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Margin MTD Goal'
+	measure 'Margin MTD Goal' = ```
+			
+			VAR workingdays =
+			    NETWORKDAYS(
+			        STARTOFMONTH('Calendar'[Date]),
+			        ENDOFMONTH('Calendar'[Date]),
+			        1,
+			        observed_holidays
+			    )
+			
+			VAR months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('Calendar'[Date]))
+			VAR override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('Calendar'[Date]))
+			VAR mpd = DIVIDE(months_margin_goal, workingdays)
+			Var mpdg_wolf_pack = 
+			    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])
+			
+			RETURN
+			mpdg
+			```
+		formatString: 0
 		displayFolder: Sales Measures\Sales Goals
 		lineageTag: 797239d8-1e2c-4255-952b-497e5063d0fb
 
