@@ -7132,19 +7132,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Count of orders covered"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Load Count": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "movement": {
 			      "Definition": {
@@ -19981,6 +19969,48 @@ cultureInfo en-US
 			          "turnover rate variance 60 30 30-today": {
 			            "State": "Generated",
 			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.margin_mtd_vs_margin_mtd_goal_variance": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Margin MTD vs Margin MTD Goal variance"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Variance": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.count_of_orders_covered_mtd": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Count of Orders Covered MTD"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Load Count MTD": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]

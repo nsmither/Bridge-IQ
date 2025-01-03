@@ -939,10 +939,9 @@ table measures_
 			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
 			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			    )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
 		lineageTag: e2f3473a-04fe-48ca-9ca3-788630877152
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Count of Orders Covered MTD' =
 			
@@ -983,10 +982,9 @@ table measures_
 		lineageTag: 98c65d90-b4d4-4af1-bcfe-02d7f06db6c1
 
 	measure 'Margin MTD MOM Variance' = [Margin MTD]-[Margin MTD 1MA]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Month over Month
 		lineageTag: b7ea4c06-ed51-4878-8892-8289c5f07532
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Customers Served' =
 			
@@ -1371,9 +1369,9 @@ table measures_
 			    FILTER(job_history,job_history[Division]="Sr. Logistics Advisor Sales")
 			)
 			
-			Var devision_logistics_advisor = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division]) = ("Logistics Advisor Sales (Formerly Henry)"),current_logistics_advisor,current_Sr_logistics_advisor)
-			Var devision_d_team = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division]) IN {"Development Team","Development Team Sales"},current_d_team,devision_logistics_advisor)
-			Var devision_blank = SWITCH(TRUE(),SELECTEDVALUE(job_history[Division])=BLANK(),current_sales,devision_d_team)
+			Var devision_logistics_advisor = SWITCH(TRUE(),SELECTEDVALUE(division_key[Division]) = ("Logistics Advisor Sales (Formerly Henry)"),current_logistics_advisor,current_Sr_logistics_advisor)
+			Var devision_d_team = SWITCH(TRUE(),SELECTEDVALUE(division_key[Division]) IN {"Development Team","Development Team Sales"},current_d_team,devision_logistics_advisor)
+			Var devision_blank = SWITCH(TRUE(),SELECTEDVALUE(division_key[Division])=BLANK(),current_sales,devision_d_team)
 			
 			RETURN
 			devision_blank
@@ -1529,10 +1527,9 @@ table measures_
 		lineageTag: c9b4ce9d-b212-41d3-8b92-8640f89d3c41
 
 	measure 'Margin Vs Margin Goal Variance' = [Margin]-[Margin Goal]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Sales Goals\Margin
 		lineageTag: 2361c828-7356-4d14-8a9c-b6835eee2164
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Margin Vs Margin Goal 1MA' = ```
 			
@@ -1670,7 +1667,28 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Margin MTD Goal'
+	measure 'Margin MTD Goal' = ```
+			
+			VAR workingdays =
+			    NETWORKDAYS(
+			        STARTOFMONTH('Calendar'[Date]),
+			        ENDOFMONTH('Calendar'[Date]),
+			        1,
+			        observed_holidays
+			    )
+			
+			VAR months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('Calendar'[Date]))
+			VAR override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('Calendar'[Date]))
+			VAR mpd = DIVIDE(months_margin_goal, workingdays)
+			Var mpdg_wolf_pack = 
+			    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
+			
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])
+			
+			RETURN
+			mpdg
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Sales Goals
 		lineageTag: 797239d8-1e2c-4255-952b-497e5063d0fb
 
@@ -1722,6 +1740,78 @@ table measures_
 		formatString: 0
 		displayFolder: Movement Measures
 		lineageTag: 43bbf707-aa19-44e8-b5f0-a73ff1c88905
+
+	measure 'Margin % MTD' = DIVIDE([Margin MTD],[Revenue MTD])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: 54d01cc9-49a6-4ddf-b2ff-759ee0bbbbe8
+
+	measure 'Revenue MTD' =
+			
+			CALCULATE(
+			    TOTALMTD([Total Revenue],'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
+			    movements[status]<>"A",
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Revenue Measures
+		lineageTag: 33d49d6c-e03b-457d-bade-b34e38e7f3ac
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Average Margin Per Day MTD' = ```
+			
+			
+			Var Margin_MTD = 
+			CALCULATE(TOTALMTD([Margin],'calendar'[Date],
+			    'calendar'[Day of Month]<DAY(TODAY())),
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			)
+			var Working_days_Elapsed = 
+			CALCULATE(
+			    If(DAY(TODAY())=1,0,
+			    NETWORKDAYS(
+			        MIN('Calendar'[Date]),
+			        TODAY()-1,
+			        1,
+			        observed_holidays))
+			)
+			var avg_ = 
+			CALCULATE(
+			    DIVIDE(Margin_MTD, Working_days_Elapsed),
+			    movements[Status] <> "A",
+			    FILTER(
+			       'Calendar',
+			        YEAR('Calendar'[Date]) = YEAR(TODAY()) && MONTH('Calendar'[Date]) = MONTH(TODAY()) && Day('Calendar'[Date]) = Day(TODAY())
+			   )
+			)
+			
+			RETURN
+			avg_
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: 6b676cc6-e76d-4c5f-a3b1-4db3e89ba430
+
+	measure 'Average Margin per day MTD vs margin today goal' = [Average Margin Per Day MTD] - [Margin per day Goal]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: 19e5489a-2cae-46aa-8cb7-8e35b9f04d61
+
+	measure 'Forcasted Margin this month' = [Margin MTD]+([Average Margin Per Day MTD]*[Working Days Left])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: 792fec62-f76b-4e35-983c-4574ea0617c3
+
+	measure 'Working Days Left' = [Working Days]-[Working days Elapsed]
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: b6e7fd4e-1fbc-489c-bad3-400fee14bcc1
+
+	measure 'Margin Per Order MTD' = DIVIDE([Margin MTD], [Count of Orders Covered MTD])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
+		lineageTag: a56f26f4-ca3a-4715-8b87-275e4ff9d407
 
 	column Column
 		isHidden

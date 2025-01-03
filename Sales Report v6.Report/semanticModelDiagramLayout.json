@@ -690,8 +690,8 @@
       "nodes": [
         {
           "location": {
-            "x": 294,
-            "y": -10
+            "x": 545,
+            "y": 1
           },
           "nodeIndex": "salesperson_key",
           "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
@@ -708,6 +708,19 @@
           },
           "nodeIndex": "orders",
           "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 124,
+            "y": 454
+          },
+          "nodeIndex": "job_history",
+          "nodeLineageTag": "0d8addef-5917-4ed8-92a6-3a017ca615e0",
           "size": {
             "height": 300,
             "width": 234
