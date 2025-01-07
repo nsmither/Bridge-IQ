@@ -136,11 +136,6 @@ relationship 4b385713-6fc9-5a64-8cd4-91ebf08a6205
 	fromColumn: job_history.'Job Start Date'
 	toColumn: Calendar.Date
 
-relationship AutoDetected_d9fd2b0c-93e4-4faa-b5ea-da76f8a95837
-	crossFilteringBehavior: bothDirections
-	fromColumn: employees.'McLeod User Code'
-	toColumn: salesperson_key.'McLeod User Code'
-
 relationship 54fc379f-b1bb-4bc1-0bbd-47442371291d
 	isActive: false
 	fromColumn: salesperson_key.'Hire Date'
@@ -408,4 +403,10 @@ relationship 74d5951a-5976-dd47-ee9d-179d8dafcd2f
 	isActive: false
 	fromColumn: salesperson_key.Devision
 	toColumn: division_key.Division
+
+relationship c9ceeb90-e932-c2b0-a29d-250dcf8e50ab
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: employees.ID
+	toColumn: salesperson_key.ID
 

@@ -986,12 +986,13 @@ table measures_
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Month over Month
 		lineageTag: b7ea4c06-ed51-4878-8892-8289c5f07532
 
+	/// Count the Distinct customer id values in the order table during a filtered time
+	/// ***any time you use this measure you must filter move status to not contain "A")***
 	measure 'Customers Served' =
 			
 			CALCULATE(
 			    DISTINCTCOUNT(orders[customer_id]),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
-			    FILTER(movements,movements[status]<>"A")
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			)
 		formatString: 0
 		displayFolder: Behavior Measures

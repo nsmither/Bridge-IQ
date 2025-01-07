@@ -511,6 +511,15 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
+	column linear_feet_brlo
+		dataType: int64
+		formatString: 0
+		lineageTag: 70864f03-34de-4bcc-9038-5b8e25ec49b6
+		summarizeBy: sum
+		sourceColumn: linear_feet_brlo
+
+		annotation SummarizationSetBy = Automatic
+
 	partition orders = m
 		mode: import
 		source = ```
