@@ -62,8 +62,6 @@ ref table orders
 ref table movements
 ref table driver_extra_pay
 ref table Calendar
-ref table LocalDateTable_75a92ebd-fc59-41d4-9bbd-0eab7041c40b
-ref table LocalDateTable_8cd7490a-0c9d-45ae-9b87-d190d0e8c13a
 ref table measures_
 ref table employees
 ref table job_history

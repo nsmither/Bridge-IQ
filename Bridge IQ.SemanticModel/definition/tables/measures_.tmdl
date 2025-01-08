@@ -1075,48 +1075,123 @@ table measures_
 		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date
 		lineageTag: 558e2a81-0e76-4f52-8cea-67309659d92f
 
-	measure 'Count of Orders Covered QTD 1QA' =
+	measure 'Count of Orders Covered QTD 1QA' = ```
 			
-			CALCULATE(
-			    [Count of Orders Covered QTD],
-			    DATEADD('calendar'[Date],
-			    -1,
-			    QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_1qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-1,QUARTER)
+			    )
+			
+			VAR qtd_date_1_qa = soq_1qa+today_doq-1
+			
+			VAR count_of_orders_1_qa = 
+			    CALCULATE(
+			        [Count of orders covered],
+			        'Calendar'[Date]>=soq_1qa,
+			        'Calendar'[Date]<qtd_date_1_qa
+			    )
+			
+			RETURN
+			count_of_orders_1_qa
+			```
 		formatString: 0
 		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
 		lineageTag: 8cb0ba1f-3282-46bc-9ed7-808320879c6d
 
-	measure 'Count of Orders Covered QTD 4QA' =
+	measure 'Count of Orders Covered QTD 4QA' = ```
 			
-			CALCULATE(
-			    [Count of Orders Covered QTD],
-			    DATEADD(
-			        'calendar'[Date],
-			        -4,
-			        QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_4qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-4,QUARTER)
+			    )
+			
+			VAR qtd_date_4_qa = soq_4qa+today_doq-1
+			
+			VAR load_count_4qa =
+			    CALCULATE(
+			        [Count of orders covered],
+			        'Calendar'[Date]>=soq_4qa,
+			        'Calendar'[Date]<qtd_date_4_qa
+			    )
+			
+			RETURN
+			load_count_4qa
+			```
 		formatString: 0
 		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
 		lineageTag: f10af020-daac-40fe-a4de-39f4b82dad2c
 
-	measure 'Margin QTD 1QA' =
+	measure 'Margin QTD 1QA' = ```
 			
-			CALCULATE(
-			    [Margin QTD],
-			    DATEADD('calendar'[Date],-1,QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_1qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-1,QUARTER)
+			    )
+			
+			VAR qtd_date_1_qa = soq_1qa+today_doq-1
+			
+			VAR margin_qtd_1qa = 
+			    CALCULATE(
+			        [Margin],
+			        'Calendar'[Date]>=soq_1qa,
+			        'Calendar'[Date]<qtd_date_1_qa
+			    )
+			
+			RETURN
+			margin_qtd_1qa
+			```
 		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
 		lineageTag: fa414730-b854-417c-8ca2-d272873b7212
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Margin QTD 4QA' =
+	measure 'Margin QTD 4QA' = ```
 			
-			CALCULATE(
-			    [Margin QTD],
-			    DATEADD('calendar'[Date],-4,QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_4qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-4,QUARTER)
+			    )
+			
+			VAR qtd_date_4_qa = soq_4qa+today_doq-1
+			
+			VAR margin_4qa = 
+			    CALCULATE(
+			        [Margin],
+			        'Calendar'[Date]>=soq_4qa,
+			        'Calendar'[Date]<qtd_date_4_qa
+			    )
+			
+			RETURN
+			margin_4qa
+			```
 		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
 		lineageTag: 2bc66d87-9e99-4447-b996-c8b492e70d0d
 
@@ -1813,6 +1888,17 @@ table measures_
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
 		lineageTag: a56f26f4-ca3a-4715-8b87-275e4ff9d407
+
+	measure 'Is Working Day' = ```
+			
+			Var is_working_day = IF([Working Days]=1,1,0)
+			 
+			Return
+			is_working_day
+			```
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 5a7993dc-cd42-47e0-bc17-6c98a2f529e4
 
 	column Column
 		isHidden

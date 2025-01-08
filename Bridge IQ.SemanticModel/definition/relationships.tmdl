@@ -26,16 +26,6 @@ relationship 779f5544-eab0-74a9-bad6-7588d81e623d
 	fromColumn: orders.consignee_stop_id
 	toColumn: stop.id
 
-relationship 53388cc1-2c8e-449a-8c25-8743119bd22f
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Calendar.'Start of Month'
-	toColumn: LocalDateTable_75a92ebd-fc59-41d4-9bbd-0eab7041c40b.Date
-
-relationship d3812500-0550-4145-957b-d4623116eb84
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Calendar.'Start of Week'
-	toColumn: LocalDateTable_8cd7490a-0c9d-45ae-9b87-d190d0e8c13a.Date
-
 relationship 3acc3c4a-a03f-acb8-6429-bc08c3d9bf1e
 	isActive: false
 	fromColumn: customer.contract_date
@@ -297,10 +287,6 @@ relationship 89783f8c-5a09-40cd-8fe0-005c7da2b54b
 	fromColumn: dispatcher_key.'Termination Date'
 	toColumn: LocalDateTable_7e773c2c-a1bd-4f2f-b9f7-efdc6b4a7c73.Date
 
-relationship AutoDetected_10b6f6c7-cb12-43a1-9141-501dae8dddae
-	fromColumn: employees.'McLeod User Code'
-	toColumn: dispatcher_key.'McLeod User Code'
-
 relationship 1f5bca13-1055-607a-5967-aaf6ba56bc12
 	isActive: false
 	fromColumn: movements.dispatcher_user_id
@@ -404,9 +390,13 @@ relationship 74d5951a-5976-dd47-ee9d-179d8dafcd2f
 	fromColumn: salesperson_key.Devision
 	toColumn: division_key.Division
 
-relationship c9ceeb90-e932-c2b0-a29d-250dcf8e50ab
+relationship 1959e8d0-2212-ed49-38cb-7604b93b7428
+	fromColumn: job_history.ID
+	toColumn: salesperson_key.ID
+
+relationship cf8a66c6-ea49-e82b-8531-36f405b7ac81
 	crossFilteringBehavior: bothDirections
 	fromCardinality: one
 	fromColumn: employees.ID
-	toColumn: salesperson_key.ID
+	toColumn: dispatcher_key.ID
 

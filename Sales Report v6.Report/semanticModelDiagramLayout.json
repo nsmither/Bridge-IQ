@@ -734,8 +734,75 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 4,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 376,
+            "y": 8
+          },
+          "nodeIndex": "employees",
+          "nodeLineageTag": "0af26c3a-e69f-4de1-a4d5-3c1431c72fc3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 72,
+            "y": 252
+          },
+          "nodeIndex": "dispatcher_key",
+          "nodeLineageTag": "ff69ace9-66a1-4c1b-b797-0305f2b98a1b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 685,
+            "y": 401
+          },
+          "nodeIndex": "salesperson_key",
+          "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 919,
+            "y": 98
+          },
+          "nodeIndex": "job_history",
+          "nodeLineageTag": "0d8addef-5917-4ed8-92a6-3a017ca615e0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 4",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 3",
+  "selectedDiagram": "Layout 4",
   "defaultDiagram": "All tables"
 }
