@@ -1,0 +1,27 @@
+table division_key
+	lineageTag: 1b8dd742-2d76-4e50-88d9-4317989076d3
+
+	column Division
+		dataType: string
+		lineageTag: 41f47a6e-5b33-4e98-80f2-3802913cd79e
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	partition division_key = m
+		mode: import
+		source =
+				let
+				    Source = job_history,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Division"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates", {"Division"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Errors", each ([Division] <> null))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

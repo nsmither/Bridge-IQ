@@ -1,0 +1,9 @@
+{
+  "version": "4.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "../Bridge IQ Dev.SemanticModel"
+    },
+    "byConnection": null
+  }
+}

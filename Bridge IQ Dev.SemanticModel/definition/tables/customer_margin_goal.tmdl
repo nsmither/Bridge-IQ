@@ -1,0 +1,74 @@
+table customer_margin_goal
+	lineageTag: 0f9a6602-f51b-4faf-8f34-4c900a783ae6
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: ef2e0f62-e615-4966-8a62-0cbd8478e489
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Code'
+		dataType: string
+		lineageTag: 9a6ad13e-aaaf-4d66-8838-743810a398aa
+		summarizeBy: none
+		sourceColumn: Customer Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Salesperson
+		dataType: string
+		lineageTag: f043f0b3-d6ca-4dbb-9756-c54f431901b0
+		summarizeBy: none
+		sourceColumn: Salesperson
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8b660e38-c8fa-4f86-9975-277f1d79ce7d
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Margin Goal'
+		dataType: int64
+		formatString: 0
+		lineageTag: d2657af3-1095-4fab-bfed-372cf2d5dd3e
+		summarizeBy: sum
+		sourceColumn: Margin Goal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Margin % Goal'
+		dataType: double
+		lineageTag: 589c88d0-8df7-445a-801b-1f2305d072e8
+		summarizeBy: sum
+		sourceColumn: Margin % Goal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition customer_margin_goal = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/SalesGoals/Shared%20Documents/Sales%20Goals.xlsx"), null, true),
+				    customer_margin_goal_Table = Source{[Item="customer_margin_goal",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(customer_margin_goal_Table,{{"Customer", type text}, {"Salesperson", type text}, {"Month", type date}, {"Margin Goal", Int64.Type}, {"Margin % Goal", type number}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "Customer", Splitter.SplitTextByEachDelimiter({":"}, QuoteStyle.Csv, false), {"Customer.1", "Customer.2"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Customer.1", type text}, {"Customer.2", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Customer.1", "Customer Name"}, {"Customer.2", "Customer Code"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

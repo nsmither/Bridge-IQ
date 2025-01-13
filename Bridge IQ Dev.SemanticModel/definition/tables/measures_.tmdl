@@ -1666,7 +1666,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Commission Strikes' = ```
+	measure 'Commission Stikes' = ```
 			
 			
 			VAR new_commission_strikes_jan = 
