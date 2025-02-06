@@ -445,9 +445,10 @@ expression historic_parade_orders =
 		    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"reference_id", "movement_id"}}),
 		    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([category] <> "outside_parade") and ([conversion_category] <> "Manually Assigned")),
 		    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows1", {"id"}),
-		    #"Filtered orders before RefreshCutOffDate" = Table.SelectRows(#"Removed Duplicates", each [created_at] < RefreshCutOffDate)
+		    #"Filtered orders before RefreshCutOffDate" = Table.SelectRows(#"Removed Duplicates", each [created_at] < RefreshCutOffDate),
+		    #"Filtered Rows2" = Table.SelectRows(#"Filtered orders before RefreshCutOffDate", each [conversion_category] <> null and [conversion_category] <> "")
 		in
-		    #"Filtered orders before RefreshCutOffDate"
+		    #"Filtered Rows2"
 	lineageTag: 95446394-12c9-44d4-bfbc-ea7f8fb2d92d
 	queryGroup: 'Historic Tables'
 
@@ -469,34 +470,6 @@ expression historic_callins =
 		    #"Calculated Start of Hour"
 	lineageTag: 56bd229e-e47a-4149-814e-6b72b080d909
 	queryGroup: 'Historic Tables'
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression parade_orders =
-		let
-		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
-		    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
-		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each Text.Contains([Folder Path], "02 BL-Areas/bridge_iq/Data Sets/Parade/parade_orders_api_files")),
-		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
-		    #"Filtered Hidden Files2" = Table.SelectRows(#"Filtered Hidden Files1", each [Attributes]?[Hidden]? <> true),
-		    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files2", "Transform File (2)", each #"Transform File (2)"([Content])),
-		    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File (2)"}),
-		    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (2)", Table.ColumnNames(#"Transform File (2)"(#"Sample File (2)"))),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"id", Int64.Type}, {"reference_id", type text}, {"created_at", type datetime}, {"archived_at", type datetime}, {"src_city", type text}, {"src_state", type text}, {"src_date", type date}, {"src_postal_code", type text}, {"dst_city", type text}, {"dst_state", type text}, {"dst_date", type date}, {"dst_postal_code", type text}, {"num_stops", Int64.Type}, {"equipment", type text}, {"trailer_type", type text}, {"rate_customer", type number}, {"first_load", type logical}, {"customer_id", type text}, {"revenue_code", Int64.Type}, {"team_name", type any}, {"rep_email", type text}, {"rep_name", type text}, {"carrier_manager", type text}, {"category", type text}, {"conversion_category", type text}, {"partner", type text}, {"margin_amount", type number}, {"margin_pct", type number}, {"carrier_name", type text}, {"dot_number", Int64.Type}, {"mc_number", Int64.Type}, {"carrier_rate", type number}}),
-		    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"rate_customer", Currency.Type}, {"margin_amount", Currency.Type}}),
-		    #"Sorted Rows" = Table.Sort(#"Changed Type1",{{"reference_id", Order.Ascending}}),
-		    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Sorted Rows", {{"reference_id", each Text.AfterDelimiter(_, "-"), type text}}),
-		    #"Removed Blank Rows" = Table.SelectRows(#"Extracted Text After Delimiter", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
-		    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"reference_id", "movement_id"}}),
-		    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([category] <> "outside_parade") and ([conversion_category] <> "Manually Assigned")),
-		    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows1", {"id"}),
-		    #"Filtered Orders on or after RefreshCutOffDate" = Table.SelectRows(#"Removed Duplicates", each [created_at] >= RefreshCutOffDate),
-		    #"Appended Query" = Table.Combine({#"Filtered Orders on or after RefreshCutOffDate", historic_parade_orders})
-		in
-		    #"Appended Query"
-	lineageTag: 5688bae6-26cc-4f19-8378-f368a98c4b01
 
 	annotation PBI_NavigationStepName = Navigation
 
@@ -653,6 +626,36 @@ expression users =
 		in
 		    #"Cleaned Text"
 	lineageTag: b0d9ea90-2639-4ad1-97d0-43f2699756a9
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression parade_orders =
+		let
+		    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+		    #"Reordered Columns" = Table.ReorderColumns(Source,{"Content", "Name", "Extension", "Date accessed", "Date modified", "Date created", "Folder Path", "Attributes"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each Text.Contains([Folder Path], "02 BL-Areas/bridge_iq/Data Sets/Parade/parade_orders_api_files")),
+		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+		    #"Filtered Hidden Files2" = Table.SelectRows(#"Filtered Hidden Files1", each [Attributes]?[Hidden]? <> true),
+		    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files2", "Transform File (2)", each #"Transform File (2)"([Content])),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File (2)"}),
+		    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (2)", Table.ColumnNames(#"Transform File (2)"(#"Sample File (2)"))),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"id", Int64.Type}, {"reference_id", type text}, {"created_at", type datetime}, {"archived_at", type datetime}, {"src_city", type text}, {"src_state", type text}, {"src_date", type date}, {"src_postal_code", type text}, {"dst_city", type text}, {"dst_state", type text}, {"dst_date", type date}, {"dst_postal_code", type text}, {"num_stops", Int64.Type}, {"equipment", type text}, {"trailer_type", type text}, {"rate_customer", type number}, {"first_load", type logical}, {"customer_id", type text}, {"revenue_code", Int64.Type}, {"team_name", type any}, {"rep_email", type text}, {"rep_name", type text}, {"carrier_manager", type text}, {"category", type text}, {"conversion_category", type text}, {"partner", type text}, {"margin_amount", type number}, {"margin_pct", type number}, {"carrier_name", type text}, {"dot_number", Int64.Type}, {"mc_number", Int64.Type}, {"carrier_rate", type number}}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"rate_customer", Currency.Type}, {"margin_amount", Currency.Type}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type1",{{"reference_id", Order.Ascending}}),
+		    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Sorted Rows", {{"reference_id", each Text.AfterDelimiter(_, "-"), type text}}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Extracted Text After Delimiter", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"reference_id", "movement_id"}}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([category] <> "outside_parade" and [category] <> "unsuccessful_quote")),
+		    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each ([category] <> "digital_visit")),
+		    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows2", {"id"}),
+		    #"Filtered Rows3" = Table.SelectRows(#"Removed Duplicates", each [conversion_category] <> null and [conversion_category] <> ""),
+		    #"Filtered Orders on or after RefreshCutOffDate" = Table.SelectRows(#"Filtered Rows3", each [created_at] >= RefreshCutOffDate),
+		    #"Appended Query" = Table.Combine({#"Filtered Orders on or after RefreshCutOffDate", historic_parade_orders})
+		in
+		    #"Appended Query"
+	lineageTag: 61f23af1-ed35-407d-a264-f6699d7ceacf
 
 	annotation PBI_NavigationStepName = Navigation
 

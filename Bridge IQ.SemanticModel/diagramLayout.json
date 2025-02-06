@@ -432,7 +432,7 @@
       "ordinal": 1,
       "scrollPosition": {
         "x": 0,
-        "y": 0
+        "y": 12
       },
       "nodes": [
         {
@@ -450,11 +450,37 @@
         },
         {
           "location": {
-            "x": 689,
-            "y": 434
+            "x": 78,
+            "y": 305
           },
           "nodeIndex": "salesperson_key",
           "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 616,
+            "y": 359
+          },
+          "nodeIndex": "movements",
+          "nodeLineageTag": "4d68b890-a71e-49b5-b4ab-a9a72c28eef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 831,
+            "y": 76
+          },
+          "nodeIndex": "dispatcher_key",
+          "nodeLineageTag": "ff69ace9-66a1-4c1b-b797-0305f2b98a1b",
           "size": {
             "height": 300,
             "width": 234

@@ -167,7 +167,7 @@
         {
           "location": {
             "x": 854.69851574271922,
-            "y": 147.54504557559631
+            "y": 147.5450455755963
           },
           "nodeIndex": "daily_number_override",
           "nodeLineageTag": "45fdfe2a-47d4-4b73-9ae1-78f6485bc2ab",
@@ -257,7 +257,7 @@
         },
         {
           "location": {
-            "x": 930.82487742599074,
+            "x": 930.82487742599073,
             "y": 2013.8242906482142
           },
           "nodeIndex": "movements",
@@ -585,7 +585,7 @@
         {
           "location": {
             "x": 527.28675713585835,
-            "y": 1220.7007979981127
+            "y": 1220.7007979981126
           },
           "nodeIndex": "rev_codes",
           "nodeLineageTag": "3cdc5a80-c6b4-41b3-9dbd-2c2e43274b14",
