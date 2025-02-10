@@ -1608,9 +1608,10 @@ table measures_
 			
 			VAR ifs = 
 			    IF(Max('Calendar'[Date]) < 45658, [Standard Commission Rate],
-			    IF(MIN('Calendar'[Date]) >= 45658 && MAX('Calendar'[Date]) <= 45688,new_commission_jan,0))
-			    --IF(MIN('Calendar'[Date]) >= 45689 && MAX('Calendar'[Date]) <= 45716,new_commission_feb,
-			    --new_commission)))
+			    IF(MIN('Calendar'[Date]) >= 45689 && MAX('Calendar'[Date]) <= 45716,new_commission_feb,
+			    IF(MIN('Calendar'[Date]) >= 45658 && MAX('Calendar'[Date]) <= 45688,new_commission_jan,
+			    new_commission))
+			    )
 			
 			
 			RETURN
@@ -1686,10 +1687,11 @@ table measures_
 			
 			VAR ifs = 
 			    IF(MAX('Calendar'[Date]) < 45658, BLANK(),
-			    IF(MIN('Calendar'[Date]) >= 45658 && MAX('Calendar'[Date]) <= 45688, new_commission_strikes_jan,
 			    IF(MIN('Calendar'[Date]) >= 45689 && MAX('Calendar'[Date]) <= 45716, new_commission_strikes_feb,
+			    IF(MIN('Calendar'[Date]) >= 45658 && MAX('Calendar'[Date]) <= 45688, new_commission_strikes_jan,
 			    new_commission_strikes)
-			    ))
+			    )
+			)
 			
 			RETURN
 			ifs
