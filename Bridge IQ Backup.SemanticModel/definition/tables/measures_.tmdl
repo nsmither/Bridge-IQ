@@ -719,6 +719,7 @@ table measures_
 			
 			CALCULATE(
 			    DIVIDE([Margin],[Total Revenue]),
+			    movements[status]<>"A",
 			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			)
 		formatString: 0%;-0%;0%
@@ -986,12 +987,13 @@ table measures_
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date\Month over Month
 		lineageTag: b7ea4c06-ed51-4878-8892-8289c5f07532
 
+	/// Count the Distinct customer id values in the order table during a filtered time
+	/// ***any time you use this measure you must filter move status to not contain "A")***
 	measure 'Customers Served' =
 			
 			CALCULATE(
 			    DISTINCTCOUNT(orders[customer_id]),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
-			    FILTER(movements,movements[status]<>"A")
+			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			)
 		formatString: 0
 		displayFolder: Behavior Measures
@@ -1074,48 +1076,123 @@ table measures_
 		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date
 		lineageTag: 558e2a81-0e76-4f52-8cea-67309659d92f
 
-	measure 'Count of Orders Covered QTD 1QA' =
+	measure 'Count of Orders Covered QTD 1QA' = ```
 			
-			CALCULATE(
-			    [Count of Orders Covered QTD],
-			    DATEADD('calendar'[Date],
-			    -1,
-			    QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_1qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-1,QUARTER)
+			    )
+			
+			VAR qtd_date_1_qa = soq_1qa+today_doq-1
+			
+			VAR count_of_orders_1_qa = 
+			    CALCULATE(
+			        [Count of orders covered],
+			        'Calendar'[Date]>=soq_1qa,
+			        'Calendar'[Date]<qtd_date_1_qa
+			    )
+			
+			RETURN
+			count_of_orders_1_qa
+			```
 		formatString: 0
 		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
 		lineageTag: 8cb0ba1f-3282-46bc-9ed7-808320879c6d
 
-	measure 'Count of Orders Covered QTD 4QA' =
+	measure 'Count of Orders Covered QTD 4QA' = ```
 			
-			CALCULATE(
-			    [Count of Orders Covered QTD],
-			    DATEADD(
-			        'calendar'[Date],
-			        -4,
-			        QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_4qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-4,QUARTER)
+			    )
+			
+			VAR qtd_date_4_qa = soq_4qa+today_doq-1
+			
+			VAR load_count_4qa =
+			    CALCULATE(
+			        [Count of orders covered],
+			        'Calendar'[Date]>=soq_4qa,
+			        'Calendar'[Date]<qtd_date_4_qa
+			    )
+			
+			RETURN
+			load_count_4qa
+			```
 		formatString: 0
 		displayFolder: Operations Measures\Count of Orders\To Date Measures\Quarter To Date\Quarters Ago
 		lineageTag: f10af020-daac-40fe-a4de-39f4b82dad2c
 
-	measure 'Margin QTD 1QA' =
+	measure 'Margin QTD 1QA' = ```
 			
-			CALCULATE(
-			    [Margin QTD],
-			    DATEADD('calendar'[Date],-1,QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_1qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-1,QUARTER)
+			    )
+			
+			VAR qtd_date_1_qa = soq_1qa+today_doq-1
+			
+			VAR margin_qtd_1qa = 
+			    CALCULATE(
+			        [Margin],
+			        'Calendar'[Date]>=soq_1qa,
+			        'Calendar'[Date]<qtd_date_1_qa
+			    )
+			
+			RETURN
+			margin_qtd_1qa
+			```
 		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
 		lineageTag: fa414730-b854-417c-8ca2-d272873b7212
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Margin QTD 4QA' =
+	measure 'Margin QTD 4QA' = ```
 			
-			CALCULATE(
-			    [Margin QTD],
-			    DATEADD('calendar'[Date],-4,QUARTER)
-			)
+			VAR today_doq = 
+			    CALCULATE(
+			        MIN('Calendar'[Day of Quarter]),
+			        'Calendar'[Date]=TODAY()
+			    )
+			    
+			Var soq_4qa =
+			    CALCULATE(
+			        STARTOFQUARTER('Calendar'[Date]),
+			        DATEADD('Calendar'[Date],-4,QUARTER)
+			    )
+			
+			VAR qtd_date_4_qa = soq_4qa+today_doq-1
+			
+			VAR margin_4qa = 
+			    CALCULATE(
+			        [Margin],
+			        'Calendar'[Date]>=soq_4qa,
+			        'Calendar'[Date]<qtd_date_4_qa
+			    )
+			
+			RETURN
+			margin_4qa
+			```
 		displayFolder: Sales Measures\Margin\To Date Measures\Quarter To Date\Quarter Ago
 		lineageTag: 2bc66d87-9e99-4447-b996-c8b492e70d0d
 
@@ -1509,6 +1586,19 @@ table measures_
 
 	measure 'Commission Rate' = ```
 			
+			
+			VAR new_commission_jan = 
+			    IF([Margin Vs Margin Goal Variance]>=0,
+			    [Standard Commission Rate],
+			    [Strike One Commissions]
+			    )
+			
+			VAR new_commission_feb = 
+			    IF([Margin Vs Margin Goal Variance]>=0,[Standard Commission Rate],
+			    IF([Margin Vs Margin Goal 1MA]>=0,[Strike One Commissions],
+			    IF([Margin Vs Margin Goal 2MA]>=0,[Strike One Commissions],
+			    [Strike Two Commissions])))
+			
 			VAR new_commission =  
 			IF([Margin Vs Margin Goal Variance]>=0,[Standard Commission Rate],
 			    IF([Margin Vs Margin Goal 1MA]>=0,[Strike One Commissions],
@@ -1516,15 +1606,22 @@ table measures_
 			    [Strike Three Commissions]
 			)))
 			
-			VAR ifs = IF(MIN('Calendar'[Date])<45688,[Standard Commission Rate],new_commission)
+			VAR ifs = 
+			    IF(Max('Calendar'[Date]) < 45658, [Standard Commission Rate],
+			    IF(MIN('Calendar'[Date]) >= 45689 && MAX('Calendar'[Date]) <= 45716,new_commission_feb,
+			    IF(MIN('Calendar'[Date]) >= 45658 && MAX('Calendar'[Date]) <= 45688,new_commission_jan,
+			    new_commission))
+			    )
+			
 			
 			RETURN
 			ifs
 			```
-		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		isHidden
 		displayFolder: Comission Measures
 		lineageTag: c9b4ce9d-b212-41d3-8b92-8640f89d3c41
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Margin Vs Margin Goal Variance' = [Margin]-[Margin Goal]
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
@@ -1570,13 +1667,34 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Commission Stikes' = ```
+	measure 'Commission Strikes' = ```
 			
+			
+			VAR new_commission_strikes_jan = 
+			    IF([Margin Vs Margin Goal Variance]>=0,0,1)
+			
+			VAR new_commission_strikes_feb = 
+			    IF([Margin Vs Margin Goal Variance]>=0,BLANK(),
+			    IF([Margin Vs Margin Goal 1MA]>=0,1,2)
+			    )
+			
+			VAR new_commission_strikes = 
 			    IF([Margin Vs Margin Goal Variance]>=0,BLANK(),
 			    IF([Margin Vs Margin Goal 1MA]>=0,1,
 			    IF([Margin Vs Margin Goal 2MA]>=0,2,
 			    3
 			    )))
+			
+			VAR ifs = 
+			    IF(MAX('Calendar'[Date]) < 45658, BLANK(),
+			    IF(MIN('Calendar'[Date]) >= 45689 && MAX('Calendar'[Date]) <= 45716, new_commission_strikes_feb,
+			    IF(MIN('Calendar'[Date]) >= 45658 && MAX('Calendar'[Date]) <= 45688, new_commission_strikes_jan,
+			    new_commission_strikes)
+			    )
+			)
+			
+			RETURN
+			ifs
 			```
 		formatString: 0
 		isHidden
@@ -1812,6 +1930,17 @@ table measures_
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
 		lineageTag: a56f26f4-ca3a-4715-8b87-275e4ff9d407
+
+	measure 'Is Working Day' = ```
+			
+			Var is_working_day = IF([Working Days]=1,1,0)
+			 
+			Return
+			is_working_day
+			```
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 5a7993dc-cd42-47e0-bc17-6c98a2f529e4
 
 	column Column
 		isHidden

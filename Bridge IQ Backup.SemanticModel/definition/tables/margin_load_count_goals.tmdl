@@ -61,6 +61,14 @@ table margin_load_count_goals
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column Column7
+		dataType: string
+		lineageTag: 24064e78-7ddc-45f3-84da-9bec1f1186de
+		summarizeBy: none
+		sourceColumn: Column7
+
+		annotation SummarizationSetBy = Automatic
+
 	partition margin_load_count_goals = m
 		mode: import
 		source =
