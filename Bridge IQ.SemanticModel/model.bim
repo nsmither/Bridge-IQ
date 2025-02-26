@@ -30784,19 +30784,18 @@
           }
         ],
         "expression": [
-          "let\r",
-          "    Source = (Parameter1 as binary) => let\r",
-          "    Source = Excel.Workbook(Parameter1, null, true),\r",
-          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],\r",
-          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])\r",
-          "in\r",
-          "    #\"Promoted Headers\"\r",
-          "in\r",
+          "let",
+          "    Source = (Parameter1 as binary) => let",
+          "        Source = Excel.Workbook(Parameter1, null, true),",
+          "        Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "        #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "    in",
+          "        #\"Promoted Headers\"",
+          "in",
           "    Source"
         ],
         "kind": "m",
         "lineageTag": "9bb2a554-9b20-411a-b1b6-ea04113e9d7c",
-        "mAttributes": "[ FunctionQueryBinding = \"{\"\"exemplarFormulaName\"\":\"\"Transform Sample File\"\"}\" ]",
         "queryGroup": "Transform File from historic_parade_orders\\Helper Queries"
       },
       {
@@ -30863,19 +30862,18 @@
           }
         ],
         "expression": [
-          "let\r",
-          "    Source = (Parameter2 as binary) => let\r",
-          "    Source = Excel.Workbook(Parameter2, null, true),\r",
-          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],\r",
-          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])\r",
-          "in\r",
-          "    #\"Promoted Headers\"\r",
-          "in\r",
+          "let",
+          "    Source = (Parameter2 as binary) => let",
+          "        Source = Excel.Workbook(Parameter2, null, true),",
+          "        Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "        #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "    in",
+          "        #\"Promoted Headers\"",
+          "in",
           "    Source"
         ],
         "kind": "m",
         "lineageTag": "bf0440a7-90f6-460f-9fbc-c2f0a8fce758",
-        "mAttributes": "[ FunctionQueryBinding = \"{\"\"exemplarFormulaName\"\":\"\"Transform Sample File (2)\"\"}\" ]",
         "queryGroup": "Transform File from parade_orders\\Helper Queries"
       },
       {
@@ -31035,19 +31033,18 @@
           }
         ],
         "expression": [
-          "let\r",
-          "    Source = (Parameter3 as binary) => let\r",
-          "    Source = Excel.Workbook(Parameter3, null, true),\r",
-          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],\r",
-          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])\r",
-          "in\r",
-          "    #\"Promoted Headers\"\r",
-          "in\r",
+          "let",
+          "    Source = (Parameter3 as binary) => let",
+          "        Source = Excel.Workbook(Parameter3, null, true),",
+          "        Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "        #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "    in",
+          "        #\"Promoted Headers\"",
+          "in",
           "    Source"
         ],
         "kind": "m",
         "lineageTag": "b594b25c-1827-4acd-ae47-d19aae6df491",
-        "mAttributes": "[ FunctionQueryBinding = \"{\"\"exemplarFormulaName\"\":\"\"Transform Sample File (3)\"\"}\" ]",
         "queryGroup": "Transform File from behaviors\\Helper Queries"
       },
       {
@@ -31113,19 +31110,18 @@
           }
         ],
         "expression": [
-          "let\r",
-          "    Source = (Parameter4 as binary) => let\r",
-          "    Source = Excel.Workbook(Parameter4, null, true),\r",
-          "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],\r",
-          "    #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])\r",
-          "in\r",
-          "    #\"Promoted Headers\"\r",
-          "in\r",
+          "let",
+          "    Source = (Parameter4 as binary) => let",
+          "        Source = Excel.Workbook(Parameter4, null, true),",
+          "        Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+          "        #\"Promoted Headers\" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true])",
+          "    in",
+          "        #\"Promoted Headers\"",
+          "in",
           "    Source"
         ],
         "kind": "m",
         "lineageTag": "96187a1f-dd5c-48bf-9faa-843e6b5cd850",
-        "mAttributes": "[ FunctionQueryBinding = \"{\"\"exemplarFormulaName\"\":\"\"Transform Sample File (4)\"\"}\" ]",
         "queryGroup": "Transform File from historic_behaviors\\Helper Queries"
       },
       {
@@ -31651,20 +31647,6 @@
         "toTable": "salesperson_key"
       },
       {
-        "name": "AutoDetected_ffb25b36-3a06-40b9-af10-7aad726e1ec8",
-        "fromColumn": "account_rep",
-        "fromTable": "rev_codes",
-        "toColumn": "account_rep",
-        "toTable": "account_rep"
-      },
-      {
-        "name": "AutoDetected_abefa4b7-b384-4af1-a7e0-a9bdd0b3cc3d",
-        "fromColumn": "wolf_pack",
-        "fromTable": "account_rep",
-        "toColumn": "wolf_pack",
-        "toTable": "wolf_pack"
-      },
-      {
         "name": "328ffb62-6ce8-4861-9f4b-2ef8226436f6",
         "fromColumn": "Observed Holidays",
         "fromTable": "observed_holidays",
@@ -32001,6 +31983,20 @@
         "joinOnDateBehavior": "datePartOnly",
         "toColumn": "Date",
         "toTable": "LocalDateTable_67948750-4a55-4170-865e-d76c6427f063"
+      },
+      {
+        "name": "b7086df5-a15e-acff-d67c-d6cd33ee67fa",
+        "fromColumn": "wolf_pack",
+        "fromTable": "account_rep",
+        "toColumn": "wolf_pack",
+        "toTable": "wolf_pack"
+      },
+      {
+        "name": "ff88e45c-e612-46ba-ab09-9a3fade68d98",
+        "fromColumn": "account_rep",
+        "fromTable": "rev_codes",
+        "toColumn": "account_rep",
+        "toTable": "account_rep"
       }
     ],
     "sourceQueryCulture": "en-US",
@@ -39160,7 +39156,7 @@
           },
           {
             "name": "PBI_ResultType",
-            "value": "Table"
+            "value": "Exception"
           }
         ],
         "columns": [
@@ -39330,7 +39326,7 @@
           },
           {
             "name": "PBI_ResultType",
-            "value": "Table"
+            "value": "Exception"
           }
         ],
         "columns": [
@@ -41830,6 +41826,7 @@
             "dataType": "dateTime",
             "isHidden": true,
             "isNameInferred": true,
+            "lineageTag": "ffd816d5-eafa-4ebf-afaf-d8aedb19ddfb",
             "sourceColumn": "[Date]",
             "summarizeBy": "none",
             "type": "calculatedTableColumn"
@@ -41850,6 +41847,7 @@
             "dataType": "int64",
             "expression": "YEAR([Date])",
             "isHidden": true,
+            "lineageTag": "313790a8-ebe1-49d7-9637-85457a56f093",
             "summarizeBy": "none",
             "type": "calculated"
           },
@@ -41869,6 +41867,7 @@
             "dataType": "int64",
             "expression": "MONTH([Date])",
             "isHidden": true,
+            "lineageTag": "39fbb9d8-a86e-4a2a-8c14-d4094fc7daf7",
             "summarizeBy": "none",
             "type": "calculated"
           },
@@ -41888,6 +41887,7 @@
             "dataType": "string",
             "expression": "FORMAT([Date], \"MMMM\")",
             "isHidden": true,
+            "lineageTag": "c9cfbbb6-a30c-4fce-bb7f-ba32bbb8d541",
             "sortByColumn": "MonthNo",
             "summarizeBy": "none",
             "type": "calculated"
@@ -41908,6 +41908,7 @@
             "dataType": "int64",
             "expression": "INT(([MonthNo] + 2) / 3)",
             "isHidden": true,
+            "lineageTag": "8ed42515-bfb7-488e-869c-74565166e897",
             "summarizeBy": "none",
             "type": "calculated"
           },
@@ -41927,6 +41928,7 @@
             "dataType": "string",
             "expression": "\"Qtr \" & [QuarterNo]",
             "isHidden": true,
+            "lineageTag": "8b4b3235-1589-4880-82a5-82f71b03cc84",
             "sortByColumn": "QuarterNo",
             "summarizeBy": "none",
             "type": "calculated"
@@ -41947,6 +41949,7 @@
             "dataType": "int64",
             "expression": "DAY([Date])",
             "isHidden": true,
+            "lineageTag": "1dbbb01e-c341-430a-b9d7-f56b36380a10",
             "summarizeBy": "none",
             "type": "calculated"
           }
@@ -41964,27 +41967,33 @@
               {
                 "name": "Year",
                 "column": "Year",
+                "lineageTag": "bfbdb139-9ed8-4958-9e98-873f3fe5c9a4",
                 "ordinal": 0
               },
               {
                 "name": "Quarter",
                 "column": "Quarter",
+                "lineageTag": "420dee65-90a6-4f6e-9e93-8cc796a291e4",
                 "ordinal": 1
               },
               {
                 "name": "Month",
                 "column": "Month",
+                "lineageTag": "ce97faac-8551-4e0c-b470-4fbc133c9cab",
                 "ordinal": 2
               },
               {
                 "name": "Day",
                 "column": "Day",
+                "lineageTag": "2baa847a-0eb5-40d3-bcb2-77c8d5d61c79",
                 "ordinal": 3
               }
-            ]
+            ],
+            "lineageTag": "b378e1b6-75db-4fd2-a168-cadaa84142a1"
           }
         ],
         "isHidden": true,
+        "lineageTag": "382e80cb-ce8d-4ef3-a920-00cfc6d03702",
         "partitions": [
           {
             "name": "LocalDateTable_67948750-4a55-4170-865e-d76c6427f063",
