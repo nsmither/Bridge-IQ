@@ -196,14 +196,6 @@ relationship 0a840ca3-82a7-107f-ba07-a21e792bf8cd
 	fromColumn: margin_load_count_goals.'Salesperson Name'
 	toColumn: salesperson_key.Name
 
-relationship AutoDetected_ffb25b36-3a06-40b9-af10-7aad726e1ec8
-	fromColumn: rev_codes.account_rep
-	toColumn: account_rep.account_rep
-
-relationship AutoDetected_abefa4b7-b384-4af1-a7e0-a9bdd0b3cc3d
-	fromColumn: account_rep.wolf_pack
-	toColumn: wolf_pack.wolf_pack
-
 relationship 328ffb62-6ce8-4861-9f4b-2ef8226436f6
 	joinOnDateBehavior: datePartOnly
 	fromColumn: observed_holidays.'Observed Holidays'
@@ -399,4 +391,27 @@ relationship cf8a66c6-ea49-e82b-8531-36f405b7ac81
 	fromCardinality: one
 	fromColumn: employees.ID
 	toColumn: dispatcher_key.ID
+
+relationship c068525c-5985-47a0-a2fb-8f38a5e05167
+	joinOnDateBehavior: datePartOnly
+	fromColumn: crt_movement_data.'Hand over'
+	toColumn: LocalDateTable_5d529210-5800-429f-b2e3-388a81d360f9.Date
+
+relationship 1b268b65-e261-470c-8a0d-ca966e3223f0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: crt_movement_data.'Ship date at Avail'
+	toColumn: LocalDateTable_67948750-4a55-4170-865e-d76c6427f063.Date
+
+relationship b7086df5-a15e-acff-d67c-d6cd33ee67fa
+	fromColumn: account_rep.wolf_pack
+	toColumn: wolf_pack.wolf_pack
+
+relationship ff88e45c-e612-46ba-ab09-9a3fade68d98
+	fromColumn: rev_codes.account_rep
+	toColumn: account_rep.account_rep
+
+relationship 9ee75757-9d7d-4c5d-bf3a-b3a04654cfd0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: orders.bol_recv_date
+	toColumn: LocalDateTable_2a3d8ac1-aff0-4e32-a507-1f99a679e947.Date
 

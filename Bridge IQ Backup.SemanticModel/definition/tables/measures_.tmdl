@@ -1711,14 +1711,14 @@ table measures_
 
 	measure 'Strike One Commissions' =
 			
-			IF([Margin]>=200000,40726+(([Margin]-199999)*.28),
-			    IF([Margin]>=150000,27976+(([Margin]-149999)*.255),
-			    IF([Margin]>=100000,16476+(([Margin]-99999)*.23),
-			    IF([Margin]>=50000,6225+(([Margin]-49999)*.205),
-			    IF([Margin]>=20000,1575+(([Margin]-19999)*.155),
-			    IF([Margin]>=15000,925+(([Margin]-14999)*.13),
-			    IF([Margin]>=10000,400+(([Margin]-9999)*.105),
-			    IF([Margin]>=5000,(([Margin]-4999)*.08),BLANK()
+			IF([Margin]>=200000,42676+(([Margin]-199999)*.29),
+			    IF([Margin]>=150000,29426+(([Margin]-149999)*.265),
+			    IF([Margin]>=100000,17426+(([Margin]-99999)*.24),
+			    IF([Margin]>=50000,6676+(([Margin]-49999)*.215),
+			    IF([Margin]>=20000,1725+(([Margin]-19999)*.165),
+			    IF([Margin]>=15000,1025+(([Margin]-14999)*.14),
+			    IF([Margin]>=10000,450+(([Margin]-9999)*.115),
+			    IF([Margin]>=5000,(([Margin]-4999)*.0),BLANK()
 			))))))))
 		isHidden
 		displayFolder: Comission Measures
@@ -1728,14 +1728,14 @@ table measures_
 
 	measure 'Strike Two Commissions' =
 			
-			IF([Margin]>=200000,3877++(([Margin]-199999)*.27),
-			    IF([Margin]>=150000,26526+(([Margin]-149999)*.245),
-			    IF([Margin]>=100000,15526+(([Margin]-99999)*.22),
-			    IF([Margin]>=50000,5775+(([Margin]-49999)*.195),
-			    IF([Margin]>=20000,1425+(([Margin]-19999)*.145),
-			    IF([Margin]>=15000,825+(([Margin]-14999)*.12),
-			    IF([Margin]>=10000,350+(([Margin]-9999)*.095),
-			    IF([Margin]>=5000,(([Margin]-4999)*.07),BLANK()
+			IF([Margin]>=200000,41701+(([Margin]-199999)*.285),
+			    IF([Margin]>=150000,28701+(([Margin]-149999)*.26),
+			    IF([Margin]>=100000,16951+(([Margin]-99999)*.235),
+			    IF([Margin]>=50000,6450+(([Margin]-49999)*.21),
+			    IF([Margin]>=20000,1650+(([Margin]-19999)*.16),
+			    IF([Margin]>=15000,975+(([Margin]-14999)*.135),
+			    IF([Margin]>=10000,425+(([Margin]-9999)*.11),
+			    IF([Margin]>=5000,(([Margin]-4999)*.085),BLANK()
 			))))))))
 		isHidden
 		displayFolder: Comission Measures
@@ -1745,14 +1745,14 @@ table measures_
 
 	measure 'Strike Three Commissions' = ```
 			
-			    IF([Margin]>=200000,34876+(([Margin]-199999)*.25),
-			    IF([Margin]>=150000,23626+(([Margin]-149999)*.225),
-			    IF([Margin]>=100000,13626+(([Margin]-99999)*.20),
-			    IF([Margin]>=50000,4875+(([Margin]-49999)*.175),
-			    IF([Margin]>=20000,1125+(([Margin]-19999)*.125),
-			    IF([Margin]>=15000,625+(([Margin]-14999)*.1),
-			    IF([Margin]>=10000,250+(([Margin]-9999)*.075),
-			    IF([Margin]>=5000,(([Margin]-4999)*.05),BLANK()
+			    IF([Margin]>=200000,40726+(([Margin]-199999)*.28),
+			    IF([Margin]>=150000,27976+(([Margin]-149999)*.255),
+			    IF([Margin]>=100000,16476+(([Margin]-99999)*.23),
+			    IF([Margin]>=50000,6225+(([Margin]-49999)*.205),
+			    IF([Margin]>=20000,1575+(([Margin]-19999)*.155),
+			    IF([Margin]>=15000,925+(([Margin]-14999)*.13),
+			    IF([Margin]>=10000,400+(([Margin]-9999)*.0105),
+			    IF([Margin]>=5000,(([Margin]-4999)*.08),BLANK()
 			))))))))
 			```
 		isHidden
@@ -1941,6 +1941,11 @@ table measures_
 		formatString: 0
 		displayFolder: Calendar Measures
 		lineageTag: 5a7993dc-cd42-47e0-bc17-6c98a2f529e4
+
+	measure 'Days since Delivered' = DATEDIFF(MIN(orders[consignee_sched_early_date]),TODAY(),DAY)
+		formatString: 0
+		displayFolder: Operations Measures
+		lineageTag: 1e22ebd4-cf31-4752-9add-16f111d81801
 
 	column Column
 		isHidden

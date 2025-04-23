@@ -51,7 +51,7 @@ annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movement
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBIDesktopVersion = 2.139.2054.0 (24.12)+334ca1c95b576cc53924655643b0d36f21caac55
+annotation PBIDesktopVersion = 2.141.1558.0 (25.03)+75b5f06a991f8f8a8a4d6b6fcd0f66e1ec2d6fdc
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -93,6 +93,9 @@ ref table LocalDateTable_984f2224-97c9-4ff5-8864-d5ee44b7d514
 ref table crm
 ref table carrier_key
 ref table division_key
+ref table LocalDateTable_5d529210-5800-429f-b2e3-388a81d360f9
+ref table LocalDateTable_67948750-4a55-4170-865e-d76c6427f063
+ref table LocalDateTable_2a3d8ac1-aff0-4e32-a507-1f99a679e947
 
 ref cultureInfo en-US
 

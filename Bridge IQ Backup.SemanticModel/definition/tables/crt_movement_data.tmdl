@@ -100,18 +100,34 @@ table crt_movement_data
 		annotation SummarizationSetBy = Automatic
 
 	column 'Ship date at Avail'
-		dataType: string
+		dataType: dateTime
+		formatString: General Date
 		lineageTag: 94100550-fe9c-4957-a3a6-8a5ac841f0d6
 		summarizeBy: none
 		sourceColumn: Ship date at Avail
 
+		variation Variation
+			isDefault
+			relationship: 1b268b65-e261-470c-8a0d-ca966e3223f0
+			defaultHierarchy: LocalDateTable_67948750-4a55-4170-865e-d76c6427f063.'Date Hierarchy'
+
+		changedProperty = DataType
+
 		annotation SummarizationSetBy = Automatic
 
 	column 'Hand over'
-		dataType: string
+		dataType: dateTime
+		formatString: General Date
 		lineageTag: 1c7d0730-ceb7-4ff6-b56a-ccedbfdce394
 		summarizeBy: none
 		sourceColumn: Hand over
+
+		variation Variation
+			isDefault
+			relationship: c068525c-5985-47a0-a2fb-8f38a5e05167
+			defaultHierarchy: LocalDateTable_5d529210-5800-429f-b2e3-388a81d360f9.'Date Hierarchy'
+
+		changedProperty = DataType
 
 		annotation SummarizationSetBy = Automatic
 

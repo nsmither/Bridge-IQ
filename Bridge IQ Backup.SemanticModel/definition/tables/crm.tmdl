@@ -270,6 +270,14 @@ table crm
 
 		annotation SummarizationSetBy = Automatic
 
+	column x_studio_zoominfo_company_id
+		dataType: string
+		lineageTag: 96cfdcac-bec3-4e5a-b465-612560150132
+		summarizeBy: none
+		sourceColumn: x_studio_zoominfo_company_id
+
+		annotation SummarizationSetBy = Automatic
+
 	partition crm = m
 		mode: import
 		source =

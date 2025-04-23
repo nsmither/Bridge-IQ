@@ -37,6 +37,30 @@ table behavior_goals
 
 		annotation SummarizationSetBy = Automatic
 
+	column Column5
+		dataType: string
+		lineageTag: 7eca8e3a-244d-4273-96d3-4f21d5e84db1
+		summarizeBy: none
+		sourceColumn: Column5
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column6
+		dataType: string
+		lineageTag: 9234a604-8c20-47b9-bf7f-a59e6804a050
+		summarizeBy: none
+		sourceColumn: Column6
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column7
+		dataType: string
+		lineageTag: f94d635b-eeae-4f73-a843-cb958ad71e89
+		summarizeBy: none
+		sourceColumn: Column7
+
+		annotation SummarizationSetBy = Automatic
+
 	partition behavior_goals = m
 		mode: import
 		source =

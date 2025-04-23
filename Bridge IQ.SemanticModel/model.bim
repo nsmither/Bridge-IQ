@@ -12,7 +12,7 @@
       },
       {
         "name": "PBIDesktopVersion",
-        "value": "2.141.1253.0 (25.03)+74f9999a1e95f78c739f3ea2b96ba340e9ba8729"
+        "value": "2.142.928.0 (25.04)+de52df9f0bb74ad93a80d89c52d63fe6d07e0e1b"
       },
       {
         "name": "PBI_ProTooling",
@@ -30335,74 +30335,6 @@
         "queryGroup": "Historic Tables"
       },
       {
-        "name": "pcs_orders",
-        "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navigation"
-          },
-          {
-            "name": "PBI_ResultType",
-            "value": "Table"
-          }
-        ],
-        "expression": [
-          "let",
-          "    Source = Sql.Databases(\"blsql\"),",
-          "    ExpData_A = Source{[Name=\"ExpData_A\"]}[Data],",
-          "    dbo_tblLoads = ExpData_A{[Schema=\"dbo\",Item=\"tblLoads\"]}[Data],",
-          "    #\"Filtered Rows\" = Table.SelectRows(dbo_tblLoads, each ([Status] = \"Arrived\")),",
-          "    #\"Removed Columns\" = Table.RemoveColumns(#\"Filtered Rows\",{\"TotalSeats\", \"TotalTariff\", \"TotalAsWeight\", \"TotalSpace\", \"SealNo\", \"RateType\", \"RatingUnits\", \"RateDiscount\", \"DiscountAmt\", \"TotalAcc\", \"TotalCom\", \"Rate\", \"txtNotes\", \"SelectYN\", \"TripID\", \"MasterLoad\", \"TailgateYN\", \"UserName\", \"InvSelect\", \"InvUser\", \"InvoiceID\", \"InvoiceDate\", \"LoadClass\", \"OfficeCode\", \"IO\", \"Container\", \"Chassis\", \"Notify\", \"NotifyTime\", \"LFD\", \"RRP\", \"LE\", \"JobID\", \"ChassisPU\", \"ChassisDel\", \"BookingNo\", \"VesselName\", \"ShipperID\", \"ShipAddress\", \"ShipPhone\", \"ShipContact\", \"ShipRef\", \"ShipZone\", \"ConsigneeID\", \"ConsAddress\", \"ConsPhone\", \"ConsContact\", \"ConsRef\", \"ConsZone\", \"DropDate\", \"DropID\", \"DropName\", \"DropAddress\", \"DropCity\", \"DropSt\", \"DropZip\", \"XStopsYN\", \"RateMatrix\", \"RateMatrixAcc\", \"CarrierName\", \"UnitNumber\", \"TruckNumber\", \"TrailerNumber1\", \"TrailerNumber2\", \"ReqTemp\", \"Pallets\", \"PalletsPU\", \"PalletsPUDam\", \"PalletsPUVar\", \"PalletsDel\", \"PalletsDelDam\", \"PalletsDelVar\", \"PalletExchange\", \"HazardousYN\", \"FundsType\", \"DZone\", \"BillToName\", \"BillToRef\", \"LastTraceDate\", \"LastTracePos\", \"ETA\", \"FrtConYN\", \"VarianceYN\", \"SaveQuoteYN\", \"ReleaseNumber\", \"LdClearedYN\", \"EDI1\", \"EDI2\", \"EDI3\", \"EDI4\", \"EDI5\", \"AvailPU\", \"AvailDel\", \"ComValue\", \"BrokerageNotes\", \"PreBillYN\", \"MinRateYN\", \"LegTrackingYN\", \"WebPosted\", \"CarrierRate\", \"WebActiveLoad\", \"TotalComF\", \"TotalAccF\", \"TotalRevenueF\", \"DiscountAmtF\", \"RateF\", \"SatStatus\", \"ChargeVAT\", \"SteamshipLine\", \"PortOfDischarge\", \"ContainerTerm\", \"RejectYN\", \"RejectDate\", \"EquipmentX\", \"LFDX\", \"RateSource\", \"RateMatrixCom\", \"MileageSys\", \"MileageMeth\", \"DropRetDate\", \"DropRetTime\", \"CarrierComment\", \"SignedForBy\", \"ClosedBorderYN\", \"RBSentDT\", \"RBSentBy\", \"RBSentTo\", \"QuoteExpires\", \"SOID\", \"AgentBatchID\", \"EDIRefs\", \"DispSelect\", \"StartTrace\", \"EndTrace\", \"CarrierRateAcc\", \"CarrierRateAccName\", \"QRIDNo\", \"PendingYN\", \"ResponseType\", \"ResponseDT\", \"ResponseUser\", \"QRDocYN\", \"QREmail\", \"QRPhone\", \"QRContact\", \"QuoteID\", \"DelOptions\", \"TeamName\", \"ContainerTermLoc\", \"ChassisPULoc\", \"ChassisDelLoc\", \"IntOrigName\", \"IntOrigAddress\", \"IntOrigCity\", \"IntOrigSt\", \"IntOrigZip\", \"IntOrigZone\", \"IntOrigPhone\", \"IntOrigContact\", \"IntOrigRef\", \"IntDestName\", \"IntDestAddress\", \"IntDestCity\", \"IntDestSt\", \"IntDestZip\", \"IntDestZone\", \"IntDestPhone\", \"IntDestContact\", \"IntDestRef\", \"MacroPointOrderID\", \"DAT_AssetID\", \"WebPostedBy\", \"DropTrailerID1\", \"DropTrailerID2\", \"CarrierRev\", \"SatStatusDT\", \"CarrierPayType\", \"CarrierPayRate\", \"CarrierPayYN\", \"LastSendX6\", \"InvHoldYN\", \"SteamshipCode\", \"NextResID\", \"PreloadTrailerID1\", \"PreloadTrailerID2\", \"XTRemoveYN\", \"ContOwnerID\", \"ChasOwnerID\", \"RateWareYN\", \"LastX6Sent\", \"ContainerST\", \"ChassisST\", \"LastFTUpdate\", \"DistDateQ\", \"TimeRem\", \"LastSendFourKites\", \"TTYN\", \"Status\", \"LoadType\", \"DispUser\", \"DriverName\"}),",
-          "    #\"Added Prefix\" = Table.TransformColumns(#\"Removed Columns\", {{\"LoadID\", each \"PCS\" & Text.From(_, \"en-US\"), type text}}),",
-          "    #\"Renamed Columns\" = Table.RenameColumns(#\"Added Prefix\",{{\"LoadID\", \"id\"}, {\"DateReceived\", \"order_entered_date\"}, {\"PickupDate\", \"shipper_sched_early_date\"}, {\"PickupTime\", \"shipper_sched_early_time\"}, {\"PUWindow\", \"shipper_sched_late_time\"}, {\"DeliveryDate\", \"consignee_sched_early_date\"}, {\"DeliveryTime\", \"consignee_sched_early_time\"}, {\"DelWindow\", \"consignee_sched_late_time\"}, {\"MilesBilled\", \"bill_distance\"}, {\"TotalPieces\", \"pieces\"}, {\"TotalWeight\", \"weight\"}, {\"TotalRevenue\", \"freight_charge\"}, {\"Equipment\", \"equipment_type_id\"}, {\"ShipName\", \"shipper_location_name\"}, {\"ShipCity\", \"shipper_city_name\"}, {\"ShipSt\", \"shipper_state\"}, {\"ShipZip\", \"shipper_zip_code\"}, {\"ConsName\", \"consignee_location_name\"}, {\"ConsCity\", \"consignee_city_name\"}, {\"ConsSt\", \"consignee_state\"}, {\"ConsZip\", \"consignee_zip_code\"}, {\"Salesperson\", \"salesperson_id\"}, {\"Commodity\", \"commodity\"}}),",
-          "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\",{{\"order_entered_date\", type date}, {\"shipper_sched_early_date\", type date}, {\"shipper_sched_early_time\", type time}, {\"shipper_sched_late_time\", type time}, {\"consignee_sched_early_date\", type date}, {\"consignee_sched_early_time\", type time}, {\"consignee_sched_late_time\", type time}, {\"freight_charge\", Currency.Type}, {\"salesperson_id\", type text}}),",
-          "    #\"Merged Queries\" = Table.NestedJoin(#\"Changed Type\", {\"salesperson_id\"}, pcs_dispatchers, {\"EmpIDNo\"}, \"tblUserList\", JoinKind.LeftOuter),",
-          "    #\"Expanded tblUserList\" = Table.ExpandTableColumn(#\"Merged Queries\", \"tblUserList\", {\"eMailAdd\"}, {\"tblUserList.eMailAdd\"}),",
-          "    #\"Removed Columns1\" = Table.RemoveColumns(#\"Expanded tblUserList\",{\"salesperson_id\"}),",
-          "    #\"Renamed Columns1\" = Table.RenameColumns(#\"Removed Columns1\",{{\"tblUserList.eMailAdd\", \"salesperson_id\"}}),",
-          "    #\"Replaced Value\" = Table.ReplaceValue(#\"Renamed Columns1\",\"tcampbell@bridgelogisticsinc.com\",\"CAMPFAO1\",Replacer.ReplaceText,{\"salesperson_id\"}),",
-          "    #\"Replaced Value1\" = Table.ReplaceValue(#\"Replaced Value\",\"BSOLORIA@BRIDGELOGISTICSINC.COM\",\"SOLOCLOH\",Replacer.ReplaceText,{\"salesperson_id\"}),",
-          "    #\"Replaced Value2\" = Table.ReplaceValue(#\"Replaced Value1\",\"jmarot@bridgelogisticsinc.com\",\"MAROHAOH\",Replacer.ReplaceText,{\"salesperson_id\"}),",
-          "    #\"Merged Queries1\" = Table.NestedJoin(#\"Replaced Value2\", {\"BillToID\"}, pcs_customers, {\"IDNo\"}, \"pcs_customers\", JoinKind.LeftOuter),",
-          "    #\"Expanded pcs_customers\" = Table.ExpandTableColumn(#\"Merged Queries1\", \"pcs_customers\", {\"EntCode\"}, {\"pcs_customers.EntCode\"}),",
-          "    #\"Trimmed Text\" = Table.TransformColumns(#\"Expanded pcs_customers\",{{\"pcs_customers.EntCode\", Text.Trim, type text}}),",
-          "    //start merging entity codes for matching",
-          "    #\"Replaced Value3\" = Table.ReplaceValue(#\"Trimmed Text\",\"V5978\",\"V6064\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value4\" = Table.ReplaceValue(#\"Replaced Value3\",\"V37123\",\"V18661\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value5\" = Table.ReplaceValue(#\"Replaced Value4\",\"V26458\",\"V18025\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value6\" = Table.ReplaceValue(#\"Replaced Value5\",\"V24526\",\"V38482\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value7\" = Table.ReplaceValue(#\"Replaced Value6\",\"V24303\",\"V20643\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value8\" = Table.ReplaceValue(#\"Replaced Value7\",\"V18231\",\"V20643\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value10\" = Table.ReplaceValue(#\"Replaced Value8\",\"V12320\",\"V6978\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value12\" = Table.ReplaceValue(#\"Replaced Value10\",\"V10210\",\"V10208\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Replaced Value11\" = Table.ReplaceValue(#\"Replaced Value12\",\"v11634\",\"V7430\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Merged Queries2\" = Table.NestedJoin(#\"Replaced Value11\", {\"pcs_customers.EntCode\"}, custmers_pcs_sync, {\"prev_code\"}, \"customer\", JoinKind.LeftOuter),",
-          "    #\"Replaced Value9\" = Table.ReplaceValue(#\"Merged Queries2\",\"V17061\",\"V11634\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
-          "    #\"Expanded customer\" = Table.ExpandTableColumn(#\"Replaced Value9\", \"customer\", {\"id\"}, {\"customer.id\"}),",
-          "    #\"Renamed Columns2\" = Table.RenameColumns(#\"Expanded customer\",{{\"customer.id\", \"customer.id_old\"}}),",
-          "    #\"Added Conditional Column\" = Table.AddColumn(#\"Renamed Columns2\", \"customer_id\", each if [pcs_customers.EntCode] = \"V11634\" then \"PARIDUIA\" else [customer.id_old]),",
-          "    #\"Removed Columns2\" = Table.RemoveColumns(#\"Added Conditional Column\",{\"customer.id_old\", \"BillToID\", \"pcs_customers.EntCode\"}),",
-          "    #\"Added Custom\" = Table.AddColumn(#\"Removed Columns2\", \"status\", each \"D\"),",
-          "    #\"Inserted First Characters\" = Table.AddColumn(#\"Added Custom\", \"consignee_3_digit_zip_code\", each Text.Start([consignee_zip_code], 3), type text),",
-          "    #\"Inserted First Characters1\" = Table.AddColumn(#\"Inserted First Characters\", \"shipper_3_digit_zip_code\", each Text.Start([shipper_zip_code], 3), type text),",
-          "    //Start Add Lane",
-          "    #\"Trimmed Text1\" = Table.TransformColumns(#\"Inserted First Characters1\",{{\"shipper_city_name\", Text.Trim, type text}, {\"shipper_state\", Text.Trim, type text}, {\"consignee_city_name\", Text.Trim, type text}, {\"consignee_state\", Text.Trim, type text}}),",
-          "    #\"Duplicated Column\" = Table.DuplicateColumn(#\"Trimmed Text1\", \"shipper_city_name\", \"shipper_city_name - Copy\"),",
-          "    #\"Duplicated Column1\" = Table.DuplicateColumn(#\"Duplicated Column\", \"shipper_state\", \"shipper_state - Copy\"),",
-          "    #\"Duplicated Column2\" = Table.DuplicateColumn(#\"Duplicated Column1\", \"consignee_city_name\", \"consignee_city_name - Copy\"),",
-          "    #\"Duplicated Column3\" = Table.DuplicateColumn(#\"Duplicated Column2\", \"consignee_state\", \"consignee_state - Copy\"),",
-          "    #\"Merged Columns\" = Table.CombineColumns(#\"Duplicated Column3\",{\"shipper_city_name - Copy\", \"shipper_state - Copy\"},Combiner.CombineTextByDelimiter(\", \", QuoteStyle.None),\"Shipper\"),",
-          "    #\"Merged Columns1\" = Table.CombineColumns(#\"Merged Columns\",{\"consignee_city_name - Copy\", \"consignee_state - Copy\"},Combiner.CombineTextByDelimiter(\", \", QuoteStyle.None),\"Consignee\"),",
-          "    //End Add Lane",
-          "    #\"Merged Columns2\" = Table.CombineColumns(#\"Merged Columns1\",{\"Shipper\", \"Consignee\"},Combiner.CombineTextByDelimiter(\" - \", QuoteStyle.None),\"lane\")",
-          "in",
-          "    #\"Merged Columns2\""
-        ],
-        "kind": "m",
-        "lineageTag": "4f815021-5764-4bb3-8b46-a88a5802f2ae",
-        "queryGroup": "Historic Tables"
-      },
-      {
         "name": "mcleod_historic_orders",
         "annotations": [
           {
@@ -30466,7 +30398,7 @@
             "value": "DateTime"
           }
         ],
-        "expression": "#datetime(2024, 10, 1, 0, 0, 0) meta [IsParameterQuery=true, Type=\"DateTime\", IsParameterQueryRequired=true]",
+        "expression": "#datetime(2025, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type=\"DateTime\", IsParameterQueryRequired=true]",
         "kind": "m",
         "lineageTag": "af39c097-cda3-4307-8194-af7487559d9a",
         "queryGroup": "Parameters"
@@ -30483,7 +30415,7 @@
             "value": "Number"
           }
         ],
-        "expression": "147510 meta [IsParameterQuery=true, Type=\"Number\", IsParameterQueryRequired=true]",
+        "expression": "163683 meta [IsParameterQuery=true, Type=\"Number\", IsParameterQueryRequired=true]",
         "kind": "m",
         "lineageTag": "7b1d95af-7d84-440e-87b8-e089fa08fe15",
         "queryGroup": "Parameters"
@@ -31216,6 +31148,74 @@
         ],
         "kind": "m",
         "lineageTag": "61f23af1-ed35-407d-a264-f6699d7ceacf"
+      },
+      {
+        "name": "pcs_orders",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Source = Sql.Databases(\"blsql\"),",
+          "    ExpData_A = Source{[Name=\"ExpData_A\"]}[Data],",
+          "    dbo_tblLoads = ExpData_A{[Schema=\"dbo\",Item=\"tblLoads\"]}[Data],",
+          "    #\"Filtered Rows\" = Table.SelectRows(dbo_tblLoads, each ([Status] = \"Arrived\")),",
+          "    #\"Removed Columns\" = Table.RemoveColumns(#\"Filtered Rows\",{\"TotalSeats\", \"TotalTariff\", \"TotalAsWeight\", \"TotalSpace\", \"SealNo\", \"RateType\", \"RatingUnits\", \"RateDiscount\", \"DiscountAmt\", \"TotalAcc\", \"TotalCom\", \"Rate\", \"txtNotes\", \"SelectYN\", \"TripID\", \"MasterLoad\", \"TailgateYN\", \"UserName\", \"InvSelect\", \"InvUser\", \"InvoiceID\", \"InvoiceDate\", \"LoadClass\", \"OfficeCode\", \"IO\", \"Container\", \"Chassis\", \"Notify\", \"NotifyTime\", \"LFD\", \"RRP\", \"LE\", \"JobID\", \"ChassisPU\", \"ChassisDel\", \"BookingNo\", \"VesselName\", \"ShipperID\", \"ShipAddress\", \"ShipPhone\", \"ShipContact\", \"ShipRef\", \"ShipZone\", \"ConsigneeID\", \"ConsAddress\", \"ConsPhone\", \"ConsContact\", \"ConsRef\", \"ConsZone\", \"DropDate\", \"DropID\", \"DropName\", \"DropAddress\", \"DropCity\", \"DropSt\", \"DropZip\", \"XStopsYN\", \"RateMatrix\", \"RateMatrixAcc\", \"CarrierName\", \"UnitNumber\", \"TruckNumber\", \"TrailerNumber1\", \"TrailerNumber2\", \"ReqTemp\", \"Pallets\", \"PalletsPU\", \"PalletsPUDam\", \"PalletsPUVar\", \"PalletsDel\", \"PalletsDelDam\", \"PalletsDelVar\", \"PalletExchange\", \"HazardousYN\", \"FundsType\", \"DZone\", \"BillToName\", \"BillToRef\", \"LastTraceDate\", \"LastTracePos\", \"ETA\", \"FrtConYN\", \"VarianceYN\", \"SaveQuoteYN\", \"ReleaseNumber\", \"LdClearedYN\", \"EDI1\", \"EDI2\", \"EDI3\", \"EDI4\", \"EDI5\", \"AvailPU\", \"AvailDel\", \"ComValue\", \"BrokerageNotes\", \"PreBillYN\", \"MinRateYN\", \"LegTrackingYN\", \"WebPosted\", \"CarrierRate\", \"WebActiveLoad\", \"TotalComF\", \"TotalAccF\", \"TotalRevenueF\", \"DiscountAmtF\", \"RateF\", \"SatStatus\", \"ChargeVAT\", \"SteamshipLine\", \"PortOfDischarge\", \"ContainerTerm\", \"RejectYN\", \"RejectDate\", \"EquipmentX\", \"LFDX\", \"RateSource\", \"RateMatrixCom\", \"MileageSys\", \"MileageMeth\", \"DropRetDate\", \"DropRetTime\", \"CarrierComment\", \"SignedForBy\", \"ClosedBorderYN\", \"RBSentDT\", \"RBSentBy\", \"RBSentTo\", \"QuoteExpires\", \"SOID\", \"AgentBatchID\", \"EDIRefs\", \"DispSelect\", \"StartTrace\", \"EndTrace\", \"CarrierRateAcc\", \"CarrierRateAccName\", \"QRIDNo\", \"PendingYN\", \"ResponseType\", \"ResponseDT\", \"ResponseUser\", \"QRDocYN\", \"QREmail\", \"QRPhone\", \"QRContact\", \"QuoteID\", \"DelOptions\", \"TeamName\", \"ContainerTermLoc\", \"ChassisPULoc\", \"ChassisDelLoc\", \"IntOrigName\", \"IntOrigAddress\", \"IntOrigCity\", \"IntOrigSt\", \"IntOrigZip\", \"IntOrigZone\", \"IntOrigPhone\", \"IntOrigContact\", \"IntOrigRef\", \"IntDestName\", \"IntDestAddress\", \"IntDestCity\", \"IntDestSt\", \"IntDestZip\", \"IntDestZone\", \"IntDestPhone\", \"IntDestContact\", \"IntDestRef\", \"MacroPointOrderID\", \"DAT_AssetID\", \"WebPostedBy\", \"DropTrailerID1\", \"DropTrailerID2\", \"CarrierRev\", \"SatStatusDT\", \"CarrierPayType\", \"CarrierPayRate\", \"CarrierPayYN\", \"LastSendX6\", \"InvHoldYN\", \"SteamshipCode\", \"NextResID\", \"PreloadTrailerID1\", \"PreloadTrailerID2\", \"XTRemoveYN\", \"ContOwnerID\", \"ChasOwnerID\", \"RateWareYN\", \"LastX6Sent\", \"ContainerST\", \"ChassisST\", \"LastFTUpdate\", \"DistDateQ\", \"TimeRem\", \"LastSendFourKites\", \"TTYN\", \"Status\", \"LoadType\", \"DispUser\", \"DriverName\"}),",
+          "    #\"Added Prefix\" = Table.TransformColumns(#\"Removed Columns\", {{\"LoadID\", each \"PCS\" & Text.From(_, \"en-US\"), type text}}),",
+          "    #\"Renamed Columns\" = Table.RenameColumns(#\"Added Prefix\",{{\"LoadID\", \"id\"}, {\"DateReceived\", \"order_entered_date\"}, {\"PickupDate\", \"shipper_sched_early_date\"}, {\"PickupTime\", \"shipper_sched_early_time\"}, {\"PUWindow\", \"shipper_sched_late_time\"}, {\"DeliveryDate\", \"consignee_sched_early_date\"}, {\"DeliveryTime\", \"consignee_sched_early_time\"}, {\"DelWindow\", \"consignee_sched_late_time\"}, {\"MilesBilled\", \"bill_distance\"}, {\"TotalPieces\", \"pieces\"}, {\"TotalWeight\", \"weight\"}, {\"TotalRevenue\", \"freight_charge\"}, {\"Equipment\", \"equipment_type_id\"}, {\"ShipName\", \"shipper_location_name\"}, {\"ShipCity\", \"shipper_city_name\"}, {\"ShipSt\", \"shipper_state\"}, {\"ShipZip\", \"shipper_zip_code\"}, {\"ConsName\", \"consignee_location_name\"}, {\"ConsCity\", \"consignee_city_name\"}, {\"ConsSt\", \"consignee_state\"}, {\"ConsZip\", \"consignee_zip_code\"}, {\"Salesperson\", \"salesperson_id\"}, {\"Commodity\", \"commodity\"}}),",
+          "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\",{{\"order_entered_date\", type date}, {\"shipper_sched_early_date\", type date}, {\"shipper_sched_early_time\", type time}, {\"shipper_sched_late_time\", type time}, {\"consignee_sched_early_date\", type date}, {\"consignee_sched_early_time\", type time}, {\"consignee_sched_late_time\", type time}, {\"freight_charge\", Currency.Type}, {\"salesperson_id\", type text}}),",
+          "    #\"Merged Queries\" = Table.NestedJoin(#\"Changed Type\", {\"salesperson_id\"}, pcs_dispatchers, {\"EmpIDNo\"}, \"tblUserList\", JoinKind.LeftOuter),",
+          "    #\"Expanded tblUserList\" = Table.ExpandTableColumn(#\"Merged Queries\", \"tblUserList\", {\"eMailAdd\"}, {\"tblUserList.eMailAdd\"}),",
+          "    #\"Removed Columns1\" = Table.RemoveColumns(#\"Expanded tblUserList\",{\"salesperson_id\"}),",
+          "    #\"Renamed Columns1\" = Table.RenameColumns(#\"Removed Columns1\",{{\"tblUserList.eMailAdd\", \"salesperson_id\"}}),",
+          "    #\"Replaced Value\" = Table.ReplaceValue(#\"Renamed Columns1\",\"tcampbell@bridgelogisticsinc.com\",\"CAMPFAO1\",Replacer.ReplaceText,{\"salesperson_id\"}),",
+          "    #\"Replaced Value1\" = Table.ReplaceValue(#\"Replaced Value\",\"BSOLORIA@BRIDGELOGISTICSINC.COM\",\"SOLOCLOH\",Replacer.ReplaceText,{\"salesperson_id\"}),",
+          "    #\"Replaced Value2\" = Table.ReplaceValue(#\"Replaced Value1\",\"jmarot@bridgelogisticsinc.com\",\"MAROHAOH\",Replacer.ReplaceText,{\"salesperson_id\"}),",
+          "    #\"Merged Queries1\" = Table.NestedJoin(#\"Replaced Value2\", {\"BillToID\"}, pcs_customers, {\"IDNo\"}, \"pcs_customers\", JoinKind.LeftOuter),",
+          "    #\"Expanded pcs_customers\" = Table.ExpandTableColumn(#\"Merged Queries1\", \"pcs_customers\", {\"EntCode\"}, {\"pcs_customers.EntCode\"}),",
+          "    #\"Trimmed Text\" = Table.TransformColumns(#\"Expanded pcs_customers\",{{\"pcs_customers.EntCode\", Text.Trim, type text}}),",
+          "    //start merging entity codes for matching",
+          "    #\"Replaced Value3\" = Table.ReplaceValue(#\"Trimmed Text\",\"V5978\",\"V6064\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value4\" = Table.ReplaceValue(#\"Replaced Value3\",\"V37123\",\"V18661\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value5\" = Table.ReplaceValue(#\"Replaced Value4\",\"V26458\",\"V18025\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value6\" = Table.ReplaceValue(#\"Replaced Value5\",\"V24526\",\"V38482\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value7\" = Table.ReplaceValue(#\"Replaced Value6\",\"V24303\",\"V20643\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value8\" = Table.ReplaceValue(#\"Replaced Value7\",\"V18231\",\"V20643\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value10\" = Table.ReplaceValue(#\"Replaced Value8\",\"V12320\",\"V6978\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value12\" = Table.ReplaceValue(#\"Replaced Value10\",\"V10210\",\"V10208\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Replaced Value11\" = Table.ReplaceValue(#\"Replaced Value12\",\"v11634\",\"V7430\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Merged Queries2\" = Table.NestedJoin(#\"Replaced Value11\", {\"pcs_customers.EntCode\"}, custmers_pcs_sync, {\"prev_code\"}, \"customer\", JoinKind.LeftOuter),",
+          "    #\"Replaced Value9\" = Table.ReplaceValue(#\"Merged Queries2\",\"V17061\",\"V11634\",Replacer.ReplaceText,{\"pcs_customers.EntCode\"}),",
+          "    #\"Expanded customer\" = Table.ExpandTableColumn(#\"Replaced Value9\", \"customer\", {\"id\"}, {\"customer.id\"}),",
+          "    #\"Renamed Columns2\" = Table.RenameColumns(#\"Expanded customer\",{{\"customer.id\", \"customer.id_old\"}}),",
+          "    #\"Added Conditional Column\" = Table.AddColumn(#\"Renamed Columns2\", \"customer_id\", each if [pcs_customers.EntCode] = \"V11634\" then \"PARIDUIA\" else [customer.id_old]),",
+          "    #\"Removed Columns2\" = Table.RemoveColumns(#\"Added Conditional Column\",{\"customer.id_old\", \"BillToID\", \"pcs_customers.EntCode\"}),",
+          "    #\"Added Custom\" = Table.AddColumn(#\"Removed Columns2\", \"status\", each \"D\"),",
+          "    #\"Inserted First Characters\" = Table.AddColumn(#\"Added Custom\", \"consignee_3_digit_zip_code\", each Text.Start([consignee_zip_code], 3), type text),",
+          "    #\"Inserted First Characters1\" = Table.AddColumn(#\"Inserted First Characters\", \"shipper_3_digit_zip_code\", each Text.Start([shipper_zip_code], 3), type text),",
+          "    //Start Add Lane",
+          "    #\"Trimmed Text1\" = Table.TransformColumns(#\"Inserted First Characters1\",{{\"shipper_city_name\", Text.Trim, type text}, {\"shipper_state\", Text.Trim, type text}, {\"consignee_city_name\", Text.Trim, type text}, {\"consignee_state\", Text.Trim, type text}}),",
+          "    #\"Duplicated Column\" = Table.DuplicateColumn(#\"Trimmed Text1\", \"shipper_city_name\", \"shipper_city_name - Copy\"),",
+          "    #\"Duplicated Column1\" = Table.DuplicateColumn(#\"Duplicated Column\", \"shipper_state\", \"shipper_state - Copy\"),",
+          "    #\"Duplicated Column2\" = Table.DuplicateColumn(#\"Duplicated Column1\", \"consignee_city_name\", \"consignee_city_name - Copy\"),",
+          "    #\"Duplicated Column3\" = Table.DuplicateColumn(#\"Duplicated Column2\", \"consignee_state\", \"consignee_state - Copy\"),",
+          "    #\"Merged Columns\" = Table.CombineColumns(#\"Duplicated Column3\",{\"shipper_city_name - Copy\", \"shipper_state - Copy\"},Combiner.CombineTextByDelimiter(\", \", QuoteStyle.None),\"Shipper\"),",
+          "    #\"Merged Columns1\" = Table.CombineColumns(#\"Merged Columns\",{\"consignee_city_name - Copy\", \"consignee_state - Copy\"},Combiner.CombineTextByDelimiter(\", \", QuoteStyle.None),\"Consignee\"),",
+          "    //End Add Lane",
+          "    #\"Merged Columns2\" = Table.CombineColumns(#\"Merged Columns1\",{\"Shipper\", \"Consignee\"},Combiner.CombineTextByDelimiter(\" - \", QuoteStyle.None),\"lane\")",
+          "in",
+          "    #\"Merged Columns2\""
+        ],
+        "kind": "m",
+        "lineageTag": "9009ad3a-1b21-4b7d-b2b1-96c10be3855c",
+        "queryGroup": "Historic Tables"
       }
     ],
     "queryGroups": [
@@ -32638,7 +32638,7 @@
           },
           {
             "name": "PBI_ResultType",
-            "value": "Exception"
+            "value": "Table"
           }
         ],
         "columns": [
@@ -34644,8 +34644,14 @@
                 "value": "Automatic"
               }
             ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
             "dataType": "string",
             "lineageTag": "18f8eb3b-bc2c-4a60-88cd-5c27079058e7",
+            "sortByColumn": "Start of Month",
             "sourceColumn": "Month / Year",
             "summarizeBy": "none"
           },
