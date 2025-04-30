@@ -1,0 +1,108 @@
+table behaviors
+	lineageTag: 0efa026f-8530-438d-a169-afe186397b78
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 49fef3ee-bae6-4c16-9849-9133c9425716
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Behavior Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3b713923-edab-47f4-a7a9-3e18797873b7
+		summarizeBy: none
+		sourceColumn: Behavior Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column author_id
+		dataType: string
+		lineageTag: f0e02d84-d40c-40f7-8f6c-66b132f18faf
+		summarizeBy: none
+		sourceColumn: author_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mail_activity_type_id
+		dataType: string
+		lineageTag: a61e477d-f216-40de-9b84-ec97d394ae48
+		summarizeBy: none
+		sourceColumn: mail_activity_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column model
+		dataType: string
+		lineageTag: c210c876-5e78-4a7a-aeac-29d4091dd37f
+		summarizeBy: none
+		sourceColumn: model
+
+		annotation SummarizationSetBy = Automatic
+
+	column res_id
+		dataType: int64
+		formatString: 0
+		lineageTag: cb66fbc3-3b19-4494-86f5-efcfefdfc4ff
+		summarizeBy: none
+		sourceColumn: res_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Behavior Time'
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: c0ed21ad-ce4e-4070-b405-204aff66961a
+		summarizeBy: none
+		sourceColumn: Behavior Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 15107117-0e45-4d66-8667-9adc52a0af8e
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition behaviors = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam", [ApiVersion = 15]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Folder Path], "https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared Documents/02 BL-Areas/bridge_iq/Data Sets/behaviors_api_files/")),
+				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (3)", each #"Transform File (3)"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (3)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (3)", Table.ColumnNames(#"Transform File (3)"(#"Sample File (3)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"id", Int64.Type}, {"date", type datetime}, {"author_id", type any}, {"mail_activity_type_id", type text}, {"model", type text}, {"res_id", Int64.Type}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Changed Type", each true),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"Source.Name"}),
+				    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Removed Columns", {{"author_id", each Text.BetweenDelimiters(_, "'", "'"), type text}, {"mail_activity_type_id", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Extracted Text Between Delimiters", {{"author_id", null}}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Replaced Errors", each ([model] <> "gamification.badge.user") and ([author_id] <> null and [author_id] <> "OdooBot" and [author_id] <> "Portal User Template")),
+				    #"Inserted Time" = Table.AddColumn(#"Filtered Rows2", "Time", each DateTime.Time([date]), type time),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Inserted Time",{{"date", "Behavior Date"}, {"Time", "Behavior Time"}}),
+				    #"Filtered Rows3" = Table.SelectRows(#"Renamed Columns2", each [Behavior Date] >= RefreshCutOffDate),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows3",{{"Behavior Date", type date}}),
+				    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date),
+				    #"Appended Query" = Table.Combine({#"Inserted Start of Month", historic_behaviors})
+				in
+				    #"Appended Query"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

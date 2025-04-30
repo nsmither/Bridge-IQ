@@ -3,7 +3,6 @@
   "datasetReference": {
     "byPath": {
       "path": "../Bridge IQ Dev.SemanticModel"
-    },
-    "byConnection": null
+    }
   }
 }
