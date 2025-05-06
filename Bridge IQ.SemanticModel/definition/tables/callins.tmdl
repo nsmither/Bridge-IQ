@@ -11,7 +11,7 @@ table callins
 
 	column entered_date
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 64ebbfeb-8149-4837-8189-06880901d32f
 		summarizeBy: none
 		sourceColumn: entered_date
