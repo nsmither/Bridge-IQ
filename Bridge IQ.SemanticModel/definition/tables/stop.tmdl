@@ -253,7 +253,8 @@ table stop
 				    #"Inserted sched_arrive_early_time" = Table.AddColumn(#"Inserted actual_departure_time", "sched_arrive_early_time", each DateTime.Time([sched_arrive_early]), type time),
 				    #"Inserted sched_arrive_late_time" = Table.AddColumn(#"Inserted sched_arrive_early_time", "sched_arrive_late_time", each DateTime.Time([sched_arrive_late]), type time),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted sched_arrive_late_time",{{"actual_arrival", type date}, {"actual_departure", type date}, {"sched_arrive_early", type date}, {"sched_arrive_late", type date}}),
-				    #"Appended Query" = Table.Combine({#"Changed Type", stop_historic})
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"id", Text.Trim, type text}}),
+				    #"Appended Query" = Table.Combine({#"Trimmed Text", stop_historic})
 				in
 				    #"Appended Query"
 

@@ -18,11 +18,13 @@ relationship 3b645fbf-1a85-2d14-049b-7ea5a3187aca
 
 relationship 7850b1cc-8ad4-c1b1-ddf4-55b266d0bf32
 	isActive: false
+	crossFilteringBehavior: bothDirections
 	fromColumn: orders.shipper_stop_id
 	toColumn: stop.id
 
 relationship 779f5544-eab0-74a9-bad6-7588d81e623d
 	isActive: false
+	crossFilteringBehavior: bothDirections
 	fromColumn: orders.consignee_stop_id
 	toColumn: stop.id
 
@@ -137,7 +139,7 @@ relationship 4a96cf76-d46c-91c7-0346-12330f400b79
 
 relationship 8714dc3c-4744-58cf-30fd-cc1bd116d520
 	isActive: false
-	fromColumn: callins.entered_date
+	fromColumn: callins.entered_date_time
 	toColumn: Calendar.Date
 
 relationship 9c9f9ee7-aadc-8abf-19fa-be24e4230ebf
@@ -396,10 +398,6 @@ relationship 1b268b65-e261-470c-8a0d-ca966e3223f0
 	fromColumn: crt_movement_data.'Ship date at Avail'
 	toColumn: LocalDateTable_67948750-4a55-4170-865e-d76c6427f063.Date
 
-relationship b7086df5-a15e-acff-d67c-d6cd33ee67fa
-	fromColumn: account_rep.wolf_pack
-	toColumn: wolf_pack.wolf_pack
-
 relationship ff88e45c-e612-46ba-ab09-9a3fade68d98
 	fromColumn: rev_codes.account_rep
 	toColumn: account_rep.account_rep
@@ -423,4 +421,9 @@ relationship AutoDetected_af962227-f3f9-4a2c-9e12-611f5b64e093
 	isActive: false
 	fromColumn: dispatcher_key.Division
 	toColumn: division_key.Division
+
+relationship f4527fa5-8422-f889-4042-2b8f1f182c2c
+	isActive: false
+	fromColumn: callins.Date
+	toColumn: Calendar.Date
 

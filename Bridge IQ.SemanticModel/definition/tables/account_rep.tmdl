@@ -9,20 +9,12 @@ table account_rep
 
 		annotation SummarizationSetBy = Automatic
 
-	column wolf_pack
-		dataType: string
-		lineageTag: f458540d-a20b-4d85-9993-336ee3af8c7b
-		summarizeBy: none
-		sourceColumn: wolf_pack
-
-		annotation SummarizationSetBy = Automatic
-
 	partition account_rep = m
 		mode: import
 		source =
 				let
 				    Source = rev_codes,
-				    #"Removed Other Columns" = Table.SelectColumns(Source,{"account_rep", "wolf_pack"}),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"account_rep"}),
 				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
 				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
 				in

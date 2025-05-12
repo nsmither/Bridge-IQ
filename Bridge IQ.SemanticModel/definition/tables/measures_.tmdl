@@ -488,7 +488,7 @@ table measures_
 			
 			CALCULATE(
 			    COUNTROWS(callins),
-			    USERELATIONSHIP(callins[entered_date],'Calendar'[Date]),
+			    USERELATIONSHIP(callins[Date],'Calendar'[Date]),
 			    USERELATIONSHIP(callins[entered_by],dispatcher_key[McLeod User Code])
 			)
 		formatString: 0
@@ -547,9 +547,9 @@ table measures_
 			
 			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
 			
-			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			//Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_blank,mpd)
 			
 			Return
 			mpdg
@@ -599,9 +599,9 @@ table measures_
 			
 			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
 			
-			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			//Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_blank,mpd)
 			Var margin_vs_margin_goal_taget = mpdg*workingdays
 			
 			Return
@@ -1752,10 +1752,10 @@ table measures_
 			VAR months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('Calendar'[Date]))
 			VAR override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('Calendar'[Date]))
 			VAR mpd = DIVIDE(months_margin_goal, workingdays)
-			Var mpdg_wolf_pack = 
-			    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
+			//Var mpdg_wolf_pack = 
+			    //SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
 			
 			RETURN
 			mpdg

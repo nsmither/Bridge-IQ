@@ -9,16 +9,14 @@ table callins
 
 		annotation SummarizationSetBy = Automatic
 
-	column entered_date
+	column entered_date_time
 		dataType: dateTime
 		formatString: Long Date
 		lineageTag: 64ebbfeb-8149-4837-8189-06880901d32f
 		summarizeBy: none
-		sourceColumn: entered_date
+		sourceColumn: entered_date_time
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
 
 	column movement_status
 		dataType: string
@@ -63,18 +61,45 @@ table callins
 
 		annotation SummarizationSetBy = Automatic
 
+	column city_name
+		dataType: string
+		lineageTag: e05afb02-98b5-4baf-8220-678cfada4aa8
+		summarizeBy: none
+		sourceColumn: city_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 4e9d6882-f938-42a8-84e5-c5724a18263f
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e2b156db-f62d-4809-8d3c-c4c4b2f1ce70
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	partition callins = m
 		mode: import
 		source =
 				let
 				    Source = Sql.Database("bl-appdb", "lme"),
 				    dbo_callin = Source{[Schema="dbo",Item="callin"]}[Data],
-				    #"Removed Other Columns" = Table.SelectColumns(dbo_callin,{"entered_by", "entered_date", "movement_status", "payee_id", "initiated_type", "movement_id"}),
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_callin,{"entered_by", "entered_date", "movement_status", "payee_id", "initiated_type", "movement_id", "city_name", "state"}),
 				    #"Filtered callins on or after RefreshCutOffDate" = Table.SelectRows(#"Removed Other Columns", each [entered_date] >= RefreshCutOffDate),
 				    #"Inserted Time" = Table.AddColumn(#"Filtered callins on or after RefreshCutOffDate", "Time", each DateTime.Time([entered_date]), type time),
-				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}}),
-				    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}}),
-				    #"Calculated Start of Hour" = Table.TransformColumns(#"Extracted Date",{{"entered_time", Time.StartOfHour, type time}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}, {"entered_date", "entered_date_time"}}),
+				    #"Inserted Date" = Table.AddColumn(#"Renamed Columns", "Date", each DateTime.Date([entered_date_time]), type date),
+				    #"Calculated Start of Hour" = Table.TransformColumns(#"Inserted Date",{{"entered_time", Time.StartOfHour, type time}}),
 				    #"Appended Query" = Table.Combine({#"Calculated Start of Hour", historic_callins})
 				in
 				    #"Appended Query"
