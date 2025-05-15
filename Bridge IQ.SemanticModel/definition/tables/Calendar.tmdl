@@ -193,6 +193,25 @@ table Calendar
 
 		annotation SummarizationSetBy = Automatic
 
+	hierarchy 'Calendar Hierachy'
+		lineageTag: e065a8bc-ad21-4062-99de-5d6030e02e43
+
+		level Year
+			lineageTag: c01f05c6-f273-4574-9a01-908c531fafe5
+			column: Year
+
+		level Quarter
+			lineageTag: 68d60c53-4cdf-483e-b989-2411c88e8a78
+			column: Quarter
+
+		level 'Month Name'
+			lineageTag: 57efdf74-b33d-4efc-b9c2-cf3042af3894
+			column: 'Month Name'
+
+		level Date
+			lineageTag: b7962dec-cb7b-4b56-af30-deaa84a0e2c2
+			column: Date
+
 	partition Calendar = m
 		mode: import
 		source =

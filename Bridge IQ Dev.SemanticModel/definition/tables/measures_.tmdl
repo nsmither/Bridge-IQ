@@ -488,7 +488,7 @@ table measures_
 			
 			CALCULATE(
 			    COUNTROWS(callins),
-			    USERELATIONSHIP(callins[entered_date],'Calendar'[Date]),
+			    USERELATIONSHIP(callins[Date],'Calendar'[Date]),
 			    USERELATIONSHIP(callins[entered_by],dispatcher_key[McLeod User Code])
 			)
 		formatString: 0
@@ -547,9 +547,9 @@ table measures_
 			
 			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
 			
-			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			//Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_blank,mpd)
 			
 			Return
 			mpdg
@@ -599,9 +599,9 @@ table measures_
 			
 			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
 			
-			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			//Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_blank,mpd)
 			Var margin_vs_margin_goal_taget = mpdg*workingdays
 			
 			Return
@@ -894,9 +894,8 @@ table measures_
 			CALCULATE(
 			    TOTALMTD(
 			    [Margin],
-			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			    )
+			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY()))
+			)
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
 		lineageTag: e2f3473a-04fe-48ca-9ca3-788630877152
@@ -1439,7 +1438,8 @@ table measures_
 			    COUNTROWS(sop_issues),
 			    sop_issues[Movement ID],
 			    sop_issues[SOP Type]= "SOPCAR",
-			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date])
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date]),
+			    USERELATIONSHIP(dispatcher_key[McLeod User Code],movements[dispatcher_user_id])
 			)
 		formatString: 0
 		displayFolder: Operations Measures\SOP
@@ -1751,10 +1751,10 @@ table measures_
 			VAR months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('Calendar'[Date]))
 			VAR override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('Calendar'[Date]))
 			VAR mpd = DIVIDE(months_margin_goal, workingdays)
-			Var mpdg_wolf_pack = 
-			    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
+			//Var mpdg_wolf_pack = 
+			    //SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
 			
 			RETURN
 			mpdg
@@ -1893,6 +1893,56 @@ table measures_
 		formatString: 0
 		displayFolder: Operations Measures
 		lineageTag: 1e22ebd4-cf31-4752-9add-16f111d81801
+
+	measure 'is today' =
+			
+			IF(
+			    MIN('Calendar'[Date])=TODAY(),
+			    1,
+			    0
+			)
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 3680c1a6-c73f-4dda-9d96-1c8562db52a8
+
+	measure 'is this week' =
+			
+			IF(
+			        WEEKNUM(MIN('Calendar'[Date]))=WEEKNUM(TODAY()),
+			        IF(
+			            YEAR(MIN('Calendar'[Date]))=YEAR(TODAY()),
+			            1,
+			            0
+			        )
+			)
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 5523c688-b146-4b79-9821-a93d3710afb2
+
+	measure 'Is this Month' =
+			
+			IF(MONTH(MIN('Calendar'[Date]))=MONTH(TODAY()),
+			    IF(YEAR(MIN('Calendar'[Date]))=YEAR(TODAY()),
+			        1,
+			        0
+			    )
+			)
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 23a6a21b-4f56-4cc4-9a5e-5b5c578554dd
+
+	measure 'Count of Behaviors' =
+			
+			CALCULATE(
+			    COUNTROWS(behaviors),
+			    USERELATIONSHIP(
+			        'Calendar'[Date],
+			        behaviors[Behavior Date]
+			    )
+			)
+		formatString: 0
+		displayFolder: Behavior Measures
+		lineageTag: 814292f8-7ea2-4246-9b03-3be11f8f774a
 
 	column Column
 		isHidden

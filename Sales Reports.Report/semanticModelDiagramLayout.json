@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 1472,
+        "x": 1322,
         "y": 222
       },
       "nodes": [
@@ -407,6 +407,58 @@
           "nodeLineageTag": "64234da3-1a77-453d-a2c0-eefc98a8f918",
           "size": {
             "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3825.4421458744177,
+            "y": 1154.1569155238444
+          },
+          "nodeIndex": "Behavior KPI",
+          "nodeLineageTag": "6f7938ae-1d3b-4903-b1b7-8f1b08920a4d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4109.4421458744182,
+            "y": 1142.1569155238444
+          },
+          "nodeIndex": "Behaviors Paramater",
+          "nodeLineageTag": "e83859cb-9dc4-403d-95c5-804aab6a6ac1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4393.4421458744182,
+            "y": 1142.1569155238444
+          },
+          "nodeIndex": "Margin, Load Count, Margin%",
+          "nodeLineageTag": "c207ebcf-8edd-4a3e-a00d-cbe985297273",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4677.4421458744182,
+            "y": 1154.1569155238444
+          },
+          "nodeIndex": "Time intelligence",
+          "nodeLineageTag": "4891f987-bb24-4566-ba78-1640183fd4b1",
+          "size": {
+            "height": 128,
             "width": 234
           },
           "zIndex": 0

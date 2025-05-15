@@ -185,6 +185,33 @@ table Calendar
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	column 'Slicer Date'
+		dataType: string
+		lineageTag: 0a766627-4d8f-4506-95fe-93c2871d045d
+		summarizeBy: none
+		sourceColumn: Slicer Date
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Calendar Hierachy'
+		lineageTag: e065a8bc-ad21-4062-99de-5d6030e02e43
+
+		level Year
+			lineageTag: c01f05c6-f273-4574-9a01-908c531fafe5
+			column: Year
+
+		level Quarter
+			lineageTag: 68d60c53-4cdf-483e-b989-2411c88e8a78
+			column: Quarter
+
+		level 'Month Name'
+			lineageTag: 57efdf74-b33d-4efc-b9c2-cf3042af3894
+			column: 'Month Name'
+
+		level Date
+			lineageTag: b7962dec-cb7b-4b56-af30-deaa84a0e2c2
+			column: Date
+
 	partition Calendar = m
 		mode: import
 		source =
@@ -220,9 +247,10 @@ table Calendar
 				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Day of Quarter", "Week of Year", "Week of Year - Copy"),
 				    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "Year", "Year - Copy"),
 				    #"Merged Columns" = Table.CombineColumns(Table.TransformColumnTypes(#"Duplicated Column1", {{"Week of Year - Copy", type text}, {"Year - Copy", type text}}, "en-US"),{"Week of Year - Copy", "Year - Copy"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Week / Year"),
-				    #"Inserted Start of Week" = Table.AddColumn(#"Merged Columns", "Start of Week", each Date.StartOfWeek([Date]), type date)
+				    #"Inserted Start of Week" = Table.AddColumn(#"Merged Columns", "Start of Week", each Date.StartOfWeek([Date]), type date),
+				    #"Added Custom1" = Table.AddColumn(#"Inserted Start of Week", "Slicer Date", each if [Date] = Date.From(DateTime.LocalNow()) then "today" else [Date])
 				in
-				    #"Inserted Start of Week"
+				    #"Added Custom1"
 
 	annotation PBI_NavigationStepName = Navigation
 

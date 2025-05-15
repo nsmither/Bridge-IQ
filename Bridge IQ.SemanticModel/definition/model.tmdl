@@ -1,6 +1,7 @@
 model Model
 	culture: en-US
 	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
 	sourceQueryCulture: en-US
 	dataAccessOptions
 		fastCombine
@@ -51,9 +52,9 @@ annotation PBI_QueryOrder = ["mcleod_historic_orders","pcs_orders","pcs_movement
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBIDesktopVersion = 2.142.928.0 (25.04)+de52df9f0bb74ad93a80d89c52d63fe6d07e0e1b
+annotation PBIDesktopVersion = 2.142.1277.0 (25.04)+014fde450f93691fc9537f0758d73d1c5df153ef
 
-annotation PBI_ProTooling = ["DevMode"]
+annotation PBI_ProTooling = ["DevMode","CalcGroup"]
 
 ref table DateTableTemplate_e2c46345-9a3a-40bb-ae4b-e3de83b68f6a
 ref table stop
@@ -95,6 +96,10 @@ ref table division_key
 ref table LocalDateTable_5d529210-5800-429f-b2e3-388a81d360f9
 ref table LocalDateTable_67948750-4a55-4170-865e-d76c6427f063
 ref table LocalDateTable_2a3d8ac1-aff0-4e32-a507-1f99a679e947
+ref table 'Behavior KPI'
+ref table 'Behaviors Paramater'
+ref table 'Time intelligence'
+ref table 'Sales KPI''s'
 
 ref cultureInfo en-US
 

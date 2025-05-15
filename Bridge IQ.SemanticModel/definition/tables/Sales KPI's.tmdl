@@ -1,0 +1,51 @@
+table 'Sales KPI''s'
+	lineageTag: c207ebcf-8edd-4a3e-a00d-cbe985297273
+
+	column 'Sales KPI''s'
+		lineageTag: e0274f15-d695-478a-aff1-ac93db13eba8
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Margin, Load Count, Margin% Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Margin, Load Count, Margin% Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Margin, Load Count, Margin% Fields'
+		isHidden
+		lineageTag: 2407f0da-0dfb-4ba2-836e-41e4e4b8d079
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Margin, Load Count, Margin% Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Margin, Load Count, Margin% Order'
+		isHidden
+		formatString: 0
+		lineageTag: 5624b795-d4bc-45c6-96fc-75a53c0dda93
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Sales KPI''s' = calculated
+		mode: import
+		source =
+				{
+				    ("Margin", NAMEOF('measures_'[Margin]), 0),
+				    ("Load Count", NAMEOF('measures_'[Count of orders covered]), 1),
+				    ("Margin %", NAMEOF('measures_'[Margin %]), 2),
+				    ("Revenue", NAMEOF([Total Revenue]), 3),
+				    ("Customers Served", NAMEOF([Customers Served]),4)
+				}
+
+	annotation PBI_Id = 0d965ac8f41b485fbfcc139f8f053b14
+

@@ -1,0 +1,43 @@
+table 'Calculation group'
+	lineageTag: 7fec5c28-bb80-4de5-82ed-66fff508bdbe
+
+	calculationGroup
+		precedence: 2
+
+		calculationItem 'CF MOM Positive or Negative' = ```
+				
+				VAR _CF = 
+				    IF(
+				        SELECTEDMEASURE()>0,1,
+				            IF(SELECTEDMEASURE()<0,2,
+				            BLANK()
+				            )
+				    )
+				VAR _CF_string = 
+				    IF(
+				        CONTAINSSTRING(SELECTEDMEASURENAME(), "CF" ),
+				        _CF,
+				        BLANK()
+				    )
+				RETURN
+				_CF_string
+				```
+
+	column 'Calculation group column'
+		dataType: string
+		lineageTag: d83a04a4-fb14-4ced-a737-ddae7c00d538
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c72ea29-b7b9-472f-b9bb-437d8ef0e90c
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

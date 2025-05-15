@@ -1,0 +1,263 @@
+table 'Time intelligence'
+	lineageTag: 4891f987-bb24-4566-ba78-1640183fd4b1
+
+	calculationGroup
+		precedence: 1
+
+		calculationItem 'Total 1 YA' =
+				
+				CALCULATE(
+				    SELECTEDMEASURE(),
+				    DATEADD(
+				        'Calendar'[Date],
+				        -1,
+				        YEAR
+				    ),
+				    REMOVEFILTERS(
+				        'Calendar'[Month Name],
+				        'Calendar'[Quarter]
+				    )
+				)
+
+		calculationItem 'Total 1 QA' =
+				
+				CALCULATE(
+				    SELECTEDMEASURE(),
+				    DATEADD(
+				        'Calendar'[Date],
+				        -1,
+				        QUARTER
+				    ),
+				    REMOVEFILTERS('Calendar'[Month Name])
+				)
+
+		calculationItem 'Total 1 MA' =
+				
+				CALCULATE(
+				    SELECTEDMEASURE(),
+				    DATEADD(
+				        'Calendar'[Date],
+				        -1,
+				        MONTH
+				    )
+				)
+
+		calculationItem Total = SELECTEDMEASURE()
+
+		calculationItem 'MTD 1 MA' = ```
+				
+				CALCULATE(
+				    TOTALMTD(
+				        SELECTEDMEASURE(),
+				        'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())
+				    ),
+				    DATEADD('Calendar'[Date],-1,MONTH)
+				)
+				
+				```
+
+		calculationItem MTD =
+				
+				CALCULATE(
+				    TOTALMTD(
+				        SELECTEDMEASURE(),
+				        'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())
+				    )
+				)
+
+		calculationItem 'QTD 1 QA' = ```
+				
+				VAR today_doq = 
+				    CALCULATE(
+				        MIN('Calendar'[Day of Quarter]),
+				        'Calendar'[Date]=TODAY()
+				    )
+				    
+				Var soq_1qa =
+				    CALCULATE(
+				        STARTOFQUARTER('Calendar'[Date]),
+				        DATEADD('Calendar'[Date],-1,QUARTER)
+				    )
+				
+				VAR qtd_date_1_qa = soq_1qa+today_doq-1
+				
+				VAR margin_qtd_1qa = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        'Calendar'[Date]>=soq_1qa,
+				        'Calendar'[Date]<qtd_date_1_qa
+				    )
+				
+				RETURN
+				margin_qtd_1qa
+				```
+
+		calculationItem QTD = ```
+				
+				VAR today_doq = 
+				    CALCULATE(
+				        MIN('Calendar'[Day of Quarter]),
+				        'Calendar'[Date]=TODAY()
+				    )
+				VAR qtd_ = 
+				    TOTALQTD(
+				        SELECTEDMEASURE(),
+				        'Calendar'[Date],
+				        'Calendar'[Day of Quarter]<today_doq
+				    )
+				
+				RETURN
+				qtd_
+				```
+
+		calculationItem 'YTD 1 YA' = ```
+				
+				Var today_doy = 
+				    CALCULATE(
+				        MIN('calendar'[Day of Year]),
+				        'calendar'[Date]=TODAY()
+				    )
+				
+				Var ytd_1ya = 
+				    CALCULATE(
+				        TOTALYTD(
+				            SELECTEDMEASURE(),
+				            'calendar'[Date],'calendar'[Day of Year]<today_doy
+				        ),
+				        DATEADD(
+				            'Calendar'[Date],
+				            -1,
+				            YEAR
+				        )
+				    )
+				
+				Return
+				ytd_1ya
+				```
+
+		calculationItem YTD = ```
+				
+				Var today_doy = 
+				    CALCULATE(
+				        MIN('calendar'[Day of Year]),
+				        'calendar'[Date]=TODAY()
+				    )
+				
+				Var ytd_ = 
+				    TOTALYTD(
+				        SELECTEDMEASURE(),
+				        'calendar'[Date],'calendar'[Day of Year]<today_doy
+				    )
+				
+				Return
+				ytd_
+				```
+
+		calculationItem 'MTD MOM Variance' = ```
+				
+				VAR CM = 
+				    CALCULATE(
+				        TOTALMTD(
+				            SELECTEDMEASURE(),
+				            'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())
+				        )
+				    )
+				VAR LM = 
+				  CALCULATE(
+				    TOTALMTD(
+				        SELECTEDMEASURE(),
+				        'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())
+				    ),
+				    DATEADD('Calendar'[Date],-1,MONTH)
+				    )
+				VAR variance_ = CM-LM
+				
+				RETURN
+				variance_
+				```
+
+		calculationItem 'QTD QOQ Variance' = ```
+				
+				VAR today_doq = 
+				    CALCULATE(
+				        MIN('Calendar'[Day of Quarter]),
+				        'Calendar'[Date]=TODAY()
+				    )
+				
+				VAR cqtd = 
+				    TOTALQTD(
+				        SELECTEDMEASURE(),
+				        'Calendar'[Date],
+				        'Calendar'[Day of Quarter]<today_doq
+				    )
+				
+				Var soq_1qa =
+				    CALCULATE(
+				        STARTOFQUARTER('Calendar'[Date]),
+				        DATEADD('Calendar'[Date],-1,QUARTER)
+				    )
+				
+				VAR qtd_date_1_qa = soq_1qa+today_doq-1
+				
+				VAR lqtd = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        'Calendar'[Date]>=soq_1qa,
+				        'Calendar'[Date]<qtd_date_1_qa
+				    )
+				VAR diff = cqtd-lqtd
+				
+				RETURN
+				diff
+				```
+
+		calculationItem 'YTD YOY Variance' = ```
+				
+				Var today_doy = 
+				    CALCULATE(
+				        MIN('calendar'[Day of Year]),
+				        'calendar'[Date]=TODAY()
+				    )
+				
+				Var cytd = 
+				    TOTALYTD(
+				        SELECTEDMEASURE(),
+				        'calendar'[Date],'calendar'[Day of Year]<today_doy
+				    )
+				
+				Var lytd = 
+				    CALCULATE(
+				        TOTALYTD(
+				            SELECTEDMEASURE(),
+				            'calendar'[Date],'calendar'[Day of Year]<today_doy
+				        ),
+				        DATEADD(
+				            'Calendar'[Date],
+				            -1,
+				            YEAR
+				        )
+				    )
+				VAR diff = cytd-lytd
+				
+				Return
+				diff
+				```
+
+	column 'Calculation group column'
+		dataType: string
+		lineageTag: 72d94915-c326-4fd8-8375-9cdffc7f4d91
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 03e4c2ef-1cf7-44bd-a182-10e6f3eaad07
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

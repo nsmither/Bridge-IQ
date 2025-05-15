@@ -1,0 +1,50 @@
+table 'Behavior KPI'
+	lineageTag: 6f7938ae-1d3b-4903-b1b7-8f1b08920a4d
+
+	calculationGroup
+
+		calculationItem 'Count of Behaviors' =
+				
+				CALCULATE(
+				    SUMX(
+				        behaviors,
+				        SELECTEDMEASURE()
+				    ),
+				    USERELATIONSHIP(
+				        'Calendar'[Date],
+				        behaviors[Behavior Date]
+				    )
+				)
+
+		calculationItem 'Behaviors Per Day' =
+				
+				IF(
+				    NOT ( ISINSCOPE( 'Calendar'[Date])),
+				    CALCULATE(
+				        DIVIDE(
+				            SELECTEDMEASURE(),
+				            [Working Days]
+				        )
+				    )
+				)
+
+			formatStringDefinition = "0.0"
+
+	column 'Calculation group column'
+		dataType: string
+		lineageTag: b449bee5-526b-41b3-8bdc-b6c6df227ae5
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 91b1a84d-5fcc-41df-8b6b-1a1602cf6a06
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

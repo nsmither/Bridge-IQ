@@ -102,15 +102,16 @@ expression mcleod_historic_orders =
 		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
 		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
 		    //End Add Lane
-		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
+		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane"),
+		    #"Trimmed Text1" = Table.TransformColumns(#"Merged Columns2",{{"shipper_stop_id", Text.Trim, type text}})
 		in
-		    #"Merged Columns2"
+		    #"Trimmed Text1"
 	lineageTag: ecc7d6f2-89e7-440c-8625-c2621e2e918e
 	queryGroup: 'Historic Tables'
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 expression RefreshCutOffDate = #datetime(2025, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: af39c097-cda3-4307-8194-af7487559d9a
@@ -403,9 +404,9 @@ expression historic_callins =
 		    #"Removed Other Columns" = Table.SelectColumns(dbo_callin,{"entered_by", "entered_date", "movement_status", "payee_id", "initiated_type", "movement_id"}),
 		    #"Filtered callins before RefreshCutOffDate" = Table.SelectRows(#"Removed Other Columns", each [entered_date] < RefreshCutOffDate),
 		    #"Inserted Time" = Table.AddColumn(#"Filtered callins before RefreshCutOffDate", "Time", each DateTime.Time([entered_date]), type time),
-		    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}}),
-		    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}}),
-		    #"Calculated Start of Hour" = Table.TransformColumns(#"Extracted Date",{{"entered_time", Time.StartOfHour, type time}})
+		    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}, {"entered_date", "entered_date_time"}}),
+		    #"Inserted Date" = Table.AddColumn(#"Renamed Columns", "Date", each DateTime.Date([entered_date_time]), type date),
+		    #"Calculated Start of Hour" = Table.TransformColumns(#"Inserted Date",{{"entered_time", Time.StartOfHour, type time}})
 		in
 		    #"Calculated Start of Hour"
 	lineageTag: 56bd229e-e47a-4149-814e-6b72b080d909

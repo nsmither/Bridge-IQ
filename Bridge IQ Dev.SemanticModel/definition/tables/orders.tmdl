@@ -440,7 +440,7 @@ table orders
 
 	column consignee_sched_late_date
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 58875f0a-4cc3-40fd-9177-0ad9069ec8bc
 		summarizeBy: none
 		sourceColumn: consignee_sched_late_date
@@ -580,13 +580,14 @@ table orders
 				    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
 				    //End Add Lane
 				    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane"),
+				    #"Trimmed Text1" = Table.TransformColumns(#"Merged Columns2",{{"shipper_stop_id", Text.Trim, type text}}),
 				    
-				    #"Appended Query" = Table.Combine({#"Merged Columns2", mcleod_historic_orders, pcs_orders})
+				    #"Appended Query" = Table.Combine({#"Trimmed Text1", mcleod_historic_orders, pcs_orders})
 				in
 				    #"Appended Query"
 				```
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 

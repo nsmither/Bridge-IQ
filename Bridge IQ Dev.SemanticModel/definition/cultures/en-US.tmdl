@@ -14224,6 +14224,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.714
 			          }
+			        },
+			        {
+			          "Salesperson Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ],
 			      "NameType": "Name"
@@ -19965,6 +19975,48 @@ cultureInfo en-US
 			          "turnover rate variance 60 30 30-today": {
 			            "State": "Generated",
 			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.count_of_behaviors": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Count of Behaviors"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Count of Behaviors": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "behavior_key.mail_activity_type_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "behavior_key",
+			          "ConceptualProperty": "mail_activity_type_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Behavior Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]

@@ -3523,16 +3523,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.714
 			          }
-			        },
-			        {
-			          "Customer Name": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ],
 			      "NameType": "Name"
@@ -7126,7 +7116,19 @@ cultureInfo en-US
 			          "ConceptualProperty": "Count of orders covered"
 			        }
 			      },
-			      "State": "Generated"
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Load Count": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    },
 			    "measures_.count_of_orders_covered_mtd": {
 			      "Definition": {
@@ -14224,6 +14226,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.714
 			          }
+			        },
+			        {
+			          "Salesperson Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ],
 			      "NameType": "Name"
@@ -19965,6 +19977,45 @@ cultureInfo en-US
 			          "turnover rate variance 60 30 30-today": {
 			            "State": "Generated",
 			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.count_of_behaviors": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Count of Behaviors"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "behavior_key.mail_activity_type_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "behavior_key",
+			          "ConceptualProperty": "mail_activity_type_id"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.customers_served": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Customers Served"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Customers Served": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]

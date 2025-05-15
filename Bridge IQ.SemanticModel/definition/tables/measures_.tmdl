@@ -894,9 +894,8 @@ table measures_
 			CALCULATE(
 			    TOTALMTD(
 			    [Margin],
-			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			    )
+			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY()))
+			)
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
 		lineageTag: e2f3473a-04fe-48ca-9ca3-788630877152
@@ -945,7 +944,12 @@ table measures_
 
 	/// Count the Distinct customer id values in the order table during a filtered time
 	/// ***any time you use this measure you must filter move status to not contain "A")***
-	measure 'Customers Served' = DISTINCTCOUNT(orders[customer_id])
+	measure 'Customers Served' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[customer_id]),
+			    movements[status]<>"A"
+			)
 		formatString: 0
 		displayFolder: Behavior Measures
 		lineageTag: 8937494c-6a1b-4e84-aa53-089ae43da266
@@ -1931,6 +1935,19 @@ table measures_
 		formatString: 0
 		displayFolder: Calendar Measures
 		lineageTag: 23a6a21b-4f56-4cc4-9a5e-5b5c578554dd
+
+	measure 'Count of Behaviors' =
+			
+			CALCULATE(
+			    COUNTROWS(behaviors),
+			    USERELATIONSHIP(
+			        'Calendar'[Date],
+			        behaviors[Behavior Date]
+			    )
+			)
+		formatString: 0
+		displayFolder: Behavior Measures
+		lineageTag: 814292f8-7ea2-4246-9b03-3be11f8f774a
 
 	column Column
 		isHidden
