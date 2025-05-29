@@ -69,62 +69,6 @@ table margin_load_count_goals
 
 		annotation SummarizationSetBy = Automatic
 
-	column Column8
-		dataType: string
-		lineageTag: c33e9fbc-a88a-464d-acd9-a23c15b492f7
-		summarizeBy: none
-		sourceColumn: Column8
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column9
-		dataType: string
-		lineageTag: 01760c08-ac6a-41a6-be99-9c13f7248efc
-		summarizeBy: none
-		sourceColumn: Column9
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column10
-		dataType: string
-		lineageTag: f021c520-2b3f-49d7-8167-78db9e0a33ac
-		summarizeBy: none
-		sourceColumn: Column10
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column11
-		dataType: string
-		lineageTag: 2926a710-2e56-4df8-a8b9-2346f1972e6f
-		summarizeBy: none
-		sourceColumn: Column11
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column12
-		dataType: string
-		lineageTag: d4346899-421b-4429-b834-40e1c9d71104
-		summarizeBy: none
-		sourceColumn: Column12
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column13
-		dataType: string
-		lineageTag: 73e0515a-2b36-4daa-abb6-375e7b67ff56
-		summarizeBy: none
-		sourceColumn: Column13
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column14
-		dataType: string
-		lineageTag: 7db49992-96e2-41cd-a284-97c4530f82ec
-		summarizeBy: none
-		sourceColumn: Column14
-
-		annotation SummarizationSetBy = Automatic
-
 	partition margin_load_count_goals = m
 		mode: import
 		source =

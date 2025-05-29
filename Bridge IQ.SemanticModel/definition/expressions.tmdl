@@ -543,9 +543,10 @@ expression historic_behaviors =
 		    #"Renamed Columns2" = Table.RenameColumns(#"Inserted Time",{{"date", "Behavior Date"}, {"Time", "Behavior Time"}}),
 		    #"Filtered Rows3" = Table.SelectRows(#"Renamed Columns2", each [Behavior Date] < RefreshCutOffDate),
 		    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows3",{{"Behavior Date", type date}}),
-		    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date)
+		    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date),
+		    #"Calculated Start of Hour" = Table.TransformColumns(#"Inserted Start of Month",{{"Behavior Time", Time.StartOfHour, type time}})
 		in
-		    #"Inserted Start of Month"
+		    #"Calculated Start of Hour"
 	lineageTag: 797f4845-cadf-4720-8f56-c0abeae60b99
 	queryGroup: 'Historic Tables'
 

@@ -1949,6 +1949,36 @@ table measures_
 		displayFolder: Behavior Measures
 		lineageTag: 814292f8-7ea2-4246-9b03-3be11f8f774a
 
+	measure Calls =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        behaviors[id]),
+			        OR(behaviors[mail_activity_type_id]="Mapping Call",behaviors[mail_activity_type_id]="Follow-up Call"),
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+		displayFolder: Behavior Measures
+		lineageTag: 456954b7-ee5c-414f-a67a-5ec7da1c1ab6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Conversations =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        behaviors[id]),
+			        OR(behaviors[mail_activity_type_id]="New Conversation", behaviors[mail_activity_type_id]="Follow-up Conversation"),
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+		displayFolder: Behavior Measures
+		lineageTag: 219a4caa-5ce5-42b8-9d6d-dfdb80243cf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Call Rank' = RANKX(all(salesperson_key[Name]),[Calls])
+		displayFolder: Behavior Measures
+		lineageTag: 81b03448-3f92-4d8a-a96f-babff23eca28
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column
 		isHidden
 		formatString: 0

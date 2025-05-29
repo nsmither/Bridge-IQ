@@ -1,0 +1,17 @@
+table '1 to 1000'
+	lineageTag: b4e93910-8975-4759-9a78-808f04353d0d
+
+	column count
+		formatString: 0
+		lineageTag: 5aa47977-a24a-4479-923b-b4aead491710
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '1 to 1000' = calculated
+		mode: import
+		source = GENERATESERIES(1,1000,1)
+
+	annotation PBI_Id = 6f5536823f48406d98de4a59486d8bd4
+

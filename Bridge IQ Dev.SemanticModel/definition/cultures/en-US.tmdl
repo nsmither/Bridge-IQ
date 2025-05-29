@@ -3523,16 +3523,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.714
 			          }
-			        },
-			        {
-			          "Customer Name": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ],
 			      "NameType": "Name"
@@ -7126,7 +7116,19 @@ cultureInfo en-US
 			          "ConceptualProperty": "Count of orders covered"
 			        }
 			      },
-			      "State": "Generated"
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Load Count": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    },
 			    "measures_.count_of_orders_covered_mtd": {
 			      "Definition": {
@@ -19986,10 +19988,28 @@ cultureInfo en-US
 			          "ConceptualProperty": "Count of Behaviors"
 			        }
 			      },
+			      "State": "Generated"
+			    },
+			    "behavior_key.mail_activity_type_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "behavior_key",
+			          "ConceptualProperty": "mail_activity_type_id"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.customers_served": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Customers Served"
+			        }
+			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Count of Behaviors": {
+			          "Customers Served": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -20000,17 +20020,125 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "behavior_key.mail_activity_type_id": {
+			    "behavior_kpi.calculation_group_column": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "behavior_key",
-			          "ConceptualProperty": "mail_activity_type_id"
+			          "ConceptualEntity": "Behavior KPI",
+			          "ConceptualProperty": "Calculation group column"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.margin_per_head": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Margin Per Head"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.revenue_per_head": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Revenue per Head"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "dispatcher_key.name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dispatcher_key",
+			          "ConceptualProperty": "Name"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.load_count_per_head": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Load Count per head"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.load_count_per_dispatcher": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Load count per dispatcher"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Behavior Type": {
+			          "Load Count per Dispatcher": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.load_count_per_salesperson": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Load Count per Salesperson"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Load Count per Salesperson": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.margin_per_salesperson": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Margin per Salesperson"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Margin per Salesperson": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dispatcher_key.division": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dispatcher_key",
+			          "ConceptualProperty": "Division"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Dispatcher Division": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

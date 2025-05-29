@@ -243,6 +243,8 @@ table 'Time intelligence'
 				diff
 				```
 
+		calculationItem 'Calculation item' = SELECTEDMEASURE()
+
 	column 'Calculation group column'
 		dataType: string
 		lineageTag: 72d94915-c326-4fd8-8375-9cdffc7f4d91

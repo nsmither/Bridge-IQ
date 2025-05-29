@@ -18,7 +18,7 @@ table 'Behavior KPI'
 
 		calculationItem 'Behaviors Per Day' =
 				
-				IF(
+				Var placeholder = IF(
 				    NOT ( ISINSCOPE( 'Calendar'[Date])),
 				    CALCULATE(
 				        DIVIDE(
@@ -27,6 +27,11 @@ table 'Behavior KPI'
 				        )
 				    )
 				)
+				
+				VAR workingdays = [Working Days]
+				
+				RETURN
+				workingdays
 
 			formatStringDefinition = "0.0"
 

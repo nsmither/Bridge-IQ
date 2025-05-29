@@ -1,7 +1,7 @@
-table 'Margin, Load Count, Margin%'
+table 'Bridge KPI''s'
 	lineageTag: c207ebcf-8edd-4a3e-a00d-cbe985297273
 
-	column 'Margin, Load Count, Margin%'
+	column 'Bridge KPI''s'
 		lineageTag: e0274f15-d695-478a-aff1-ac93db13eba8
 		summarizeBy: none
 		sourceColumn: [Value1]
@@ -36,15 +36,23 @@ table 'Margin, Load Count, Margin%'
 
 		annotation SummarizationSetBy = Automatic
 
-	partition 'Margin, Load Count, Margin%' = calculated
+	partition 'Bridge KPI''s' = calculated
 		mode: import
 		source =
 				{
 				    ("Margin", NAMEOF('measures_'[Margin]), 0),
 				    ("Load Count", NAMEOF('measures_'[Count of orders covered]), 1),
 				    ("Margin %", NAMEOF('measures_'[Margin %]), 2),
-				    ("Revenue", NAMEOF([Total Revenue]), 3)
-				}
+				    ("Revenue", NAMEOF([Total Revenue]), 3),
+				    ("Customers Served", NAMEOF([Customers Served]),4),
+				    ("Margin Per Head" , NAMEOF([Margin Per Head]),5),
+				    ("Revenue Per Head", NAMEOF([Revenue per Head]),6),
+				    ("Load count Per Head", NAMEOF([Load Count per head]),7),
+				    ("Avg Head Count", NAMEOF([Avg Monthy Head Count]),8),
+				    ("Load Count per Dispatcher", NAMEOF([Load count per dispatcher]),9),
+				    ("Load Count per Salesperson", NAMEOF([Load Count per Salesperson]),10),
+				    ("Margin per Salesperson", NAMEOF([Margin per Salesperson]),11)
+				    }
 
 	annotation PBI_Id = 0d965ac8f41b485fbfcc139f8f053b14
 

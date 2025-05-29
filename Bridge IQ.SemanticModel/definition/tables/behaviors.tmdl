@@ -98,7 +98,8 @@ table behaviors
 				    #"Filtered Rows3" = Table.SelectRows(#"Renamed Columns2", each [Behavior Date] >= RefreshCutOffDate),
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows3",{{"Behavior Date", type date}}),
 				    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date),
-				    #"Appended Query" = Table.Combine({#"Inserted Start of Month", historic_behaviors})
+				    #"Calculated Start of Hour" = Table.TransformColumns(#"Inserted Start of Month",{{"Behavior Time", Time.StartOfHour, type time}}),
+				    #"Appended Query" = Table.Combine({#"Calculated Start of Hour", historic_behaviors})
 				in
 				    #"Appended Query"
 

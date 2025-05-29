@@ -20019,6 +20019,15 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "behavior_kpi.calculation_group_column": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Behavior KPI",
+			          "ConceptualProperty": "Calculation group column"
+			        }
+			      },
+			      "State": "Generated"
 			    }
 			  },
 			  "Relationships": {

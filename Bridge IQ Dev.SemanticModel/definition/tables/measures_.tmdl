@@ -944,7 +944,12 @@ table measures_
 
 	/// Count the Distinct customer id values in the order table during a filtered time
 	/// ***any time you use this measure you must filter move status to not contain "A")***
-	measure 'Customers Served' = DISTINCTCOUNT(orders[customer_id])
+	measure 'Customers Served' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[customer_id]),
+			    movements[status]<>"A"
+			)
 		formatString: 0
 		displayFolder: Behavior Measures
 		lineageTag: 8937494c-6a1b-4e84-aa53-089ae43da266
@@ -1501,7 +1506,7 @@ table measures_
 		formatString: 0
 		lineageTag: 71cd02e2-6da4-4121-977d-e41a58ebf14b
 
-	measure 'Margin per Dispatcher' =
+	measure 'Margin Dispatcher relationship' =
 			
 			CALCULATE(
 			    [Margin],
@@ -1943,6 +1948,176 @@ table measures_
 		formatString: 0
 		displayFolder: Behavior Measures
 		lineageTag: 814292f8-7ea2-4246-9b03-3be11f8f774a
+
+	measure Calls =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        behaviors[id]),
+			        OR(behaviors[mail_activity_type_id]="Mapping Call",behaviors[mail_activity_type_id]="Follow-up Call"),
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+		displayFolder: Behavior Measures
+		lineageTag: 456954b7-ee5c-414f-a67a-5ec7da1c1ab6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Conversations =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        behaviors[id]),
+			        OR(behaviors[mail_activity_type_id]="New Conversation", behaviors[mail_activity_type_id]="Follow-up Conversation"),
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+		displayFolder: Behavior Measures
+		lineageTag: 219a4caa-5ce5-42b8-9d6d-dfdb80243cf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Call Rank' = RANKX(all(salesperson_key[Name]),[Calls])
+		displayFolder: Behavior Measures
+		lineageTag: 81b03448-3f92-4d8a-a96f-babff23eca28
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Per Head' = DIVIDE([Margin],[Avg Monthy Head Count])
+		displayFolder: Operations Measures
+		lineageTag: a88dc83b-af01-4dfc-9573-75870538a72e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue per Head' = DIVIDE([Total Revenue],[Avg Monthy Head Count])
+		displayFolder: Operations Measures
+		lineageTag: e072fd5e-48ce-4b79-a18b-402826bab8d1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin per months since hire date' = ```
+			
+			VAR hire_date = MIN(salesperson_key[Hire Date])
+			
+			VAR monthNO = SELECTEDVALUE('1 to 1000'[count])
+			
+			VAR hire_date_plus_months_employed = EDATE(hire_date,monthNO)
+			VAR min_date = 
+			    CALCULATE(
+			        STARTOFMONTH('Calendar'[Date]),
+			        'Calendar'[Date]=hire_date_plus_months_employed
+			    )
+			
+			VAR max_date = 
+			    CALCULATE(
+			        ENDOFMONTH('Calendar'[Date]),
+			        'Calendar'[Date]=hire_date_plus_months_employed
+			    )
+			
+			VAR margin_per_months_employed =
+			    CALCULATE(
+			        [Margin],
+			        FILTER(ALL('Calendar'[Date]),
+			            'Calendar'[Date]>= min_date &&
+			            'Calendar'[Date]<=max_date
+			        )
+			    )
+			
+			RETURN
+			margin_per_months_employed
+			```
+		displayFolder: Normalizing Ramp Up
+		lineageTag: 98270a7d-20e0-4512-a622-20316dd738c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin month 12' =
+			
+			CALCULATE(
+			    [Margin],
+			    'Calendar'[Date]
+			)
+		lineageTag: c352db53-7a0f-4a70-947c-ee32064d80d8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin per months since first load' = ```
+			
+			VAR first_load = 
+			    CALCULATE(
+			        MIN(orders[shipper_sched_early_date]),
+			        movements[status]<>"A" &&
+			        movements[status]<>"V"
+			    )
+			VAR monthNO = SELECTEDVALUE('1 to 1000'[count])
+			
+			VAR hire_date_plus_months_employed = EDATE(first_load,monthNO)
+			VAR min_date = 
+			    CALCULATE(
+			        STARTOFMONTH('Calendar'[Date]),
+			        'Calendar'[Date]=hire_date_plus_months_employed
+			    )
+			
+			VAR max_date = 
+			    CALCULATE(
+			        ENDOFMONTH('Calendar'[Date]),
+			        'Calendar'[Date]=hire_date_plus_months_employed
+			    )
+			
+			VAR margin_per_months_employed =
+			    CALCULATE(
+			        [Margin],
+			        FILTER(ALL('Calendar'[Date]),
+			            'Calendar'[Date]>= min_date &&
+			            'Calendar'[Date]<=max_date
+			        )
+			    )
+			
+			RETURN
+			margin_per_months_employed
+			```
+		displayFolder: Normalizing Ramp Up
+		lineageTag: bc966123-0881-4787-963d-3d1abab1bc9f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Load Count per head' = DIVIDE([Count of orders covered],[Avg Monthy Head Count])
+		displayFolder: Operations Measures
+		lineageTag: 6c795de6-a629-4ea3-9956-e407d339b549
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Distinct Count of Dispatchers' = DISTINCTCOUNT(movements[dispatcher_user_id])
+		displayFolder: Operations Measures
+		lineageTag: c385c8d1-434b-413f-86ff-8c325282dd7b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin per Dispatcher' = DIVIDE([Margin],[Distinct Count of Dispatchers])
+		displayFolder: Operations Measures
+		lineageTag: 2a43e1e5-e8f1-4fd6-8573-a1b7387436a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Load count per dispatcher' = DIVIDE([Count of orders covered],[Distinct Count of Dispatchers])
+		displayFolder: Operations Measures
+		lineageTag: c8f78717-5653-4f49-b1d2-94ca6fb7ead9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Load Count per Salesperson' = DIVIDE([Count of orders covered], [Distinct Count of Salespeople])
+		displayFolder: Sales Measures
+		lineageTag: ecaee5b6-bea7-4368-b43b-38de98e312c5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Distinct Count of Salespeople' = DISTINCTCOUNT(orders[salesperson_id])
+		displayFolder: Sales Measures
+		lineageTag: 057eb10d-4a0a-4b9e-8608-af51ccae9d34
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin per Salesperson' = DIVIDE([Margin],[Distinct Count of Salespeople])
+		displayFolder: Sales Measures
+		lineageTag: 58f68d14-a02a-4d76-a694-6683c606127c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		isHidden

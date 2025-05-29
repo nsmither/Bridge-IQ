@@ -1,0 +1,349 @@
+table pcs_orders
+	lineageTag: b51ef50c-3873-40f2-8183-250a9091827d
+
+	column id
+		dataType: string
+		lineageTag: 7dd0f301-178c-42ed-ad1a-1bec3463144a
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_entered_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9beffa03-169f-4a3c-a877-a4b7cdb66a9d
+		summarizeBy: none
+		sourceColumn: order_entered_date
+
+		variation Variation
+			isDefault
+			relationship: daa96146-8627-438d-9a09-3ca5e4308d8c
+			defaultHierarchy: LocalDateTable_7574816a-bd33-4729-8674-050ab7ab8fb0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column shipper_sched_early_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cbaacbcd-40f5-4ac4-88c7-b4326a5efdab
+		summarizeBy: none
+		sourceColumn: shipper_sched_early_date
+
+		variation Variation
+			isDefault
+			relationship: df113134-fac6-4142-9fd5-4ef250022a95
+			defaultHierarchy: LocalDateTable_6a6dbd94-d4d6-40f2-83d3-1bfc03775ee1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column shipper_sched_early_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 79e4586d-438c-4f11-8161-c2d610c90e4d
+		summarizeBy: none
+		sourceColumn: shipper_sched_early_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column shipper_sched_late_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: de4e48b9-3fea-4b38-9ffd-7672dedef445
+		summarizeBy: none
+		sourceColumn: shipper_sched_late_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column consignee_sched_early_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 46c63318-8bc8-4946-9ea2-b79bf997f0fb
+		summarizeBy: none
+		sourceColumn: consignee_sched_early_date
+
+		variation Variation
+			isDefault
+			relationship: 08997685-23ee-4b71-b787-bc1b8ca09d28
+			defaultHierarchy: LocalDateTable_c88bfe48-3795-436a-97ac-5752d9a2c4e1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column consignee_sched_early_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 9efcd092-dd15-4f19-800e-f3f7c31dc82a
+		summarizeBy: none
+		sourceColumn: consignee_sched_early_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column consignee_sched_late_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: cebff538-a11d-4884-b943-c22622bb00e0
+		summarizeBy: none
+		sourceColumn: consignee_sched_late_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column bill_distance
+		dataType: double
+		lineageTag: b318917a-bfe0-482e-bd94-01c087eb98d4
+		summarizeBy: sum
+		sourceColumn: bill_distance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column commodity
+		dataType: string
+		lineageTag: 0487c13e-6b17-4436-9c02-6ed61eecec6a
+		summarizeBy: none
+		sourceColumn: commodity
+
+		annotation SummarizationSetBy = Automatic
+
+	column pieces
+		dataType: double
+		lineageTag: cd36f007-710e-4504-b395-dcfb72770c0f
+		summarizeBy: sum
+		sourceColumn: pieces
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weight
+		dataType: double
+		lineageTag: 28d08ef7-40c8-43c3-84b0-9e327d42e8c3
+		summarizeBy: sum
+		sourceColumn: weight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_charge
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 864d5cb3-0db2-45a6-a6e9-4c819dbd63b3
+		summarizeBy: sum
+		sourceColumn: freight_charge
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column equipment_type_id
+		dataType: string
+		lineageTag: 390d5387-73c7-40c8-9f99-c409fd3769d1
+		summarizeBy: none
+		sourceColumn: equipment_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_location_name
+		dataType: string
+		lineageTag: ce60232b-b53b-4056-8e79-17ac15fe114e
+		summarizeBy: none
+		sourceColumn: shipper_location_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_city_name
+		dataType: string
+		lineageTag: a2c0d3fe-cc9d-4531-b54c-8586cf194d2b
+		summarizeBy: none
+		sourceColumn: shipper_city_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_state
+		dataType: string
+		lineageTag: 43005d0d-00ba-42ad-9254-b64cb3d3281c
+		summarizeBy: none
+		sourceColumn: shipper_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_zip_code
+		dataType: string
+		lineageTag: 14efdba5-08e9-4b51-8863-cbe95b3ff1c8
+		summarizeBy: none
+		sourceColumn: shipper_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_location_name
+		dataType: string
+		lineageTag: 900badfc-d959-4654-9592-5745efd83558
+		summarizeBy: none
+		sourceColumn: consignee_location_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_city_name
+		dataType: string
+		lineageTag: d217b84e-e41a-434f-8083-4dbbc80ff508
+		summarizeBy: none
+		sourceColumn: consignee_city_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_state
+		dataType: string
+		lineageTag: d7f9437d-ac0a-4886-ae42-256e10c0f9d4
+		summarizeBy: none
+		sourceColumn: consignee_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_zip_code
+		dataType: string
+		lineageTag: 103457a5-1054-4a1d-b31b-b30d17d00bcc
+		summarizeBy: none
+		sourceColumn: consignee_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesperson_id
+		dataType: string
+		lineageTag: ed014b98-b174-4181-8c89-f347ce8f7163
+		summarizeBy: none
+		sourceColumn: salesperson_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 4a69e17c-a5ed-4894-b244-437cd70d305d
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 7e5ce6bc-629f-42f8-96cc-dc273e541fa0
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_3_digit_zip_code
+		dataType: string
+		lineageTag: 271f66ee-a151-4a86-9586-b3dae5605734
+		summarizeBy: none
+		sourceColumn: consignee_3_digit_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipper_3_digit_zip_code
+		dataType: string
+		lineageTag: 1f84a82f-7b2f-462b-b1cd-611c243c368d
+		summarizeBy: none
+		sourceColumn: shipper_3_digit_zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column lane
+		dataType: string
+		lineageTag: 5fd438ad-2100-4701-b06b-8ccf9941b634
+		summarizeBy: none
+		sourceColumn: lane
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pcs_orders = m
+		mode: import
+		queryGroup: 'Historic Tables'
+		source =
+				let
+				    Source = Sql.Databases("blsql"),
+				    ExpData_A = Source{[Name="ExpData_A"]}[Data],
+				    dbo_tblLoads = ExpData_A{[Schema="dbo",Item="tblLoads"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_tblLoads, each ([Status] = "Arrived")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"TotalSeats", "TotalTariff", "TotalAsWeight", "TotalSpace", "SealNo", "RateType", "RatingUnits", "RateDiscount", "DiscountAmt", "TotalAcc", "TotalCom", "Rate", "txtNotes", "SelectYN", "TripID", "MasterLoad", "TailgateYN", "UserName", "InvSelect", "InvUser", "InvoiceID", "InvoiceDate", "LoadClass", "OfficeCode", "IO", "Container", "Chassis", "Notify", "NotifyTime", "LFD", "RRP", "LE", "JobID", "ChassisPU", "ChassisDel", "BookingNo", "VesselName", "ShipperID", "ShipAddress", "ShipPhone", "ShipContact", "ShipRef", "ShipZone", "ConsigneeID", "ConsAddress", "ConsPhone", "ConsContact", "ConsRef", "ConsZone", "DropDate", "DropID", "DropName", "DropAddress", "DropCity", "DropSt", "DropZip", "XStopsYN", "RateMatrix", "RateMatrixAcc", "CarrierName", "UnitNumber", "TruckNumber", "TrailerNumber1", "TrailerNumber2", "ReqTemp", "Pallets", "PalletsPU", "PalletsPUDam", "PalletsPUVar", "PalletsDel", "PalletsDelDam", "PalletsDelVar", "PalletExchange", "HazardousYN", "FundsType", "DZone", "BillToName", "BillToRef", "LastTraceDate", "LastTracePos", "ETA", "FrtConYN", "VarianceYN", "SaveQuoteYN", "ReleaseNumber", "LdClearedYN", "EDI1", "EDI2", "EDI3", "EDI4", "EDI5", "AvailPU", "AvailDel", "ComValue", "BrokerageNotes", "PreBillYN", "MinRateYN", "LegTrackingYN", "WebPosted", "CarrierRate", "WebActiveLoad", "TotalComF", "TotalAccF", "TotalRevenueF", "DiscountAmtF", "RateF", "SatStatus", "ChargeVAT", "SteamshipLine", "PortOfDischarge", "ContainerTerm", "RejectYN", "RejectDate", "EquipmentX", "LFDX", "RateSource", "RateMatrixCom", "MileageSys", "MileageMeth", "DropRetDate", "DropRetTime", "CarrierComment", "SignedForBy", "ClosedBorderYN", "RBSentDT", "RBSentBy", "RBSentTo", "QuoteExpires", "SOID", "AgentBatchID", "EDIRefs", "DispSelect", "StartTrace", "EndTrace", "CarrierRateAcc", "CarrierRateAccName", "QRIDNo", "PendingYN", "ResponseType", "ResponseDT", "ResponseUser", "QRDocYN", "QREmail", "QRPhone", "QRContact", "QuoteID", "DelOptions", "TeamName", "ContainerTermLoc", "ChassisPULoc", "ChassisDelLoc", "IntOrigName", "IntOrigAddress", "IntOrigCity", "IntOrigSt", "IntOrigZip", "IntOrigZone", "IntOrigPhone", "IntOrigContact", "IntOrigRef", "IntDestName", "IntDestAddress", "IntDestCity", "IntDestSt", "IntDestZip", "IntDestZone", "IntDestPhone", "IntDestContact", "IntDestRef", "MacroPointOrderID", "DAT_AssetID", "WebPostedBy", "DropTrailerID1", "DropTrailerID2", "CarrierRev", "SatStatusDT", "CarrierPayType", "CarrierPayRate", "CarrierPayYN", "LastSendX6", "InvHoldYN", "SteamshipCode", "NextResID", "PreloadTrailerID1", "PreloadTrailerID2", "XTRemoveYN", "ContOwnerID", "ChasOwnerID", "RateWareYN", "LastX6Sent", "ContainerST", "ChassisST", "LastFTUpdate", "DistDateQ", "TimeRem", "LastSendFourKites", "TTYN", "Status", "LoadType", "DispUser", "DriverName"}),
+				    #"Added Prefix" = Table.TransformColumns(#"Removed Columns", {{"LoadID", each "PCS" & Text.From(_, "en-US"), type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Prefix",{{"LoadID", "id"}, {"DateReceived", "order_entered_date"}, {"PickupDate", "shipper_sched_early_date"}, {"PickupTime", "shipper_sched_early_time"}, {"PUWindow", "shipper_sched_late_time"}, {"DeliveryDate", "consignee_sched_early_date"}, {"DeliveryTime", "consignee_sched_early_time"}, {"DelWindow", "consignee_sched_late_time"}, {"MilesBilled", "bill_distance"}, {"TotalPieces", "pieces"}, {"TotalWeight", "weight"}, {"TotalRevenue", "freight_charge"}, {"Equipment", "equipment_type_id"}, {"ShipName", "shipper_location_name"}, {"ShipCity", "shipper_city_name"}, {"ShipSt", "shipper_state"}, {"ShipZip", "shipper_zip_code"}, {"ConsName", "consignee_location_name"}, {"ConsCity", "consignee_city_name"}, {"ConsSt", "consignee_state"}, {"ConsZip", "consignee_zip_code"}, {"Salesperson", "salesperson_id"}, {"Commodity", "commodity"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"order_entered_date", type date}, {"shipper_sched_early_date", type date}, {"shipper_sched_early_time", type time}, {"shipper_sched_late_time", type time}, {"consignee_sched_early_date", type date}, {"consignee_sched_early_time", type time}, {"consignee_sched_late_time", type time}, {"freight_charge", Currency.Type}, {"salesperson_id", type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"salesperson_id"}, pcs_employees, {"IDNo"}, "tblUserList", JoinKind.LeftOuter),
+				    #"Expanded tblUserList" = Table.ExpandTableColumn(#"Merged Queries", "tblUserList", {"InvEmailAddress"}, {"tblUserList.InvEmailAddress"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Expanded tblUserList",{"salesperson_id"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns1",{{"tblUserList.InvEmailAddress", "salesperson_id"}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Renamed Columns1",{{"salesperson_id", Text.Upper, type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Uppercased Text","TCAMPBELL@BRIDGELOGISTICSINC.COM","CAMPFAO1",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","BSOLORIA@BRIDGELOGISTICSINC.COM","SOLOCLOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","JMAROT@BRIDGELOGISTICSINC.COM","MAROHAOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value13" = Table.ReplaceValue(#"Replaced Value2","BWIEHE@BRIDGELOGISTICSINC.COM","WIEHCHOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value14" = Table.ReplaceValue(#"Replaced Value13","CARMSTRONG@BRIDGELOGISTICSINC.COM","ARMSCIOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value15" = Table.ReplaceValue(#"Replaced Value14","CLEIST@BRIDGELOGISTICSINC.COM","LEISGOOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value16" = Table.ReplaceValue(#"Replaced Value15","DAGLIOTI@BRIDGELOGISTICSINC.COM","AGLIUNOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value17" = Table.ReplaceValue(#"Replaced Value16","EWINKLER@BRIDGELOGISTICSINC.COM","WINKMIOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value18" = Table.ReplaceValue(#"Replaced Value17","JKNAIER@BRIDGELOGISTICSINC.COM","KNAICIOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value19" = Table.ReplaceValue(#"Replaced Value18","JLONG@BRIDGELOGISTICSINC.COM","LONGCIOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value20" = Table.ReplaceValue(#"Replaced Value19","JOE@BRIDGELOGISTICSINC.COM","CAMPLOOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value21" = Table.ReplaceValue(#"Replaced Value20","JSTANLEY@BRIDGELOGISTICSINC.COM","STANLOOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value22" = Table.ReplaceValue(#"Replaced Value21","MELROD@BRIDGELOGISTICSINC.COM","CHRIWEOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value23" = Table.ReplaceValue(#"Replaced Value22","NBJORSON@BRIDGELOGISTICSINC.COM","BJORHIIL",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value24" = Table.ReplaceValue(#"Replaced Value23","NNANAVATI@BRIDGELOGISTICSINC.COM","NANATROH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value25" = Table.ReplaceValue(#"Replaced Value24","NOTTINO@BRIDGELOGISTCSINC.COM","OTTIWAOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value26" = Table.ReplaceValue(#"Replaced Value25","RHECKMULLER@BRIDGELGOISTICSINC.COM","HECKCIOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value27" = Table.ReplaceValue(#"Replaced Value26","SDUGAN-TRUJILLO@BRIDGELOGISTICSINC.COM","DUGAHAOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value28" = Table.ReplaceValue(#"Replaced Value27","JOECAMPBELL@BRIDGELOGISTICSINC.COM","CAMPLOOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Replaced Value29" = Table.ReplaceValue(#"Replaced Value28","BNOBLE@BRIDGELOGISTICSINC.COM","NOBLCIOH",Replacer.ReplaceText,{"salesperson_id"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Replaced Value29", {"BillToID"}, pcs_customers, {"IDNo"}, "pcs_customers", JoinKind.LeftOuter),
+				    #"Expanded pcs_customers" = Table.ExpandTableColumn(#"Merged Queries1", "pcs_customers", {"EntCode"}, {"pcs_customers.EntCode"}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Expanded pcs_customers",{{"pcs_customers.EntCode", Text.Trim, type text}}),
+				    //start merging entity codes for matching
+				    #"Replaced Value3" = Table.ReplaceValue(#"Trimmed Text","V5978","V6064",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","V37123","V18661",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","V26458","V18025",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5","V24526","V38482",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6","V24303","V20643",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value7","V18231","V20643",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value10" = Table.ReplaceValue(#"Replaced Value8","V12320","V6978",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value12" = Table.ReplaceValue(#"Replaced Value10","V10210","V10208",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Replaced Value11" = Table.ReplaceValue(#"Replaced Value12","v11634","V7430",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Replaced Value11", {"pcs_customers.EntCode"}, custmers_pcs_sync, {"prev_code"}, "customer", JoinKind.LeftOuter),
+				    #"Replaced Value9" = Table.ReplaceValue(#"Merged Queries2","V17061","V11634",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+				    #"Expanded customer" = Table.ExpandTableColumn(#"Replaced Value9", "customer", {"id"}, {"customer.id"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Expanded customer",{{"customer.id", "customer.id_old"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns2", "customer_id", each if [pcs_customers.EntCode] = "V11634" then "PARIDUIA" else [customer.id_old]),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"customer.id_old", "BillToID", "pcs_customers.EntCode"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Columns2", "status", each "D"),
+				    #"Inserted First Characters" = Table.AddColumn(#"Added Custom", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
+				    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+				    //Start Add Lane
+				    #"Trimmed Text1" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text1", "shipper_city_name", "shipper_city_name - Copy"),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
+				    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
+				    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
+				    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
+				    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
+				    //End Add Lane
+				    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
+				in
+				    #"Merged Columns2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

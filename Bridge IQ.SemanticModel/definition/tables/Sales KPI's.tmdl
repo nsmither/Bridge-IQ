@@ -45,7 +45,7 @@ table 'Sales KPI''s'
 				    ("Margin %", NAMEOF('measures_'[Margin %]), 2),
 				    ("Revenue", NAMEOF([Total Revenue]), 3),
 				    ("Customers Served", NAMEOF([Customers Served]),4)
-				}
+				    }
 
 	annotation PBI_Id = 0d965ac8f41b485fbfcc139f8f053b14
 
