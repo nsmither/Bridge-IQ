@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.64\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":11,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
+  "config": "{\"version\":\"5.64\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2},\"customTheme\":{\"name\":\"Innovate\",\"version\":\"5.58\",\"type\":2}},\"activeSectionIndex\":12,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
   "layoutOptimization": 0,
   "publicCustomVisuals": [
     "BoxandWhiskerByMAQ1823AD39DT234AB532063E128AX",
@@ -685,6 +685,36 @@
         }
       ],
       "width": 1550.00
+    },
+    {
+      "config": "{}",
+      "displayName": "Page 4",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "e46d0e7918b3d1028e83",
+      "ordinal": 12,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"5511c82412fa36b08e99\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1,\"width\":576,\"height\":96,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.Year\",\"active\":true},{\"queryRef\":\"Calendar.Month Name\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"},\"Name\":\"Calendar.Year\",\"NativeReferenceName\":\"Year\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"},\"Name\":\"Calendar.Month Name\",\"NativeReferenceName\":\"Month Name\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendar.Year\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendar.Month Name\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null,\"children\":[{\"identityValues\":[{\"Literal\":{\"Value\":\"2024L\"}}],\"isToggled\":true},{\"identityValues\":[{\"Literal\":{\"Value\":\"2025L\"}}],\"isToggled\":true}]}}],\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month Name\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2025L\"}},{\"Literal\":{\"Value\":\"'May'\"}}]]}}}]}}}}]},\"filterExpressionMetadata\":{\"expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}}],\"cachedValueItems\":[{\"identities\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Year\"}},\"Right\":{\"Literal\":{\"Value\":\"2025L\"}}}}},{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month Name\"}},\"Right\":{\"Literal\":{\"Value\":\"'May'\"}}}}}],\"valueMap\":{\"0\":\"2025\",\"1\":\"May\"}}]}}}",
+          "filters": "[{\"name\":\"7e171af8b60275d677eb\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Date\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"Comparison\":{\"ComparisonKind\":2,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}},\"Right\":{\"DateSpan\":{\"Expression\":{\"Literal\":{\"Value\":\"datetime'2024-01-01T00:00:00'\"}},\"TimeUnit\":5}}}}}]},\"type\":\"Advanced\",\"howCreated\":1}]",
+          "height": 96.00,
+          "width": 576.00,
+          "x": 0.00,
+          "y": 0.00,
+          "z": 1.00
+        },
+        {
+          "config": "{\"name\":\"fdd85e97ac321255d442\",\"layouts\":[{\"id\":0,\"position\":{\"x\":560,\"y\":416,\"z\":0,\"width\":720,\"height\":304,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"salesperson_key.Name\"},{\"queryRef\":\"measures_.Margin\"},{\"queryRef\":\"measures_.Commission Strikes\"},{\"queryRef\":\"measures_.Commission Rate\"},{\"queryRef\":\"measures_.Commission Deductions\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"measures_\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"},\"Name\":\"salesperson_key.Name\",\"NativeReferenceName\":\"Name\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Margin\"},\"Name\":\"measures_.Margin\",\"NativeReferenceName\":\"Margin\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Commission Rate\"},\"Name\":\"measures_.Commission Rate\",\"NativeReferenceName\":\"Commission Rate\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Commission Deductions\"},\"Name\":\"measures_.Commission Deductions\",\"NativeReferenceName\":\"Commission Deductions\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Commission Strikes\"},\"Name\":\"measures_.Commission Strikes\",\"NativeReferenceName\":\"Commission Strikes\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Name\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"total\":[{\"properties\":{\"totals\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[{\"name\":\"34cd99d88a7f3baaad26\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"salesperson_key\"}},\"Property\":\"Termination Date\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Termination Date\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"null\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}},{\"name\":\"b5da0a4203553044c846\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"salesperson_key\"}},\"Property\":\"Division\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"salesperson_key\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Division\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Logistics Advisor Sales (Formerly Henry)'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{}}]",
+          "height": 304.00,
+          "width": 720.00,
+          "x": 560.00,
+          "y": 416.00,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
     },
     {
       "config": "{}",

@@ -1676,7 +1676,7 @@ table measures_
 			    IF([Margin]>=20000,1725+(([Margin]-19999)*.165),
 			    IF([Margin]>=15000,1025+(([Margin]-14999)*.14),
 			    IF([Margin]>=10000,450+(([Margin]-9999)*.115),
-			    IF([Margin]>=5000,(([Margin]-4999)*.0),BLANK()
+			    IF([Margin]>=5000,(([Margin]-4999)*.09),BLANK()
 			))))))))
 		isHidden
 		displayFolder: Comission Measures
