@@ -135,6 +135,9 @@ table Calendar
 		lineageTag: 9da35ee3-b43a-45a0-9a4e-af097f1575fe
 		summarizeBy: none
 		sourceColumn: Day Name
+		sortByColumn: 'Day of Week'
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 

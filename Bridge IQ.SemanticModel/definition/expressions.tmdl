@@ -1,6 +1,6 @@
 expression pcs_employees =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblEntities = ExpData_A{[Schema="dbo",Item="tblEntities"]}[Data],
 		    #"Removed Other Columns" = Table.SelectColumns(dbo_tblEntities,{"EntCode", "IDNo"})
@@ -15,7 +15,7 @@ expression pcs_employees =
 
 expression pcs_dispatchers =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblUserList = ExpData_A{[Schema="dbo",Item="tblUserList"]}[Data],
 		    #"Removed Columns" = Table.RemoveColumns(dbo_tblUserList,{"UserPassword", "OffCode", "DefOff", "CatCode", "MsgInterval", "PollerYN", "NotifyCode", "LiveUpdateYN", "Registration", "AlertsA", "AlertsD", "AlertsM", "QCUserName", "QCPassword", "QCSubscriberID", "QCPollInterval", "ShowWelcomeYN", "DefChkPrt", "DefInvPrt", "DefBOLPrt", "SignPath", "DefDocPrt", "AgentYN", "AlertsCC", "MsgIntervalLoads", "MsgIntervalEntries", "RemoteYN", "BackgroundImg", "AutoRefreshScreensYN", "AutoRefreshReportsYN", "ReportStartRange", "ReportAllowInactivesYN", "DirectPhone", "DivCode", "DefDiv", "TeamName", "DefBOLStyle", "EmailServer", "EmailPassword", "EmailServerSSL", "EmailServerPort", "UseCompDefMailYN", "p2", "p3", "p4", "PWUpdate", "PWFailedAttempts", "TempPWIssued", "ITSIntegrationID", "DAT_UserName", "DAT_PW", "DAT_TokenPrimary", "DAT_TokenSecondary", "DAT_LastCall", "DisplayLargeFonts", "RestrictAdminYN", "DeptMgrYN", "SalespersonYN", "FBTokenID", "PowBI_OpYN", "PowBI_DispYN", "PowBI_FinYN", "CameraYN", "Cam_AccelYN", "Cam_TurnsYN", "Cam_ShockYN", "Cam_PanicYN", "Cam_BreaksYN"}),
@@ -35,7 +35,7 @@ expression pcs_dispatchers =
 
 expression pcs_orders_dispatchers =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblLoads = ExpData_A{[Schema="dbo",Item="tblLoads"]}[Data],
 		    #"Filtered Rows" = Table.SelectRows(dbo_tblLoads, each ([Status] = "Arrived")),
@@ -113,7 +113,7 @@ expression mcleod_historic_orders =
 
 	annotation PBI_ResultType = Table
 
-expression RefreshCutOffDate = #datetime(2025, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+expression RefreshCutOffDate = #datetime(2025, 7, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: af39c097-cda3-4307-8194-af7487559d9a
 	queryGroup: Parameters
 
@@ -121,7 +121,7 @@ expression RefreshCutOffDate = #datetime(2025, 1, 1, 0, 0, 0) meta [IsParameterQ
 
 	annotation PBI_ResultType = DateTime
 
-expression MovementCutOffNumber = 163683 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
+expression MovementCutOffNumber = 192267 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
 	lineageTag: 7b1d95af-7d84-440e-87b8-e089fa08fe15
 	queryGroup: Parameters
 
@@ -131,7 +131,7 @@ expression MovementCutOffNumber = 163683 meta [IsParameterQuery=true, Type="Numb
 
 expression pcs_customers =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblEntities = ExpData_A{[Schema="dbo",Item="tblEntities"]}[Data],
 		    #"Filtered Rows" = Table.SelectRows(dbo_tblEntities, each ([EntType] = "Customer"))
@@ -160,7 +160,7 @@ expression custmers_pcs_sync =
 
 expression pcs_movements =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblLoadDispatch = ExpData_A{[Schema="dbo",Item="tblLoadDispatch"]}[Data],
 		    #"Removed Columns" = Table.RemoveColumns(dbo_tblLoadDispatch,{"TripID", "UnitID", "UnitNumber", "DriverID", "CoDriverID", "CoDriverName", "TruckID", "TruckNumber", "TrailerID1", "TrailerNumber1", "TrailerID2", "TrailerNumber2", "CarrierID", "CarrierName", "PayCode", "PayType", "TotalPay", "EMI", "EMO", "EmptyRate", "RevShare", "PUCus", "PUZone", "DropDate", "DropCus", "DropName", "DropAddress", "DropCity", "DropState", "DropZip", "DropZone", "DropTimeIn", "DropTimeOut", "DelCus", "DelZone", "AccTimeIn", "AccTimeOut", "CoDriverPay", "BackupDate", "BackupRecYN", "BatchID", "SelectedYN", "txtNotes", "EntCode", "PayMatrix", "InputUser", "InputDate", "InputTime", "Activity_ctr_Cont", "Activity_ctr_Chassis", "LoadClass", "PayUnits", "CarrierRef", "CarrierContact", "LastAction", "ChassisNo", "AccSplitID", "ContainerNo", "LoadAccID", "PUAddress", "DelAddress", "PaySource", "MainDispID", "DropRetDate", "DropRetTime", "AgentBatchID", "FuelMatrixID", "OwnerID", "CurCode", "DriverPayF", "ActDateO", "ActTimeInO", "ActTimeOutO", "ActDateD", "ActTimeInD", "ActTimeOutD", "DispHours", "TrailerID3", "TrailerNumber3", "DelOptions", "PullOptionC", "PullOptionX", "DPLocC", "DPLocX", "DPDateC", "DPDateX", "DPTimeInC", "DPTimeOutC", "DPTimeInX", "DPTimeOutX", "ActDPDateC", "ActDPDateX", "ActDPTimeInC", "ActDPTimeOutC", "ActDPTimeInX", "ActDPTimeOutX", "LinkedOutbound", "DPContainer", "DPChassis", "EmptyPullYN", "ChassisPULoc", "ChassisPUDate", "ChassisPUTimeIn", "ChassisPUTimeOut", "ChassisDelLoc", "ChassisDelDate", "ChassisDelTimeIn", "ChassisDelTimeOut", "ActChassisPUDate", "ActChassisPUTimeIn", "ActChassisPUTimeOut", "ActChassisDelDate", "ActChassisDelTimeIn", "ActChassisDelTimeOut", "ChassisOption", "IntEmptyPayType", "LateReason", "EDIStatusCode", "EDIPostBy", "EDIPostDate", "IntEmptyPayMatrix", "PrevVersionYN", "MacroPointOrderID", "DropTrailerID1", "DropTrailerID2", "TrailerCharge", "AllowRejectYN", "PreloadTrailer1YN", "PreloadTrailer2YN", "AutoDispatchYN", "AutoSendSatYN", "DropTrailer1YN", "DropTrailer2YN", "RejectedDT", "StreetTurnYN", "IMLHRate", "IMFuelRate", "IMInsRate", "IMLHAmt", "IMFuelAmt", "IMInsAmt", "PUName", "PUCity", "PUState", "PUZip", "PUTimeIn", "PUTimeOut", "DelName", "DelCity", "DelState", "DelZip", "DelDate", "DelTimeIn", "DelTimeOut", "Status", "PUDate", "DispatchDate", "DispatchTime", "DriverPay", "DispatchCode", "DriverName"}),
@@ -603,7 +603,7 @@ expression parade_orders =
 
 expression pcs_orders =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblLoads = ExpData_A{[Schema="dbo",Item="tblLoads"]}[Data],
 		    #"Filtered Rows" = Table.SelectRows(dbo_tblLoads, each ([Status] = "Arrived")),
@@ -653,6 +653,49 @@ expression pcs_orders =
 		in
 		    #"Merged Columns2"
 	lineageTag: 9009ad3a-1b21-4b7d-b2b1-96c10be3855c
+	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Contacts =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/CRM/new_contacts.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"is_company", type logical}, {"x_studio_mcleod_code", type any}, {"parent_id", type any}, {"name", type text}, {"city", type any}, {"phone", type any}, {"x_studio_zoominfo_contact_id", type any}, {"user_id", type any}, {"x_studio_sdr", type logical}, {"x_studio_last_stage_update", type any}, {"x_studio_zoominfo_company_id", type any}, {"activity_date_deadline", type any}, {"x_studio_lead_type", type any}, {"x_studio_originally_passed_to", type logical}, {"x_studio_do_not_move", type logical}, {"x_studio_lead_passed_date", type any}, {"x_studio_enrichment_date", type any}, {"x_studio_revenue_range", type any}, {"x_studio_last_salesperson_update", type datetime}, {"x_studio_primary_industry", type any}, {"state_id", type any}, {"x_res_partner_prospecting_stage", type any}, {"x_studio_last_activity_date", type any}, {"x_studio_working_start_date", type any}, {"x_studio_working_end_date", type any}, {"x_studio_no_for_now_start_date", type any}, {"x_studio_no_for_now_end_date", type logical}, {"x_studio_hope_island_start_date", type logical}, {"x_studio_hope_island_end_date", type logical}, {"x_studio_qualified_start_date", type logical}, {"x_studio_qualified_end_date", type logical}, {"x_studio_quoted_start_date", type logical}, {"x_studio_quoted_end_date", type logical}, {"x_studio_credit_app_start_date", type logical}, {"x_studio_credit_app_end_date", type any}, {"x_studio_1_3_loads_start_date", type logical}, {"x_studio_1_3_loads_end_date", type logical}, {"x_studio_customer_start_date", type any}, {"x_studio_customer_end_date", type logical}, {"category_names", type text}, {"user_login", type text}}),
+		    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Changed Type", {{"user_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters1" = Table.TransformColumns(#"Extracted Text Between Delimiters", {{"x_studio_sdr", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters2" = Table.TransformColumns(#"Extracted Text Between Delimiters1", {{"x_studio_originally_passed_to", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters3" = Table.TransformColumns(#"Extracted Text Between Delimiters2", {{"x_studio_revenue_range", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters4" = Table.TransformColumns(#"Extracted Text Between Delimiters3", {{"x_studio_primary_industry", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters5" = Table.TransformColumns(#"Extracted Text Between Delimiters4", {{"state_id", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters6" = Table.TransformColumns(#"Extracted Text Between Delimiters5", {{"x_res_partner_prospecting_stage", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters7" = Table.TransformColumns(#"Extracted Text Between Delimiters6", {{"parent_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Extracted Text Between Delimiters7",{{"x_studio_last_stage_update", type datetime}, {"activity_date_deadline", type datetime}, {"x_studio_last_salesperson_update", type datetime}, {"x_studio_last_activity_date", type datetime}, {"x_studio_working_start_date", type datetime}, {"x_studio_working_end_date", type datetime}, {"x_studio_no_for_now_start_date", type datetime}, {"x_studio_no_for_now_end_date", type datetime}, {"x_studio_hope_island_start_date", type datetime}, {"x_studio_hope_island_end_date", type datetime}, {"x_studio_qualified_start_date", type datetime}, {"x_studio_qualified_end_date", type datetime}, {"x_studio_quoted_start_date", type datetime}, {"x_studio_quoted_end_date", type datetime}, {"x_studio_credit_app_start_date", type datetime}, {"x_studio_credit_app_end_date", type datetime}, {"x_studio_1_3_loads_start_date", type datetime}, {"x_studio_1_3_loads_end_date", type datetime}, {"x_studio_customer_start_date", type datetime}, {"x_studio_customer_end_date", type datetime}}),
+		    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type1", {{"x_studio_last_stage_update", null},{"activity_date_deadline", null},{"x_studio_last_activity_date", null},{"x_studio_working_start_date", null},{"x_studio_working_end_date", null},{"x_studio_no_for_now_start_date", null},{"x_studio_no_for_now_end_date", null},{"x_studio_hope_island_start_date", null},{"x_studio_hope_island_end_date", null},{"x_studio_qualified_start_date", null},{"x_studio_qualified_end_date", null},{"x_studio_quoted_start_date", null},{"x_studio_quoted_end_date", null},{"x_studio_credit_app_start_date", null},{"x_studio_credit_app_end_date", null},{"x_studio_1_3_loads_start_date", null},{"x_studio_1_3_loads_end_date", null},{"x_studio_customer_start_date", null},{"x_studio_customer_end_date", null}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Replaced Errors",false,null,Replacer.ReplaceValue,{"x_studio_mcleod_code"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","",null,Replacer.ReplaceValue,{"parent_id"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1",false,null,Replacer.ReplaceValue,{"city"}),
+		    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2",false,null,Replacer.ReplaceValue,{"phone"}),
+		    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3",false,null,Replacer.ReplaceValue,{"x_studio_zoominfo_contact_id"}),
+		    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","",null,Replacer.ReplaceValue,{"user_id"}),
+		    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Replaced Value5", {{"x_studio_sdr", null}}),
+		    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Errors1","",null,Replacer.ReplaceValue,{"x_studio_sdr"}),
+		    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6",false,null,Replacer.ReplaceValue,{"x_studio_lead_type"}),
+		    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Replaced Value7", {{"x_studio_originally_passed_to", null}}),
+		    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Errors2","",null,Replacer.ReplaceValue,{"x_studio_originally_passed_to"}),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Value8",{{"x_studio_enrichment_date", type date}}),
+		    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type2", {{"x_studio_enrichment_date", null}}),
+		    #"Replaced Value9" = Table.ReplaceValue(#"Replaced Errors3","",null,Replacer.ReplaceValue,{"x_studio_revenue_range"}),
+		    #"Replaced Value10" = Table.ReplaceValue(#"Replaced Value9","",null,Replacer.ReplaceValue,{"x_studio_primary_industry"}),
+		    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Replaced Value10", {{"state_id", null}}),
+		    #"Replaced Errors5" = Table.ReplaceErrorValues(#"Replaced Errors4", {{"x_res_partner_prospecting_stage", null}}),
+		    #"Replaced Errors6" = Table.ReplaceErrorValues(#"Replaced Errors5", {{"x_studio_last_salesperson_update", null}})
+		in
+		    #"Replaced Errors6"
+	lineageTag: a86aa7ea-8ec8-4b2b-9536-14c46f5da6d7
 	queryGroup: 'Historic Tables'
 
 	annotation PBI_NavigationStepName = Navigation

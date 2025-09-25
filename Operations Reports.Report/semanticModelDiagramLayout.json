@@ -410,6 +410,58 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3897.378808680126,
+            "y": 852.06519016772563
+          },
+          "nodeIndex": "Behavior KPI",
+          "nodeLineageTag": "6f7938ae-1d3b-4903-b1b7-8f1b08920a4d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4181.378808680126,
+            "y": 840.06519016772563
+          },
+          "nodeIndex": "Behaviors Paramater",
+          "nodeLineageTag": "e83859cb-9dc4-403d-95c5-804aab6a6ac1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4465.378808680126,
+            "y": 840.06519016772563
+          },
+          "nodeIndex": "Sales KPI's",
+          "nodeLineageTag": "c207ebcf-8edd-4a3e-a00d-cbe985297273",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4749.378808680126,
+            "y": 852.06519016772563
+          },
+          "nodeIndex": "Time intelligence",
+          "nodeLineageTag": "4891f987-bb24-4566-ba78-1640183fd4b1",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",

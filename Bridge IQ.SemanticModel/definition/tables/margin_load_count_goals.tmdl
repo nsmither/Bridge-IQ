@@ -69,6 +69,46 @@ table margin_load_count_goals
 
 		annotation SummarizationSetBy = Automatic
 
+	column Column8
+		dataType: string
+		lineageTag: c432ccea-425a-4f65-b09f-7ebec3a6b1c9
+		summarizeBy: none
+		sourceColumn: Column8
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column9
+		dataType: string
+		lineageTag: da290cb4-52c7-421f-ad9f-895379a58e7a
+		summarizeBy: none
+		sourceColumn: Column9
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column10
+		dataType: string
+		lineageTag: 0505da06-51ca-46b5-ae4b-54157757b3a3
+		summarizeBy: none
+		sourceColumn: Column10
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column11
+		dataType: string
+		lineageTag: bf0af2f6-8766-40de-b043-c03e339a4bd2
+		summarizeBy: none
+		sourceColumn: Column11
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column12
+		dataType: string
+		lineageTag: fdfbf07c-a118-44d4-9a4a-3b978c02db04
+		summarizeBy: none
+		sourceColumn: Column12
+
+		annotation SummarizationSetBy = Automatic
+
 	partition margin_load_count_goals = m
 		mode: import
 		source =

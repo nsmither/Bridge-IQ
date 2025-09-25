@@ -23,11 +23,9 @@ table measures_
 			)
 			
 			```
-		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Revenue Measures
 		lineageTag: 39ae93b5-50d6-453e-80c8-dbbb58f43df7
-
-		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	measure 'Sum of override_pay_amt' = SUM(movements[override_pay_amt])
 		displayFolder: Pay Measures
@@ -770,13 +768,13 @@ table measures_
 	measure 'Days since Last Stage Update' = ```
 			
 			 DATEDIFF(
-			    MAX(crm[Last Stage Change]),TODAY(),DAY)
+			    MAX(odoo[x_studio_last_stage_update]),TODAY(),DAY)
 			```
 		formatString: 0
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: ecc086f7-a6d4-4e6c-b109-8712f700c70f
 
-	measure 'Last Behavior Date' = MAX(behaviors[Behavior Date])
+	measure 'Last Behavior Date' = MAX(odoo[x_studio_last_activity_date])
 		formatString: Short Date
 		displayFolder: CRM Measures
 		lineageTag: 9de3f64a-8161-47da-8c52-3bc6064fa7f6
@@ -788,7 +786,7 @@ table measures_
 
 	measure 'Days Over Due' = ```
 			
-			Var next_behavior_deadline = MAX(crm[activity_date_deadline])
+			Var next_behavior_deadline = MAX(odoo[activity_date_deadline])
 			Var days_over_due = DATEDIFF(next_behavior_deadline,TODAY(),DAY)
 			
 			Return 
@@ -802,8 +800,8 @@ table measures_
 			
 			Var at_risk = IF([Days Since Last Shipment]>120,1,0)
 			Var ifs = 
-			    IF(MIN(crm[Stage])="Customer",at_risk,
-			    IF(MIN(crm[Stage])="1-3 Loads",at_risk,0))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",at_risk,0))
 			
 			
 			return
@@ -818,13 +816,13 @@ table measures_
 			Var prospect_at_risk = if([Days since Last Stage Update]>90,1,0)
 			Var pipeline_at_risk = IF([Days since Last Stage Update]>60,1,0)
 			Var ifs = 
-			    IF(MIN(crm[Stage])="Customer",0,
-			    IF(MIN(crm[Stage])="Working",prospect_at_risk,
-			    IF(MIN(crm[Stage])="No For Now",prospect_at_risk,
-			    IF(MIN(crm[Stage])="Qualified",pipeline_at_risk,
-			    IF(MIN(crm[Stage])="Quoted",pipeline_at_risk,
-			    IF(MIN(crm[Stage])="Credit App",pipeline_at_risk,
-			    IF(MIN(crm[Stage])="1-3 Loads",pipeline_at_risk,0)))))))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",0,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Working",prospect_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="No For Now",prospect_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Qualified",pipeline_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Quoted",pipeline_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Credit App",pipeline_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",pipeline_at_risk,0)))))))
 			
 			Return
 			ifs
@@ -840,13 +838,13 @@ table measures_
 			Var no_for_now_at_risk = IF([Days since last Behaivor]>90,1,0)
 			
 			Var Ifs = 
-			    IF(MIN(crm[Stage])="Qualified",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Quoted",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Credit App", opportunity_at_risk,
-			    IF(MIN(crm[Stage])="1-3 Loads",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Customer",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Working",working_at_risk,
-			    IF(MIN(crm[Stage])="No For Now",no_for_now_at_risk,0)))))))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Qualified",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Quoted",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Credit App", opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Working",working_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="No For Now",no_for_now_at_risk,0)))))))
 			
 			Return
 			Ifs
@@ -855,7 +853,26 @@ table measures_
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: d2fccc3b-65d6-4647-81ff-6908557e9873
 
-	measure 'Days since last Salesperson Update' = DATEDIFF(MAX(crm[date_open]),TODAY(),DAY)
+	measure 'Days since last Salesperson Update' = ```
+			
+			VAR last_salesperson_update = 
+			  IF(
+			    MIN(odoo[x_studio_last_salesperson_update])=BLANK(),
+			    Date(2025,07,26),
+			    MIN(odoo[x_studio_last_salesperson_update])
+			  )
+			
+			
+			VAR dslu = 
+			    DATEDIFF(
+			        last_salesperson_update,
+			        TODAY(),
+			        DAY
+			    )
+			
+			RETURN
+			dslu
+			```
 		formatString: 0
 		displayFolder: CRM Measures
 		lineageTag: cfbd7a5c-e9af-4629-a9f9-e6c37a23dfdc
@@ -863,22 +880,23 @@ table measures_
 	measure 'Count at Risk (inactive relationship)' = ```
 			
 			CALCULATE(
-			    DISTINCTCOUNT(crm[id]),
-			    FILTER(crm,crm[At Risk]="TRUE"),
-			    FILTER(crm,crm[user_id]<>BLANK()),
-			    USERELATIONSHIP(crm[user_id],salesperson_key[Name])
+			    DISTINCTCOUNT(odoo[id]),
+			    FILTER(odoo,odoo[At Risk]=TRUE()),
+			    FILTER(odoo,odoo[user_id]<>BLANK()),
+			    USERELATIONSHIP(odoo[user_id],salesperson_key[Name])
 			)
 			
 			```
-		formatString: 0
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: 81759a22-7856-45de-82cd-a68019cf40d6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Count CRM Ids (inactive relationship)' =
 			
 			CALCULATE(
-			    DISTINCTCOUNT(crm[id]),
-			    USERELATIONSHIP(crm[user_id],salesperson_key[Name])
+			    DISTINCTCOUNT(odoo[id]),
+			    USERELATIONSHIP(odoo[user_id],salesperson_key[Name])
 			)
 		formatString: 0
 		displayFolder: CRM Measures
@@ -1940,10 +1958,8 @@ table measures_
 			
 			CALCULATE(
 			    COUNTROWS(behaviors),
-			    USERELATIONSHIP(
-			        'Calendar'[Date],
-			        behaviors[Behavior Date]
-			    )
+			    USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			    USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
 			)
 		formatString: 0
 		displayFolder: Behavior Measures
@@ -1955,7 +1971,9 @@ table measures_
 			    DISTINCTCOUNT(
 			        behaviors[id]),
 			        OR(behaviors[mail_activity_type_id]="Mapping Call",behaviors[mail_activity_type_id]="Follow-up Call"),
-			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			        USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			        )
 		displayFolder: Behavior Measures
 		lineageTag: 456954b7-ee5c-414f-a67a-5ec7da1c1ab6
 
@@ -1967,7 +1985,9 @@ table measures_
 			    DISTINCTCOUNT(
 			        behaviors[id]),
 			        OR(behaviors[mail_activity_type_id]="New Conversation", behaviors[mail_activity_type_id]="Follow-up Conversation"),
-			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			        USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			        )
 		displayFolder: Behavior Measures
 		lineageTag: 219a4caa-5ce5-42b8-9d6d-dfdb80243cf8
 
@@ -1976,6 +1996,20 @@ table measures_
 	measure 'Call Rank' = RANKX(all(salesperson_key[Name]),[Calls])
 		displayFolder: Behavior Measures
 		lineageTag: 81b03448-3f92-4d8a-a96f-babff23eca28
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Daily Performance' =
+			
+			--Current Day--
+			MIN('Calendar'[Day of Month]) & REPT(UNICHAR(10),2) &
+			
+			--Events--
+			"Revenue" & " $" & [Total Revenue] & REPT(UNICHAR(10),2) &
+			
+			"Margin" & " $" & [Margin]
+		displayFolder: Calendar Measures
+		lineageTag: 88c5f783-a053-456e-807d-8d4f7ab0a9da
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

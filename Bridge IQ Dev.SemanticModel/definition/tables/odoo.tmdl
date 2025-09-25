@@ -1,0 +1,453 @@
+table odoo
+	lineageTag: d8affeaf-9f97-4d96-90f7-96700409e326
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 60cf8ccc-dd8c-4558-abb8-ec1737412cde
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_mcleod_code
+		dataType: string
+		lineageTag: 55a7b365-0c38-43b4-8269-0779b85c762b
+		summarizeBy: none
+		sourceColumn: x_studio_mcleod_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column parent_id
+		dataType: string
+		lineageTag: e01d10f2-b10d-4025-8aae-8fbb140ed7bb
+		summarizeBy: none
+		sourceColumn: parent_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 4788cb27-0137-446f-a82f-42069ddd95aa
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: ae6fc18f-7984-499a-a233-4c8c4c66969f
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: 52d14232-c5a5-47ff-a11d-f0b174ac9d89
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 99e4bebf-3ad5-4d69-a3c2-b7010ba5cbce
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_zoominfo_contact_id
+		dataType: string
+		lineageTag: 35270fd8-576b-46ff-9a8c-080a4b9e4576
+		summarizeBy: none
+		sourceColumn: x_studio_zoominfo_contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		lineageTag: 67d9c807-fb50-4b91-90b8-67588aedb769
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_sdr
+		dataType: string
+		lineageTag: 45836dcc-d332-4d14-83d6-429cd0c362db
+		summarizeBy: none
+		sourceColumn: x_studio_sdr
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_last_stage_update
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a0498311-1e5f-4a3b-a6ed-d3333b3e4dbe
+		summarizeBy: none
+		sourceColumn: x_studio_last_stage_update
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_zoominfo_company_id
+		dataType: string
+		lineageTag: b523c2f2-62bc-4d62-a5fe-337f6ed35717
+		summarizeBy: none
+		sourceColumn: x_studio_zoominfo_company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column activity_date_deadline
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 5ed9c7d8-e68f-441d-b338-f731ca406ad7
+		summarizeBy: none
+		sourceColumn: activity_date_deadline
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_lead_type
+		dataType: string
+		lineageTag: f5d9fb7d-f3d5-41a4-bad1-6aa893793305
+		summarizeBy: none
+		sourceColumn: x_studio_lead_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_originally_passed_to
+		dataType: string
+		lineageTag: 0a29a015-aa1a-41fe-b70c-5efff9853aa1
+		summarizeBy: none
+		sourceColumn: x_studio_originally_passed_to
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_do_not_move
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8bc3fae2-f988-40a0-9a9e-cb3a95f08a72
+		summarizeBy: none
+		sourceColumn: x_studio_do_not_move
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_lead_passed_date
+		dataType: string
+		lineageTag: 7fd62b89-009e-4fe5-bbd7-407fce79bdfc
+		summarizeBy: none
+		sourceColumn: x_studio_lead_passed_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_enrichment_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4fda34d6-6452-4217-b80d-24e86135687a
+		summarizeBy: none
+		sourceColumn: x_studio_enrichment_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column x_studio_revenue_range
+		dataType: string
+		lineageTag: 99b5b6c4-6917-417e-800a-d173c1984678
+		summarizeBy: none
+		sourceColumn: x_studio_revenue_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_primary_industry
+		dataType: string
+		lineageTag: ee87c0b7-bb8d-428f-af84-dde5f243efc9
+		summarizeBy: none
+		sourceColumn: x_studio_primary_industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_id
+		dataType: string
+		lineageTag: 4f65503e-f00d-4275-a74a-768e5ee10c21
+		summarizeBy: none
+		sourceColumn: state_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_res_partner_prospecting_stage
+		dataType: string
+		lineageTag: 2974fd9a-7734-4f4c-9202-1a54e7d62e12
+		summarizeBy: none
+		sourceColumn: x_res_partner_prospecting_stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_last_activity_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 161cd96d-d94f-43d4-8d14-502b346f6f03
+		summarizeBy: none
+		sourceColumn: x_studio_last_activity_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_working_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e510ce35-89a4-4a27-88ac-1a9f043e40e1
+		summarizeBy: none
+		sourceColumn: x_studio_working_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_working_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3cf63e91-475d-47fb-8ae1-010180f2d5b7
+		summarizeBy: none
+		sourceColumn: x_studio_working_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_no_for_now_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ad07d319-1121-484a-955e-cb4a83df7f86
+		summarizeBy: none
+		sourceColumn: x_studio_no_for_now_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_no_for_now_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7c3f4611-84b5-4641-8e46-57bf172a4edd
+		summarizeBy: none
+		sourceColumn: x_studio_no_for_now_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_hope_island_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0429d9bf-8bf2-4d50-847a-bb8c45e7831e
+		summarizeBy: none
+		sourceColumn: x_studio_hope_island_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_hope_island_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b3248b88-28af-43d5-8c52-bd5688f5cd64
+		summarizeBy: none
+		sourceColumn: x_studio_hope_island_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_qualified_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7468af49-7cb0-4bf2-9c63-b23bac9a7ac2
+		summarizeBy: none
+		sourceColumn: x_studio_qualified_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_qualified_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a47d6268-d0fb-4835-a703-67644cd899c0
+		summarizeBy: none
+		sourceColumn: x_studio_qualified_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_quoted_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a42e4e4b-2932-4505-8df2-27a16c79f861
+		summarizeBy: none
+		sourceColumn: x_studio_quoted_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_quoted_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ffdc65cf-43c8-44c0-98f9-2753a9a7e6ef
+		summarizeBy: none
+		sourceColumn: x_studio_quoted_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_credit_app_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7bff0670-3982-453a-ad44-de345ddaf198
+		summarizeBy: none
+		sourceColumn: x_studio_credit_app_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_credit_app_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9f5c83d4-6989-4c0b-ba4e-3aa4566d1a3a
+		summarizeBy: none
+		sourceColumn: x_studio_credit_app_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_1_3_loads_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 512caff7-7bb7-4140-94a4-f2f0e5307526
+		summarizeBy: none
+		sourceColumn: x_studio_1_3_loads_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_1_3_loads_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 30a57ac8-fb9c-48ee-96ef-d9aa76081cb3
+		summarizeBy: none
+		sourceColumn: x_studio_1_3_loads_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_customer_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 01786df9-0c41-418f-8ed0-1acddb4d8eb3
+		summarizeBy: none
+		sourceColumn: x_studio_customer_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_customer_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1aec73b4-e581-4a04-bea3-945216229069
+		summarizeBy: none
+		sourceColumn: x_studio_customer_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_names
+		dataType: string
+		lineageTag: 86cecf9d-687b-4e46-bd85-8dae561a7838
+		summarizeBy: none
+		sourceColumn: category_names
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_login
+		dataType: string
+		lineageTag: d13e9ade-c360-4049-a193-861fdb6c3641
+		summarizeBy: none
+		sourceColumn: user_login
+
+		annotation SummarizationSetBy = Automatic
+
+	column x_studio_last_salesperson_update
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0bf71ad6-3227-45a5-a8f5-ca1a429d7679
+		summarizeBy: none
+		sourceColumn: x_studio_last_salesperson_update
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'At Risk' = ```
+			
+			VAR Working = 
+			    IF([Days since Last Salesperson Update]<7,"False",
+			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>90,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			VAR NoForNow = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>90,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>90,"TRUE",
+			    "FALSE")))))
+			
+			VAR Qualified = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>60,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			VAR Quoted = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>60,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			VAR CreditApp = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Since Last Stage Update]>60,"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			VAR OneToThree = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since Last Shipment]>120,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			VAR Customer = 
+			    IF([Days since Last Salesperson Update]<7,"FALSE",
+			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
+			    IF([Days Over Due]>14,"TRUE",
+			    IF([Days since Last Shipment]>120,"TRUE",
+			    IF([Days since last Behaivor]>60,"TRUE",
+			    "FALSE")))))
+			
+			VAR AtRisk =
+			    IF(odoo[x_res_partner_prospecting_stage]="Working",Working,
+			    IF(odoo[x_res_partner_prospecting_stage]="No For Now",NoForNow,
+			    IF(odoo[x_res_partner_prospecting_stage]="Qualified",Qualified,
+			    IF(odoo[x_res_partner_prospecting_stage]="Quoted",Quoted,
+			    IF(odoo[x_res_partner_prospecting_stage]="Credit App",CreditApp,
+			    IF(odoo[x_res_partner_prospecting_stage]="1-3 Loads",OneToThree,
+			    IF(odoo[x_res_partner_prospecting_stage]="Customer",Customer,
+			    "FALSE")))))))
+			
+			RETURN
+			AtRisk
+			```
+		lineageTag: 82604928-3850-4845-85b4-b81d0021dbed
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition odoo = m
+		mode: import
+		source =
+				let
+				    Source = Contacts,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([is_company] = true)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"is_company"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

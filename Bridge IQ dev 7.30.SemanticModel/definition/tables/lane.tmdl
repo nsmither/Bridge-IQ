@@ -1,0 +1,27 @@
+table lane
+	lineageTag: 7bc0b0c0-f527-406e-9f68-57b6dddde0c5
+
+	column lane
+		dataType: string
+		lineageTag: edbd3dbd-dfe5-4437-b9b0-041387b7fe49
+		summarizeBy: none
+		sourceColumn: lane
+
+		annotation SummarizationSetBy = Automatic
+
+	partition lane = m
+		mode: import
+		source =
+				let
+				    Source = orders,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"lane"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Removed Other Columns",{{"lane", Text.Upper, type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Uppercased Text",{{"lane", Text.Trim, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Trimmed Text")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+
