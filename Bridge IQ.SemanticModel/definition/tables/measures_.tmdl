@@ -2013,6 +2013,43 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'number of stops' = ```
+			
+			VAR TWO = 2
+			VAR PU = 
+			    CALCULATE(
+			        IF(
+			            ISBLANK(MIN(orders[extra_pickups])),
+			            BLANK(),
+			            MIN(orders[extra_pickups])
+			        )
+			    )
+			VAR DEL = 
+			    CALCULATE(
+			        IF(
+			            ISBLANK(MIN(orders[extra_deliveries])),
+			            BLANK(),
+			            MIN(orders[extra_deliveries])
+			        )
+			    )
+			VAR ADD_ = 
+			    IF(
+			        ISBLANK(PU) || ISBLANK(DEL),
+			        BLANK(),
+			        PU + DEL
+			    )
+			RETURN 
+			    IF(
+			        ISBLANK(ADD_),
+			        BLANK(),
+			        TWO + ADD_
+			    )
+			```
+		displayFolder: Movement Measures
+		lineageTag: f60214ae-d7db-4ebf-9a15-4be840feb66e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column
 		isHidden
 		formatString: 0
