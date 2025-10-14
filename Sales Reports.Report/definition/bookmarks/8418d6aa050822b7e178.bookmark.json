@@ -1,0 +1,2649 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/1.4.0/schema.json",
+  "displayName": "Customer / Total",
+  "name": "8418d6aa050822b7e178",
+  "options": {
+    "targetVisualNames": [],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "5f9b893ced41dab097cc",
+    "sections": {
+      "5f9b893ced41dab097cc": {
+        "visualContainers": {
+          "605857c05c306eb48d66": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "5a49b87502430adb6649",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "6b984cf5a544aa3217bb",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "salesperson_key"
+                        }
+                      },
+                      "Property": "Name"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "5ebf44c7663944c11e00",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4a762a1044b122d23ce9",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6ebd003e650d03b8db71",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "7968b1bc6e763dd6ea0e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8d3b4450e320ce5a93e5",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of orders covered"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "dc8cff5be049e73006d9",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "84a82b54a69d1d207b08",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "1578a7b81e12c9ad4450",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ceffe28616ea5b214125",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "03979b49459a4c7395dc",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin Per Order"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "b11e73c7c2a9d0169b90": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c75add22c3852184c6e7",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of orders covered"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a9d5ca18ce6a38892467",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "55f1ed6469bc86de0d8c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 4QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "cc858374dc685ce01310",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "adb0f5c3ea05c2cd6530",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "edb6c5d0e38a78ce1d0d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "2c7b8fe34c413e736c88",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "aaa6b7219c7da5bb9363",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4cb81ed66807a427e97d",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d70451f96c95ad596c94",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "salesperson_key"
+                        }
+                      },
+                      "Property": "Name"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "2c178dd00bcdb7ed0dba",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 4QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "1e0a12a5b474a58d4a36",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin Per Order"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b77bbad1b1026b689b51",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "d54765496982b9708eb6": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "baaca8278855ae337587",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "819f72ef010947197860",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "390e9dc0c06da6e6ea10",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "da78391dc8c5e5872ea2",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a50759d6607bb08a0226",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of orders covered"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6212f50c3a003801c072",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9b4c2053095ab0231d2b",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "44fda8572894dbd03028",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d5fae73379cc51539660",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin Per Order"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered QTD 4QA"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "242d6278d4d48c00e846": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "baeaad028044521bba8a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "41e122a29124642e2c0d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e78bff66d32eb59201e5",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a589f7dd59164e26a694",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6074af0bae22ce8404bd",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4212159b5403b4c0290c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "43229a6396cde301a398",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3242f98c007e503005cc",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8699a7d41a4800c2d3ca",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a2e66e6c54a8b80b7c01",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD MOM diff"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b2e581a523d5bde4e44d",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD MOM Variance"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "61b7cf63bdbd492d8c14": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "9928c512609b07de1410",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "3f162fe5b1a2abdb82e2",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "77d2ca90506c47912c93",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "cf2a9fd9ca01099708ea",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered YTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4f5c24605146b3068058",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3e6f93947e1065e2bb91",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered YTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "628a2290be8003bca0d8",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "20b51a43e3b3714b8b00",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered YTD YOY Variance"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8ba2589806b9ae2b018e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YTD YOY Variance"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YTD"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "711a49d02188510b185e": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "88571c34474e372ce014": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "9be6db306955744de283": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "36d6321230078701a521": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "45d9f65901007b0cea0b": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "c1e111e04bc244d04b26": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "2eca24a8217dae0569ce": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "9ad442c306c0223db9db",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "m",
+                        "Entity": "measures_",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 2,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "m"
+                                  }
+                                },
+                                "Property": "Current Sales"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "1L"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "b0906658a965b574e676",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5e5c89069b60678346ee",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b8c98a3d7d846c4b8c75",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "2dc50f9d6307aeb80a97",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "add974d4d0560ec09b97",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "24f94b1697abd80c7b2c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "aeeb65640426ec25c430",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of orders covered"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4de979855b15b6292a85",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a2040cfe4ce68e71c743",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MOM Variance"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "47b8b9d2638b00a97002",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MOM Variance"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1YA"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "a4c85e72c60cb4a32022": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "aff26cf0307a84c05b01",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "m",
+                        "Entity": "measures_",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 2,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "m"
+                                  }
+                                },
+                                "Property": "Current Sales"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "1L"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "349c00bfc92e60218629",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "caab1998ea6c1d54ae0d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "286854dbd33607cb0c23",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d59593151e7e96d24aa7",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6b45f0771c30ec93d055",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of orders covered"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0dc98e1dac182703eac2",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b50685502b43bb16aa07",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered YOY Variance"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3dccfba5cb0095677a51",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YOY Variance"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "d242472bb3a04873b2d4": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "57968c1b6ace0d6150a2",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "m",
+                        "Entity": "measures_",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 2,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "m"
+                                  }
+                                },
+                                "Property": "Current Sales"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "1L"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "33b2b6efad4b668850a2",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fbc67ed1d60603c2e376",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "f164eb7632784e5768bb",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 4QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ba03ee6e364335ea691e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 4QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "14cb61e8578792c33c50",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered 1QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b7e236a3a11a2204544a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin 1QA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a13e1bf9011c7e44e08c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of orders covered"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fd0cf00f705cd67d1e06",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "42c37cc7e013b0300015",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered QOQ Variance"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "40ef004c9edb8c4170cb",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin QOQ Variance"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "22677fa0c8ea8750ead5": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "8bca16fc5e1b0a510ad0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "orders"
+                        }
+                      },
+                      "Property": "shipper_state"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+              "objects": {}
+            }
+          },
+          "39eb4da3c9b217d25872": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "1f5e1ba99b18d062e306",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "m",
+                        "Entity": "measures_",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 2,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "m"
+                                  }
+                                },
+                                "Property": "Current Sales"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "1L"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "3255bdc303852919cb71",
+                  "type": "Categorical",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "s",
+                        "Entity": "salesperson_key",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "In": {
+                                "Expressions": [
+                                  {
+                                    "Column": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Source": "s"
+                                        }
+                                      },
+                                      "Property": "Name"
+                                    }
+                                  }
+                                ],
+                                "Values": [
+                                  [
+                                    {
+                                      "Literal": {
+                                        "Value": "null"
+                                      }
+                                    }
+                                  ],
+                                  [
+                                    {
+                                      "Literal": {
+                                        "Value": "'Jarred Long'"
+                                      }
+                                    }
+                                  ],
+                                  [
+                                    {
+                                      "Literal": {
+                                        "Value": "'Isaiah Bruce'"
+                                      }
+                                    }
+                                  ]
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "salesperson_key"
+                        }
+                      },
+                      "Property": "Name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "salesperson_key"
+                        }
+                      },
+                      "Property": "Name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "55b0978850c3090a8090": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "1b1c942905a25a13d685",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "orders"
+                        }
+                      },
+                      "Property": "consignee_state"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+              "objects": {}
+            }
+          },
+          "6aa5042a0d07c63dd20b": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "b7e29e8b9bbecb76c9a0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "orders"
+                        }
+                      },
+                      "Property": "consignee_city_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+              "objects": {}
+            }
+          },
+          "6cbc5b03070a08581023": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "3f00496f5a2204eed346",
+                  "type": "Categorical",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "j",
+                        "Entity": "job_history",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "In": {
+                            "Expressions": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "j"
+                                    }
+                                  },
+                                  "Property": "Division"
+                                }
+                              }
+                            ],
+                            "Values": [
+                              [
+                                {
+                                  "Literal": {
+                                    "Value": "'Development Team'"
+                                  }
+                                }
+                              ],
+                              [
+                                {
+                                  "Literal": {
+                                    "Value": "'Development Team Sales'"
+                                  }
+                                }
+                              ],
+                              [
+                                {
+                                  "Literal": {
+                                    "Value": "'Logistics Advisor Sales (Formerly Henry)'"
+                                  }
+                                }
+                              ],
+                              [
+                                {
+                                  "Literal": {
+                                    "Value": "'Sr. Logistics Advisor Sales'"
+                                  }
+                                }
+                              ]
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "job_history"
+                        }
+                      },
+                      "Property": "Division"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9d434600bb3006a4c577",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "m",
+                        "Entity": "measures_",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 2,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "m"
+                                  }
+                                },
+                                "Property": "Current Sales"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "1L"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "job_history"
+                        }
+                      },
+                      "Property": "Division"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8143e60249332d9c3015": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "ecebad03ed2b06172015",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+              "objects": {}
+            }
+          },
+          "c52bd2e40948286050aa": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "464df9ad178d52943c37",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "orders"
+                        }
+                      },
+                      "Property": "shipper_city_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+              "objects": {}
+            }
+          },
+          "6f5a99231000071add04": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "9eb1ec0d10d0225c39de": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "a0aedc53369cbe0015c5": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "6b9a307d640a9368d645": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "8551122a9b0985d3142a": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "e517c6c7251bca979486": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "6c7984950690297c048a": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "1fca8374ce2617d85039",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Current Sales"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "86f6346d15d371d7451e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5f31f0ec008a72a07e50",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "432d4437ed3399a97815",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered YTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a7819ce791767086aaee",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered YTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "915f8dd308c02ed42d85",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Schema": "extension",
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered YTD YOY Variance"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e7ad9d387c0321d8ebdd",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4dd24929508408153590",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "dc96954d520272d3584e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin YTD YOY Variance"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "99b329bfa47d6cc215d8": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "004928702053b08b170d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ddceec36e382107c4a46",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "lane"
+                        }
+                      },
+                      "Property": "lane"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "25bda55da0d67245a690",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fb0c7167583964a6a6ba",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b2499ea97432ac66047a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5c2038f1e63a307cbca4",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Count of Orders Covered MTD MOM diff"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a47ad3fd74792cd33970",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD 1YA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "7e43b9819ce0b0b46e47",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD 1MA"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "2bc1d8ac82e012196db7",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "aa0ca258ac3b711b5e05",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "measures_"
+                        }
+                      },
+                      "Property": "Margin MTD MOM Variance"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "customer"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "fcd55ee8b6605622e82e": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          }
+        },
+        "visualContainerGroups": {
+          "0bc398332500080a278a": {
+            "isHidden": true
+          },
+          "1840ce4376b56a3bae6b": {
+            "isHidden": true
+          },
+          "4692e0c03402e2272933": {
+            "isHidden": false
+          },
+          "a6bfd8676191a5ea6018": {
+            "isHidden": false
+          },
+          "d1f50a64103de2c9b64b": {
+            "isHidden": false,
+            "children": {
+              "17ebe9138b7c5a43d963": {
+                "isHidden": true
+              }
+            }
+          },
+          "e410e67f3e2e2761d826": {
+            "isHidden": true
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

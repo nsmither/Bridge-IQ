@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainerMobileState/2.2.0/schema.json",
+  "position": {
+    "x": 0,
+    "y": 1881,
+    "z": 13000,
+    "height": 336,
+    "width": 324,
+    "tabOrder": 10000
+  },
+  "objects": {
+    "subTotals": [],
+    "values": [],
+    "columnTotal": [],
+    "columnWidth": [
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "69.39342708631733D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Margin"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "103.15065350823303D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "customer.name"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "54.61454899501764D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Count of Orders Covered"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "62.25255788552458D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Margin Per Order"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "65.88077852998752D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Margin %"
+        }
+      }
+    ],
+    "columnHeaders": []
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "e24f73762752da7c8378",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1000,
+    "height": 144,
+    "width": 368,
+    "tabOrder": 3000
+  },
+  "visualGroup": {
+    "displayName": "Lane Buttons",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "d1f50a64103de2c9b64b"
+}

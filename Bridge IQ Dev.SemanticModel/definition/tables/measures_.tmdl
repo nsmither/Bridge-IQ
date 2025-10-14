@@ -774,7 +774,7 @@ table measures_
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: ecc086f7-a6d4-4e6c-b109-8712f700c70f
 
-	measure 'Last Behavior Date' = MAX(behaviors[Behavior Date])
+	measure 'Last Behavior Date' = MAX(odoo[x_studio_last_activity_date])
 		formatString: Short Date
 		displayFolder: CRM Measures
 		lineageTag: 9de3f64a-8161-47da-8c52-3bc6064fa7f6
@@ -853,7 +853,26 @@ table measures_
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: d2fccc3b-65d6-4647-81ff-6908557e9873
 
-	measure 'Days since last Salesperson Update' = DATEDIFF(MAX(odoo[x_studio_last_salesperson_update]),TODAY(),DAY)
+	measure 'Days since last Salesperson Update' = ```
+			
+			VAR last_salesperson_update = 
+			  IF(
+			    MIN(odoo[x_studio_last_salesperson_update])=BLANK(),
+			    Date(2025,07,26),
+			    MIN(odoo[x_studio_last_salesperson_update])
+			  )
+			
+			
+			VAR dslu = 
+			    DATEDIFF(
+			        last_salesperson_update,
+			        TODAY(),
+			        DAY
+			    )
+			
+			RETURN
+			dslu
+			```
 		formatString: 0
 		displayFolder: CRM Measures
 		lineageTag: cfbd7a5c-e9af-4629-a9f9-e6c37a23dfdc
@@ -862,15 +881,16 @@ table measures_
 			
 			CALCULATE(
 			    DISTINCTCOUNT(odoo[id]),
-			    FILTER(odoo,odoo[At Risk]="TRUE"),
+			    FILTER(odoo,odoo[At Risk]=TRUE()),
 			    FILTER(odoo,odoo[user_id]<>BLANK()),
 			    USERELATIONSHIP(odoo[user_id],salesperson_key[Name])
 			)
 			
 			```
-		formatString: 0
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: 81759a22-7856-45de-82cd-a68019cf40d6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Count CRM Ids (inactive relationship)' =
 			
@@ -1574,7 +1594,7 @@ table measures_
 			ifs
 			```
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: c9b4ce9d-b212-41d3-8b92-8640f89d3c41
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1592,7 +1612,7 @@ table measures_
 			)
 			```
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: badea8ac-28cc-460b-a63e-6565293c1147
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1605,7 +1625,7 @@ table measures_
 			)
 			```
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: bd03f181-fcb7-4159-a884-b0f22ca9120d
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1618,7 +1638,7 @@ table measures_
 			)
 			```
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: 859ed77a-a9f4-47cf-8d90-c0e605509945
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1654,7 +1674,7 @@ table measures_
 			```
 		formatString: 0
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: 9dd2a6a1-196e-440d-98f0-051f14a34a0d
 
 	measure 'Commission Deductions' =
@@ -1662,7 +1682,7 @@ table measures_
 			[Commission Rate]-[Standard Commission Rate]
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: 682e22f9-9fba-446e-a8af-6f98fd661e0c
 
 	measure 'Strike One Commissions' =
@@ -1677,7 +1697,7 @@ table measures_
 			    IF([Margin]>=5000,(([Margin]-4999)*.09),BLANK()
 			))))))))
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: 3a6d5e4e-dee1-482e-ae8a-c2f5f1e2d3ea
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1694,7 +1714,7 @@ table measures_
 			    IF([Margin]>=5000,(([Margin]-4999)*.085),BLANK()
 			))))))))
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: 44a287f0-0edd-4fd5-9f43-6b7afba79847
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1712,7 +1732,7 @@ table measures_
 			))))))))
 			```
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: cabdbae3-add5-48f2-8a1d-09951fbaa9da
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1731,12 +1751,12 @@ table measures_
 			```
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: a456ebca-df22-469c-8fc2-7f49c5e4cbb3
 
 	measure '10% Commission' = [Margin]*.1
 		isHidden
-		displayFolder: Comission Measures
+		displayFolder: Commission Measures
 		lineageTag: a841ab9d-e69e-4100-82e5-e7cdf98e2bc9
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1938,10 +1958,8 @@ table measures_
 			
 			CALCULATE(
 			    COUNTROWS(behaviors),
-			    USERELATIONSHIP(
-			        'Calendar'[Date],
-			        behaviors[Behavior Date]
-			    )
+			    USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			    USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
 			)
 		formatString: 0
 		displayFolder: Behavior Measures
@@ -1953,7 +1971,9 @@ table measures_
 			    DISTINCTCOUNT(
 			        behaviors[id]),
 			        OR(behaviors[mail_activity_type_id]="Mapping Call",behaviors[mail_activity_type_id]="Follow-up Call"),
-			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			        USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			        )
 		displayFolder: Behavior Measures
 		lineageTag: 456954b7-ee5c-414f-a67a-5ec7da1c1ab6
 
@@ -1965,7 +1985,9 @@ table measures_
 			    DISTINCTCOUNT(
 			        behaviors[id]),
 			        OR(behaviors[mail_activity_type_id]="New Conversation", behaviors[mail_activity_type_id]="Follow-up Conversation"),
-			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]))
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			        USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			        )
 		displayFolder: Behavior Measures
 		lineageTag: 219a4caa-5ce5-42b8-9d6d-dfdb80243cf8
 
@@ -1988,6 +2010,1932 @@ table measures_
 			"Margin" & " $" & [Margin]
 		displayFolder: Calendar Measures
 		lineageTag: 88c5f783-a053-456e-807d-8d4f7ab0a9da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'number of stops' = ```
+			
+			VAR TWO = 2
+			VAR PU = 
+			    CALCULATE(
+			        IF(
+			            ISBLANK(MIN(orders[extra_pickups])),
+			            BLANK(),
+			            MIN(orders[extra_pickups])
+			        )
+			    )
+			VAR DEL = 
+			    CALCULATE(
+			        IF(
+			            ISBLANK(MIN(orders[extra_deliveries])),
+			            BLANK(),
+			            MIN(orders[extra_deliveries])
+			        )
+			    )
+			VAR ADD_ = 
+			    IF(
+			        ISBLANK(PU) || ISBLANK(DEL),
+			        BLANK(),
+			        PU + DEL
+			    )
+			RETURN 
+			    IF(
+			        ISBLANK(ADD_),
+			        BLANK(),
+			        TWO + ADD_
+			    )
+			```
+		displayFolder: Movement Measures
+		lineageTag: f60214ae-d7db-4ebf-9a15-4be840feb66e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Pay Periods' = COUNTROWS(pay_dates)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 337e9763-be58-4b62-a4fe-ec191135f7f7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Base Salary' = [Count of Pay Periods]*SUM(payee[regular_rate])
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 6057f534-ca24-46d1-8850-e0fc47c03113
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Customer 25%' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR new_customer_25 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, customer[id] IN new_or_revived_customers),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.25
+			    )
+			
+			RETURN
+			    new_customer_25
+			
+			```
+		displayFolder: Commission Measures\Commission Testing\New Customers
+		lineageTag: 649ef139-867b-4a7f-82c6-cc7c14687580
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure billed_freight_charges =
+			
+			CALCULATE(
+			    SUMX(
+			        orders,
+			        orders[freight_charge]
+			    ),
+			    REMOVEFILTERS('Calendar'[Date]),
+			    USERELATIONSHIP(
+			        'Calendar'[Date],
+			        orders[bill_date]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 338497e9-1111-428e-a988-1be8249c77bb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure billed_other_charges =
+			
+			CALCULATE(
+			    SUMX(orders,orders[other_charges_total]),
+			    REMOVEFILTERS('Calendar'[Date]),
+			    USERELATIONSHIP('Calendar'[Date],orders[bill_date])
+			)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 439ceef2-bd1b-49ea-abf8-40f97316718d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure billed_revenue =
+			
+			CALCULATE(
+			    [billed_freight_charges]+[billed_other_charges],
+			    REMOVEFILTERS('Calendar'[Date]),
+			    USERELATIONSHIP(
+			        'Calendar'[Date],
+			        orders[bill_date]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 72c4b068-466b-4adc-a268-bdd85378fa4b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure billed_driver_extra_pay =
+			
+			CALCULATE(
+			    SUMX(
+			        driver_extra_pay,
+			        driver_extra_pay[amount]
+			    ),
+			    REMOVEFILTERS('Calendar'[Date]),
+			    USERELATIONSHIP(
+			          'Calendar'[Date],
+			         orders[bill_date]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 06656103-3618-4cb3-ab61-15b6d0439701
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure billed_override_pay_amt =
+			
+			CALCULATE(
+			    SUMX(
+			        movements,
+			        movements[override_pay_amt]
+			    ),
+			    REMOVEFILTERS('Calendar'[Date]),
+			    USERELATIONSHIP(
+			        'Calendar'[Date],
+			        orders[bill_date]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 658d6f8a-5b0d-48fb-bb25-9487c06d6da9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure billed_carrier_pay =
+			
+			CALCULATE(
+			    [billed_driver_extra_pay]+[billed_override_pay_amt],
+			    REMOVEFILTERS('Calendar'[Date]),
+			    USERELATIONSHIP(
+			        'Calendar'[Date],
+			        orders[bill_date]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 25f890f2-c3ac-407d-a6a9-25188848cebe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure billed_margin =
+			
+			CALCULATE(
+			    [billed_revenue]-[billed_carrier_pay],
+			    REMOVEFILTERS('Calendar'[Date]),
+			    USERELATIONSHIP(
+			        'Calendar'[Date],
+			        orders[bill_date]
+			    ),
+			    movements[status] <> "A" && movements[status] <> "V"
+			)
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: 28092e06-c75e-4d1c-9874-e29c28833843
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 20% No Transitions' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR established_customer_20 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, NOT customer[id] IN new_or_revived_customers),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.20
+			    )
+			
+			RETURN
+			established_customer_20
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\Without Transitions
+		lineageTag: e9223a71-56f7-47ad-8848-c9f23a456272
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission 20% 25% no transitions' = [Established Customer 20% No Transitions]+[New Customer 25%]
+		displayFolder: Commission Measures\Commission Testing\TQL Commission Without Transitions
+		lineageTag: cfaf705c-0e25-46e6-b91d-91e1c422055a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TQL Total Comp without transitions' =
+			
+			SUMX(
+			    salesperson_key,
+			    IF([Total Commission 20% 25% no transitions]>[Base Salary],
+			        [Total Commission 20% 25% no transitions],
+			        [Base Salary]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\TQL Commission Without Transitions
+		lineageTag: f4fd5cef-70d0-454c-a51b-73063a340674
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TQL Total Comp without transitions as % of billed margin' = DIVIDE([TQL Total Comp without transitions],[billed_margin])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Commission Measures\Commission Testing\TQL Commission Without Transitions
+		lineageTag: 7d4b9443-7ad8-496e-aa73-b6f57800d356
+
+	measure 'Transitioned Account' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR transitioned_account_ids = 
+			    SELECTCOLUMNS(
+			        transitioned_accounts,
+			        "customer_id",transitioned_accounts[Customer ID]
+			    )
+			
+			VAR transitioned_account_excluding_new = 
+			    COUNTROWS(
+			        EXCEPT(transitioned_account_ids,new_or_revived_customers)
+			    )
+			
+			RETURN
+			transitioned_account_excluding_new
+			```
+		displayFolder: Commission Measures\Commission Testing\Transitioned Accounts
+		lineageTag: d04d37a6-e279-4e8a-a6e3-fbf788ff5010
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transitioned Customers 15%' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR transitioned_account_ids = 
+			    SELECTCOLUMNS(
+			        transitioned_accounts,
+			        "customer_id",transitioned_accounts[Customer ID]
+			    )
+			
+			VAR transitioned_account_excluding_new = 
+			        EXCEPT(transitioned_account_ids,new_or_revived_customers)
+			
+			VAR transitioned_accounts_15 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer,customer[id] IN transitioned_account_excluding_new)
+			        ),
+			        [billed_margin]*.15
+			    )
+			    
+			
+			RETURN
+			transitioned_accounts_15
+			```
+		displayFolder: Commission Measures\Commission Testing\Transitioned Accounts
+		lineageTag: 778caf87-c00a-4495-a2a8-fe0aa032357e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 20% with transistions' = ```
+			
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    DISTINCT(EXCEPT(customer_ty, prior_customers))
+			
+			VAR transitioned_account_ids = 
+			    DISTINCT(
+			        SELECTCOLUMNS(
+			            transitioned_accounts,
+			            "customer_id", transitioned_accounts[Customer ID]
+			        )
+			    )
+			
+			VAR established_customers =
+			    INTERSECT(customer_ty, prior_customers)
+			
+			VAR established_non_transitioned_non_new =
+			    EXCEPT(
+			        EXCEPT(established_customers, transitioned_account_ids),
+			        new_or_revived_customers
+			    )
+			
+			VAR established_customer_20 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, customer[id] IN established_non_transitioned_non_new),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.20
+			    )
+			
+			RETURN
+			established_customer_20
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\With Transitions
+		lineageTag: b4552502-8be1-4acb-893c-7bdb34d0e700
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission 15% 20% 25% with transistions' = [Transitioned Customers 15%]+[Established Customer 20% with transistions]+[New Customer 25%]
+		displayFolder: Commission Measures\Commission Testing\TQL Commission With Transitions
+		lineageTag: 204d32a6-7cd7-4a53-9f3f-1e6a7d801604
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TQL Total Comp with transitions' =
+			
+			SUMX(
+			    salesperson_key,
+			    IF([Total Commission 15% 20% 25% with transistions]>[Base Salary],
+			        [Total Commission 15% 20% 25% with transistions],
+			        [Base Salary]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\TQL Commission With Transitions
+		lineageTag: 862f3f98-1323-48ca-8f60-12905b0f1860
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 15% No Transitions' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR established_customer_15 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, NOT customer[id] IN new_or_revived_customers),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.15
+			    )
+			
+			RETURN
+			established_customer_15
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\Without Transitions
+		lineageTag: e31a31be-e9f9-4cbc-8759-2b5a14b348f2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Customer 20%' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR new_customer_20 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, customer[id] IN new_or_revived_customers),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.20
+			    )
+			
+			RETURN
+			    new_customer_20
+			```
+		displayFolder: Commission Measures\Commission Testing\New Customers
+		lineageTag: 38d5edf8-db8a-497a-863e-a6368f98cfb7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Base + Commission 15% 20% Without Transitions' = [Established Customer 15% No Transitions]+[New Customer 20%]
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 15% 20% without tramsitinos
+		lineageTag: c2a2cf9c-a65a-4bb7-9c8e-da76c7e3bcc6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comp Base + Commission 15% 20% Without Transitions' = ```
+			[Total Commission 15% 20% 25% with transistions]+[Base Salary]
+			
+			```
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 15% 20% without tramsitinos
+		lineageTag: 55f37264-52a2-409c-ab53-888d338cff89
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transitioned Customers 10%' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR transitioned_account_ids = 
+			    SELECTCOLUMNS(
+			        transitioned_accounts,
+			        "customer_id",transitioned_accounts[Customer ID]
+			    )
+			
+			VAR transitioned_account_excluding_new = 
+			        EXCEPT(transitioned_account_ids,new_or_revived_customers)
+			
+			VAR transitioned_accounts_10 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer,customer[id] IN transitioned_account_excluding_new)
+			        ),
+			        [billed_margin]*.10
+			    )
+			    
+			
+			RETURN
+			transitioned_accounts_10
+			```
+		displayFolder: Commission Measures\Commission Testing\Transitioned Accounts
+		lineageTag: 0013dd0f-557c-4851-a103-379a64dd9996
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 15% with transistions' = ```
+			
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    DISTINCT(EXCEPT(customer_ty, prior_customers))
+			
+			VAR transitioned_account_ids = 
+			    DISTINCT(
+			        SELECTCOLUMNS(
+			            transitioned_accounts,
+			            "customer_id", transitioned_accounts[Customer ID]
+			        )
+			    )
+			
+			VAR established_customers =
+			    INTERSECT(customer_ty, prior_customers)
+			
+			VAR established_non_transitioned_non_new =
+			    EXCEPT(
+			        EXCEPT(established_customers, transitioned_account_ids),
+			        new_or_revived_customers
+			    )
+			
+			VAR established_customer_15 =
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, customer[id] IN established_non_transitioned_non_new),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.15
+			    )
+			
+			RETURN
+			established_customer_15
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\With Transitions
+		lineageTag: 33a28d4b-fc9f-4169-9e88-9af97f9f2299
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Base + Commission 10% 15% 20% With Transitions' = [Transitioned Customers 10%]+[Established Customer 15% with transistions]+[New Customer 20%]
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 10% 15% 20% with tramsitinos
+		lineageTag: bae3fac8-2e9a-4683-9e94-18fb8a0630ab
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comp Base + Commission 10% 15% 20% With Transitions' = [Total Commission Base + Commission 10% 15% 20% With Transitions]+[Base Salary]
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 10% 15% 20% with tramsitinos
+		lineageTag: 35a7891d-b690-4bbe-a351-7efe343d42fc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Standard Commission Rate Bassed on Bill Date' = ```
+			
+			    IF([billed_margin]>=200000,44626+(([Margin]-199999)*.3),
+			    IF([billed_margin]>=150000,30876+(([Margin]-149999)*.275),
+			    IF([billed_margin]>=100000,18376+(([Margin]-99999)*.25),
+			    IF([billed_margin]>=50000,7126+(([Margin]-49999)*.225),
+			    IF([billed_margin]>=20000,1875+(([Margin]-19999)*.175),
+			    IF([billed_margin]>=15000,1125+(([Margin]-14999)*.15),
+			    IF([billed_margin]>=10000,500+(([Margin]-9999)*.125),
+			    IF([billed_margin]>=5000,(([Margin]-4999)*.1),BLANK()
+			    ))))))))
+			```
+		displayFolder: Commission Measures\Commission Testing\Current Plan Based on Bill Date
+		lineageTag: 3cc151a7-c2dc-44dd-830a-bccd1c1276ff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Rate Based on Bill Date' =
+			
+			SUMX(
+			    salesperson_key,
+			    [Standard Commission Rate Bassed on Bill Date]
+			)
+		displayFolder: Commission Measures\Commission Testing\Current Plan Based on Bill Date
+		lineageTag: 49939347-b329-4d06-9ec4-fbe0e458e6ed
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Current Comp Based on Bill Date' =
+			
+			SUMX(
+			    salesperson_key,
+			    [Total Commission Rate Based on Bill Date]+[Base Salary]
+			)
+		displayFolder: Commission Measures\Commission Testing\Current Plan Based on Bill Date
+		lineageTag: 4af2031b-ff96-4031-b0d8-33e928b0334e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'LTL 10%' =
+			
+			CALCULATE(
+			    [billed_margin]*.10,
+			    orders[order_type_id]="LTL"
+			)
+		displayFolder: Commission Measures\Commission Testing
+		lineageTag: cc681c0a-6e91-4755-a1fb-6d07912a9e05
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Customer 20% Excluding LTL' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR new_customer_20 =
+			    CALCULATE(
+			        SUMX(
+			            CALCULATETABLE(
+			                FILTER(customer, customer[id] IN new_or_revived_customers),
+			                REMOVEFILTERS(salesperson_key)
+			            ),
+			        [billed_margin] * 0.20
+			        ),
+			        orders[order_type_id]<>"LTL"
+			    )
+			
+			RETURN
+			    new_customer_20
+			```
+		displayFolder: Commission Measures\Commission Testing\New Customers
+		lineageTag: 4c058050-6938-48ba-a9b1-a2d9a96acad3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Customer 25% excluding LTL' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR new_customer_25 =
+			CALCULATE( 
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, customer[id] IN new_or_revived_customers),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.25
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			
+			RETURN
+			    new_customer_25
+			```
+		displayFolder: Commission Measures\Commission Testing\New Customers
+		lineageTag: 2df412e2-551f-4f48-8ea6-dc30180b0bc7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 15% with transistions Excluding LTL' = ```
+			
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    DISTINCT(EXCEPT(customer_ty, prior_customers))
+			
+			VAR transitioned_account_ids = 
+			    DISTINCT(
+			        SELECTCOLUMNS(
+			            transitioned_accounts,
+			            "customer_id", transitioned_accounts[Customer ID]
+			        )
+			    )
+			
+			VAR established_customers =
+			    INTERSECT(customer_ty, prior_customers)
+			
+			VAR established_non_transitioned_non_new =
+			    EXCEPT(
+			        EXCEPT(established_customers, transitioned_account_ids),
+			        new_or_revived_customers
+			    )
+			
+			VAR established_customer_15 =
+			CALCULATE(
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, customer[id] IN established_non_transitioned_non_new),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.15
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			
+			RETURN
+			established_customer_15
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\With Transitions
+		lineageTag: 80c3c12b-a510-4ec5-ae0d-e31ea046048d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 20% with transistions excluding LTL' = ```
+			
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    DISTINCT(EXCEPT(customer_ty, prior_customers))
+			
+			VAR transitioned_account_ids = 
+			    DISTINCT(
+			        SELECTCOLUMNS(
+			            transitioned_accounts,
+			            "customer_id", transitioned_accounts[Customer ID]
+			        )
+			    )
+			
+			VAR established_customers =
+			    INTERSECT(customer_ty, prior_customers)
+			
+			VAR established_non_transitioned_non_new =
+			    EXCEPT(
+			        EXCEPT(established_customers, transitioned_account_ids),
+			        new_or_revived_customers
+			    )
+			
+			VAR established_customer_20 =
+			CALCULATE(
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, customer[id] IN established_non_transitioned_non_new),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.20
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			
+			RETURN
+			established_customer_20
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\With Transitions
+		lineageTag: 89f40587-96bb-4cc8-9534-812e62dff238
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 15% No Transitions excluding LTL' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR established_customer_15 =
+			CALCULATE(
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, NOT customer[id] IN new_or_revived_customers),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.15
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			
+			RETURN
+			established_customer_15
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\Without Transitions
+		lineageTag: cf863745-085a-4e24-83e1-03de559fadc5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Established Customer 20% No Transitions excluding LTL' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR established_customer_20 =
+			CALCULATE(
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer, NOT customer[id] IN new_or_revived_customers),
+			            REMOVEFILTERS(salesperson_key)
+			        ),
+			        [billed_margin] * 0.20
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			
+			RETURN
+			established_customer_20
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\Without Transitions
+		lineageTag: 2ae5ff31-3dbc-4952-9619-b8a9a83e0f67
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transitioned Customers 10% excluding LTL' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR transitioned_account_ids = 
+			    SELECTCOLUMNS(
+			        transitioned_accounts,
+			        "customer_id",transitioned_accounts[Customer ID]
+			    )
+			
+			VAR transitioned_account_excluding_new = 
+			        EXCEPT(transitioned_account_ids,new_or_revived_customers)
+			
+			VAR transitioned_accounts_10 =
+			CALCULATE(
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer,customer[id] IN transitioned_account_excluding_new)
+			        ),
+			        [billed_margin]*.10
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			    
+			
+			RETURN
+			transitioned_accounts_10
+			```
+		displayFolder: Commission Measures\Commission Testing\Transitioned Accounts
+		lineageTag: 39919cd6-89d4-45eb-9cc9-9ded51c0c762
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transitioned Customers 15% exluding LTL' = ```
+			
+			VAR customer_ty =
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] >= MIN('Calendar'[Date]) - 365
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR prior_customers = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS('Calendar'),
+			        REMOVEFILTERS(salesperson_key),
+			        USERELATIONSHIP('Calendar'[Date], orders[bill_date]),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date] <= MIN('Calendar'[Date]) - 365 &&
+			            'Calendar'[Date] > MIN('Calendar'[Date]) - 730
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			
+			VAR new_or_revived_customers =        
+			    EXCEPT(customer_ty, prior_customers)
+			
+			VAR transitioned_account_ids = 
+			    SELECTCOLUMNS(
+			        transitioned_accounts,
+			        "customer_id",transitioned_accounts[Customer ID]
+			    )
+			
+			VAR transitioned_account_excluding_new = 
+			        EXCEPT(transitioned_account_ids,new_or_revived_customers)
+			
+			VAR transitioned_accounts_15 =
+			CALCULATE(
+			    SUMX(
+			        CALCULATETABLE(
+			            FILTER(customer,customer[id] IN transitioned_account_excluding_new)
+			        ),
+			        [billed_margin]*.15
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			    
+			
+			RETURN
+			transitioned_accounts_15
+			```
+		displayFolder: Commission Measures\Commission Testing\Transitioned Accounts
+		lineageTag: ad340578-f4fd-4865-b4a9-584df3cc6e39
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission 20% 25% no transitions with LTL at 10%' = [Established Customer 20% No Transitions excluding LTL]+[New Customer 25% excluding LTL]+[LTL 10%]
+		displayFolder: Commission Measures\Commission Testing\TQL Commission Without Transitions
+		lineageTag: 0ed4e2b4-8912-4083-ab36-b62698b8c61a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TQL Total Comp without transitions with LTL at 10%' =
+			
+			SUMX(
+			    salesperson_key,
+			    IF([Total Commission 20% 25% no transitions with LTL at 10%]>[Base Salary],
+			        [Total Commission 20% 25% no transitions with LTL at 10%],
+			        [Base Salary]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\TQL Commission Without Transitions
+		lineageTag: f24d5160-80c6-471f-80d8-53213cbf905c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission 15% 20% 25% with transistions With LTL at 10%' = [Transitioned Customers 15% exluding LTL]+[Established Customer 20% with transistions excluding LTL]+[New Customer 25% excluding LTL]+[LTL 10%]
+		displayFolder: Commission Measures\Commission Testing\TQL Commission With Transitions
+		lineageTag: 2eace0a7-e44e-4e87-b52f-676823b0b66b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TQL Total Comp with transitions With LTL at 10%' =
+			
+			SUMX(
+			    salesperson_key,
+			    IF([Total Commission 15% 20% 25% with transistions With LTL at 10%]>[Base Salary],
+			        [Total Commission 15% 20% 25% with transistions With LTL at 10%],
+			        [Base Salary]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\TQL Commission With Transitions
+		lineageTag: 160078ec-2e4a-42c7-bbc4-911cffed93f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Base + Commission 15% 20% Without Transitions With LTL at 10%' = [Established Customer 15% No Transitions excluding LTL]+[New Customer 20% Excluding LTL]+[LTL 10%]
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 15% 20% without tramsitinos
+		lineageTag: 4c7e87db-ea41-4220-8cc1-45b617f347dc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comp Base + Commission 15% 20% Without Transitions with LTL at 10%' = [Total Commission Base + Commission 15% 20% Without Transitions With LTL at 10%]+[Base Salary]
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 15% 20% without tramsitinos
+		lineageTag: 3ecd319b-bae8-4620-93bd-819a2841397a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Base + Commission 10% 15% 20% With Transitions with LTL at 10%' = [Transitioned Customers 10% excluding LTL]+[Established Customer 15% with transistions Excluding LTL]+[New Customer 20% Excluding LTL]+[LTL 10%]
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 10% 15% 20% with tramsitinos
+		lineageTag: d39e184b-e702-4d1e-a56f-3b802eb28c45
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comp Base + Commission 10% 15% 20% With Transitions wit LTL at 10%' = [Total Commission Base + Commission 10% 15% 20% With Transitions with LTL at 10%]+[Base Salary]
+		displayFolder: Commission Measures\Commission Testing\Base + Commissions 10% 15% 20% with tramsitinos
+		lineageTag: be25e7ba-8a9a-4662-9164-fc0d26b80623
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Load Count Points' =
+			
+			SUMX(
+			    ffl_lineup,
+			    SWITCH(
+			        RELATED(salesperson_key[Division]),
+			        "Development Team", CALCULATE([Count of orders covered]) * 0.4,
+			        "Logistics Advisor Sales (Formerly Henry)", CALCULATE([Count of orders covered]) * 0.2,
+			        "Sr. Logistics Advisor Sales", CALCULATE([Count of orders covered]) * 0.1,
+			        BLANK()
+			    )
+			)
+		displayFolder: FFL
+		lineageTag: 9ef2b37a-765e-49c5-be9d-00860ee84d40
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ffl Margin per Week Goal' =
+			
+			SUMX(
+			    FILTER(
+			        ffl_lineup,
+			        VAR Division = RELATED(salesperson_key[Division])
+			        RETURN
+			            Division IN {
+			                "Sr. Logistics Advisor Sales",
+			                "Logistics Advisor Sales (Formerly Henry)",
+			                "Development Team"
+			            }
+			    ),
+			    VAR MinDate = MIN('calendar'[Date])
+			    VAR MaxDate = MAX('calendar'[Date])
+			    VAR CountOfMonths = DISTINCTCOUNT('calendar'[MonthNmb])
+			
+			    -- First Month
+			    VAR StartMinMonth = CALCULATE(STARTOFMONTH('calendar'[Date]), 'calendar'[Date] = MinDate)
+			    VAR EndMinMonth = CALCULATE(ENDOFMONTH('calendar'[Date]), 'calendar'[Date] = MinDate)
+			    VAR WorkDaysMinMonth = NETWORKDAYS(StartMinMonth, EndMinMonth, 1, observed_holidays)
+			    VAR WorkDaysFirstHalf = NETWORKDAYS(MinDate, EndMinMonth, 1, observed_holidays)
+			    VAR MarginGoalMinMonth = CALCULATE([Margin Goal], 'calendar'[Date] = StartMinMonth)
+			    VAR MPWGMinMonth = DIVIDE(MarginGoalMinMonth, WorkDaysMinMonth)
+			    VAR MPWGFirstHalf = MPWGMinMonth * WorkDaysFirstHalf
+			
+			    -- Second Month
+			    VAR StartMaxMonth = CALCULATE(STARTOFMONTH('calendar'[Date]), 'calendar'[Date] = MaxDate)
+			    VAR EndMaxMonth = CALCULATE(ENDOFMONTH('calendar'[Date]), 'calendar'[Date] = MaxDate)
+			    VAR WorkDaysMaxMonth = NETWORKDAYS(StartMaxMonth, EndMaxMonth, 1, observed_holidays)
+			    VAR WorkDaysSecondHalf = NETWORKDAYS(StartMaxMonth, MaxDate, 1, observed_holidays)
+			    VAR MarginGoalMaxMonth = CALCULATE([Margin Goal], 'calendar'[Date] = StartMaxMonth)
+			    VAR MPWGMaxMonth = DIVIDE(MarginGoalMaxMonth, WorkDaysMaxMonth)
+			    VAR MPWGSecondHalf = MPWGMaxMonth * WorkDaysSecondHalf
+			
+			    -- Single Month
+			    VAR TotalWorkDays = NETWORKDAYS(MinDate, MaxDate, 1, observed_holidays)
+			    VAR MPWGSingleMonth = MPWGMinMonth * TotalWorkDays
+			
+			    -- Final Logic
+			    VAR TwoMonthGoal = MPWGFirstHalf + MPWGSecondHalf
+			    VAR ResultIfTwoMonths = IF(CountOfMonths = 2, TwoMonthGoal, MPWGSingleMonth)
+			
+			    VAR SalespersonName = RELATED(salesperson_key[Name])
+			
+			    RETURN
+			    IF(
+			        ISBLANK(SalespersonName),
+			        BLANK(),
+			        ResultIfTwoMonths
+			    )
+			)
+		displayFolder: FFL
+		lineageTag: e20ef051-e89e-4908-a950-1b0f449bbf3e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL weekly margin goal points' = ```
+			
+			SUMX(
+			    FILTER(
+			        ffl_lineup,
+			        VAR Division = RELATED(salesperson_key[Division])
+			        RETURN
+			            Division IN {
+			                "Sr. Logistics Advisor Sales",
+			                "Logistics Advisor Sales (Formerly Henry)",
+			                "Development Team"
+			            }
+			    ),
+			    VAR ActualMargin = [Margin]  -- Replace with your actual margin measure
+			    VAR GoalMargin = [ffl Margin per Week Goal]  -- The measure we built earlier
+			
+			    RETURN
+			        IF(ActualMargin > GoalMargin, 5, 0)
+			)
+			
+			```
+		displayFolder: FFL
+		lineageTag: 813ae9c2-5fba-4ef1-b74d-7d938485364c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Weekly Margin Goal 1.5 Points' =
+			
+			SUMX(
+			    FILTER(
+			        ffl_lineup,
+			        VAR Division = RELATED(salesperson_key[Division])
+			        RETURN
+			            Division IN {
+			                "Sr. Logistics Advisor Sales",
+			                "Logistics Advisor Sales (Formerly Henry)",
+			                "Development Team"
+			            }
+			    ),
+			    VAR ActualMargin = [Margin]  -- Replace with your actual margin measure
+			    VAR GoalMargin = [ffl Margin per Week Goal]  -- The goal measure
+			
+			    RETURN
+			        IF(ActualMargin > GoalMargin * 1.5, 5, 0)
+			)
+		displayFolder: FFL
+		lineageTag: ac44a8c9-3a95-498a-9d35-247a3116093a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total FFL Points' = [Load Count Points]+[FFL weekly margin goal points]+[FFL Weekly Margin Goal 1.5 Points]+[FFL 7 Convos a day points]+ [FFL New/Revived Points]+[FFL Daily Margin Goal Points]+[FFL Days over Best Maring Day Points]+[FFL Days over Best Load Count Day Points]+[FFL KARE Check Points]
+		displayFolder: FFL
+		lineageTag: 9ed5970d-e463-422d-938b-91f7feb78652
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Days with Over 7 Conversations' = ```
+			
+			SUMX(
+			    FILTER(
+			        ffl_lineup,
+			        VAR Division = RELATED(salesperson_key[Division])
+			        RETURN
+			            Division IN {
+			                "Sr. Logistics Advisor Sales",
+			                "Logistics Advisor Sales (Formerly Henry)",
+			                "Development Team"
+			            }
+			    ),
+			    CALCULATE(
+			        COUNTROWS(
+			            FILTER(
+			                VALUES('calendar'[Date]),
+			                [FFL Conversations] >= 7
+			            )
+			        )
+			    )
+			)
+			
+			```
+		displayFolder: FFL
+		lineageTag: f7078ec7-9d6d-41cc-83b6-8760490fa4a5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Conversations' = ```
+			
+			VAR new_conversations = 
+			    CALCULATE(
+			        DISTINCTCOUNT(
+			            behaviors[id]),
+			            behaviors[mail_activity_type_id]="New Conversation",
+			            USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			            USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			    )
+			
+			VAR follow_up_conversations = 
+			    CALCULATE(
+			        DISTINCTCOUNT(
+			            behaviors[id]),
+			            behaviors[mail_activity_type_id]="Follow-up Conversation",
+			            USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			            USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			    )
+			
+			VAR customer_conversations = 
+			    CALCULATE(
+			        DISTINCTCOUNT(
+			            behaviors[id]),
+			            behaviors[mail_activity_type_id]="Customer Conversation",
+			            USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			            USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			    )
+			
+			VAR conversations = new_conversations+follow_up_conversations+customer_conversations
+			
+			RETURN
+			conversations
+			```
+		displayFolder: FFL
+		lineageTag: e732377b-10e7-4468-986c-b25ca87e5d38
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL 7 Convos a day points' = [Days with Over 7 Conversations]*3
+		displayFolder: FFL
+		lineageTag: b7cfca05-6b53-4d9c-99d2-7100d829dc4c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL New/Revived' = ```
+			
+			VAR customers_tp = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			VAR customers_last_90 = 
+			    CALCULATETABLE(
+			        VALUES(orders[customer_id]),
+			        REMOVEFILTERS(salesperson_key),
+			        FILTER(
+			            ALL('Calendar'[Date]),
+			            'Calendar'[Date]>=MIN('Calendar'[Date])-90 &&
+			            'Calendar'[Date]<MIN('Calendar'[Date])
+			        )
+			    )
+			
+			VAR new_revived_90 = 
+			    EXCEPT(
+			        customers_tp,
+			        customers_last_90
+			    )
+			
+			VAR count_customers = 
+			        COUNTROWS(new_revived_90)
+			
+			RETURN
+			count_customers
+			```
+		displayFolder: FFL
+		lineageTag: 6dea4340-54f8-4477-ab73-95cac2e2d747
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL New/Revived Points' = [FFL New/Revived]*7
+		formatString: 0
+		displayFolder: FFL
+		lineageTag: 600c55c8-3246-41a8-b020-5652b02ec01e
+
+	measure 'ffl Daily Margin Goal' =
+			
+			
+			SUMX(
+			    FILTER(
+			        ffl_lineup,
+			        VAR Division = RELATED(salesperson_key[Division])
+			        RETURN
+			            Division IN {
+			                "Sr. Logistics Advisor Sales",
+			                "Logistics Advisor Sales (Formerly Henry)",
+			                "Development Team"
+			            }
+			    ),
+			    VAR CurrentDate = SELECTEDVALUE('calendar'[Date])
+			
+			    VAR StartOfMonthFFL =
+			        CALCULATE(
+			            MIN('calendar'[Date]),
+			            DATESBETWEEN('calendar'[Date], STARTOFMONTH('calendar'[Date]), ENDOFMONTH('calendar'[Date]))
+			        )
+			
+			    VAR EndOfMonthFFL =
+			        CALCULATE(
+			            MAX('calendar'[Date]),
+			            DATESBETWEEN('calendar'[Date], STARTOFMONTH('calendar'[Date]), ENDOFMONTH('calendar'[Date]))
+			        )
+			
+			    VAR WorkDaysInMonth = NETWORKDAYS(StartOfMonthFFL, EndOfMonthFFL, 1, observed_holidays)
+			
+			    VAR MarginGoal = CALCULATE([Margin Goal], 'calendar'[Date] = StartOfMonthFFL)
+			
+			    VAR DailyGoal = DIVIDE(MarginGoal, WorkDaysInMonth)
+			
+			    VAR IsWorkDay = NETWORKDAYS(CurrentDate, CurrentDate, 1, observed_holidays) > 0
+			
+			    RETURN IF(IsWorkDay, DailyGoal, BLANK())
+			)
+		displayFolder: FFL
+		lineageTag: baffc42b-b6aa-4a04-987a-5d600dd3315f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Days Over Daily Margin Goal' =
+			
+			
+			SUMX(
+			    FILTER(
+			        ffl_lineup,
+			        VAR Division = RELATED(salesperson_key[Division])
+			        RETURN
+			            Division IN {
+			                "Sr. Logistics Advisor Sales",
+			                "Logistics Advisor Sales (Formerly Henry)",
+			                "Development Team"
+			            }
+			    ),
+			    CALCULATE(
+			        COUNTROWS(
+			            FILTER(
+			                VALUES('Calendar'[Date]),
+			                NETWORKDAYS('Calendar'[Date], 'Calendar'[Date], 1, observed_holidays) > 0
+			                    && [Margin] > [ffl Daily Margin Goal]
+			            )
+			        )
+			    )
+			)
+		displayFolder: FFL
+		lineageTag: ba1ead9a-70ed-4c5b-af91-68071326f666
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Daily Margin Goal Points' =
+			
+			SUMX(
+			    FILTER(
+			        ffl_lineup,
+			        VAR Division = RELATED(salesperson_key[Division])
+			        RETURN
+			            Division IN {
+			                "Sr. Logistics Advisor Sales",
+			                "Logistics Advisor Sales (Formerly Henry)",
+			                "Development Team"
+			            }
+			    ),
+			    CALCULATE(
+			        SUMX(
+			            FILTER(
+			                VALUES('Calendar'[Date]),
+			                NETWORKDAYS('Calendar'[Date], 'Calendar'[Date], 1, observed_holidays) > 0
+			                    && [Margin] > [ffl Daily Margin Goal]
+			            ),
+			            1
+			        )
+			    )
+			)
+		displayFolder: FFL
+		lineageTag: b5db89e5-9915-4a59-84ba-1bffb74f231b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Best Margin Day of the Year' = ```
+			
+			VAR MarginTable =
+			    ADDCOLUMNS(
+			        SUMMARIZE(
+			            CALCULATETABLE(
+			                orders,
+			                REMOVEFILTERS('Calendar'[Date])  -- Ensures full year is considered
+			            ),
+			            salesperson_key[Name],
+			            'Calendar'[Date]
+			        ),
+			        "Margin", [Margin]
+			    )
+			
+			VAR FilterYear =
+			    FILTER(
+			        MarginTable,
+			        YEAR('Calendar'[Date]) = YEAR(TODAY())
+			    )
+			
+			VAR filter_year_before_week = 
+			    FILTER(FilterYear,
+			    'Calendar'[Date]<MIN('Calendar'[Date])
+			    )
+			
+			RETURN
+			    MAXX(filter_year_before_week, [Margin])
+			```
+		displayFolder: FFL
+		lineageTag: 3cd60707-f3b1-4733-b263-6458def3cd4d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Days Over Best Load Count Day (Base)' =
+			
+			VAR BestLoadCount = [FFL Best Load Count Day of the Year]
+			
+			VAR DailyLoadCountTable =
+			    ADDCOLUMNS(
+			        SUMMARIZE(
+			            orders,
+			            orders[salesperson_id],
+			            orders[shipper_sched_early_date]
+			        ),
+			        "DailyLoadCount", CALCULATE([Count of orders covered])
+			    )
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        DailyLoadCountTable,
+			        [DailyLoadCount] > BestLoadCount
+			    ),
+			    1
+			)
+		displayFolder: FFL
+		lineageTag: 621b7011-ae78-4fd9-bc5e-6a7f2cb7bfb8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Days over Best Maring Day Points' = [Days Over Best Margin Day (Rollup)]*7
+		displayFolder: FFL
+		lineageTag: 6f1c1ff3-896b-4374-a971-00c6aa9b052c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Days Over Best Margin Day (Rollup)' =
+			
+			IF(
+			    ISINSCOPE(orders[salesperson_id]),
+			    [Days Over Best Margin Day (Base)],
+			    SUMX(
+			        VALUES(orders[salesperson_id]),
+			        CALCULATE([Days Over Best Margin Day (Base)])
+			    )
+			)
+		displayFolder: FFL
+		lineageTag: af52ed39-fa7b-4fe0-aa62-33c6be6e50ba
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Best Load Count Day of the Year' = ```
+			
+			VAR OrderTable =
+			    ADDCOLUMNS(
+			        SUMMARIZE(
+			            CALCULATETABLE(
+			                orders,
+			                REMOVEFILTERS('Calendar'[Date])  -- Ensures full year is considered
+			            ),
+			            salesperson_key[Name],
+			            'Calendar'[Date]
+			        ),
+			        "count_of_orders", [Count of orders covered]
+			    )
+			
+			VAR FilterYear =
+			    FILTER(
+			        OrderTable,
+			        YEAR('Calendar'[Date]) = YEAR(TODAY())
+			    )
+			
+			VAR filter_year_before_week = 
+			    FILTER(FilterYear,
+			    'Calendar'[Date]<MIN('Calendar'[Date])
+			    )
+			
+			RETURN
+			    MAXX(filter_year_before_week, [Count of orders covered])
+			```
+		displayFolder: FFL
+		lineageTag: c57a003a-b752-4291-a767-591107155035
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Days Over Best Load Count Day (Rollup)' =
+			
+			IF(
+			    ISINSCOPE(orders[salesperson_id]),
+			    [Days Over Best Load Count Day (Base)],
+			    SUMX(
+			        VALUES(orders[salesperson_id]),
+			        CALCULATE([Days Over Best Load Count Day (Base)])
+			    )
+			)
+		displayFolder: FFL
+		lineageTag: 82e30fa8-0e98-4840-9dc7-ed8fc06bf5de
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Days Over Best Margin Day (Base)' =
+			
+			VAR BestLoadCount = [FFL Best Margin Day of the Year]
+			
+			VAR DailyMarginTable =
+			    ADDCOLUMNS(
+			        SUMMARIZE(
+			            orders,
+			            orders[salesperson_id],
+			            orders[shipper_sched_early_date]
+			        ),
+			        "DailyMargin", CALCULATE([Margin])
+			    )
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        DailyMarginTable,
+			        [DailyMargin] > BestLoadCount
+			    ),
+			    1
+			)
+		displayFolder: FFL
+		lineageTag: d4e030b9-998a-4f48-b3bb-6aa1377d7677
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Days over Best Load Count Day Points' = [Days Over Best Load Count Day (Rollup)]*7
+		displayFolder: FFL
+		lineageTag: fce481d9-8d6a-47f3-9a61-97059474a208
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL KARE Checks' = ```
+			
+			VAR KARE_Check = 
+			    CALCULATE(
+			        DISTINCTCOUNT(
+			            behaviors[id]),
+			            behaviors[mail_activity_type_id]="KARE Check",
+			            USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			            USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			    )
+			
+			
+			RETURN
+			KARE_Check
+			```
+		displayFolder: FFL
+		lineageTag: 42024ccf-2514-49c0-a965-9097d1b8e1e2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL KARE Check Points' = ```
+			
+			VAR IndividualPoints = 
+			    MIN([FFL KARE Checks] * 3, 6)
+			
+			RETURN
+			IF(
+			    ISINSCOPE(salesperson_key[ID]),  -- Adjust to your actual salesperson column
+			    IndividualPoints,
+			    SUMX(
+			        VALUES(salesperson_key[ID]),
+			        CALCULATE(MIN([FFL KARE Checks] * 3, 6))
+			    )
+			)
+			```
+		displayFolder: FFL
+		lineageTag: 00f4728d-7f37-4f3c-8641-943f24c58611
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average FFL Points by Salesperson (Unfiltered)' =
+			
+			AVERAGEX(
+			    ALL(salesperson_key[ID]),  -- Removes filters on salesperson
+			    [Total FFL Points]
+			)
+		displayFolder: FFL
+		lineageTag: 981372de-af31-42da-ba21-53202db69bc5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'NPC FFL Points Final' =
+			
+			VAR IsNPC = SELECTEDVALUE(ffl_lineup[employee_name]) = "NPC"
+			
+			VAR PointComponents =
+			    [Load Count Points] +
+			    [FFL weekly margin goal points] +
+			    [FFL Weekly Margin Goal 1.5 Points] +
+			    [FFL 7 Convos a day points] +
+			    [FFL New/Revived Points] +
+			    [FFL Daily Margin Goal Points] +
+			    [FFL Days over Best Maring Day Points] +
+			    [FFL Days over Best Load Count Day Points] +
+			    [FFL KARE Check Points]
+			
+			VAR NPCScore =
+			    CALCULATE(
+			        AVERAGEX(
+			            VALUES(ffl_lineup[employee_name]),
+			            CALCULATE(
+			                [Load Count Points] +
+			                [FFL weekly margin goal points] +
+			                [FFL Weekly Margin Goal 1.5 Points] +
+			                [FFL 7 Convos a day points] +
+			                [FFL New/Revived Points] +
+			                [FFL Daily Margin Goal Points] +
+			                [FFL Days over Best Maring Day Points] +
+			                [FFL Days over Best Load Count Day Points] +
+			                [FFL KARE Check Points]
+			            )
+			        ),
+			        REMOVEFILTERS(ffl_lineup[employee_name])
+			    )
+			
+			RETURN
+			IF(
+			    IsNPC,
+			    NPCScore,
+			    PointComponents
+			)
+		displayFolder: FFL
+		lineageTag: 6a8e8490-71d9-41d8-b219-6443b13642f1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL total points final' = SUMX(VALUES(ffl_lineup[employee_name]), [NPC FFL Points Final])
+		displayFolder: FFL
+		lineageTag: 6dd292c2-99e2-4c12-a86f-fd17d5fc7c4e
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

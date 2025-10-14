@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainerMobileState/2.2.0/schema.json",
+  "position": {
+    "x": 0,
+    "y": 1307,
+    "z": 9000,
+    "height": 272,
+    "width": 324,
+    "tabOrder": 6000
+  },
+  "objects": {
+    "subTotals": [],
+    "values": [],
+    "columnHeaders": [],
+    "rowHeaders": [],
+    "columnWidth": [
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "145.29471174568573D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Count of Behaviors"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "77.48066381857059D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Behavior Goal"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "92.51063749198406D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Behavior Progress"
+        }
+      }
+    ]
+  }
+}

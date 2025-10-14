@@ -128,6 +128,14 @@ table employees
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Office Payee ID'
+		dataType: string
+		lineageTag: f02999c2-e903-441e-bc30-0aaed1688e2a
+		summarizeBy: none
+		sourceColumn: Office Payee ID
+
+		annotation SummarizationSetBy = Automatic
+
 	partition employees = m
 		mode: import
 		source =

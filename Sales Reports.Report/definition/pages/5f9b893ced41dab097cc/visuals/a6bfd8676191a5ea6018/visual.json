@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "a6bfd8676191a5ea6018",
+  "position": {
+    "x": 16,
+    "y": 304,
+    "z": 4000,
+    "height": 1216,
+    "width": 1664
+  },
+  "visualGroup": {
+    "displayName": "Total / Customer View",
+    "groupMode": "ScaleMode"
+  }
+}

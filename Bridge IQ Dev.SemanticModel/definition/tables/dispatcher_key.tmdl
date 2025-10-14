@@ -138,6 +138,14 @@ table dispatcher_key
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Office Payee ID'
+		dataType: string
+		lineageTag: 7f1c53cb-5658-4eb9-b28f-d1ab0b7e37da
+		summarizeBy: none
+		sourceColumn: Office Payee ID
+
+		annotation SummarizationSetBy = Automatic
+
 	partition dispatcher_key = m
 		mode: import
 		source =

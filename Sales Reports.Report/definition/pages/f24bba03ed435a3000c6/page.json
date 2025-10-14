@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "f24bba03ed435a3000c6",
+  "displayName": "What's Most Important Now",
+  "displayOption": "FitToPage",
+  "height": 1210,
+  "width": 1565,
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "188L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "8acb2ae20a4a61009cd7",
+      "target": "34a8fa8f8094caa0141d",
+      "type": "DataFilter"
+    }
+  ]
+}

@@ -364,76 +364,124 @@ table odoo
 
 	column 'At Risk' = ```
 			
+			
 			VAR Working = 
-			    IF([Days since Last Salesperson Update]<7,"False",
-			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
-			    IF([Days Since Last Stage Update]>90,"TRUE",
-			    IF([Days Over Due]>14,"TRUE",
-			    IF([Days since last Behaivor]>60,"TRUE",
-			    "FALSE")))))
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Since Last Stage Update]>90,TRUE(),
+			                 IF([Days Over Due]>14,TRUE(),
+			                    IF([Days since last Behaivor]>60,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			     )
+			
 			
 			VAR NoForNow = 
-			    IF([Days since Last Salesperson Update]<7,"FALSE",
-			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
-			    IF([Days Since Last Stage Update]>90,"TRUE",
-			    IF([Days Over Due]>14,"TRUE",
-			    IF([Days since last Behaivor]>90,"TRUE",
-			    "FALSE")))))
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Since Last Stage Update]>90,TRUE(),
+			                IF([Days Over Due]>14,TRUE(),
+			                    IF([Days since last Behaivor]>90,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			    )
 			
 			VAR Qualified = 
-			    IF([Days since Last Salesperson Update]<7,"FALSE",
-			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
-			    IF([Days Since Last Stage Update]>60,"TRUE",
-			    IF([Days Over Due]>14,"TRUE",
-			    IF([Days since last Behaivor]>60,"TRUE",
-			    "FALSE")))))
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Since Last Stage Update]>60,TRUE(),
+			                IF([Days Over Due]>14,TRUE(),
+			                    IF([Days since last Behaivor]>60,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			    )
 			VAR Quoted = 
-			    IF([Days since Last Salesperson Update]<7,"FALSE",
-			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
-			    IF([Days Since Last Stage Update]>60,"TRUE",
-			    IF([Days Over Due]>14,"TRUE",
-			    IF([Days since last Behaivor]>60,"TRUE",
-			    "FALSE")))))
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Since Last Stage Update]>60,TRUE(),
+			                IF([Days Over Due]>14,TRUE(),
+			                    IF([Days since last Behaivor]>60,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			    )
 			
 			VAR CreditApp = 
-			    IF([Days since Last Salesperson Update]<7,"FALSE",
-			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
-			    IF([Days Since Last Stage Update]>60,"TRUE",
-			    IF([Days Over Due]>14,"TRUE",
-			    IF([Days since last Behaivor]>60,"TRUE",
-			    "FALSE")))))
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Since Last Stage Update]>60,TRUE(),
+			                IF([Days Over Due]>14,TRUE(),
+			                    IF([Days since last Behaivor]>60,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			    )
 			
 			VAR OneToThree = 
-			    IF([Days since Last Salesperson Update]<7,"FALSE",
-			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
-			    IF([Days Over Due]>14,"TRUE",
-			    IF([Days since Last Shipment]>120,"TRUE",
-			    IF([Days since last Behaivor]>60,"TRUE",
-			    "FALSE")))))
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Over Due]>14,TRUE(),
+			                IF([Days since Last Shipment]>120,TRUE(),
+			                    IF([Days since last Behaivor]>60,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			    )
 			
 			VAR Customer = 
-			    IF([Days since Last Salesperson Update]<7,"FALSE",
-			    IF(odoo[activity_date_deadline]=BLANK(),"TRUE",
-			    IF([Days Over Due]>14,"TRUE",
-			    IF([Days since Last Shipment]>120,"TRUE",
-			    IF([Days since last Behaivor]>60,"TRUE",
-			    "FALSE")))))
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Over Due]>14,TRUE(),
+			                IF([Days since Last Shipment]>120,TRUE(),
+			                    IF([Days since last Behaivor]>60,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			    )
 			
 			VAR AtRisk =
 			    IF(odoo[x_res_partner_prospecting_stage]="Working",Working,
-			    IF(odoo[x_res_partner_prospecting_stage]="No For Now",NoForNow,
-			    IF(odoo[x_res_partner_prospecting_stage]="Qualified",Qualified,
-			    IF(odoo[x_res_partner_prospecting_stage]="Quoted",Quoted,
-			    IF(odoo[x_res_partner_prospecting_stage]="Credit App",CreditApp,
-			    IF(odoo[x_res_partner_prospecting_stage]="1-3 Loads",OneToThree,
-			    IF(odoo[x_res_partner_prospecting_stage]="Customer",Customer,
-			    "FALSE")))))))
+			        IF(odoo[x_res_partner_prospecting_stage]="No For Now",NoForNow,
+			            IF(odoo[x_res_partner_prospecting_stage]="Qualified",Qualified,
+			                IF(odoo[x_res_partner_prospecting_stage]="Quoted",Quoted,
+			                    IF(odoo[x_res_partner_prospecting_stage]="Credit App",CreditApp,
+			                        IF(odoo[x_res_partner_prospecting_stage]="1-3 Loads",OneToThree,
+			                            IF(odoo[x_res_partner_prospecting_stage]="Customer",Customer,
+			                            FALSE()
+			                            )
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
 			
 			RETURN
 			AtRisk
 			```
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
 		lineageTag: 82604928-3850-4845-85b4-b81d0021dbed
 		summarizeBy: none
+
+		changedProperty = DataType
 
 		annotation SummarizationSetBy = Automatic
 

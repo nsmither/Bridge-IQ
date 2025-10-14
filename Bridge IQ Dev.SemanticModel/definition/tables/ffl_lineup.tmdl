@@ -1,0 +1,41 @@
+table ffl_lineup
+	lineageTag: 3a4ae469-f750-4726-99f1-1b1124d36f78
+
+	column employee_name
+		dataType: string
+		lineageTag: a18e44b5-66e2-4ff5-8f87-b4d4a9e2a71b
+		summarizeBy: none
+		sourceColumn: employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team
+		dataType: string
+		lineageTag: ebc00f06-1628-4a45-9a81-a282d92f2e8b
+		summarizeBy: none
+		sourceColumn: team
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_team
+		dataType: string
+		lineageTag: b5b51750-f417-48f2-9bc9-5ce6f902cb6a
+		summarizeBy: none
+		sourceColumn: sub_team
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ffl_lineup = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/FFL/FFL%20TEAMS.xlsx"), null, true),
+				    ffl_teams_Table = Source{[Item="ffl_teams",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(ffl_teams_Table,{{"employee_name", type text}, {"team", type text}, {"sub_team", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

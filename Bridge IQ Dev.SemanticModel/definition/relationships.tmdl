@@ -232,6 +232,7 @@ relationship 30fc2257-db24-5b7f-69f4-4cac84f7474f
 	toColumn: salesperson_key.Name
 
 relationship 4356cecc-3a49-50e0-30e2-1296be23ba81
+	isActive: false
 	fromColumn: behaviors.author_id
 	toColumn: salesperson_key.Name
 
@@ -506,4 +507,56 @@ relationship ddc8f246-c76c-54e0-5c0c-39f727272fb3
 	isActive: false
 	fromColumn: odoo.x_studio_last_salesperson_update
 	toColumn: Calendar.Date
+
+relationship be9c3dc5-2aec-a8f0-5848-6470a6b11efb
+	crossFilteringBehavior: bothDirections
+	fromColumn: salesperson_key.'Office Payee ID'
+	toColumn: payee.id
+
+relationship 1208bac4-6ed5-463a-8939-6a7787e783f0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: pay_dates.'Pay Date'
+	toColumn: LocalDateTable_071b01ee-fb93-4e02-b088-9fa5349dda26.Date
+
+relationship 3b3aa9a8-d457-a172-9241-cef771bcfb7d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: pay_dates.'Pay Date'
+
+relationship 879f14dd-d5dd-1a20-6883-163cfc600193
+	isActive: false
+	fromColumn: payee.hire_date
+	toColumn: Calendar.Date
+
+relationship 5bec0b74-7982-1e31-92ed-f205c7312005
+	isActive: false
+	fromColumn: payee.last_raise_date
+	toColumn: Calendar.Date
+
+relationship a7feffdd-13bb-f279-2a53-4ff12f8d6a50
+	isActive: false
+	fromColumn: payee.termination_date
+	toColumn: Calendar.Date
+
+relationship 42957be7-ec5b-6365-a288-446a62599801
+	isActive: false
+	fromColumn: transitioned_accounts.'Change Date'
+	toColumn: Calendar.Date
+
+relationship 14031265-facc-05ae-0dd1-60159e4ef59c
+	fromColumn: transitioned_accounts.'Customer ID'
+	toColumn: customer.id
+
+relationship eac4758b-44f6-8cc2-f3d9-c8ae1d60543d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: ffl_lineup.employee_name
+	toColumn: salesperson_key.Name
+
+relationship 07ce6f0f-1118-dee8-2b5c-b5fdb83d3cb2
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: ffl_lineup.employee_name
+	toColumn: 'Employee Photos'.EmployeeName
 

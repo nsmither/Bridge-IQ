@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainerMobileState/2.2.0/schema.json",
+  "position": {
+    "x": 0,
+    "y": 1681,
+    "z": 16000,
+    "height": 419,
+    "width": 324,
+    "tabOrder": 16000
+  },
+  "objects": {
+    "columnHeaders": [],
+    "values": [],
+    "total": [],
+    "grid": [],
+    "columnWidth": [
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "134.3760696207105D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Calendar.Date"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "167.6389370085202D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Total Revenue"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "147.43808430587933D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Margin"
+        }
+      }
+    ]
+  }
+}

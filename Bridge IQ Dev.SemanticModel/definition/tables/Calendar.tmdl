@@ -5,6 +5,8 @@ table Calendar
 	measure 'Calendar General' = FORMAT(MIN('Calendar'[Date]),"General Number")
 		lineageTag: 060c64c1-9345-4648-a1bf-10a163a011b3
 
+		changedProperty = IsHidden
+
 	column Date
 		dataType: dateTime
 		isKey
@@ -12,6 +14,8 @@ table Calendar
 		lineageTag: 8c8cd0ec-bc3a-497c-8890-727a55c10611
 		summarizeBy: none
 		sourceColumn: Date
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -24,6 +28,8 @@ table Calendar
 		summarizeBy: none
 		sourceColumn: Start of Month
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
@@ -35,6 +41,8 @@ table Calendar
 		summarizeBy: sum
 		sourceColumn: Year
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column Quarter
@@ -42,6 +50,8 @@ table Calendar
 		lineageTag: f47f69c1-ff67-4e2f-89d8-5290e3b12366
 		summarizeBy: none
 		sourceColumn: Quarter
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -51,6 +61,8 @@ table Calendar
 		lineageTag: 24fe33b4-7940-4d34-a726-e55a50ba02eb
 		summarizeBy: sum
 		sourceColumn: QuarterNmb
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -63,6 +75,8 @@ table Calendar
 
 		changedProperty = SortByColumn
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column MonthAbv
@@ -74,6 +88,8 @@ table Calendar
 
 		changedProperty = SortByColumn
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column MonthNmb
@@ -82,6 +98,8 @@ table Calendar
 		lineageTag: 9e2df293-236d-4167-aa97-27899fa85f79
 		summarizeBy: sum
 		sourceColumn: MonthNmb
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -92,6 +110,8 @@ table Calendar
 		summarizeBy: sum
 		sourceColumn: Week of Year
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column 'Week of Month'
@@ -100,6 +120,8 @@ table Calendar
 		lineageTag: ec41ace3-8053-410f-b7e1-a0aa2140a693
 		summarizeBy: sum
 		sourceColumn: Week of Month
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -110,6 +132,8 @@ table Calendar
 		summarizeBy: sum
 		sourceColumn: Day of Year
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column 'Day of Month'
@@ -119,6 +143,8 @@ table Calendar
 		summarizeBy: sum
 		sourceColumn: Day of Month
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column 'Day of Week'
@@ -127,6 +153,8 @@ table Calendar
 		lineageTag: ccc72e4a-d3ac-464d-ac0b-84de114d234d
 		summarizeBy: sum
 		sourceColumn: Day of Week
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -139,6 +167,8 @@ table Calendar
 
 		changedProperty = SortByColumn
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column 'Is Past'
@@ -147,6 +177,8 @@ table Calendar
 		lineageTag: 6d1b380f-221b-4d89-aaf7-b3bc2dbd9e53
 		summarizeBy: none
 		sourceColumn: Is Past
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -159,6 +191,8 @@ table Calendar
 
 		changedProperty = SortByColumn
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column 'Day of Quarter'
@@ -167,6 +201,8 @@ table Calendar
 		summarizeBy: none
 		sourceColumn: Day of Quarter
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 	column 'Week / Year'
@@ -174,6 +210,8 @@ table Calendar
 		lineageTag: a34020b1-473b-4db1-b090-a14e7fcca899
 		summarizeBy: none
 		sourceColumn: Week / Year
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -184,6 +222,8 @@ table Calendar
 		summarizeBy: none
 		sourceColumn: Start of Week
 
+		changedProperty = IsHidden
+
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
@@ -193,6 +233,8 @@ table Calendar
 		lineageTag: 0a766627-4d8f-4506-95fe-93c2871d045d
 		summarizeBy: none
 		sourceColumn: Slicer Date
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -214,6 +256,8 @@ table Calendar
 		level Date
 			lineageTag: b7962dec-cb7b-4b56-af30-deaa84a0e2c2
 			column: Date
+
+		changedProperty = IsHidden
 
 	partition Calendar = m
 		mode: import
@@ -254,6 +298,8 @@ table Calendar
 				    #"Added Custom1" = Table.AddColumn(#"Inserted Start of Week", "Slicer Date", each if [Date] = Date.From(DateTime.LocalNow()) then "today" else [Date])
 				in
 				    #"Added Custom1"
+
+	changedProperty = IsHidden
 
 	annotation PBI_NavigationStepName = Navigation
 

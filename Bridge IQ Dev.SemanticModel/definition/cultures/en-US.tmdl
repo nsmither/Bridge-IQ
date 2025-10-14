@@ -20017,7 +20017,19 @@ cultureInfo en-US
 			          "ConceptualProperty": "mail_activity_type_id"
 			        }
 			      },
-			      "State": "Generated"
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Behavior Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    },
 			    "measures_.customers_served": {
 			      "Definition": {
@@ -20056,19 +20068,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "name"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Company Name": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "crm.x_studio_mcleod_code": {
 			      "Definition": {
@@ -20077,19 +20077,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "x_studio_mcleod_code"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "McLeod Code": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "crm.activity_date_deadline": {
 			      "Definition": {
@@ -20098,19 +20086,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "activity_date_deadline"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Next Behavior Deadline": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "crm.date_open": {
 			      "Definition": {
@@ -20119,19 +20095,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "date_open"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Last Salesperson Change": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    }
 			  },
 			  "Relationships": {

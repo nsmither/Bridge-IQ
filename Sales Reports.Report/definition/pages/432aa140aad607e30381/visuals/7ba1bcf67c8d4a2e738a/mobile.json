@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainerMobileState/2.2.0/schema.json",
+  "position": {
+    "x": 0,
+    "y": 2121,
+    "z": 18000,
+    "height": 557,
+    "width": 324,
+    "tabOrder": 18000
+  },
+  "objects": {
+    "columnHeaders": [],
+    "values": [],
+    "total": [],
+    "columnWidth": [
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "138.6883979153739D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "salesperson_key.Name"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "140.9770840660486D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Total Revenue"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "127.82208446411968D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Margin"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "131.00086928648125D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Margin %"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "84.64786530366808D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "measures_.Count of orders covered"
+        }
+      }
+    ],
+    "grid": []
+  }
+}

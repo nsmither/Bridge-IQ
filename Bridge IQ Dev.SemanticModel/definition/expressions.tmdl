@@ -113,7 +113,7 @@ expression mcleod_historic_orders =
 
 	annotation PBI_ResultType = Table
 
-expression RefreshCutOffDate = #datetime(2025, 4, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+expression RefreshCutOffDate = #datetime(2025, 7, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: af39c097-cda3-4307-8194-af7487559d9a
 	queryGroup: Parameters
 
@@ -121,7 +121,7 @@ expression RefreshCutOffDate = #datetime(2025, 4, 1, 0, 0, 0) meta [IsParameterQ
 
 	annotation PBI_ResultType = DateTime
 
-expression MovementCutOffNumber = 166584 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
+expression MovementCutOffNumber = 192267 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
 	lineageTag: 7b1d95af-7d84-440e-87b8-e089fa08fe15
 	queryGroup: Parameters
 
@@ -697,6 +697,20 @@ expression Contacts =
 		    #"Replaced Errors6"
 	lineageTag: a86aa7ea-8ec8-4b2b-9536-14c46f5da6d7
 	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression off_payee =
+		let
+		    Source = Sql.Database("bl-appdb", "lme"),
+		    dbo_off_payee = Source{[Schema="dbo",Item="off_payee"]}[Data],
+		    #"Filtered Rows" = Table.SelectRows(dbo_off_payee, each ([office_paymethod] = "S")),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"regular_rate", "id"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 490c4ab9-bc43-499e-a0a2-034ce13df49e
 
 	annotation PBI_NavigationStepName = Navigation
 

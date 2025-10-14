@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "d1f50a64103de2c9b64b",
+  "position": {
+    "x": 1296,
+    "y": 32,
+    "z": 1000,
+    "height": 144,
+    "width": 368,
+    "tabOrder": 5000
+  },
+  "visualGroup": {
+    "displayName": "Lane View",
+    "groupMode": "ScaleMode"
+  }
+}

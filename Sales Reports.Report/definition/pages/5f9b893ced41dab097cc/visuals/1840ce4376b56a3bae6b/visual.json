@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "1840ce4376b56a3bae6b",
+  "position": {
+    "x": 24,
+    "y": 312,
+    "z": 6000,
+    "height": 1216,
+    "width": 1664,
+    "tabOrder": 28001
+  },
+  "visualGroup": {
+    "displayName": "To Date / Customer View",
+    "groupMode": "ScaleMode"
+  },
+  "isHidden": true
+}

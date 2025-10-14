@@ -1,0 +1,916 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/reportExtension/1.0.0/schema.json",
+  "name": "extension",
+  "entities": [
+    {
+      "name": "measures_",
+      "measures": [
+        {
+          "name": "Avg Customers Served per day",
+          "dataType": "Double",
+          "expression": "DIVIDE(SUMX(GROUPBY('calendar','calendar'[Date]),[Customers Served]),[Working Days])",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Customers Served"
+              },
+              {
+                "entity": "measures_",
+                "name": "Working Days"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Avg order count per day",
+          "dataType": "Double",
+          "expression": "DIVIDE([Count of Orders Covered],[Working days Elapsed])",
+          "formatString": "0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              },
+              {
+                "entity": "measures_",
+                "name": "Working days Elapsed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Customers Served 1YA",
+          "dataType": "Integer",
+          "expression": "\nVAR DATE_ = \nCALCULATE(\n    [Customers Served],\n    DATEADD('calendar'[Date],-1,YEAR),\n    USERELATIONSHIP(customer[salesperson_id],salesperson_key[McLeod Salesperson Code]),\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\n\nRETURN\nDATE_",
+          "formatString": "0",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Customers Served"
+              }
+            ]
+          }
+        },
+        {
+          "name": "New / Revived Bill-too's",
+          "dataType": "Double",
+          "expression": "\n\nVar customer_tm = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        movements[status]<>\"A\" && movements[status]<> \"V\"\n    )\n\nVar prior_customers = \nCALCULATETABLE(\n    VALUES(orders[customer_id]),\n    FILTER(ALL('Calendar'),\n     'Calendar'[Date] >= min('Calendar'[Date])-90 &&\n     'Calendar'[Date] <= MIN('Calendar'[Date])\n    ),\n    REMOVEFILTERS(salesperson_key[Name]),\n    movements[status]<>\"A\" && movements[status]<>\"V\"\n)\n\nVAR old_return = COUNTROWS(EXCEPT(customer_tm,prior_customers))\n\nReturn\nold_return",
+          "displayFolder": "CRM Measures"
+        },
+        {
+          "name": "New / Revived Bill-too's 1YA",
+          "dataType": "Double",
+          "expression": "CALCULATE([New / Revived Bill-too's],DATEADD('calendar'[Date],-1,YEAR))",
+          "displayFolder": "CRM Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "New / Revived Bill-too's"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin Today",
+          "dataType": "Double",
+          "expression": "\nCALCULATE([Margin],\n    'calendar'[Date]=TODAY(),\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])\n)",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Available Margin",
+          "dataType": "Double",
+          "expression": "\nVAR avaialable_rev = \nCALCULATE(\n    SUM(orders[freight_charge]),\n    movements[status]=\"A\",\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),\n    NOT(CONTAINSSTRING(orders[id],\"S\"))\n)\nVar available_margin = avaialable_rev*[Margin %]\n\nReturn\navailable_margin",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin %"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Available",
+          "dataType": "Double",
+          "expression": "\nCALCULATE(\n    COUNT(orders[id]),\n    movements[Status]=\"A\",\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),\n    NOT(CONTAINSSTRING(orders[id],\"S\"))\n)",
+          "displayFolder": "1 Report Measures"
+        },
+        {
+          "name": "Working days Elapsed 1",
+          "dataType": "Double",
+          "expression": "\r\nIf(DAY(TODAY())=1,0,\r\n    NETWORKDAYS(\r\n        MIN('Calendar'[Date]),\r\n        TODAY()-1,\r\n        1,\r\n        observed_holidays))",
+          "displayFolder": "1 Report Measures"
+        },
+        {
+          "name": "Count of Customers First Load",
+          "dataType": "Double",
+          "expression": "\n    CALCULATE(\n        DISTINCTCOUNT(orders[customer_id]),\n        FILTER(customer,[First_Load]>=MIN('calendar'[Date])),\n        FILTER(customer,[First_Load]<=MAX('calendar'[Date]))\n    )\n",
+          "displayFolder": "CRM Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "First_Load"
+              }
+            ]
+          }
+        },
+        {
+          "name": "First_Load",
+          "dataType": "Double",
+          "expression": "\n    CALCULATE(\n        MIN(orders[shipper_sched_early_date]),\n        REMOVEFILTERS(salesperson_key[Name]),\n        ALL('Calendar'),\n        movements[status]<>\"A\" && movements[status]<>\"V\"\n    )\n",
+          "displayFolder": "CRM Measures"
+        },
+        {
+          "name": "Revived Bill too's",
+          "dataType": "Double",
+          "expression": "\r\nVAR revived = [New / Revived Bill-too's]-[Count of Customers First Load]\r\n\r\nVAR ifs = IF(revived<=0,BLANK(),revived)\r\n\r\nRETURN\r\nifs",
+          "displayFolder": "CRM Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "New / Revived Bill-too's"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Count of Customers First Load"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Leads Passed",
+          "dataType": "Double",
+          "expression": "\nCALCULATE(\n    DISTINCTCOUNT(crm[id]),\n        USERELATIONSHIP(crm[x_studio_originally_passed_to],salesperson_key[Name]),    \n        USERELATIONSHIP(crm[x_studio_lead_passed_date],'Calendar'[Date])\n    )",
+          "displayFolder": "CRM Measures"
+        },
+        {
+          "name": "Leads Closed",
+          "dataType": "Double",
+          "expression": "\nCALCULATE(\n    DISTINCTCOUNT(crm[x_studio_mcleod_code]),\n    FILTER(crm,[First Load After Lead Passed]>=MIN('calendar'[Date])),\n    FILTER(crm,[First Load After Lead Passed]<=MAX('calendar'[Date])),\n    crm[x_studio_originally_passed_to]=MIN(salesperson_key[Name])\n)",
+          "displayFolder": "CRM Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "First Load After Lead Passed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Bill too's Added",
+          "dataType": "Double",
+          "expression": "\r\nCALCULATE(\r\n    DISTINCTCOUNT(customer[id]),\r\n    USERELATIONSHIP(customer[salesperson_id],salesperson_key[McLeod Salesperson Code]),\r\n    USERELATIONSHIP(customer[entered_date],'Calendar'[Date])\r\n)\r\n",
+          "displayFolder": "CRM Measures"
+        },
+        {
+          "name": "Margin % Goal Variance",
+          "dataType": "Double",
+          "expression": "[Margin %]-[Avg Margin % Goal]",
+          "formatString": "0.00\\ %;-0.00\\ %;0.00\\ %",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin %"
+              },
+              {
+                "entity": "measures_",
+                "name": "Avg Margin % Goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin per Week Goal",
+          "dataType": "Double",
+          "expression": "\r\n\r\nVar min_date = MIN('calendar'[Date])\r\nVar max_date = MAX('calendar'[Date])\r\nVar count_of_months = DISTINCTCOUNT('calendar'[MonthNmb])\r\n\r\n//first month measures\r\nVar start_of_month_min_date = calculate(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=min_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar end_of_month_min_date = CALCULATE(ENDOFMONTH('calendar'[Date]),'calendar'[Date]=min_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar working_days_of_min_month =\r\n CALCULATE(\r\n    NETWORKDAYS(\r\n        start_of_month_min_date,\r\n        end_of_month_min_date,\r\n        1,\r\n        observed_holidays),\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar working_days_of_week_of_first_month = \r\nCALCULATE(\r\n    NETWORKDAYS(\r\n        min_date,\r\n        end_of_month_min_date,\r\n        1,\r\n        observed_holidays),\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar margin_goal_first_month = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month_min_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar mpwg_min_month = DIVIDE(margin_goal_first_month,working_days_of_min_month)\r\nVar mpwg_first_half = mpwg_min_month*working_days_of_week_of_first_month\r\n//end first month measures\r\n\r\n//second month measures\r\nVar start_of_month_max_date = CALCULATE(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=max_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar end_of_month_max_date = CALCULATE(ENDOFMONTH('calendar'[Date]),'calendar'[Date]=max_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar working_days_max_month = \r\nCALCULATE(\r\n    NETWORKDAYS(\r\n        start_of_month_max_date,\r\n        end_of_month_max_date,\r\n        1,\r\n        observed_holidays),\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar working_days_of_week_of_secound_month = \r\nCALCULATE(\r\n    NETWORKDAYS(\r\n        start_of_month_max_date,\r\n        max_date,\r\n        1,\r\n        observed_holidays),\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar margin_goal_secound_month = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month_max_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar mpwg_secound_month = DIVIDE(margin_goal_secound_month,working_days_max_month)\r\nVar mpwg_second_half = mpwg_secound_month*working_days_of_week_of_secound_month\r\n//end second month measures\r\n\r\n//standard month\r\nVar workingdays = \r\nCALCULATE(\r\n    NETWORKDAYS(\r\n        MIN('calendar'[Date]),\r\n        MAX('calendar'[Date]),\r\n        1,\r\n        observed_holidays),\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar months_margin_goal = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month_min_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar mpwg = DIVIDE(months_margin_goal,working_days_of_min_month)\r\nVar mpwg_single_month = mpwg*workingdays\r\n//end standard month\r\n\r\n//override margin goal first month\r\nVar override_margin_goal_min_month = CALCULATE([Override margin goal],'calendar'[Date]=start_of_month_min_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar override_mpwg_first_half_override_set = override_margin_goal_min_month*working_days_of_week_of_first_month\r\nVar override_mpwg_first_half = \r\n    IF(override_margin_goal_min_month>0,\r\n    override_mpwg_first_half_override_set,\r\n    mpwg_first_half)\r\n//end override margin goal first month\r\n\r\n//override margin goal second month\r\nVar override_margin_goal_max_month = CALCULATE([Override margin goal],'calendar'[Date]=start_of_month_max_date,\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar override_mpwg_second_month_override_set = override_margin_goal_max_month*working_days_of_week_of_secound_month\r\nVar override_mpwg_second_half =\r\n    IF(override_margin_goal_max_month>0,\r\n    override_mpwg_second_month_override_set,\r\n    mpwg_second_half)\r\n//end overridge margin goal second month\r\n\r\n//override margin goal single month\r\nVar override_mpwg_single_month_override_set = override_margin_goal_min_month*workingdays\r\nVar override_mpwg_single_month = \r\n    IF(override_margin_goal_min_month>0,\r\n   override_mpwg_single_month_override_set,\r\n    mpwg_single_month)\r\n//end override margin goal single month\r\n\r\nVar two_month_goal = mpwg_first_half+mpwg_second_half\r\nVar two_month_goal_salerperson_not_set = override_mpwg_first_half+override_mpwg_second_half\r\n\r\nVar if_2_months = \r\n    IF(count_of_months=2,\r\n    two_month_goal,\r\n    mpwg_single_month)\r\nVar if_2_month_salesperson_not_set = \r\n    IF(count_of_months=2,\r\n    two_month_goal_salerperson_not_set,\r\n    override_mpwg_single_month)\r\n\r\nVar salesperson_is_selected = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),if_2_month_salesperson_not_set,if_2_months)\r\n\r\nRETURN\r\nsalesperson_is_selected",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin Goal"
+              },
+              {
+                "entity": "measures_",
+                "name": "Override margin goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin vs Margin per week Goal Variance",
+          "dataType": "Double",
+          "expression": "[Margin]-[Margin per Week Goal]",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Margin per Week Goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Need to Average Per day",
+          "dataType": "Double",
+          "expression": "\nVar margin_vs_goal = [Margin Goal]-[Margin MTD]\nVar ifs = \n    IF([Margin Goal]=0,\"NG\",\n    DIVIDE(margin_vs_goal,[Working Days Left]\n))\n\nReturn\nifs",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin Goal"
+              },
+              {
+                "entity": "measures_",
+                "name": "Margin MTD"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Loads Needed",
+          "dataType": "Integer",
+          "expression": "\r\nVar margin_vs_goal = SUM(margin_load_count_goals[Margin Goal])-[Margin MTD]\r\nVar need_to_average_per_day = \r\n    IF(margin_vs_goal<=0,0,\r\n    DIVIDE(margin_vs_goal,[Working Days Left]\r\n))\r\nVar margin_per_load = DIVIDE([Margin MTD],[Count of Orders Covered MTD])\r\nVar loads_needed = DIVIDE(need_to_average_per_day,margin_per_load)\r\nVar ifs = IF(loads_needed<=0,0,loads_needed)\r\n\r\nReturn\r\nifs",
+          "formatString": "0",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin MTD"
+              },
+              {
+                "entity": "measures_",
+                "name": "Count of Orders Covered MTD"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Covered Revenue",
+          "dataType": "Double",
+          "expression": "\nVAR SUM_ = [Total Revenue]\n\nVAR COVERED = CALCULATE(SUM_,movements[Status]<>\"Available\")\n\nRETURN COVERED",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Total Revenue"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Revenue 1YA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Covered Revenue],DATEADD('calendar'[Date],-1,YEAR))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Covered Revenue"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Revenue 2YA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Covered Revenue],DATEADD('calendar'[Date],-2,YEAR))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Covered Revenue"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Revenue Covered MTD",
+          "dataType": "Double",
+          "expression": "TOTALMTD([Covered Revenue], 'calendar'[Date],'calendar'[Day of Month]<DAY(TODAY()))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Covered Revenue"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Revenue MTD 1YA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Revenue Covered MTD],DATEADD('calendar'[Date],-1,YEAR))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Revenue Covered MTD"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin 1YA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Margin],DATEADD('calendar'[Date],-1,YEAR))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin 2YA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Margin],DATEADD('calendar'[Date],-2,YEAR))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin Vs Margin Goal Target 1",
+          "dataType": "Double",
+          "expression": "\r\nVAR override_margin_goal = [Override margin goal]*[Working Days]\r\nVAR switchy_switch = SWITCH(TRUE(),AND(SELECTEDVALUE(division_key[Division])=BLANK(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK()),123,[Margin Goal])\r\n\r\nRETURN\r\nswitchy_switch",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Override margin goal"
+              },
+              {
+                "entity": "measures_",
+                "name": "Working Days"
+              },
+              {
+                "entity": "measures_",
+                "name": "Margin Goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin vs Margin Goal Gauge Max 1",
+          "dataType": "Double",
+          "expression": "\r\n[Margin]*1.2",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Todays margin goal",
+          "dataType": "Double",
+          "expression": "\nVar start_of_month = CALCULATE(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=TODAY(),\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\n\nVar workingdays = \n    NETWORKDAYS(\n        CALCULATE(STARTOFMONTH('Calendar'[Date]),'calendar'[Date]=start_of_month,\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])),\n        CALCULATE(ENDOFMONTH('Calendar'[Date]),'calendar'[Date]=TODAY(),\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])),\n        1,\n        observed_holidays)\nVar months_margin_goal = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month,\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\nVar override_mpdg = CALCULATE([Override margin goal],'calendar'[Date]=start_of_month,\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\nVar mpd = DIVIDE(months_margin_goal,workingdays)\nVar override_is_blank = IF(override_mpdg=0,mpd,override_mpdg)\n\nVar mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_is_blank,mpd)\n\nReturn\nmpdg",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin Goal"
+              },
+              {
+                "entity": "measures_",
+                "name": "Override margin goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "This Weeks Margin",
+          "dataType": "Double",
+          "expression": "CALCULATE([Margin],YEAR(orders[shipper_sched_early_date])=YEAR(TODAY()) && WEEKNUM(orders[shipper_sched_early_date])=WEEKNUM(TODAY()))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin per day Goal 1",
+          "dataType": "Double",
+          "expression": "\r\nVar workingdays =\r\n CALCULATE(\r\n    NETWORKDAYS(\r\n        STARTOFMONTH('Calendar'[Date]),\r\n        ENDOFMONTH('Calendar'[Date]),\r\n        1,\r\n        observed_holidays)\r\n )\r\nVar months_margin_goal = CALCULATE([Margin Goal],\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar override_mpdg = CALCULATE([Override margin goal],\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\r\nVar mpd = DIVIDE(months_margin_goal,workingdays)\r\n\r\nVar override_blank = IF(override_mpdg=0,mpd,override_mpdg)\r\n\r\nVar wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)\r\n\r\nVar mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)\r\n\r\nReturn\r\nmpdg",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "Sales Measures\\Sales Goals\\Margin",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin Goal"
+              },
+              {
+                "entity": "measures_",
+                "name": "Override margin goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Best Margin Day Ever",
+          "dataType": "Double",
+          "expression": "\r\nCALCULATE(\r\n    MAXX(\r\n        GROUPBY('calendar','Calendar'[Date]),\r\n        [Margin]),\r\n        REMOVEFILTERS('calendar'[Year]),\r\n        REMOVEFILTERS('calendar'[Month Name])\r\n)",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "Best Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Best Margin Week Ever",
+          "dataType": "Double",
+          "expression": "\r\nCALCULATE(\r\n    MAXX(\r\n        GROUPBY('Calendar','calendar'[Week / Year]),\r\n        [Margin]),\r\n        REMOVEFILTERS('Calendar'[Date]))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Revived Bill too's test",
+          "dataType": "Integer",
+          "expression": "\r\n\r\nvar New_Revived = [New / Revived Bill-too's]\r\nvar bill_too = [New / Revived Bill-too's]\r\nvar first = [Count of Customers First Load]\r\nVar first_date = CALCULATE([First_Load])\r\nvar min90 = CALCULATE(min('Calendar'[Date]),DATEADD('Calendar'[Date],-90,DAY))\r\nvar sub = bill_too - first\r\nvar ifs = CALCULATE(if(first_date >= min90,sub,BLANK()))\r\nvar ifs_ = CALCULATE(if(ifs > 0,sub,BLANK()))\r\n\r\nRETURN\r\nifs_\r\n",
+          "formatString": "0",
+          "displayFolder": "CRM Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "New / Revived Bill-too's"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Count of Customers First Load"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "First_Load"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Week Number Equals this Week",
+          "dataType": "Double",
+          "expression": "\r\nIF(\r\n    MIN('calendar'[Week of Year])=WEEKNUM(TODAY()),\r\n    1,\r\n    0\r\n)",
+          "displayFolder": "1 Report Measures"
+        },
+        {
+          "name": "Avg Revenue Per Day",
+          "dataType": "Double",
+          "expression": "DIVIDE([Total Revenue],[Working Days])",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Total Revenue"
+              },
+              {
+                "entity": "measures_",
+                "name": "Working Days"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Avg Margin Per Day",
+          "dataType": "Double",
+          "expression": "DIVIDE([Margin],[Working days])",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              },
+              {
+                "entity": "measures_",
+                "name": "Working Days"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered 1YA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-1,YEAR))",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered 1MA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-1,MONTH))",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin 1MA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Margin],DATEADD('calendar'[Date],-1,MONTH))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered MOM Variance",
+          "dataType": "Double",
+          "expression": "[Count of Orders Covered] - [Count of Orders Covered 1MA]",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Count of Orders Covered 1MA"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin MOM Variance",
+          "dataType": "Double",
+          "expression": "[Margin]-[Margin 1MA]",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Margin 1MA"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered 4QA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-4,QUARTER))",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin 4QA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Margin],DATEADD('calendar'[Date],-4,QUARTER))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered 1QA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Count of Orders Covered],DATEADD('calendar'[Date],-1,QUARTER))",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin 1QA",
+          "dataType": "Double",
+          "expression": "CALCULATE([Margin],DATEADD('calendar'[Date],-1,QUARTER))",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered QOQ Variance",
+          "dataType": "Double",
+          "expression": "[Count of Orders Covered]-[Count of Orders Covered 1QA]",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Count of Orders Covered 1QA"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin QOQ Variance",
+          "dataType": "Double",
+          "expression": "[Margin]-[Margin 1QA]",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Margin 1QA"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered YOY Variance",
+          "dataType": "Double",
+          "expression": "[Count of Orders Covered]-[Count of Orders Covered 1YA]",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of orders covered"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Count of Orders Covered 1YA"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin YOY Variance",
+          "dataType": "Double",
+          "expression": "[Margin]-[Margin 1YA]",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin"
+              },
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Margin 1YA"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Count of Orders Covered YTD YOY Variance",
+          "dataType": "Double",
+          "expression": "[Count of Orders Covered YTD]-[Count of Orders Covered YTD 1YA]",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Count of Orders Covered YTD"
+              },
+              {
+                "entity": "measures_",
+                "name": "Count of Orders Covered YTD 1YA"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Customers Served_",
+          "dataType": "Double",
+          "expression": "\r\nCALCULATE(\r\n    DISTINCTCOUNT(orders[customer_id]),\r\n    FILTER(movements,movements[status]<>\"A\"),   \r\n    USERELATIONSHIP(customer[salesperson_id],salesperson_key[McLeod Salesperson Code]),\r\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])\r\n)",
+          "displayFolder": "Behavior Measures"
+        },
+        {
+          "name": "First Load After Lead Passed",
+          "dataType": "Double",
+          "expression": "\nCALCULATE(\n    MIN(orders[shipper_sched_early_date]),\n    crm[x_studio_lead_passed_date]<>BLANK()\n)",
+          "displayFolder": "CRM Measures"
+        },
+        {
+          "name": "Todays margin goal Daily Dash",
+          "dataType": "Double",
+          "expression": "\nVar start_of_month = CALCULATE(STARTOFMONTH('calendar'[Date]),'calendar'[Date]=TODAY(),\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\n\nVar workingdays = \n    NETWORKDAYS(\n        CALCULATE(STARTOFMONTH('Calendar'[Date]),'calendar'[Date]=start_of_month,\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])),\n        CALCULATE(ENDOFMONTH('Calendar'[Date]),'calendar'[Date]=TODAY(),\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])),\n        1,\n        observed_holidays)\nVar months_margin_goal = CALCULATE([Margin Goal],'calendar'[Date]=start_of_month,\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\nVar override_mpdg = CALCULATE([Override margin goal],'calendar'[Date]=start_of_month,\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\nVar mpd = DIVIDE(months_margin_goal,workingdays)\nVar override_is_blank = IF(override_mpdg=0,mpd,override_mpdg)\n\nVar mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_is_blank,mpd)\nVAR division_switch = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Division])=BLANK(),override_is_blank,mpd)\n\nReturn\ndivision_switch",
+          "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin Goal"
+              },
+              {
+                "entity": "measures_",
+                "name": "Override margin goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Margin This month Max Line",
+          "dataType": "Double",
+          "expression": "[Margin per day Goal]*1.2",
+          "displayFolder": "Best Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Margin per day Goal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "todays margin goal daily dash max",
+          "dataType": "Double",
+          "expression": "[Todays margin goal Daily Dash]*1.1",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "Todays margin goal Daily Dash"
+              }
+            ]
+          }
+        },
+        {
+          "name": "No behavior Scheduled is the reason",
+          "dataType": "Double",
+          "expression": "\nIF(MIN(odoo[activity_date_deadline])=BLANK(),1,0)",
+          "displayFolder": "CRM Measures\\At Risk Measures"
+        },
+        {
+          "name": "90 day revived",
+          "dataType": "Double",
+          "expression": "\nVAR customers_today = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        movements[status] <> \"A\" && movements[status] <> \"V\"\n    )\nVAR customers_last_90 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-90 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\n\nVAR all_customers_prior_today = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        ),\n        REMOVEFILTERS(salesperson_key),\n        movements[status] <> \"A\" &&\n        movements[status] <> \"V\"\n    )\n\nVAR new_revived_90 = \n    EXCEPT(\n        customers_today,\n        customers_last_90\n    )\n\nVAR new = \n    EXCEPT(\n        customers_today,\n        all_customers_prior_today\n    )\n\nVAR revived = \n    EXCEPT(\n        new_revived_90,\n        new\n    )\n\nVAR count_customers = \n        COUNTROWS(revived)\n\nRETURN\ncount_customers\n"
+        },
+        {
+          "name": "No Loads 90 days",
+          "dataType": "Double",
+          "expression": "\n\nVAR customers_last_90 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-90 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\n\nVAR all_customers_prior_today = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        ),\n//        REMOVEFILTERS(salesperson_key),\n        movements[status] <> \"A\" &&\n        movements[status] <> \"V\"\n    )\n\nVAR customers_wtih_no_loads_90 =\n    EXCEPT(\n        all_customers_prior_today,\n        customers_last_90\n    )\n\nVAR count_customers = \n    COUNTROWS(customers_wtih_no_loads_90)\n\nRETURN\ncount_customers"
+        },
+        {
+          "name": "30 day revived",
+          "dataType": "Double",
+          "expression": "\nVAR customers_today = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        movements[status] <> \"A\" && movements[status] <> \"V\"\n    )\nVAR customers_last_90 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-90 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\n\nVAR customers_last_30 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-30 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\n\nVAR all_customers_prior_today = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        ),\n        REMOVEFILTERS(salesperson_key),\n        movements[status] <> \"A\" &&\n        movements[status] <> \"V\"\n    )\n\nVAR new_revived_90 = \n    EXCEPT(\n        customers_today,\n        customers_last_90\n    )\n\nVAR new = \n    EXCEPT(\n        customers_today,\n        all_customers_prior_today\n    )\n\nVAR revived_90 = \n    EXCEPT(\n        new_revived_90,\n        new\n    )\n\nVAR new_revived_30 = \n    EXCEPT(\n        customers_today,\n        customers_last_30\n    )\n\nVAR revived_30 = \n    EXCEPT(\n        new_revived_30,\n        new\n    )\n\nVAR revived_30_excluding_revived_90 =\n    EXCEPT(\n        revived_30,\n        revived_90\n    )\n\nVAR count_customers = \n        COUNTROWS(revived_30_excluding_revived_90)\n\n\nRETURN\ncount_customers\n"
+        },
+        {
+          "name": "Measure 2",
+          "dataType": "Double",
+          "expression": "",
+          "annotations": [
+            {
+              "name": "43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c",
+              "value": "True"
+            }
+          ]
+        },
+        {
+          "name": "No Loads 30 days",
+          "dataType": "Double",
+          "expression": "\n\nVAR customers_last_90 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-90 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\nVAR customers_last_30 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-30 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\n\nVAR all_customers_prior_today = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        ),\n//        REMOVEFILTERS(salesperson_key),\n        movements[status] <> \"A\" &&\n        movements[status] <> \"V\"\n    )\n\nVAR customers_wtih_no_loads_90 =\n    EXCEPT(\n        all_customers_prior_today,\n        customers_last_90\n    )\n\nVAR customers_with_no_loads_30 =\n    EXCEPT(\n        all_customers_prior_today,\n        customers_last_30\n    )\n\nVAR customers_with_no_loads_30_excluding_customers_with_no_loads_90 = \n    EXCEPT(\n        customers_with_no_loads_30,\n        customers_wtih_no_loads_90\n    )\n\nVAR count_customers = \n    COUNTROWS(customers_with_no_loads_30_excluding_customers_with_no_loads_90)\n\nRETURN\ncount_customers"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+table 'Employee Photos'
+	lineageTag: fa3f0a45-a866-4212-b83d-72c09c64efd0
+
+	measure Measure
+		lineageTag: a3476ba9-7d25-4031-9aa5-0b30461de63e
+
+		annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":null}
+
+		annotation 277cc1b9-af89-4597-8e15-cacc25c0886b = To use special characters in a measure name, enclose the entire name in brackets ( [] ) and add a ] to any closing brackets in the name.
+
+	column Id
+		dataType: string
+		lineageTag: 14d9f7a2-0d6f-44b0-a666-419fed37d709
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeName
+		dataType: string
+		lineageTag: a100b8e2-c33c-4b51-acc0-98406b19eccd
+		summarizeBy: none
+		sourceColumn: EmployeeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'File.ServerRelativeUrl'
+		dataType: string
+		lineageTag: 0ebe54d3-a78a-4463-bb66-86a76e9a5c5e
+		summarizeBy: none
+		sourceColumn: File.ServerRelativeUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Image URL' = "https://bridgelogisticsinc.sharepoint.com/"&'Employee Photos'[File.ServerRelativeUrl]
+		lineageTag: 829b956e-3688-413a-ab22-cd81651d5f9c
+		dataCategory: ImageUrl
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Employee Photos' = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Tables("https://bridgelogisticsinc.sharepoint.com/sites/BusinessIntelligence", [Implementation=null, ApiVersion=15]),
+				    #"cfff0858-6804-4082-9dbd-341b13fe1fa6" = Source{[Id="cfff0858-6804-4082-9dbd-341b13fe1fa6"]}[Items],
+				    #"Removed Other Columns" = Table.SelectColumns(#"cfff0858-6804-4082-9dbd-341b13fe1fa6",{"Id", "EmployeeName", "File"}),
+				    #"Expanded File" = Table.ExpandRecordColumn(#"Removed Other Columns", "File", {"ServerRelativeUrl"}, {"File.ServerRelativeUrl"})
+				in
+				    #"Expanded File"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

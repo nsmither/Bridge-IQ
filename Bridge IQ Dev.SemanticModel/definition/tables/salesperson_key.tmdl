@@ -128,6 +128,14 @@ table salesperson_key
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Office Payee ID'
+		dataType: string
+		lineageTag: b4453bdc-4557-4821-b5df-52780cfc2ca0
+		summarizeBy: none
+		sourceColumn: Office Payee ID
+
+		annotation SummarizationSetBy = Automatic
+
 	partition salesperson_key = m
 		mode: import
 		source =

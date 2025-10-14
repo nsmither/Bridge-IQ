@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "cfc1f05ae07b1d515b7c",
+  "position": {
+    "x": 0,
+    "y": 2.8421709430404007E-14,
+    "z": 1000,
+    "height": 144,
+    "width": 368
+  },
+  "visualGroup": {
+    "displayName": "Customer Buttons",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "4692e0c03402e2272933"
+}
