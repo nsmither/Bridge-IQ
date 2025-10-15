@@ -6,7 +6,8 @@
     "y": 315.61643835616439,
     "z": 0,
     "height": 404.45662100456622,
-    "width": 1280
+    "width": 1280,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -593,20 +594,6 @@
         },
         "type": "Advanced",
         "howCreated": "User"
-      },
-      {
-        "name": "bec81130143ca034108a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "LTL 10%"
-          }
-        },
-        "type": "Advanced"
       }
     ],
     "filterSortOrder": "Custom"

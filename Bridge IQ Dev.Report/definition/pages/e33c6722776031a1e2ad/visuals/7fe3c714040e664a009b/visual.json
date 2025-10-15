@@ -6,7 +6,8 @@
     "y": 0,
     "z": 1000,
     "height": 93.366583541147122,
-    "width": 1223.6408977556109
+    "width": 1223.6408977556109,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "slicer",
@@ -163,6 +164,11 @@
           }
         }
       ]
+    },
+    "syncGroup": {
+      "groupName": "Date2",
+      "fieldChanges": true,
+      "filterChanges": true
     },
     "drillFilterOtherVisuals": true
   },

@@ -6,8 +6,7 @@
     "y": 315.91448931116389,
     "z": 0,
     "height": 403.80047505938245,
-    "width": 1500,
-    "tabOrder": 1000
+    "width": 1500
   },
   "visual": {
     "visualType": "pivotTable",
@@ -623,62 +622,6 @@
         },
         "type": "Advanced",
         "howCreated": "User"
-      },
-      {
-        "name": "dae732440859076e16ec",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "LTL 10%"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "dfe785bc3b949609eba5",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Established Customer 15% No Transitions excluding LTL"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "cb04859e0cd49e29742d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "New Customer 20% Excluding LTL"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "243891fb30d9e01e0d39",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Commission Base + Commission 15% 20% Without Transitions With LTL at 10%"
-          }
-        },
-        "type": "Advanced"
       }
     ],
     "filterSortOrder": "Custom"

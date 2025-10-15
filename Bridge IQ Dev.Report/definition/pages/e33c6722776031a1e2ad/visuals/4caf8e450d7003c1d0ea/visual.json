@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
   "name": "4caf8e450d7003c1d0ea",
   "position": {
-    "x": 803.51781652767249,
-    "y": 173.7073540561031,
-    "z": 1001,
-    "height": 327.03563305534493,
-    "width": 409.52236542835482,
-    "tabOrder": 1001
+    "x": 714.57391304347823,
+    "y": 55.652173913043477,
+    "z": 2000,
+    "height": 303.8608695652174,
+    "width": 565.42608695652177,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "tableEx",
@@ -60,6 +60,38 @@
           ]
         }
       }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "160.95652173913044D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ffl_lineup.employee_name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "125.92173913043479D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "measures_.Total FFL Points"
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   },
@@ -191,48 +223,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "920eae164d6ac605415b",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Employee Photos"
-              }
-            },
-            "Property": "Image URL"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "85c804b9ab4875804ad9",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ffl_lineup"
-              }
-            },
-            "Property": "employee_name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "15868ef85d00b00aab28",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total FFL Points"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

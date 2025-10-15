@@ -3,11 +3,10 @@
   "name": "8b2fff2dcd739a408958",
   "position": {
     "x": 0,
-    "y": 210.03436426116838,
+    "y": 93.495652173913044,
     "z": 0,
-    "height": 315.60137457044669,
-    "width": 674.08934707903779,
-    "tabOrder": 1000
+    "height": 296.0695652173913,
+    "width": 703.4434782608696
   },
   "visual": {
     "visualType": "tableEx",
@@ -74,6 +73,23 @@
           ],
           "showAll": true
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "ffl_lineup"
+                  }
+                },
+                "Property": "employee_name"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "drillFilterOtherVisuals": true
@@ -163,62 +179,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "bd67c89975540e31a1a9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "NPC FFL Points Final"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6c5b1f4b25e575515c41",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ffl_lineup"
-              }
-            },
-            "Property": "employee_name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "138cf4706822b7c37a0a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Employee Photos"
-              }
-            },
-            "Property": "Image URL"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "21e915e45a40a709ad0b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL total points final"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -3890,7 +3890,8 @@ table measures_
 
 	measure 'NPC FFL Points Final' =
 			
-			VAR IsNPC = SELECTEDVALUE(ffl_lineup[employee_name]) = "NPC"
+			VAR CurrentEmployee = MAX(ffl_lineup[employee_name])
+			VAR IsNPC = CurrentEmployee = "NPC"
 			
 			VAR PointComponents =
 			    [Load Count Points] +
@@ -3906,8 +3907,61 @@ table measures_
 			VAR NPCScore =
 			    CALCULATE(
 			        AVERAGEX(
-			            VALUES(ffl_lineup[employee_name]),
-			            CALCULATE(
+			            FILTER(
+			                ALL(ffl_lineup[employee_name]),
+			                ffl_lineup[employee_name] <> "NPC"
+			            ),
+			            [Load Count Points] +
+			            [FFL weekly margin goal points] +
+			            [FFL Weekly Margin Goal 1.5 Points] +
+			            [FFL 7 Convos a day points] +
+			            [FFL New/Revived Points] +
+			            [FFL Daily Margin Goal Points] +
+			            [FFL Days over Best Maring Day Points] +
+			            [FFL Days over Best Load Count Day Points] +
+			            [FFL KARE Check Points]
+			        ),
+			        ALL(ffl_lineup[employee_name])
+			    )
+			
+			RETURN
+			IF(IsNPC, NPCScore, PointComponents)
+		displayFolder: FFL
+		lineageTag: 6a8e8490-71d9-41d8-b219-6443b13642f1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL total points final' = SUMX(VALUES(ffl_lineup[employee_name]), [FFL total points final v5])
+		displayFolder: FFL
+		lineageTag: 6dd292c2-99e2-4c12-a86f-fd17d5fc7c4e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL total points final v5' = ```
+			
+			IF(
+			    HASONEVALUE('Employee Photos'[EmployeeName]),
+			    VAR CurrentEmployee = VALUES('Employee Photos'[EmployeeName])
+			    VAR IsNPC = CurrentEmployee = "NPC"
+			    
+			    VAR RegularPoints = 
+			        [Load Count Points] +
+			        [FFL weekly margin goal points] +
+			        [FFL Weekly Margin Goal 1.5 Points] +
+			        [FFL 7 Convos a day points] +
+			        [FFL New/Revived Points] +
+			        [FFL Daily Margin Goal Points] +
+			        [FFL Days over Best Maring Day Points] +
+			        [FFL Days over Best Load Count Day Points] +
+			        [FFL KARE Check Points]
+			    
+			    VAR NPCScore =
+			        CALCULATE(
+			            AVERAGEX(
+			                FILTER(
+			                    ALL('Employee Photos'[EmployeeName]),
+			                    'Employee Photos'[EmployeeName] <> "NPC"
+			                ),
 			                [Load Count Points] +
 			                [FFL weekly margin goal points] +
 			                [FFL Weekly Margin Goal 1.5 Points] +
@@ -3917,25 +3971,57 @@ table measures_
 			                [FFL Days over Best Maring Day Points] +
 			                [FFL Days over Best Load Count Day Points] +
 			                [FFL KARE Check Points]
-			            )
-			        ),
-			        REMOVEFILTERS(ffl_lineup[employee_name])
-			    )
-			
-			RETURN
-			IF(
-			    IsNPC,
-			    NPCScore,
-			    PointComponents
+			            ),
+			            ALL('Employee Photos'),
+			            USERELATIONSHIP('Employee Photos'[EmployeeName], ffl_lineup[employee_name])  // Only if needed
+			        )
+			    
+			    RETURN IF(IsNPC, NPCScore, RegularPoints),
+			    
+			    // Total calculation remains the same
+			    VAR NonNPCTotal = 
+			        CALCULATE(
+			            SUMX(
+			                VALUES('Employee Photos'[EmployeeName]),
+			                [Load Count Points] +
+			                [FFL weekly margin goal points] +
+			                [FFL Weekly Margin Goal 1.5 Points] +
+			                [FFL 7 Convos a day points] +
+			                [FFL New/Revived Points] +
+			                [FFL Daily Margin Goal Points] +
+			                [FFL Days over Best Maring Day Points] +
+			                [FFL Days over Best Load Count Day Points] +
+			                [FFL KARE Check Points]
+			            ),
+			            'Employee Photos'[EmployeeName] <> "NPC"
+			        )
+			    
+			    VAR NPCScore =
+			        CALCULATE(
+			            AVERAGEX(
+			                FILTER(
+			                    ALL('Employee Photos'[EmployeeName]),
+			                    'Employee Photos'[EmployeeName] <> "NPC"
+			                ),
+			                [Load Count Points] +
+			                [FFL weekly margin goal points] +
+			                [FFL Weekly Margin Goal 1.5 Points] +
+			                [FFL 7 Convos a day points] +
+			                [FFL New/Revived Points] +
+			                [FFL Daily Margin Goal Points] +
+			                [FFL Days over Best Maring Day Points] +
+			                [FFL Days over Best Load Count Day Points] +
+			                [FFL KARE Check Points]
+			            ),
+			            ALL('Employee Photos')
+			        )
+			    
+			    RETURN NonNPCTotal + NPCScore
 			)
+			
+			```
 		displayFolder: FFL
-		lineageTag: 6a8e8490-71d9-41d8-b219-6443b13642f1
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'FFL total points final' = SUMX(VALUES(ffl_lineup[employee_name]), [NPC FFL Points Final])
-		displayFolder: FFL
-		lineageTag: 6dd292c2-99e2-4c12-a86f-fd17d5fc7c4e
+		lineageTag: 9eb83486-2042-4350-a06b-678ac8e7378c
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

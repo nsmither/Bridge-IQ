@@ -40,7 +40,7 @@
           "expanded": {
             "expr": {
               "Literal": {
-                "Value": "true"
+                "Value": "false"
               }
             }
           }
@@ -66,6 +66,17 @@
           "name": "Innovate",
           "path": "BuiltInThemes/Innovate.json",
           "type": "CustomTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "24146448575241786209956439950468599.jpg",
+          "path": "24146448575241786209956439950468599.jpg",
+          "type": "Image"
         }
       ]
     }

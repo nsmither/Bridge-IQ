@@ -4,10 +4,9 @@
   "position": {
     "x": 0,
     "y": 0,
-    "z": 1,
+    "z": 1000,
     "height": 280,
-    "width": 280,
-    "tabOrder": 1
+    "width": 280
   },
   "visual": {
     "visualType": "slicer",
@@ -262,20 +261,6 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "2f8e022591dc001201a3",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "Year"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
         "name": "ff242a2f07649b93be05",
         "field": {
           "Column": {
@@ -328,20 +313,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "37ce313d3b5edc35640d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "Month Name"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

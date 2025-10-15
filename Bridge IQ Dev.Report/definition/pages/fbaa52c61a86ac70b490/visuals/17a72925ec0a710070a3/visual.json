@@ -6,8 +6,7 @@
     "y": 315.91448931116389,
     "z": 0,
     "height": 403.80047505938245,
-    "width": 1500,
-    "tabOrder": 1000
+    "width": 1500
   },
   "visual": {
     "visualType": "pivotTable",
@@ -638,76 +637,6 @@
         },
         "type": "Advanced",
         "howCreated": "User"
-      },
-      {
-        "name": "327e5b1c08eac2d63722",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "LTL 10%"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "a27664e1009696929e10",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Commission 15% 20% 25% with transistions With LTL at 10%"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "b0124c0c407e6dd698c0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Transitioned Customers 15% exluding LTL"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6336cbc2b0766a1a0e30",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Established Customer 20% No Transitions excluding LTL"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "2695eea81951bb78a9b6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "New Customer 25% excluding LTL"
-          }
-        },
-        "type": "Advanced"
       }
     ],
     "filterSortOrder": "Custom"

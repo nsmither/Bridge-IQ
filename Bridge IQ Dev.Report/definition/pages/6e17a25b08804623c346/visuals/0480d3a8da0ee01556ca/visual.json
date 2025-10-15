@@ -6,8 +6,7 @@
     "y": 315.91448931116389,
     "z": 0,
     "height": 403.80047505938245,
-    "width": 1500,
-    "tabOrder": 1000
+    "width": 1500
   },
   "visual": {
     "visualType": "pivotTable",
@@ -651,90 +650,6 @@
         },
         "type": "Advanced",
         "howCreated": "User"
-      },
-      {
-        "name": "be9eeb6c190586a29179",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Commission Base + Commission 10% 15% 20% With Transitions"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "101e265b628a2e0c018a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Comp Base + Commission 10% 15% 20% With Transitions"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "2161aa315318712dce69",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "LTL 10%"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1fc6538cd136a3bd16e5",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Transitioned Customers 10% excluding LTL"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6d1f3b68c2b1c713308e",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Established Customer 15% with transistions Excluding LTL"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "094396c2b50d23be5707",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "New Customer 20% Excluding LTL"
-          }
-        },
-        "type": "Advanced"
       }
     ],
     "filterSortOrder": "Custom"

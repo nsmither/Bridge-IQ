@@ -6,7 +6,8 @@
     "y": 128,
     "z": 0,
     "height": 592,
-    "width": 1280
+    "width": 1280,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "tableEx",
@@ -337,132 +338,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "24ba166a864052eb0083",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "5eb65784403ee8235973",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "shipper_city_name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "fd71818b0e8c850e97aa",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "shipper_state"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "299ffec5e9003bc942a3",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "consignee_city_name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "67e991d3c6d8658b8186",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "shipper_sched_early_date"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "e3a355b7ad5bbde4e706",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Revenue"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "892aa5e39e1312143acc",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Carrier Pay"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "046f7e7205625ba253d6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Margin"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f3649851d1a803ae82d2",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "number of stops"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -554,9 +554,14 @@ relationship eac4758b-44f6-8cc2-f3d9-c8ae1d60543d
 	fromColumn: ffl_lineup.employee_name
 	toColumn: salesperson_key.Name
 
-relationship 07ce6f0f-1118-dee8-2b5c-b5fdb83d3cb2
+relationship 9e332f23-783c-0247-014a-ca5de92a7018
+	isActive: false
+	fromColumn: employees.Name
+	toColumn: ffl_lineup.employee_name
+
+relationship bce370c5-b5d9-6b2d-b10f-fb225fc80c61
 	crossFilteringBehavior: bothDirections
 	fromCardinality: one
-	fromColumn: ffl_lineup.employee_name
-	toColumn: 'Employee Photos'.EmployeeName
+	fromColumn: 'Employee Photos'.EmployeeName
+	toColumn: ffl_lineup.employee_name
 

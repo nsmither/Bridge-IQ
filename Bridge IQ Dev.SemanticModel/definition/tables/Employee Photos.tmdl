@@ -1,13 +1,6 @@
 table 'Employee Photos'
 	lineageTag: fa3f0a45-a866-4212-b83d-72c09c64efd0
 
-	measure Measure
-		lineageTag: a3476ba9-7d25-4031-9aa5-0b30461de63e
-
-		annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":null}
-
-		annotation 277cc1b9-af89-4597-8e15-cacc25c0886b = To use special characters in a measure name, enclose the entire name in brackets ( [] ) and add a ] to any closing brackets in the name.
-
 	column Id
 		dataType: string
 		lineageTag: 14d9f7a2-0d6f-44b0-a666-419fed37d709
@@ -32,10 +25,20 @@ table 'Employee Photos'
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Image URL' = "https://bridgelogisticsinc.sharepoint.com/"&'Employee Photos'[File.ServerRelativeUrl]
+	column 'Image URL' = ```
+			"https://bridgelogisticsinc.sharepoint.com/"&'Employee Photos'[File.ServerRelativeUrl] 
+			```
 		lineageTag: 829b956e-3688-413a-ab22-cd81651d5f9c
 		dataCategory: ImageUrl
 		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ffl_lineup.team'
+		dataType: string
+		lineageTag: 55b1a7a4-0677-4023-9227-18665328a2b8
+		summarizeBy: none
+		sourceColumn: ffl_lineup.team
 
 		annotation SummarizationSetBy = Automatic
 
@@ -46,9 +49,11 @@ table 'Employee Photos'
 				    Source = SharePoint.Tables("https://bridgelogisticsinc.sharepoint.com/sites/BusinessIntelligence", [Implementation=null, ApiVersion=15]),
 				    #"cfff0858-6804-4082-9dbd-341b13fe1fa6" = Source{[Id="cfff0858-6804-4082-9dbd-341b13fe1fa6"]}[Items],
 				    #"Removed Other Columns" = Table.SelectColumns(#"cfff0858-6804-4082-9dbd-341b13fe1fa6",{"Id", "EmployeeName", "File"}),
-				    #"Expanded File" = Table.ExpandRecordColumn(#"Removed Other Columns", "File", {"ServerRelativeUrl"}, {"File.ServerRelativeUrl"})
+				    #"Expanded File" = Table.ExpandRecordColumn(#"Removed Other Columns", "File", {"ServerRelativeUrl"}, {"File.ServerRelativeUrl"}),
+				    #"Merged Queries" = Table.FuzzyNestedJoin(#"Expanded File", {"EmployeeName"}, ffl_lineup, {"employee_name"}, "ffl_lineup", JoinKind.LeftOuter, [IgnoreCase=true, IgnoreSpace=false]),
+				    #"Expanded ffl_lineup" = Table.ExpandTableColumn(#"Merged Queries", "ffl_lineup", {"team"}, {"ffl_lineup.team"})
 				in
-				    #"Expanded File"
+				    #"Expanded ffl_lineup"
 
 	annotation PBI_NavigationStepName = Navigation
 

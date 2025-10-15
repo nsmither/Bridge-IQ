@@ -3,10 +3,11 @@
   "name": "2326c3c3737b918d1d68",
   "position": {
     "x": 0,
-    "y": 210.57708871662362,
+    "y": 210.91458805744517,
     "z": 0,
-    "height": 509.35400516795869,
-    "width": 1280
+    "height": 508.90400604686317,
+    "width": 1280,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -42,7 +43,7 @@
               },
               "queryRef": "ffl_lineup.employee_name",
               "nativeQueryRef": "employee_name",
-              "active": true
+              "active": false
             }
           ]
         },
@@ -292,16 +293,6 @@
                   }
                 }
               ]
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'BLUE'"
-                  }
-                }
-              ],
-              "isToggled": true
             }
           ]
         }
@@ -442,34 +433,6 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "b2bc91766439b088c0ba",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ffl_lineup"
-              }
-            },
-            "Property": "team"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "9075ec28055804544d89",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ffl_lineup"
-              }
-            },
-            "Property": "employee_name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
         "name": "0d5975d9d641c09924d2",
         "field": {
           "Column": {
@@ -541,174 +504,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "531b5b503b3414beeb8d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Daily Margin Goal Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "c8f789d5805813cc945d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Load Count Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "bcaf68250c127d04024c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL weekly margin goal points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6e0b6bc9b01046531550",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Weekly Margin Goal 1.5 Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "222e62dcd6114a49e0a4",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL New/Revived Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "54a25dc6cde7c1ba5310",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total FFL Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6ebf98418cd0156d061d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL 7 Convos a day points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "77f6eb66ba1082430caa",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Days over Best Maring Day Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "5f501e6edd89dd256012",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Days over Best Load Count Day Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "444da25c74300482036b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL KARE Check Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "b0c7e3f071d808deceb2",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "NPC FFL Points Final"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "24a6bb74cac5500eebe3",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL total points final"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }
