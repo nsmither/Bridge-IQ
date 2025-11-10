@@ -565,3 +565,51 @@ relationship bce370c5-b5d9-6b2d-b10f-fb225fc80c61
 	fromColumn: 'Employee Photos'.EmployeeName
 	toColumn: ffl_lineup.employee_name
 
+relationship 856fae69-2d91-45aa-9efe-33280f0ba05c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'ffl week schedule'.'start of week'
+	toColumn: LocalDateTable_e33814f8-eec2-44ca-a33e-ada525a06173.Date
+
+relationship 77a6da26-51d8-4465-8356-a7fefc3278db
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'ffl week schedule'.'end of week '
+	toColumn: LocalDateTable_240c5f16-071c-4116-a9e4-5499a06f4cf8.Date
+
+relationship ab82696e-9394-6e1e-28e0-6939050d6ec7
+	isActive: false
+	fromColumn: 'ffl week schedule'.' team 1A'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship aba5dda6-c503-6c70-71d3-f5d64fb8a5f2
+	isActive: false
+	fromColumn: 'ffl week schedule'.' team 2A'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship ca7c21ff-88ac-0ef6-4e4d-a30d3f04198e
+	isActive: false
+	fromColumn: 'ffl week schedule'.'team 1B'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship 06b55305-9dc5-2e69-62cf-61f9ba47f743
+	isActive: false
+	fromColumn: 'ffl week schedule'.'team 2B'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship af280d98-956b-f9f4-2bf2-2a148e354201
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: 'ffl week schedule'.'start of week'
+
+relationship 8871d2e1-6b9d-fa07-4909-1599813f10bc
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: 'ffl week schedule'.'end of week '
+
+relationship 59362e10-5143-d29e-e652-7d9be13a7bce
+	fromColumn: 'Employee Photos'.'ffl_lineup.team'
+	toColumn: 'Team Logos'.Teamnumber
+

@@ -1,0 +1,98 @@
+table 'ffl week schedule'
+	lineageTag: ad70944e-7b3b-4155-b701-977bbaf105df
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: e6bfdc39-46cf-4a03-8a8c-1bccc5b46e8a
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weeks '
+		dataType: string
+		lineageTag: cc491069-624d-4053-a338-837ca1cdaae5
+		summarizeBy: none
+		sourceColumn: "Weeks "
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'start of week'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b610956c-1940-4491-8dd8-1efdf5c22395
+		summarizeBy: none
+		sourceColumn: start of week
+
+		variation Variation
+			isDefault
+			relationship: 856fae69-2d91-45aa-9efe-33280f0ba05c
+			defaultHierarchy: LocalDateTable_e33814f8-eec2-44ca-a33e-ada525a06173.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'end of week '
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 270502e7-687e-43b2-aa21-e73dee470f1c
+		summarizeBy: none
+		sourceColumn: "end of week "
+
+		variation Variation
+			isDefault
+			relationship: 77a6da26-51d8-4465-8356-a7fefc3278db
+			defaultHierarchy: LocalDateTable_240c5f16-071c-4116-a9e4-5499a06f4cf8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ' team 1A'
+		dataType: string
+		lineageTag: eeab320d-11a2-4b1a-8032-ca089a3410a2
+		summarizeBy: none
+		sourceColumn: " team 1A"
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'team 1B'
+		dataType: string
+		lineageTag: 5dd6c638-b2c9-4818-aab3-c9c5abba7018
+		summarizeBy: none
+		sourceColumn: team 1B
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' team 2A'
+		dataType: string
+		lineageTag: b21ceac6-e9c0-458d-8cbb-9f5a700cf621
+		summarizeBy: none
+		sourceColumn: " team 2A"
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'team 2B'
+		dataType: string
+		lineageTag: db5ef5ed-001a-4cdc-98fe-c520ef43007b
+		summarizeBy: none
+		sourceColumn: team 2B
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ffl week schedule' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/FFL/ffl%20weeks%20schedule.xlsx"), null, true),
+				    Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Table1_Table,{{"id", Int64.Type}, {"Weeks ", type text}, {"start of week", type date}, {"end of week ", type date}, {" team 1A", type text}, {"team 1B", type text}, {" team 2A", type text}, {"team 2B", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

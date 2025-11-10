@@ -1,0 +1,166 @@
+table payee
+	isHidden
+	lineageTag: f6dc99e8-aed1-420c-a3ea-5e6d2cbe78f8
+
+	column email
+		dataType: string
+		isHidden
+		lineageTag: 7345b090-8934-41d4-8d4e-d2106b2f4e65
+		summarizeBy: none
+		sourceColumn: email
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hire_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 6b8b7a2b-182a-4dd3-8f53-e2ff23c6d906
+		summarizeBy: none
+		sourceColumn: hire_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		isHidden
+		lineageTag: ef251229-851c-40b1-8d6e-43d07e38c8fe
+		summarizeBy: none
+		sourceColumn: id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_raise_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 6b85d89f-a274-423c-8800-cb893bbbe716
+		summarizeBy: none
+		sourceColumn: last_raise_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column office_employee
+		dataType: string
+		isHidden
+		lineageTag: a2710289-770f-44f8-89be-dabbe43c74fc
+		summarizeBy: none
+		sourceColumn: office_employee
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		isHidden
+		lineageTag: a604c980-2261-4098-8862-80768c5bbe7a
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		isHidden
+		lineageTag: 5c08a223-eff1-4a98-8649-1c84aeb0bf54
+		summarizeBy: none
+		sourceColumn: status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column termination_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: c8651e52-b11a-4ee0-b909-0dae23e4ec00
+		summarizeBy: none
+		sourceColumn: termination_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column regular_rate
+		dataType: double
+		isHidden
+		lineageTag: ce803fcd-4bf3-42f9-9f81-532f2bfe300f
+		summarizeBy: none
+		sourceColumn: regular_rate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column last_name
+		dataType: string
+		isHidden
+		lineageTag: 1666f4a2-6e7a-4499-a2fa-235ea20aeb76
+		summarizeBy: none
+		sourceColumn: last_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		isHidden
+		lineageTag: 2892f49e-3bfa-4e1b-94de-f94ebb3df669
+		summarizeBy: none
+		sourceColumn: first_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		isHidden
+		lineageTag: d634d10c-048a-432c-b05e-cb28926a3596
+		summarizeBy: none
+		sourceColumn: name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition payee = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_payee = Source{[Schema="dbo",Item="payee"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(dbo_payee,{"company_id", "ach_batch_class_code", "add_fed_to_wh", "add_fed_to_wh_c", "add_fed_to_wh_d", "add_fed_to_wh_n", "add_fed_to_wh_r", "addl_st_to_whold", "addl_st_to_whold_c", "addl_st_to_whold_d", "addl_st_to_whold_n", "addl_st_to_whold_r", "address1", "address2", "adp_co_code", "adp_e_no", "birth_date", "check_address", "check_address2", "check_city", "check_city_st_zip", "check_date", "check_name", "check_number", "check_st", "check_stub_comment", "check_zip", "city", "city_tax_code", "country_id", "county_tax_code", "currency", "dependents", "dependents_c", "dependents_d", "dependents_n", "dependents_r", "disable_payroll_taxes", "email_summary", "enable_carrier_app", "exempt_from_fed", "extra_withholdings", "extra_withholdings_c", "extra_withholdings_d", "extra_withholdings_n", "extra_withholdings_r", "fed_amt_to_whold", "fed_amt_to_whold_c", "fed_amt_to_whold_d", "fed_amt_to_whold_n", "fed_amt_to_whold_r", "fed_exemptions", "fed_marital_status", "freeze_pay", "gp_exclude", "gp_exported", "holiday_hours_pd", "loadpay_contact_phone", "multiple_jobs", "legal_name", "non_office_emp", "other_deductions", "other_deductions_c", "other_deductions_d", "other_deductions_n", "other_deductions_r", "other_income", "other_income_c", "other_income_d", "other_income_n", "other_income_r", "overtime_hours_pd", "phone_number", "prev_code", "primary_agency", "regular_hours_pd", "remarks", "settlement_status", "sick_hours_pd", "social_security_no", "st_amt_to_whold", "st_amt_to_whold_c", "st_amt_to_whold_d", "st_amt_to_whold_n", "st_amt_to_whold_r", "st_marital_status", "state", "state_exemptions", "state_tax_code", "sui_tax_code", "tax_table_city_aux", "tax_table_city_misc", "tax_table_county_aux", "tax_table_county_misc", "tax_table_fit_aux", "tax_table_fit_misc", "tax_table_st_aux", "tax_table_st_misc", "tax_table_sui_aux", "tax_table_sui_misc", "vacation_hours_pd", "vm_part_update", "wf_queue", "w4_status", "ytd_holiday_hrs", "ytd_overtime_hrs", "ytd_reg_hrs_paid", "ytd_sick_hrs_paid", "ytd_vacation_hrs", "zip_code", "freight_matching_override", "posted_check_date"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Columns", {"id"}, off_payee, {"id"}, "off_payee", JoinKind.LeftOuter),
+				    #"Expanded off_payee" = Table.ExpandTableColumn(#"Merged Queries", "off_payee", {"regular_rate"}, {"regular_rate"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Expanded off_payee", each ([office_employee] = "Y")),
+				    #"Inserted Text Before Delimiter" = Table.AddColumn(#"Filtered Rows", "last_name", each Text.BeforeDelimiter([name], ","), type text),
+				    #"Inserted Text Between Delimiters" = Table.AddColumn(#"Inserted Text Before Delimiter", "Text Between Delimiters", each Text.BetweenDelimiters([name], ", ", " "), type text),
+				    #"Inserted Text After Delimiter" = Table.AddColumn(#"Inserted Text Between Delimiters", "Text After Delimiter", each Text.AfterDelimiter([name], ", "), type text),
+				    #"Added Conditional Column" = Table.AddColumn(#"Inserted Text After Delimiter", "first_name", each if [Text Between Delimiters] = "" then [Text After Delimiter] else [Text Between Delimiters]),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column",{"Text Between Delimiters", "Text After Delimiter", "name"}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Removed Columns1", "name", each Text.Combine({[first_name], [last_name]}, " "), type text)
+				in
+				    #"Inserted Merged Column"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

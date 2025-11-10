@@ -114,14 +114,6 @@ table dispatcher_key
 
 		annotation SummarizationSetBy = Automatic
 
-	column Devision
-		dataType: string
-		lineageTag: 6e68814c-8e5e-4214-a4e2-df8a47ea733c
-		summarizeBy: none
-		sourceColumn: Devision
-
-		annotation SummarizationSetBy = Automatic
-
 	column Department
 		dataType: string
 		lineageTag: ec08ed91-bb2b-4bc3-ae18-151d36d68bac
@@ -135,6 +127,22 @@ table dispatcher_key
 		lineageTag: 671118c3-d10c-474e-97e0-9e6cbabf1ef7
 		summarizeBy: none
 		sourceColumn: users.revenue_code_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: 67514468-222e-49b6-9f39-76a9e519788b
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Office Payee ID'
+		dataType: string
+		lineageTag: 7f1c53cb-5658-4eb9-b28f-d1ab0b7e37da
+		summarizeBy: none
+		sourceColumn: Office Payee ID
 
 		annotation SummarizationSetBy = Automatic
 

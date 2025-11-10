@@ -5161,22 +5161,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "employee.devision": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "employees",
-			          "ConceptualProperty": "Devision"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "devision": {
-			            "State": "Generated"
-			          }
-			        }
-			      ]
-			    },
 			    "employee.hire_date": {
 			      "Definition": {
 			        "Binding": {
@@ -7142,7 +7126,19 @@ cultureInfo en-US
 			          "ConceptualProperty": "Count of orders covered"
 			        }
 			      },
-			      "State": "Generated"
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Load Count": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    },
 			    "measures_.count_of_orders_covered_mtd": {
 			      "Definition": {
@@ -12671,6 +12667,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.609
 			          }
+			        },
+			        {
+			          "Chipper City": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -14042,22 +14048,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "salesperson_key.devision": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "salesperson_key",
-			          "ConceptualProperty": "Devision"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "devision": {
-			            "State": "Generated"
-			          }
-			        }
-			      ]
-			    },
 			    "salesperson_key.hire_date": {
 			      "Definition": {
 			        "Binding": {
@@ -14255,6 +14245,16 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "Salesperson Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ],
@@ -20000,6 +20000,102 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "measures_.count_of_behaviors": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Count of Behaviors"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "behavior_key.mail_activity_type_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "behavior_key",
+			          "ConceptualProperty": "mail_activity_type_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Behavior Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.customers_served": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Customers Served"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Customers Served": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "behavior_kpi.calculation_group_column": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Behavior KPI",
+			          "ConceptualProperty": "Calculation group column"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "crm.name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "name"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "crm.x_studio_mcleod_code": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "x_studio_mcleod_code"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "crm.activity_date_deadline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "activity_date_deadline"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "crm.date_open": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "crm",
+			          "ConceptualProperty": "date_open"
+			        }
+			      },
+			      "State": "Generated"
 			    }
 			  },
 			  "Relationships": {

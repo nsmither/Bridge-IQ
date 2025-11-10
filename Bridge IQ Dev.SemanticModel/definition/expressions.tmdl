@@ -716,3 +716,27 @@ expression off_payee =
 
 	annotation PBI_ResultType = Table
 
+expression 'Errors in ffl week schedule' =
+		let
+		Source = #"ffl week schedule",
+		  #"Detected Type Mismatches" = let
+		    tableWithOnlyPrimitiveTypes = Table.SelectColumns(Source, Table.ColumnsOfType(Source, {type nullable number, type nullable text, type nullable logical, type nullable date, type nullable datetime, type nullable datetimezone, type nullable time, type nullable duration})),
+		    recordTypeFields = Type.RecordFields(Type.TableRow(Value.Type(tableWithOnlyPrimitiveTypes))),
+		    fieldNames = Record.FieldNames(recordTypeFields),
+		    fieldTypes = List.Transform(Record.ToList(recordTypeFields), each [Type]),
+		    pairs = List.Transform(List.Positions(fieldNames), (i) => {fieldNames{i}, (v) => if v = null or Value.Is(v, fieldTypes{i}) then v else error [Message = "The type of the value does not match the type of the column.", Detail = v], fieldTypes{i}})
+		in
+		    Table.TransformColumns(Source, pairs),
+		  #"Added Index" = Table.AddIndexColumn(#"Detected Type Mismatches", "Row Number" ,1),
+		  #"Kept Errors" = Table.SelectRowsWithErrors(#"Added Index", {"id", "Weeks ", "start of week", "end of week ", " team 1A", "team 1B", " team 2A", "team 2B"}),
+		  #"Reordered Columns" = Table.ReorderColumns(#"Kept Errors", {"Row Number", "id", "Weeks ", "start of week", "end of week ", " team 1A", "team 1B", " team 2A", "team 2B"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Reordered Columns",{{" team 1A", type text}, {"team 1B", type text}, {" team 2A", type text}, {"team 2B", type text}})
+		in
+		  #"Changed Type"
+	lineageTag: 4ae8eb2c-d515-4b92-b8a5-4eb32fb00f3e
+	queryGroup: 'Query Errors - 10/16/2025 9:01:05 AM'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

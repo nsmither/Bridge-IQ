@@ -1,6 +1,6 @@
 expression pcs_employees =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblEntities = ExpData_A{[Schema="dbo",Item="tblEntities"]}[Data],
 		    #"Removed Other Columns" = Table.SelectColumns(dbo_tblEntities,{"EntCode", "IDNo"})
@@ -15,7 +15,7 @@ expression pcs_employees =
 
 expression pcs_dispatchers =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblUserList = ExpData_A{[Schema="dbo",Item="tblUserList"]}[Data],
 		    #"Removed Columns" = Table.RemoveColumns(dbo_tblUserList,{"UserPassword", "OffCode", "DefOff", "CatCode", "MsgInterval", "PollerYN", "NotifyCode", "LiveUpdateYN", "Registration", "AlertsA", "AlertsD", "AlertsM", "QCUserName", "QCPassword", "QCSubscriberID", "QCPollInterval", "ShowWelcomeYN", "DefChkPrt", "DefInvPrt", "DefBOLPrt", "SignPath", "DefDocPrt", "AgentYN", "AlertsCC", "MsgIntervalLoads", "MsgIntervalEntries", "RemoteYN", "BackgroundImg", "AutoRefreshScreensYN", "AutoRefreshReportsYN", "ReportStartRange", "ReportAllowInactivesYN", "DirectPhone", "DivCode", "DefDiv", "TeamName", "DefBOLStyle", "EmailServer", "EmailPassword", "EmailServerSSL", "EmailServerPort", "UseCompDefMailYN", "p2", "p3", "p4", "PWUpdate", "PWFailedAttempts", "TempPWIssued", "ITSIntegrationID", "DAT_UserName", "DAT_PW", "DAT_TokenPrimary", "DAT_TokenSecondary", "DAT_LastCall", "DisplayLargeFonts", "RestrictAdminYN", "DeptMgrYN", "SalespersonYN", "FBTokenID", "PowBI_OpYN", "PowBI_DispYN", "PowBI_FinYN", "CameraYN", "Cam_AccelYN", "Cam_TurnsYN", "Cam_ShockYN", "Cam_PanicYN", "Cam_BreaksYN"}),
@@ -35,7 +35,7 @@ expression pcs_dispatchers =
 
 expression pcs_orders_dispatchers =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblLoads = ExpData_A{[Schema="dbo",Item="tblLoads"]}[Data],
 		    #"Filtered Rows" = Table.SelectRows(dbo_tblLoads, each ([Status] = "Arrived")),
@@ -64,64 +64,6 @@ expression stop_historic =
 		in
 		    #"Changed Type"
 	lineageTag: b3dd5e3a-6047-4487-aedf-02870170447d
-	queryGroup: 'Historic Tables'
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression pcs_orders =
-		let
-		    Source = Sql.Databases("blsql"),
-		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
-		    dbo_tblLoads = ExpData_A{[Schema="dbo",Item="tblLoads"]}[Data],
-		    #"Filtered Rows" = Table.SelectRows(dbo_tblLoads, each ([Status] = "Arrived")),
-		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"TotalSeats", "TotalTariff", "TotalAsWeight", "TotalSpace", "SealNo", "RateType", "RatingUnits", "RateDiscount", "DiscountAmt", "TotalAcc", "TotalCom", "Rate", "txtNotes", "SelectYN", "TripID", "MasterLoad", "TailgateYN", "UserName", "InvSelect", "InvUser", "InvoiceID", "InvoiceDate", "LoadClass", "OfficeCode", "IO", "Container", "Chassis", "Notify", "NotifyTime", "LFD", "RRP", "LE", "JobID", "ChassisPU", "ChassisDel", "BookingNo", "VesselName", "ShipperID", "ShipAddress", "ShipPhone", "ShipContact", "ShipRef", "ShipZone", "ConsigneeID", "ConsAddress", "ConsPhone", "ConsContact", "ConsRef", "ConsZone", "DropDate", "DropID", "DropName", "DropAddress", "DropCity", "DropSt", "DropZip", "XStopsYN", "RateMatrix", "RateMatrixAcc", "CarrierName", "UnitNumber", "TruckNumber", "TrailerNumber1", "TrailerNumber2", "ReqTemp", "Pallets", "PalletsPU", "PalletsPUDam", "PalletsPUVar", "PalletsDel", "PalletsDelDam", "PalletsDelVar", "PalletExchange", "HazardousYN", "FundsType", "DZone", "BillToName", "BillToRef", "LastTraceDate", "LastTracePos", "ETA", "FrtConYN", "VarianceYN", "SaveQuoteYN", "ReleaseNumber", "LdClearedYN", "EDI1", "EDI2", "EDI3", "EDI4", "EDI5", "AvailPU", "AvailDel", "ComValue", "BrokerageNotes", "PreBillYN", "MinRateYN", "LegTrackingYN", "WebPosted", "CarrierRate", "WebActiveLoad", "TotalComF", "TotalAccF", "TotalRevenueF", "DiscountAmtF", "RateF", "SatStatus", "ChargeVAT", "SteamshipLine", "PortOfDischarge", "ContainerTerm", "RejectYN", "RejectDate", "EquipmentX", "LFDX", "RateSource", "RateMatrixCom", "MileageSys", "MileageMeth", "DropRetDate", "DropRetTime", "CarrierComment", "SignedForBy", "ClosedBorderYN", "RBSentDT", "RBSentBy", "RBSentTo", "QuoteExpires", "SOID", "AgentBatchID", "EDIRefs", "DispSelect", "StartTrace", "EndTrace", "CarrierRateAcc", "CarrierRateAccName", "QRIDNo", "PendingYN", "ResponseType", "ResponseDT", "ResponseUser", "QRDocYN", "QREmail", "QRPhone", "QRContact", "QuoteID", "DelOptions", "TeamName", "ContainerTermLoc", "ChassisPULoc", "ChassisDelLoc", "IntOrigName", "IntOrigAddress", "IntOrigCity", "IntOrigSt", "IntOrigZip", "IntOrigZone", "IntOrigPhone", "IntOrigContact", "IntOrigRef", "IntDestName", "IntDestAddress", "IntDestCity", "IntDestSt", "IntDestZip", "IntDestZone", "IntDestPhone", "IntDestContact", "IntDestRef", "MacroPointOrderID", "DAT_AssetID", "WebPostedBy", "DropTrailerID1", "DropTrailerID2", "CarrierRev", "SatStatusDT", "CarrierPayType", "CarrierPayRate", "CarrierPayYN", "LastSendX6", "InvHoldYN", "SteamshipCode", "NextResID", "PreloadTrailerID1", "PreloadTrailerID2", "XTRemoveYN", "ContOwnerID", "ChasOwnerID", "RateWareYN", "LastX6Sent", "ContainerST", "ChassisST", "LastFTUpdate", "DistDateQ", "TimeRem", "LastSendFourKites", "TTYN", "Status", "LoadType", "DispUser", "DriverName"}),
-		    #"Added Prefix" = Table.TransformColumns(#"Removed Columns", {{"LoadID", each "PCS" & Text.From(_, "en-US"), type text}}),
-		    #"Renamed Columns" = Table.RenameColumns(#"Added Prefix",{{"LoadID", "id"}, {"DateReceived", "order_entered_date"}, {"PickupDate", "shipper_sched_early_date"}, {"PickupTime", "shipper_sched_early_time"}, {"PUWindow", "shipper_sched_late_time"}, {"DeliveryDate", "consignee_sched_early_date"}, {"DeliveryTime", "consignee_sched_early_time"}, {"DelWindow", "consignee_sched_late_time"}, {"MilesBilled", "bill_distance"}, {"TotalPieces", "pieces"}, {"TotalWeight", "weight"}, {"TotalRevenue", "freight_charge"}, {"Equipment", "equipment_type_id"}, {"ShipName", "shipper_location_name"}, {"ShipCity", "shipper_city_name"}, {"ShipSt", "shipper_state"}, {"ShipZip", "shipper_zip_code"}, {"ConsName", "consignee_location_name"}, {"ConsCity", "consignee_city_name"}, {"ConsSt", "consignee_state"}, {"ConsZip", "consignee_zip_code"}, {"Salesperson", "salesperson_id"}, {"Commodity", "commodity"}}),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"order_entered_date", type date}, {"shipper_sched_early_date", type date}, {"shipper_sched_early_time", type time}, {"shipper_sched_late_time", type time}, {"consignee_sched_early_date", type date}, {"consignee_sched_early_time", type time}, {"consignee_sched_late_time", type time}, {"freight_charge", Currency.Type}, {"salesperson_id", type text}}),
-		    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"salesperson_id"}, pcs_dispatchers, {"EmpIDNo"}, "tblUserList", JoinKind.LeftOuter),
-		    #"Expanded tblUserList" = Table.ExpandTableColumn(#"Merged Queries", "tblUserList", {"eMailAdd"}, {"tblUserList.eMailAdd"}),
-		    #"Removed Columns1" = Table.RemoveColumns(#"Expanded tblUserList",{"salesperson_id"}),
-		    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns1",{{"tblUserList.eMailAdd", "salesperson_id"}}),
-		    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns1","tcampbell@bridgelogisticsinc.com","CAMPFAO1",Replacer.ReplaceText,{"salesperson_id"}),
-		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","BSOLORIA@BRIDGELOGISTICSINC.COM","SOLOCLOH",Replacer.ReplaceText,{"salesperson_id"}),
-		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","jmarot@bridgelogisticsinc.com","MAROHAOH",Replacer.ReplaceText,{"salesperson_id"}),
-		    #"Merged Queries1" = Table.NestedJoin(#"Replaced Value2", {"BillToID"}, pcs_customers, {"IDNo"}, "pcs_customers", JoinKind.LeftOuter),
-		    #"Expanded pcs_customers" = Table.ExpandTableColumn(#"Merged Queries1", "pcs_customers", {"EntCode"}, {"pcs_customers.EntCode"}),
-		    #"Trimmed Text" = Table.TransformColumns(#"Expanded pcs_customers",{{"pcs_customers.EntCode", Text.Trim, type text}}),
-		    //start merging entity codes for matching
-		    #"Replaced Value3" = Table.ReplaceValue(#"Trimmed Text","V5978","V6064",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","V37123","V18661",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","V26458","V18025",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5","V24526","V38482",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6","V24303","V20643",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value7","V18231","V20643",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value10" = Table.ReplaceValue(#"Replaced Value8","V12320","V6978",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value12" = Table.ReplaceValue(#"Replaced Value10","V10210","V10208",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Replaced Value11" = Table.ReplaceValue(#"Replaced Value12","v11634","V7430",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Merged Queries2" = Table.NestedJoin(#"Replaced Value11", {"pcs_customers.EntCode"}, custmers_pcs_sync, {"prev_code"}, "customer", JoinKind.LeftOuter),
-		    #"Replaced Value9" = Table.ReplaceValue(#"Merged Queries2","V17061","V11634",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
-		    #"Expanded customer" = Table.ExpandTableColumn(#"Replaced Value9", "customer", {"id"}, {"customer.id"}),
-		    #"Renamed Columns2" = Table.RenameColumns(#"Expanded customer",{{"customer.id", "customer.id_old"}}),
-		    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns2", "customer_id", each if [pcs_customers.EntCode] = "V11634" then "PARIDUIA" else [customer.id_old]),
-		    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"customer.id_old", "BillToID", "pcs_customers.EntCode"}),
-		    #"Added Custom" = Table.AddColumn(#"Removed Columns2", "status", each "D"),
-		    #"Inserted First Characters" = Table.AddColumn(#"Added Custom", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
-		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
-		    //Start Add Lane
-		    #"Trimmed Text1" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
-		    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text1", "shipper_city_name", "shipper_city_name - Copy"),
-		    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
-		    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
-		    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
-		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
-		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
-		    //End Add Lane
-		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
-		in
-		    #"Merged Columns2"
-	lineageTag: 4f815021-5764-4bb3-8b46-a88a5802f2ae
 	queryGroup: 'Historic Tables'
 
 	annotation PBI_NavigationStepName = Navigation
@@ -160,17 +102,18 @@ expression mcleod_historic_orders =
 		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
 		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
 		    //End Add Lane
-		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
+		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane"),
+		    #"Trimmed Text1" = Table.TransformColumns(#"Merged Columns2",{{"shipper_stop_id", Text.Trim, type text}})
 		in
-		    #"Merged Columns2"
+		    #"Trimmed Text1"
 	lineageTag: ecc7d6f2-89e7-440c-8625-c2621e2e918e
 	queryGroup: 'Historic Tables'
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
-expression RefreshCutOffDate = #datetime(2024, 10, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+expression RefreshCutOffDate = #datetime(2025, 7, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: af39c097-cda3-4307-8194-af7487559d9a
 	queryGroup: Parameters
 
@@ -178,7 +121,7 @@ expression RefreshCutOffDate = #datetime(2024, 10, 1, 0, 0, 0) meta [IsParameter
 
 	annotation PBI_ResultType = DateTime
 
-expression MovementCutOffNumber = 147510 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
+expression MovementCutOffNumber = 192267 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
 	lineageTag: 7b1d95af-7d84-440e-87b8-e089fa08fe15
 	queryGroup: Parameters
 
@@ -188,7 +131,7 @@ expression MovementCutOffNumber = 147510 meta [IsParameterQuery=true, Type="Numb
 
 expression pcs_customers =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblEntities = ExpData_A{[Schema="dbo",Item="tblEntities"]}[Data],
 		    #"Filtered Rows" = Table.SelectRows(dbo_tblEntities, each ([EntType] = "Customer"))
@@ -217,7 +160,7 @@ expression custmers_pcs_sync =
 
 expression pcs_movements =
 		let
-		    Source = Sql.Databases("blsql"),
+		    Source = Sql.Databases("bl-mcbiserver"),
 		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
 		    dbo_tblLoadDispatch = ExpData_A{[Schema="dbo",Item="tblLoadDispatch"]}[Data],
 		    #"Removed Columns" = Table.RemoveColumns(dbo_tblLoadDispatch,{"TripID", "UnitID", "UnitNumber", "DriverID", "CoDriverID", "CoDriverName", "TruckID", "TruckNumber", "TrailerID1", "TrailerNumber1", "TrailerID2", "TrailerNumber2", "CarrierID", "CarrierName", "PayCode", "PayType", "TotalPay", "EMI", "EMO", "EmptyRate", "RevShare", "PUCus", "PUZone", "DropDate", "DropCus", "DropName", "DropAddress", "DropCity", "DropState", "DropZip", "DropZone", "DropTimeIn", "DropTimeOut", "DelCus", "DelZone", "AccTimeIn", "AccTimeOut", "CoDriverPay", "BackupDate", "BackupRecYN", "BatchID", "SelectedYN", "txtNotes", "EntCode", "PayMatrix", "InputUser", "InputDate", "InputTime", "Activity_ctr_Cont", "Activity_ctr_Chassis", "LoadClass", "PayUnits", "CarrierRef", "CarrierContact", "LastAction", "ChassisNo", "AccSplitID", "ContainerNo", "LoadAccID", "PUAddress", "DelAddress", "PaySource", "MainDispID", "DropRetDate", "DropRetTime", "AgentBatchID", "FuelMatrixID", "OwnerID", "CurCode", "DriverPayF", "ActDateO", "ActTimeInO", "ActTimeOutO", "ActDateD", "ActTimeInD", "ActTimeOutD", "DispHours", "TrailerID3", "TrailerNumber3", "DelOptions", "PullOptionC", "PullOptionX", "DPLocC", "DPLocX", "DPDateC", "DPDateX", "DPTimeInC", "DPTimeOutC", "DPTimeInX", "DPTimeOutX", "ActDPDateC", "ActDPDateX", "ActDPTimeInC", "ActDPTimeOutC", "ActDPTimeInX", "ActDPTimeOutX", "LinkedOutbound", "DPContainer", "DPChassis", "EmptyPullYN", "ChassisPULoc", "ChassisPUDate", "ChassisPUTimeIn", "ChassisPUTimeOut", "ChassisDelLoc", "ChassisDelDate", "ChassisDelTimeIn", "ChassisDelTimeOut", "ActChassisPUDate", "ActChassisPUTimeIn", "ActChassisPUTimeOut", "ActChassisDelDate", "ActChassisDelTimeIn", "ActChassisDelTimeOut", "ChassisOption", "IntEmptyPayType", "LateReason", "EDIStatusCode", "EDIPostBy", "EDIPostDate", "IntEmptyPayMatrix", "PrevVersionYN", "MacroPointOrderID", "DropTrailerID1", "DropTrailerID2", "TrailerCharge", "AllowRejectYN", "PreloadTrailer1YN", "PreloadTrailer2YN", "AutoDispatchYN", "AutoSendSatYN", "DropTrailer1YN", "DropTrailer2YN", "RejectedDT", "StreetTurnYN", "IMLHRate", "IMFuelRate", "IMInsRate", "IMLHAmt", "IMFuelAmt", "IMInsAmt", "PUName", "PUCity", "PUState", "PUZip", "PUTimeIn", "PUTimeOut", "DelName", "DelCity", "DelState", "DelZip", "DelDate", "DelTimeIn", "DelTimeOut", "Status", "PUDate", "DispatchDate", "DispatchTime", "DriverPay", "DispatchCode", "DriverName"}),
@@ -461,9 +404,9 @@ expression historic_callins =
 		    #"Removed Other Columns" = Table.SelectColumns(dbo_callin,{"entered_by", "entered_date", "movement_status", "payee_id", "initiated_type", "movement_id"}),
 		    #"Filtered callins before RefreshCutOffDate" = Table.SelectRows(#"Removed Other Columns", each [entered_date] < RefreshCutOffDate),
 		    #"Inserted Time" = Table.AddColumn(#"Filtered callins before RefreshCutOffDate", "Time", each DateTime.Time([entered_date]), type time),
-		    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}}),
-		    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"entered_date", DateTime.Date, type date}}),
-		    #"Calculated Start of Hour" = Table.TransformColumns(#"Extracted Date",{{"entered_time", Time.StartOfHour, type time}})
+		    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time", "entered_time"}, {"entered_date", "entered_date_time"}}),
+		    #"Inserted Date" = Table.AddColumn(#"Renamed Columns", "Date", each DateTime.Date([entered_date_time]), type date),
+		    #"Calculated Start of Hour" = Table.TransformColumns(#"Inserted Date",{{"entered_time", Time.StartOfHour, type time}})
 		in
 		    #"Calculated Start of Hour"
 	lineageTag: 56bd229e-e47a-4149-814e-6b72b080d909
@@ -600,9 +543,10 @@ expression historic_behaviors =
 		    #"Renamed Columns2" = Table.RenameColumns(#"Inserted Time",{{"date", "Behavior Date"}, {"Time", "Behavior Time"}}),
 		    #"Filtered Rows3" = Table.SelectRows(#"Renamed Columns2", each [Behavior Date] < RefreshCutOffDate),
 		    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows3",{{"Behavior Date", type date}}),
-		    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date)
+		    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type1", "Start of Month", each Date.StartOfMonth([Behavior Date]), type date),
+		    #"Calculated Start of Hour" = Table.TransformColumns(#"Inserted Start of Month",{{"Behavior Time", Time.StartOfHour, type time}})
 		in
-		    #"Inserted Start of Month"
+		    #"Calculated Start of Hour"
 	lineageTag: 797f4845-cadf-4720-8f56-c0abeae60b99
 	queryGroup: 'Historic Tables'
 
@@ -652,6 +596,107 @@ expression parade_orders =
 		in
 		    #"Appended Query"
 	lineageTag: 61f23af1-ed35-407d-a264-f6699d7ceacf
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression pcs_orders =
+		let
+		    Source = Sql.Databases("bl-mcbiserver"),
+		    ExpData_A = Source{[Name="ExpData_A"]}[Data],
+		    dbo_tblLoads = ExpData_A{[Schema="dbo",Item="tblLoads"]}[Data],
+		    #"Filtered Rows" = Table.SelectRows(dbo_tblLoads, each ([Status] = "Arrived")),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"TotalSeats", "TotalTariff", "TotalAsWeight", "TotalSpace", "SealNo", "RateType", "RatingUnits", "RateDiscount", "DiscountAmt", "TotalAcc", "TotalCom", "Rate", "txtNotes", "SelectYN", "TripID", "MasterLoad", "TailgateYN", "UserName", "InvSelect", "InvUser", "InvoiceID", "InvoiceDate", "LoadClass", "OfficeCode", "IO", "Container", "Chassis", "Notify", "NotifyTime", "LFD", "RRP", "LE", "JobID", "ChassisPU", "ChassisDel", "BookingNo", "VesselName", "ShipperID", "ShipAddress", "ShipPhone", "ShipContact", "ShipRef", "ShipZone", "ConsigneeID", "ConsAddress", "ConsPhone", "ConsContact", "ConsRef", "ConsZone", "DropDate", "DropID", "DropName", "DropAddress", "DropCity", "DropSt", "DropZip", "XStopsYN", "RateMatrix", "RateMatrixAcc", "CarrierName", "UnitNumber", "TruckNumber", "TrailerNumber1", "TrailerNumber2", "ReqTemp", "Pallets", "PalletsPU", "PalletsPUDam", "PalletsPUVar", "PalletsDel", "PalletsDelDam", "PalletsDelVar", "PalletExchange", "HazardousYN", "FundsType", "DZone", "BillToName", "BillToRef", "LastTraceDate", "LastTracePos", "ETA", "FrtConYN", "VarianceYN", "SaveQuoteYN", "ReleaseNumber", "LdClearedYN", "EDI1", "EDI2", "EDI3", "EDI4", "EDI5", "AvailPU", "AvailDel", "ComValue", "BrokerageNotes", "PreBillYN", "MinRateYN", "LegTrackingYN", "WebPosted", "CarrierRate", "WebActiveLoad", "TotalComF", "TotalAccF", "TotalRevenueF", "DiscountAmtF", "RateF", "SatStatus", "ChargeVAT", "SteamshipLine", "PortOfDischarge", "ContainerTerm", "RejectYN", "RejectDate", "EquipmentX", "LFDX", "RateSource", "RateMatrixCom", "MileageSys", "MileageMeth", "DropRetDate", "DropRetTime", "CarrierComment", "SignedForBy", "ClosedBorderYN", "RBSentDT", "RBSentBy", "RBSentTo", "QuoteExpires", "SOID", "AgentBatchID", "EDIRefs", "DispSelect", "StartTrace", "EndTrace", "CarrierRateAcc", "CarrierRateAccName", "QRIDNo", "PendingYN", "ResponseType", "ResponseDT", "ResponseUser", "QRDocYN", "QREmail", "QRPhone", "QRContact", "QuoteID", "DelOptions", "TeamName", "ContainerTermLoc", "ChassisPULoc", "ChassisDelLoc", "IntOrigName", "IntOrigAddress", "IntOrigCity", "IntOrigSt", "IntOrigZip", "IntOrigZone", "IntOrigPhone", "IntOrigContact", "IntOrigRef", "IntDestName", "IntDestAddress", "IntDestCity", "IntDestSt", "IntDestZip", "IntDestZone", "IntDestPhone", "IntDestContact", "IntDestRef", "MacroPointOrderID", "DAT_AssetID", "WebPostedBy", "DropTrailerID1", "DropTrailerID2", "CarrierRev", "SatStatusDT", "CarrierPayType", "CarrierPayRate", "CarrierPayYN", "LastSendX6", "InvHoldYN", "SteamshipCode", "NextResID", "PreloadTrailerID1", "PreloadTrailerID2", "XTRemoveYN", "ContOwnerID", "ChasOwnerID", "RateWareYN", "LastX6Sent", "ContainerST", "ChassisST", "LastFTUpdate", "DistDateQ", "TimeRem", "LastSendFourKites", "TTYN", "Status", "LoadType", "DispUser", "DriverName"}),
+		    #"Added Prefix" = Table.TransformColumns(#"Removed Columns", {{"LoadID", each "PCS" & Text.From(_, "en-US"), type text}}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Prefix",{{"LoadID", "id"}, {"DateReceived", "order_entered_date"}, {"PickupDate", "shipper_sched_early_date"}, {"PickupTime", "shipper_sched_early_time"}, {"PUWindow", "shipper_sched_late_time"}, {"DeliveryDate", "consignee_sched_early_date"}, {"DeliveryTime", "consignee_sched_early_time"}, {"DelWindow", "consignee_sched_late_time"}, {"MilesBilled", "bill_distance"}, {"TotalPieces", "pieces"}, {"TotalWeight", "weight"}, {"TotalRevenue", "freight_charge"}, {"Equipment", "equipment_type_id"}, {"ShipName", "shipper_location_name"}, {"ShipCity", "shipper_city_name"}, {"ShipSt", "shipper_state"}, {"ShipZip", "shipper_zip_code"}, {"ConsName", "consignee_location_name"}, {"ConsCity", "consignee_city_name"}, {"ConsSt", "consignee_state"}, {"ConsZip", "consignee_zip_code"}, {"Salesperson", "salesperson_id"}, {"Commodity", "commodity"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"order_entered_date", type date}, {"shipper_sched_early_date", type date}, {"shipper_sched_early_time", type time}, {"shipper_sched_late_time", type time}, {"consignee_sched_early_date", type date}, {"consignee_sched_early_time", type time}, {"consignee_sched_late_time", type time}, {"freight_charge", Currency.Type}, {"salesperson_id", type text}}),
+		    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"salesperson_id"}, pcs_dispatchers, {"EmpIDNo"}, "tblUserList", JoinKind.LeftOuter),
+		    #"Expanded tblUserList" = Table.ExpandTableColumn(#"Merged Queries", "tblUserList", {"eMailAdd"}, {"tblUserList.eMailAdd"}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Expanded tblUserList",{"salesperson_id"}),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns1",{{"tblUserList.eMailAdd", "salesperson_id"}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns1","tcampbell@bridgelogisticsinc.com","CAMPFAO1",Replacer.ReplaceText,{"salesperson_id"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","BSOLORIA@BRIDGELOGISTICSINC.COM","SOLOCLOH",Replacer.ReplaceText,{"salesperson_id"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","jmarot@bridgelogisticsinc.com","MAROHAOH",Replacer.ReplaceText,{"salesperson_id"}),
+		    #"Merged Queries1" = Table.NestedJoin(#"Replaced Value2", {"BillToID"}, pcs_customers, {"IDNo"}, "pcs_customers", JoinKind.LeftOuter),
+		    #"Expanded pcs_customers" = Table.ExpandTableColumn(#"Merged Queries1", "pcs_customers", {"EntCode"}, {"pcs_customers.EntCode"}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Expanded pcs_customers",{{"pcs_customers.EntCode", Text.Trim, type text}}),
+		    //start merging entity codes for matching
+		    #"Replaced Value3" = Table.ReplaceValue(#"Trimmed Text","V5978","V6064",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","V37123","V18661",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","V26458","V18025",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5","V24526","V38482",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6","V24303","V20643",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value7","V18231","V20643",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value10" = Table.ReplaceValue(#"Replaced Value8","V12320","V6978",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value12" = Table.ReplaceValue(#"Replaced Value10","V10210","V10208",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Replaced Value11" = Table.ReplaceValue(#"Replaced Value12","v11634","V7430",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Merged Queries2" = Table.NestedJoin(#"Replaced Value11", {"pcs_customers.EntCode"}, custmers_pcs_sync, {"prev_code"}, "customer", JoinKind.LeftOuter),
+		    #"Replaced Value9" = Table.ReplaceValue(#"Merged Queries2","V17061","V11634",Replacer.ReplaceText,{"pcs_customers.EntCode"}),
+		    #"Expanded customer" = Table.ExpandTableColumn(#"Replaced Value9", "customer", {"id"}, {"customer.id"}),
+		    #"Renamed Columns2" = Table.RenameColumns(#"Expanded customer",{{"customer.id", "customer.id_old"}}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns2", "customer_id", each if [pcs_customers.EntCode] = "V11634" then "PARIDUIA" else [customer.id_old]),
+		    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"customer.id_old", "BillToID", "pcs_customers.EntCode"}),
+		    #"Added Custom" = Table.AddColumn(#"Removed Columns2", "status", each "D"),
+		    #"Inserted First Characters" = Table.AddColumn(#"Added Custom", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
+		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+		    //Start Add Lane
+		    #"Trimmed Text1" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text1", "shipper_city_name", "shipper_city_name - Copy"),
+		    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
+		    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
+		    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
+		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
+		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
+		    //End Add Lane
+		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
+		in
+		    #"Merged Columns2"
+	lineageTag: 9009ad3a-1b21-4b7d-b2b1-96c10be3855c
+	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Contacts =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/CRM/new_contacts.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Sheet1_Sheet, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"is_company", type logical}, {"x_studio_mcleod_code", type any}, {"parent_id", type any}, {"name", type text}, {"city", type any}, {"phone", type any}, {"x_studio_zoominfo_contact_id", type any}, {"user_id", type any}, {"x_studio_sdr", type logical}, {"x_studio_last_stage_update", type any}, {"x_studio_zoominfo_company_id", type any}, {"activity_date_deadline", type any}, {"x_studio_lead_type", type any}, {"x_studio_originally_passed_to", type logical}, {"x_studio_do_not_move", type logical}, {"x_studio_lead_passed_date", type any}, {"x_studio_enrichment_date", type any}, {"x_studio_revenue_range", type any}, {"x_studio_last_salesperson_update", type datetime}, {"x_studio_primary_industry", type any}, {"state_id", type any}, {"x_res_partner_prospecting_stage", type any}, {"x_studio_last_activity_date", type any}, {"x_studio_working_start_date", type any}, {"x_studio_working_end_date", type any}, {"x_studio_no_for_now_start_date", type any}, {"x_studio_no_for_now_end_date", type logical}, {"x_studio_hope_island_start_date", type logical}, {"x_studio_hope_island_end_date", type logical}, {"x_studio_qualified_start_date", type logical}, {"x_studio_qualified_end_date", type logical}, {"x_studio_quoted_start_date", type logical}, {"x_studio_quoted_end_date", type logical}, {"x_studio_credit_app_start_date", type logical}, {"x_studio_credit_app_end_date", type any}, {"x_studio_1_3_loads_start_date", type logical}, {"x_studio_1_3_loads_end_date", type logical}, {"x_studio_customer_start_date", type any}, {"x_studio_customer_end_date", type logical}, {"category_names", type text}, {"user_login", type text}}),
+		    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Changed Type", {{"user_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters1" = Table.TransformColumns(#"Extracted Text Between Delimiters", {{"x_studio_sdr", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters2" = Table.TransformColumns(#"Extracted Text Between Delimiters1", {{"x_studio_originally_passed_to", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters3" = Table.TransformColumns(#"Extracted Text Between Delimiters2", {{"x_studio_revenue_range", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters4" = Table.TransformColumns(#"Extracted Text Between Delimiters3", {{"x_studio_primary_industry", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters5" = Table.TransformColumns(#"Extracted Text Between Delimiters4", {{"state_id", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters6" = Table.TransformColumns(#"Extracted Text Between Delimiters5", {{"x_res_partner_prospecting_stage", each Text.BetweenDelimiters(_, "'", "'"), type text}}),
+		    #"Extracted Text Between Delimiters7" = Table.TransformColumns(#"Extracted Text Between Delimiters6", {{"parent_id", each Text.BetweenDelimiters(Text.From(_, "en-US"), "'", "'"), type text}}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Extracted Text Between Delimiters7",{{"x_studio_last_stage_update", type datetime}, {"activity_date_deadline", type datetime}, {"x_studio_last_salesperson_update", type datetime}, {"x_studio_last_activity_date", type datetime}, {"x_studio_working_start_date", type datetime}, {"x_studio_working_end_date", type datetime}, {"x_studio_no_for_now_start_date", type datetime}, {"x_studio_no_for_now_end_date", type datetime}, {"x_studio_hope_island_start_date", type datetime}, {"x_studio_hope_island_end_date", type datetime}, {"x_studio_qualified_start_date", type datetime}, {"x_studio_qualified_end_date", type datetime}, {"x_studio_quoted_start_date", type datetime}, {"x_studio_quoted_end_date", type datetime}, {"x_studio_credit_app_start_date", type datetime}, {"x_studio_credit_app_end_date", type datetime}, {"x_studio_1_3_loads_start_date", type datetime}, {"x_studio_1_3_loads_end_date", type datetime}, {"x_studio_customer_start_date", type datetime}, {"x_studio_customer_end_date", type datetime}}),
+		    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type1", {{"x_studio_last_stage_update", null},{"activity_date_deadline", null},{"x_studio_last_activity_date", null},{"x_studio_working_start_date", null},{"x_studio_working_end_date", null},{"x_studio_no_for_now_start_date", null},{"x_studio_no_for_now_end_date", null},{"x_studio_hope_island_start_date", null},{"x_studio_hope_island_end_date", null},{"x_studio_qualified_start_date", null},{"x_studio_qualified_end_date", null},{"x_studio_quoted_start_date", null},{"x_studio_quoted_end_date", null},{"x_studio_credit_app_start_date", null},{"x_studio_credit_app_end_date", null},{"x_studio_1_3_loads_start_date", null},{"x_studio_1_3_loads_end_date", null},{"x_studio_customer_start_date", null},{"x_studio_customer_end_date", null}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Replaced Errors",false,null,Replacer.ReplaceValue,{"x_studio_mcleod_code"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","",null,Replacer.ReplaceValue,{"parent_id"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1",false,null,Replacer.ReplaceValue,{"city"}),
+		    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2",false,null,Replacer.ReplaceValue,{"phone"}),
+		    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3",false,null,Replacer.ReplaceValue,{"x_studio_zoominfo_contact_id"}),
+		    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","",null,Replacer.ReplaceValue,{"user_id"}),
+		    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Replaced Value5", {{"x_studio_sdr", null}}),
+		    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Errors1","",null,Replacer.ReplaceValue,{"x_studio_sdr"}),
+		    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6",false,null,Replacer.ReplaceValue,{"x_studio_lead_type"}),
+		    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Replaced Value7", {{"x_studio_originally_passed_to", null}}),
+		    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Errors2","",null,Replacer.ReplaceValue,{"x_studio_originally_passed_to"}),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Value8",{{"x_studio_enrichment_date", type date}}),
+		    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type2", {{"x_studio_enrichment_date", null}}),
+		    #"Replaced Value9" = Table.ReplaceValue(#"Replaced Errors3","",null,Replacer.ReplaceValue,{"x_studio_revenue_range"}),
+		    #"Replaced Value10" = Table.ReplaceValue(#"Replaced Value9","",null,Replacer.ReplaceValue,{"x_studio_primary_industry"}),
+		    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Replaced Value10", {{"state_id", null}}),
+		    #"Replaced Errors5" = Table.ReplaceErrorValues(#"Replaced Errors4", {{"x_res_partner_prospecting_stage", null}}),
+		    #"Replaced Errors6" = Table.ReplaceErrorValues(#"Replaced Errors5", {{"x_studio_last_salesperson_update", null}})
+		in
+		    #"Replaced Errors6"
+	lineageTag: a86aa7ea-8ec8-4b2b-9536-14c46f5da6d7
+	queryGroup: 'Historic Tables'
 
 	annotation PBI_NavigationStepName = Navigation
 

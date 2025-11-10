@@ -1,8 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
-  "name": "aff4614064215b189260",
-  "displayName": "TQL Commission without transitions",
-  "displayOption": "FitToPage",
-  "height": 720,
-  "width": 1280
-}

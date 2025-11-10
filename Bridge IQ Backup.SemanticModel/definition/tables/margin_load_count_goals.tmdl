@@ -71,7 +71,7 @@ table margin_load_count_goals
 
 	column Column8
 		dataType: string
-		lineageTag: c33e9fbc-a88a-464d-acd9-a23c15b492f7
+		lineageTag: c432ccea-425a-4f65-b09f-7ebec3a6b1c9
 		summarizeBy: none
 		sourceColumn: Column8
 
@@ -79,7 +79,7 @@ table margin_load_count_goals
 
 	column Column9
 		dataType: string
-		lineageTag: 01760c08-ac6a-41a6-be99-9c13f7248efc
+		lineageTag: da290cb4-52c7-421f-ad9f-895379a58e7a
 		summarizeBy: none
 		sourceColumn: Column9
 
@@ -87,7 +87,7 @@ table margin_load_count_goals
 
 	column Column10
 		dataType: string
-		lineageTag: f021c520-2b3f-49d7-8167-78db9e0a33ac
+		lineageTag: 0505da06-51ca-46b5-ae4b-54157757b3a3
 		summarizeBy: none
 		sourceColumn: Column10
 
@@ -95,7 +95,7 @@ table margin_load_count_goals
 
 	column Column11
 		dataType: string
-		lineageTag: 2926a710-2e56-4df8-a8b9-2346f1972e6f
+		lineageTag: bf0af2f6-8766-40de-b043-c03e339a4bd2
 		summarizeBy: none
 		sourceColumn: Column11
 
@@ -103,25 +103,9 @@ table margin_load_count_goals
 
 	column Column12
 		dataType: string
-		lineageTag: d4346899-421b-4429-b834-40e1c9d71104
+		lineageTag: fdfbf07c-a118-44d4-9a4a-3b978c02db04
 		summarizeBy: none
 		sourceColumn: Column12
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column13
-		dataType: string
-		lineageTag: 73e0515a-2b36-4daa-abb6-375e7b67ff56
-		summarizeBy: none
-		sourceColumn: Column13
-
-		annotation SummarizationSetBy = Automatic
-
-	column Column14
-		dataType: string
-		lineageTag: 7db49992-96e2-41cd-a284-97c4530f82ec
-		summarizeBy: none
-		sourceColumn: Column14
 
 		annotation SummarizationSetBy = Automatic
 

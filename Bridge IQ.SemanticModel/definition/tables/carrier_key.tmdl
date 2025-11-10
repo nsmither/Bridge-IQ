@@ -57,15 +57,42 @@ table carrier_key
 
 		annotation SummarizationSetBy = Automatic
 
+	column dot_number
+		dataType: string
+		lineageTag: 52fcdf4c-17d2-4a20-8186-c2e1597f8cb0
+		summarizeBy: none
+		sourceColumn: dot_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column mc_number
+		dataType: string
+		lineageTag: 19a0e7be-5468-4e0e-94ee-2eacd68c382e
+		summarizeBy: none
+		sourceColumn: mc_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column factoring_company_id
+		dataType: string
+		lineageTag: 6fd27678-051b-46df-bb69-c25baf546b67
+		summarizeBy: none
+		sourceColumn: factoring_company_id
+
+		annotation SummarizationSetBy = Automatic
+
 	partition carrier_key = m
 		mode: import
 		source =
 				let
 				    Source = Sql.Database("bl-appdb", "lme"),
 				    dbo_payee = Source{[Schema="dbo",Item="payee"]}[Data],
-				    #"Removed Other Columns" = Table.SelectColumns(dbo_payee,{"address1", "city", "id", "name", "state", "status", "zip_code"})
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_payee,{"address1", "city", "id", "name", "state", "status", "zip_code"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns", {"id"}, drs_payee, {"id"}, "drs_payee", JoinKind.LeftOuter),
+				    #"Expanded drs_payee" = Table.ExpandTableColumn(#"Merged Queries", "drs_payee", {"dot_number", "factoring_company_id", "icc_number"}, {"dot_number", "factoring_company_id", "icc_number"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded drs_payee",{{"icc_number", "mc_number"}})
 				in
-				    #"Removed Other Columns"
+				    #"Renamed Columns"
 
 	annotation PBI_NavigationStepName = Navigation
 

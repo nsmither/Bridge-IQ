@@ -18,11 +18,13 @@ relationship 3b645fbf-1a85-2d14-049b-7ea5a3187aca
 
 relationship 7850b1cc-8ad4-c1b1-ddf4-55b266d0bf32
 	isActive: false
+	crossFilteringBehavior: bothDirections
 	fromColumn: orders.shipper_stop_id
 	toColumn: stop.id
 
 relationship 779f5544-eab0-74a9-bad6-7588d81e623d
 	isActive: false
+	crossFilteringBehavior: bothDirections
 	fromColumn: orders.consignee_stop_id
 	toColumn: stop.id
 
@@ -57,7 +59,6 @@ relationship d4ef4df2-bec2-44d5-bf6e-66c89dcd2ef0
 	toColumn: Calendar.Date
 
 relationship d11a4704-dac2-0387-6936-11ef3940a42d
-	isActive: false
 	fromColumn: orders.shipper_sched_early_date
 	toColumn: Calendar.Date
 
@@ -138,7 +139,7 @@ relationship 4a96cf76-d46c-91c7-0346-12330f400b79
 
 relationship 8714dc3c-4744-58cf-30fd-cc1bd116d520
 	isActive: false
-	fromColumn: callins.entered_date
+	fromColumn: callins.entered_date_time
 	toColumn: Calendar.Date
 
 relationship 9c9f9ee7-aadc-8abf-19fa-be24e4230ebf
@@ -231,6 +232,7 @@ relationship 30fc2257-db24-5b7f-69f4-4cac84f7474f
 	toColumn: salesperson_key.Name
 
 relationship 4356cecc-3a49-50e0-30e2-1296be23ba81
+	isActive: false
 	fromColumn: behaviors.author_id
 	toColumn: salesperson_key.Name
 
@@ -326,60 +328,12 @@ relationship 646c1a80-76eb-d026-541d-f24cb7513861
 	fromColumn: salesperson_key.'users.revenue_code_id'
 	toColumn: rev_codes.rev_code_id
 
-relationship f5de2138-734f-d1f0-c3e9-1e4db079f31c
-	isActive: false
-	fromColumn: crm.user_id
-	toColumn: salesperson_key.Name
-
-relationship 82c544f0-1454-b8bc-6636-53d24c9c968d
-	fromColumn: behaviors.res_id
-	toColumn: crm.id
-
-relationship 0f21aa1b-6b85-8918-e339-9d77cc645f4e
-	crossFilteringBehavior: bothDirections
-	fromColumn: crm.x_studio_mcleod_code
-	toColumn: customer.id
-
-relationship 505e4f7a-91da-3795-4f6c-0ce71fe9a849
-	fromColumn: crm.Stage
-	toColumn: crm_stages.'Stage Name'
-
-relationship 3b1e061c-a5ff-e2d1-f792-0655bae1a0fe
-	isActive: false
-	fromColumn: crm.activity_date_deadline
-	toColumn: Calendar.Date
-
-relationship e3d150d3-95a8-be74-fb25-f8dbed528f15
-	isActive: false
-	fromColumn: crm.date_open
-	toColumn: Calendar.Date
-
-relationship 381bfd96-8b6a-75a1-cbd3-a66ebf4bc532
-	isActive: false
-	fromColumn: crm.'Last Stage Change'
-	toColumn: Calendar.Date
-
-relationship f0de3666-daea-391d-95c0-9e626b3fd4ac
-	isActive: false
-	fromColumn: crm.x_studio_enrichment_date
-	toColumn: Calendar.Date
-
-relationship 5bcae216-568f-9183-68ca-54fcb10620d3
-	isActive: false
-	fromColumn: crm.x_studio_lead_passed_date
-	toColumn: Calendar.Date
-
 relationship 5ecbe4d8-a96b-f32b-3c0f-b5a97190a921
 	fromColumn: movements.override_payee_id
 	toColumn: carrier_key.id
 
 relationship AutoDetected_c95c3e67-b4b1-4b4b-8a21-220baa5e0198
 	fromColumn: job_history.Division
-	toColumn: division_key.Division
-
-relationship 74d5951a-5976-dd47-ee9d-179d8dafcd2f
-	isActive: false
-	fromColumn: salesperson_key.Devision
 	toColumn: division_key.Division
 
 relationship 1959e8d0-2212-ed49-38cb-7604b93b7428
@@ -402,10 +356,6 @@ relationship 1b268b65-e261-470c-8a0d-ca966e3223f0
 	fromColumn: crt_movement_data.'Ship date at Avail'
 	toColumn: LocalDateTable_67948750-4a55-4170-865e-d76c6427f063.Date
 
-relationship b7086df5-a15e-acff-d67c-d6cd33ee67fa
-	fromColumn: account_rep.wolf_pack
-	toColumn: wolf_pack.wolf_pack
-
 relationship ff88e45c-e612-46ba-ab09-9a3fade68d98
 	fromColumn: rev_codes.account_rep
 	toColumn: account_rep.account_rep
@@ -414,4 +364,147 @@ relationship 9ee75757-9d7d-4c5d-bf3a-b3a04654cfd0
 	joinOnDateBehavior: datePartOnly
 	fromColumn: orders.bol_recv_date
 	toColumn: LocalDateTable_2a3d8ac1-aff0-4e32-a507-1f99a679e947.Date
+
+relationship AutoDetected_b25812e3-1f55-45da-8671-626e9a88349f
+	isActive: false
+	fromColumn: employees.Division
+	toColumn: division_key.Division
+
+relationship AutoDetected_c5451f5b-3c3a-4fdc-8816-2cd909c635ac
+	isActive: false
+	fromColumn: salesperson_key.Division
+	toColumn: division_key.Division
+
+relationship AutoDetected_af962227-f3f9-4a2c-9e12-611f5b64e093
+	isActive: false
+	fromColumn: dispatcher_key.Division
+	toColumn: division_key.Division
+
+relationship f4527fa5-8422-f889-4042-2b8f1f182c2c
+	isActive: false
+	fromColumn: callins.Date
+	toColumn: Calendar.Date
+
+relationship eee45f7d-4246-d806-b3e7-f54e110d69ae
+	fromColumn: behaviors.res_id
+	toColumn: odoo.id
+
+relationship 26b17c27-a550-704a-20d1-bbcca97c182b
+	fromColumn: odoo.x_res_partner_prospecting_stage
+	toColumn: crm_stages.'Stage Name'
+
+relationship b31e1018-f736-ae61-e6c9-1ff9b6f5d1af
+	crossFilteringBehavior: bothDirections
+	fromColumn: odoo.x_studio_mcleod_code
+	toColumn: customer.id
+
+relationship f06dbad5-26c8-27b4-1c4b-98f79586e26e
+	isActive: false
+	fromColumn: odoo.user_id
+	toColumn: salesperson_key.Name
+
+relationship 497ec19d-97a4-d959-e3ba-d542e6e29d07
+	isActive: false
+	fromColumn: odoo.activity_date_deadline
+	toColumn: Calendar.Date
+
+relationship 4f52e7b9-bb48-aea1-4ded-04fea393236a
+	isActive: false
+	fromColumn: odoo.x_studio_1_3_loads_end_date
+	toColumn: Calendar.Date
+
+relationship caecf88f-7573-bfa9-f5e6-b6e1f9c66e71
+	isActive: false
+	fromColumn: odoo.x_studio_1_3_loads_start_date
+	toColumn: Calendar.Date
+
+relationship d5985f7b-c6d2-4df0-8135-3534cc2b2906
+	isActive: false
+	fromColumn: odoo.x_studio_credit_app_end_date
+	toColumn: Calendar.Date
+
+relationship d63b6391-676f-4b88-4698-c6c01dab14c1
+	isActive: false
+	fromColumn: odoo.x_studio_credit_app_start_date
+	toColumn: Calendar.Date
+
+relationship 250432b9-5349-e89b-6316-bc765f6da584
+	isActive: false
+	fromColumn: odoo.x_studio_customer_end_date
+	toColumn: Calendar.Date
+
+relationship c2aca92d-8bf4-82e4-dfbd-2ac3fa91a07d
+	isActive: false
+	fromColumn: odoo.x_studio_customer_start_date
+	toColumn: Calendar.Date
+
+relationship 17dd4858-a00d-0c25-35de-de3a746e58f7
+	isActive: false
+	fromColumn: odoo.x_studio_enrichment_date
+	toColumn: Calendar.Date
+
+relationship 42426169-218c-25b2-d815-3fc75802c7d9
+	isActive: false
+	fromColumn: odoo.x_studio_hope_island_end_date
+	toColumn: Calendar.Date
+
+relationship 80938aeb-290d-c07e-cfc6-e269ad6fb3cf
+	isActive: false
+	fromColumn: odoo.x_studio_hope_island_start_date
+	toColumn: Calendar.Date
+
+relationship 84649ab8-55d5-d4a7-d5f3-8cf89324e677
+	isActive: false
+	fromColumn: odoo.x_studio_last_activity_date
+	toColumn: Calendar.Date
+
+relationship 9f44e648-c030-0562-3ab2-d20e8cd9e287
+	isActive: false
+	fromColumn: odoo.x_studio_last_stage_update
+	toColumn: Calendar.Date
+
+relationship 9fff064d-032c-09de-911c-b347de6f0621
+	isActive: false
+	fromColumn: odoo.x_studio_no_for_now_end_date
+	toColumn: Calendar.Date
+
+relationship f1c6de04-64d1-cfad-c082-54d1b87f0a7a
+	isActive: false
+	fromColumn: odoo.x_studio_no_for_now_start_date
+	toColumn: Calendar.Date
+
+relationship 067b83e2-159c-9ddc-7904-db791f631b54
+	isActive: false
+	fromColumn: odoo.x_studio_qualified_end_date
+	toColumn: Calendar.Date
+
+relationship 655b17d4-dee1-085c-8417-0a4514f3383f
+	isActive: false
+	fromColumn: odoo.x_studio_qualified_start_date
+	toColumn: Calendar.Date
+
+relationship ddf102a6-d466-befd-5946-51080fa55989
+	isActive: false
+	fromColumn: odoo.x_studio_quoted_end_date
+	toColumn: Calendar.Date
+
+relationship e8a9175b-6095-82dc-a27a-800de9d1b328
+	isActive: false
+	fromColumn: odoo.x_studio_quoted_start_date
+	toColumn: Calendar.Date
+
+relationship ea2a471a-307e-45f6-09e4-e392906b0964
+	isActive: false
+	fromColumn: odoo.x_studio_working_end_date
+	toColumn: Calendar.Date
+
+relationship f8516bb0-0004-a02a-1c90-2528e7b72c89
+	isActive: false
+	fromColumn: odoo.x_studio_working_start_date
+	toColumn: Calendar.Date
+
+relationship ddc8f246-c76c-54e0-5c0c-39f727272fb3
+	isActive: false
+	fromColumn: odoo.x_studio_last_salesperson_update
+	toColumn: Calendar.Date
 

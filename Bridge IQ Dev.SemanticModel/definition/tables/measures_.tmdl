@@ -3942,7 +3942,7 @@ table measures_
 			IF(
 			    HASONEVALUE('Employee Photos'[EmployeeName]),
 			    VAR CurrentEmployee = VALUES('Employee Photos'[EmployeeName])
-			    VAR IsNPC = CurrentEmployee = "NPC"
+			    VAR IsNPC = CurrentEmployee = "Sweet Feet"
 			    
 			    VAR RegularPoints = 
 			        [Load Count Points] +
@@ -3960,7 +3960,7 @@ table measures_
 			            AVERAGEX(
 			                FILTER(
 			                    ALL('Employee Photos'[EmployeeName]),
-			                    'Employee Photos'[EmployeeName] <> "NPC"
+			                    'Employee Photos'[EmployeeName] <> "Sweet Feet"
 			                ),
 			                [Load Count Points] +
 			                [FFL weekly margin goal points] +
@@ -3973,12 +3973,18 @@ table measures_
 			                [FFL KARE Check Points]
 			            ),
 			            ALL('Employee Photos'),
-			            USERELATIONSHIP('Employee Photos'[EmployeeName], ffl_lineup[employee_name])  // Only if needed
+			            USERELATIONSHIP('Employee Photos'[EmployeeName], ffl_lineup[employee_name])
 			        )
 			    
 			    RETURN IF(IsNPC, NPCScore, RegularPoints),
 			    
-			    // Total calculation remains the same
+			    // Total calculation - check if Sweet Feet is on the team
+			    VAR TeamHasNPC = 
+			        CALCULATE(
+			            COUNTROWS('Employee Photos'),
+			            'Employee Photos'[EmployeeName] = "Sweet Feet"
+			        ) > 0
+			    
 			    VAR NonNPCTotal = 
 			        CALCULATE(
 			            SUMX(
@@ -3993,7 +3999,7 @@ table measures_
 			                [FFL Days over Best Load Count Day Points] +
 			                [FFL KARE Check Points]
 			            ),
-			            'Employee Photos'[EmployeeName] <> "NPC"
+			            'Employee Photos'[EmployeeName] <> "Sweet Feet"
 			        )
 			    
 			    VAR NPCScore =
@@ -4001,7 +4007,7 @@ table measures_
 			            AVERAGEX(
 			                FILTER(
 			                    ALL('Employee Photos'[EmployeeName]),
-			                    'Employee Photos'[EmployeeName] <> "NPC"
+			                    'Employee Photos'[EmployeeName] <> "Sweet Feet"
 			                ),
 			                [Load Count Points] +
 			                [FFL weekly margin goal points] +
@@ -4016,12 +4022,371 @@ table measures_
 			            ALL('Employee Photos')
 			        )
 			    
-			    RETURN NonNPCTotal + NPCScore
+			    RETURN 
+			        IF(
+			            TeamHasNPC,
+			            NonNPCTotal + NPCScore,
+			            NonNPCTotal
+			        )
 			)
-			
 			```
+		formatString: 0.00
 		displayFolder: FFL
 		lineageTag: 9eb83486-2042-4350-a06b-678ac8e7378c
+
+	measure 'FFL week number' =
+			
+			VAR TodaysDate = TODAY()
+			RETURN
+			    CALCULATE(
+			        MIN('ffl week schedule'[Weeks ]),
+			        USERELATIONSHIP('Calendar'[Date], 'ffl week schedule'[start of week]),
+			        'Calendar'[Date] = TodaysDate
+			    )
+		displayFolder: FFL
+		lineageTag: 842538b1-aeec-40c2-8ccf-9e06f354bcc5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1A name' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 1A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[TeamName]),
+			        'Team Logos'[Teamnumber] = Team1AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: d724969a-7422-481c-90fb-861b703ee8d0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1B name' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1BValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 1B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[TeamName]),
+			        'Team Logos'[Teamnumber] = Team1BValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 86048301-6401-4f59-8161-7679c6329153
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1A player' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 1A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('ffl_lineup'[employee_name]),
+			        'ffl_lineup'[team] = Team1AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: c41fe5de-30fa-48d5-ad3f-c8db2a150837
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1B player' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 1B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('ffl_lineup'[employee_name]),
+			        'ffl_lineup'[team] = Team1AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: a00b6416-374b-45e2-8119-0240fa5da9d5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1A logo' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 1A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[Image URL]),
+			        'Team Logos'[Teamnumber] = Team1AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 95ef6f69-b889-4210-855e-d5f0e91ee08c
+		dataCategory: ImageUrl
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1B logo' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 1B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[Image URL]),
+			        'Team Logos'[Teamnumber] = Team1AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: c6c91eea-de84-47d3-8558-fa57b8a0264c
+		dataCategory: ImageUrl
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1A Total Points' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 1A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        [FFL total points final v5],
+			        'ffl_lineup'[team] = Team1AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 6d61ff49-031f-4ea0-9b1d-cd16b608f9fb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 1B Total Points' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team1AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 1B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        [FFL total points final v5],
+			        'ffl_lineup'[team] = Team1AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 70012971-5f4c-4c7d-81f4-d8545bfac59a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2A logo' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 2A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[Image URL]),
+			        'Team Logos'[Teamnumber] = Team2AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 322c6027-af79-45fa-8e38-685071291dfb
+		dataCategory: ImageUrl
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2A name' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 2A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[TeamName]),
+			        'Team Logos'[Teamnumber] = Team2AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 0e66c5d9-daa0-497b-aa45-c7a507836ed9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2A player' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 2A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('ffl_lineup'[employee_name]),
+			        'ffl_lineup'[team] = Team2AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 524b9560-49b2-48ba-8244-75f504a3359c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2A Total Points' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[ team 2A]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        [FFL total points final v5],
+			        'ffl_lineup'[team] = Team2AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: ec267547-423b-4582-b0dc-3594a082bb01
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2B logo' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2AValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 2B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[Image URL]),
+			        'Team Logos'[Teamnumber] = Team2AValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: a4c245e3-695e-4a3e-bbe0-411db0487a5e
+		dataCategory: ImageUrl
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2B name' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2BValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 2B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('Team Logos'[TeamName]),
+			        'Team Logos'[Teamnumber] = Team2BValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: d4344fd1-6c64-4694-93c3-20ba665a6897
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2B player' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2BValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 2B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        min('ffl_lineup'[employee_name]),
+			        'ffl_lineup'[team] = Team2BValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: db4b3d99-0e6e-4542-8804-bae562ccea31
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'FFL Team 2B Total Points' = ```
+			
+			VAR CurrentWeek = [FFL week number]
+			VAR Team2BValue = 
+			    CALCULATE(
+			        MIN('ffl week schedule'[team 2B]),
+			        'ffl week schedule'[Weeks ] = CurrentWeek
+			    )
+			RETURN
+			    CALCULATE(
+			        [FFL total points final v5],
+			        'ffl_lineup'[team] = Team2BValue
+			    )
+			```
+		displayFolder: FFL
+		lineageTag: 3ffdb552-bc1b-4452-b8b9-f334376f4597
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total points WOW' = ```
+			
+			VAR ThisWeek = [FFL total points final]
+			
+			VAR LastWeek = 
+			CALCULATE(
+			    [FFL total points final],
+			    DATEADD('Calendar'[Date], -7, DAY)
+			)
+			VAR WoW_ = 
+			DIVIDE(
+			    ThisWeek - LastWeek,
+			    LastWeek,
+			    0
+			)
+			
+			RETURN WoW_ / 100
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: FFL
+		lineageTag: 946c5d85-fda6-4e41-8766-8f7e14afcea3
+
+	measure 'Total Points Season' =
+			
+			CALCULATE(
+			    [FFL total points final v5],
+			    REMOVEFILTERS('Calendar'),
+			    'Calendar'[Date] >= DATE(2025,10,20)
+			)
+		displayFolder: FFL
+		lineageTag: b3cc5e82-462e-46c4-894d-0b39c4298675
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

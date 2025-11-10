@@ -20107,6 +20107,16 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
+			          "Weekly MVP": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
 			          "Total Points": {
 			            "State": "Suggested",
 			            "Source": {
@@ -20125,6 +20135,36 @@ cultureInfo en-US
 			          "ConceptualProperty": "Total FFL Points"
 			        }
 			      },
+			      "State": "Generated"
+			    },
+			    "employee_photos.image_url": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Employee Photos",
+			          "ConceptualProperty": "Image URL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Players": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_team_1b_total_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Team 1B Total Points"
+			        }
+			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
@@ -20139,17 +20179,341 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "employee_photos.image_url": {
+			    "measures_.ffl_team_1a_total_points": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "Employee Photos",
-			          "ConceptualProperty": "Image URL"
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Team 1A Total Points"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Players": {
+			          "Total Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_team_2a_total_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Team 2A Total Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_team_2b_total_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Team 2B Total Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "team_logos.teamname": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Team Logos",
+			          "ConceptualProperty": "TeamName"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Team Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_weekly_margin_goal_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL weekly margin goal points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Weekly margin goal points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_weekly_margin_goal_1_5_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Weekly Margin Goal 1.5 Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Weekly Margin Goal 1.5 Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_7_convos_a_day_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL 7 Convos a day points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "7 Convos a day points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_new_revived_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL New/Revived Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "New / Revived Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_daily_margin_goal_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Daily Margin Goal Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Daily Margin Goal Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_days_over_best_maring_day_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Days over Best Maring Day Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days over Best Margin Day Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_days_over_best_load_count_day_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL Days over Best Load Count Day Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days over Best Load Count Day Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_kare_check_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL KARE Check Points"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "KARE Check Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.ffl_total_points_final": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "FFL total points final"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.load_count_points": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Load Count Points"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_.total_points_wow": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Total points WOW"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Top Under Dog (WOW %)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "employee_photos.employeename": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Employee Photos",
+			          "ConceptualProperty": "EmployeeName"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_.total_points_season": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "measures_",
+			          "ConceptualProperty": "Total Points Season"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Season MVP": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

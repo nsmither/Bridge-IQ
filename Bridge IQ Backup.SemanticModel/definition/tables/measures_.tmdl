@@ -1,24 +1,14 @@
 table measures_
 	lineageTag: 4f6dad67-79ad-4db3-9aa7-ea35ff6c1845
 
-	measure 'Sum of freight_charges' =
-			
-			CALCULATE(
-			    SUM(orders[freight_charge]),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+	measure 'Sum of freight_charges' = SUM(orders[freight_charge])
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Revenue Measures
 		lineageTag: 89d17990-2077-45c7-af5c-49710ca0fdc8
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
-	measure 'Sum of other_charges' =
-			
-			CALCULATE(
-			    SUM(orders[other_charges_total]),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+	measure 'Sum of other_charges' = SUM(orders[other_charges_total])
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Revenue Measures
 		lineageTag: 5f9abf81-2be6-48b2-9799-922feb050f30
@@ -29,45 +19,27 @@ table measures_
 			
 			CALCULATE(
 			    [Sum of freight_charges]+[Sum of other_charges],
-			    FILTER(movements,movements[status]<>"A"),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    FILTER(movements,movements[status]<>"A")
 			)
 			
 			```
-		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Revenue Measures
 		lineageTag: 39ae93b5-50d6-453e-80c8-dbbb58f43df7
 
-		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
-
-	measure 'Sum of override_pay_amt' =
-			
-			CALCULATE(
-			    SUM(movements[override_pay_amt]),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+	measure 'Sum of override_pay_amt' = SUM(movements[override_pay_amt])
 		displayFolder: Pay Measures
 		lineageTag: 4afe6d8c-348c-4f5f-9fa1-593d24fa27a4
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Sum of driver_extra_pay' =
-			
-			CALCULATE(
-			    SUM(driver_extra_pay[amount]),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+	measure 'Sum of driver_extra_pay' = SUM(driver_extra_pay[amount])
 		displayFolder: Pay Measures
 		lineageTag: 6be686a6-e220-4dff-91a4-141b0da5ca73
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Carrier Pay' =
-			
-			CALCULATE(
-			    [Sum of driver_extra_pay]+[Sum of override_pay_amt],
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+	measure 'Total Carrier Pay' = [Sum of driver_extra_pay]+[Sum of override_pay_amt]
 		displayFolder: Pay Measures
 		lineageTag: c7c5f213-a346-4367-8717-3924d6ef52da
 
@@ -78,7 +50,6 @@ table measures_
 			CALCULATE(
 			    [Total Revenue]-[Total Carrier Pay],
 			    movements[status]<>"A"
-			    ,USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
 			)
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		lineageTag: 3491f4d3-9764-45b7-a60b-c17891311500
@@ -322,7 +293,7 @@ table measures_
 	measure 'LA Move Date color' =
 			
 			
-			var LA = CONTAINSSTRING(min(employees[Devision]),"Logistics Advisor Sales")
+			var LA = CONTAINSSTRING(min(employees[Division]),"Logistics Advisor Sales")
 			VAR IFS = IF(LA = TRUE,1,0)
 			
 			RETURN
@@ -366,7 +337,7 @@ table measures_
 	measure 'Ops Move Date color' =
 			
 			
-			VAR OPS = CONTAINSSTRING(min(employees[Devision]),"CRT")
+			VAR OPS = CONTAINSSTRING(min(employees[Division]),"CRT")
 			VAR IFS = IF(OPS = TRUE,1,0)
 			
 			RETURN
@@ -378,7 +349,7 @@ table measures_
 	measure 'SDR Move Date color' =
 			
 			
-			VAR SDR =CONTAINSSTRING(min(employees[Devision]),"SDR")
+			VAR SDR =CONTAINSSTRING(min(employees[Division]),"SDR")
 			VAR IFS = IF(SDR = TRUE,1,0)
 			
 			RETURN
@@ -390,7 +361,7 @@ table measures_
 	measure 'D-Team Move Date color' =
 			
 			
-			var dteam = CONTAINSSTRING(min(employees[Devision]),"Development Team")
+			var dteam = CONTAINSSTRING(min(employees[Division]),"Development Team")
 			VAR IFS = IF(dteam = TRUE,1,0)
 			
 			RETURN
@@ -414,7 +385,6 @@ table measures_
 			CALCULATE(
 			    DISTINCTCOUNT(movements[id]),
 			    movements[status]<>"A",
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
 			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			)
 		formatString: 0
@@ -425,8 +395,7 @@ table measures_
 			
 			CALCULATE(
 			    DISTINCTCOUNT(orders[id]),
-			    movements[status]<>"A",
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    movements[status]<>"A"
 			)
 		formatString: 0
 		displayFolder: Operations Measures
@@ -466,7 +435,6 @@ table measures_
 			        movements[status]<>"A",
 			        orders[order_type_id]="FTL",
 			        orders[bill_distance]>50,
-			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
 			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			    )
 			Var count_bw = 
@@ -475,7 +443,6 @@ table measures_
 			        movements[status]<>"A",
 			        orders[order_type_id]="BW",
 			        orders[bill_distance]>50,
-			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
 			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			    )
 			        
@@ -485,7 +452,6 @@ table measures_
 			        movements[status]<>"A",
 			        orders[order_type_id]="PARTIAL",
 			        orders[bill_distance]>50,
-			        USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
 			        USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code])
 			    )
 			
@@ -504,7 +470,6 @@ table measures_
 			CALCULATE(
 			    DISTINCTCOUNT(callins[movement_id]),
 			    FILTER(GROUPBY(callins,callins[movement_id]),[Count of tracking pings]>=3),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]),
 			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code]
 			))
 		formatString: 0
@@ -521,7 +486,7 @@ table measures_
 			
 			CALCULATE(
 			    COUNTROWS(callins),
-			    USERELATIONSHIP(callins[entered_date],'Calendar'[Date]),
+			    USERELATIONSHIP(callins[Date],'Calendar'[Date]),
 			    USERELATIONSHIP(callins[entered_by],dispatcher_key[McLeod User Code])
 			)
 		formatString: 0
@@ -533,13 +498,10 @@ table measures_
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: 06663e34-2ac5-4c2d-b23e-2f4cdab296d3
 
-	measure 'Date Diff order_entered_date vs shipper_sched_early_date' =
+	measure 'Date Diff order_entered_date vs shipper_sched_early_date' = ```
+			DATEDIFF(MIN(orders[order_entered_date]),MIN(orders[shipper_sched_early_date]),DAY)
 			
-			//CALCULATE(
-			    DATEDIFF(MIN(orders[order_entered_date]),MIN(orders[shipper_sched_early_date]),DAY)//,
-			    //FILTER(orders,orders[order_entered_date]>=MIN('Calendar'[Date])),
-			    //ILTER(orders,orders[order_entered_date]<=MAX('Calendar'[Date]))
-			//)
+			```
 		formatString: 0
 		lineageTag: 1859b08e-036c-4f3d-9186-8e213722335d
 
@@ -552,13 +514,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Movements Passed During Date Range' =
-			
-			CALCULATE(
-			    DISTINCTCOUNT(crt_movement_data[Movement ID]),
-			    FILTER(orders,orders[shipper_sched_early_date]>=MIN('Calendar'[Date])),
-			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date]))
-			)
+	measure 'Movements Passed During Date Range' = DISTINCTCOUNT(crt_movement_data[Movement ID])
 		formatString: 0
 		lineageTag: ddd39222-cbdb-4e56-b194-734028683608
 
@@ -589,9 +545,9 @@ table measures_
 			
 			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
 			
-			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			//Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_blank,mpd)
 			
 			Return
 			mpdg
@@ -641,9 +597,9 @@ table measures_
 			
 			Var override_blank = IF(override_mpdg=0,mpd,override_mpdg)
 			
-			Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
+			//Var wolf_pack_switch = SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_blank,mpd)
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),wolf_pack_switch,mpd)
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_blank,mpd)
 			Var margin_vs_margin_goal_taget = mpdg*workingdays
 			
 			Return
@@ -719,8 +675,7 @@ table measures_
 			
 			CALCULATE(
 			    DIVIDE([Margin],[Total Revenue]),
-			    movements[status]<>"A",
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    movements[status]<>"A"
 			)
 		formatString: 0%;-0%;0%
 		lineageTag: 60d83be5-356c-48e2-afb8-950ca6a8f0d6
@@ -813,13 +768,13 @@ table measures_
 	measure 'Days since Last Stage Update' = ```
 			
 			 DATEDIFF(
-			    MAX(crm[Last Stage Change]),TODAY(),DAY)
+			    MAX(odoo[x_studio_last_stage_update]),TODAY(),DAY)
 			```
 		formatString: 0
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: ecc086f7-a6d4-4e6c-b109-8712f700c70f
 
-	measure 'Last Behavior Date' = MAX(behaviors[Behavior Date])
+	measure 'Last Behavior Date' = MAX(odoo[x_studio_last_activity_date])
 		formatString: Short Date
 		displayFolder: CRM Measures
 		lineageTag: 9de3f64a-8161-47da-8c52-3bc6064fa7f6
@@ -831,7 +786,7 @@ table measures_
 
 	measure 'Days Over Due' = ```
 			
-			Var next_behavior_deadline = MAX(crm[activity_date_deadline])
+			Var next_behavior_deadline = MAX(odoo[activity_date_deadline])
 			Var days_over_due = DATEDIFF(next_behavior_deadline,TODAY(),DAY)
 			
 			Return 
@@ -845,8 +800,8 @@ table measures_
 			
 			Var at_risk = IF([Days Since Last Shipment]>120,1,0)
 			Var ifs = 
-			    IF(MIN(crm[Stage])="Customer",at_risk,
-			    IF(MIN(crm[Stage])="1-3 Loads",at_risk,0))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",at_risk,0))
 			
 			
 			return
@@ -861,13 +816,13 @@ table measures_
 			Var prospect_at_risk = if([Days since Last Stage Update]>90,1,0)
 			Var pipeline_at_risk = IF([Days since Last Stage Update]>60,1,0)
 			Var ifs = 
-			    IF(MIN(crm[Stage])="Customer",0,
-			    IF(MIN(crm[Stage])="Working",prospect_at_risk,
-			    IF(MIN(crm[Stage])="No For Now",prospect_at_risk,
-			    IF(MIN(crm[Stage])="Qualified",pipeline_at_risk,
-			    IF(MIN(crm[Stage])="Quoted",pipeline_at_risk,
-			    IF(MIN(crm[Stage])="Credit App",pipeline_at_risk,
-			    IF(MIN(crm[Stage])="1-3 Loads",pipeline_at_risk,0)))))))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",0,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Working",prospect_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="No For Now",prospect_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Qualified",pipeline_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Quoted",pipeline_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Credit App",pipeline_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",pipeline_at_risk,0)))))))
 			
 			Return
 			ifs
@@ -883,13 +838,13 @@ table measures_
 			Var no_for_now_at_risk = IF([Days since last Behaivor]>90,1,0)
 			
 			Var Ifs = 
-			    IF(MIN(crm[Stage])="Qualified",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Quoted",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Credit App", opportunity_at_risk,
-			    IF(MIN(crm[Stage])="1-3 Loads",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Customer",opportunity_at_risk,
-			    IF(MIN(crm[Stage])="Working",working_at_risk,
-			    IF(MIN(crm[Stage])="No For Now",no_for_now_at_risk,0)))))))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Qualified",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Quoted",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Credit App", opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Working",working_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="No For Now",no_for_now_at_risk,0)))))))
 			
 			Return
 			Ifs
@@ -898,7 +853,26 @@ table measures_
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: d2fccc3b-65d6-4647-81ff-6908557e9873
 
-	measure 'Days since last Salesperson Update' = DATEDIFF(MAX(crm[date_open]),TODAY(),DAY)
+	measure 'Days since last Salesperson Update' = ```
+			
+			VAR last_salesperson_update = 
+			  IF(
+			    MIN(odoo[x_studio_last_salesperson_update])=BLANK(),
+			    Date(2025,07,26),
+			    MIN(odoo[x_studio_last_salesperson_update])
+			  )
+			
+			
+			VAR dslu = 
+			    DATEDIFF(
+			        last_salesperson_update,
+			        TODAY(),
+			        DAY
+			    )
+			
+			RETURN
+			dslu
+			```
 		formatString: 0
 		displayFolder: CRM Measures
 		lineageTag: cfbd7a5c-e9af-4629-a9f9-e6c37a23dfdc
@@ -906,22 +880,23 @@ table measures_
 	measure 'Count at Risk (inactive relationship)' = ```
 			
 			CALCULATE(
-			    DISTINCTCOUNT(crm[id]),
-			    FILTER(crm,crm[At Risk]="TRUE"),
-			    FILTER(crm,crm[user_id]<>BLANK()),
-			    USERELATIONSHIP(crm[user_id],salesperson_key[Name])
+			    DISTINCTCOUNT(odoo[id]),
+			    FILTER(odoo,odoo[At Risk]=TRUE()),
+			    FILTER(odoo,odoo[user_id]<>BLANK()),
+			    USERELATIONSHIP(odoo[user_id],salesperson_key[Name])
 			)
 			
 			```
-		formatString: 0
 		displayFolder: CRM Measures\At Risk Measures
 		lineageTag: 81759a22-7856-45de-82cd-a68019cf40d6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Count CRM Ids (inactive relationship)' =
 			
 			CALCULATE(
-			    DISTINCTCOUNT(crm[id]),
-			    USERELATIONSHIP(crm[user_id],salesperson_key[Name])
+			    DISTINCTCOUNT(odoo[id]),
+			    USERELATIONSHIP(odoo[user_id],salesperson_key[Name])
 			)
 		formatString: 0
 		displayFolder: CRM Measures
@@ -937,21 +912,19 @@ table measures_
 			CALCULATE(
 			    TOTALMTD(
 			    [Margin],
-			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			    )
+			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY()))
+			)
 		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: Sales Measures\Margin\To Date Measures\Month To Date
 		lineageTag: e2f3473a-04fe-48ca-9ca3-788630877152
 
-	measure 'Count of Orders Covered MTD' =
+	measure 'Count of Orders Covered MTD' = ```
 			
-			CALCULATE(
 			    TOTALMTD(
 			    [Count of orders covered],
-			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+			    'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY()))
+			
+			```
 		formatString: 0
 		displayFolder: Operations Measures\Count of Orders\To Date Measures\Month To Date
 		lineageTag: 02f71283-e287-4086-8bc8-d6c66a160475
@@ -993,20 +966,22 @@ table measures_
 			
 			CALCULATE(
 			    DISTINCTCOUNT(orders[customer_id]),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    movements[status]<>"A"
 			)
 		formatString: 0
 		displayFolder: Behavior Measures
 		lineageTag: 8937494c-6a1b-4e84-aa53-089ae43da266
 
-	measure 'Customer Served 90 days before max date' =
+	measure 'Customer Served 90 days before max date' = ```
 			
-			CALCULATE(
-			    DISTINCTCOUNT(orders[customer_id]),
-			    FILTER(movements,movements[status]<>"A"),
-			    FILTER(orders,orders[shipper_sched_early_date]<=MAX('Calendar'[Date])),
-			    FILTER(orders,orders[shipper_sched_early_date]>=(MAX('Calendar'[Date])-90))
-			)
+			    CALCULATE(
+			        [Customers Served],
+			        REMOVEFILTERS('Calendar'[Year],'Calendar'[Month Name],'Calendar'[QuarterNmb]),
+			        movements[status]<>"A",
+			        orders[shipper_sched_early_date]<MIN('Calendar'[Date]),
+			        orders[shipper_sched_early_date]>=MIN('Calendar'[Date])-90
+			    )
+			```
 		formatString: 0
 		displayFolder: Behavior Measures
 		lineageTag: 3be00b8e-0192-495c-83db-113ec47d3dfb
@@ -1486,7 +1461,8 @@ table measures_
 			    COUNTROWS(sop_issues),
 			    sop_issues[Movement ID],
 			    sop_issues[SOP Type]= "SOPCAR",
-			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date])
+			    USERELATIONSHIP(sop_issues[Date_time],'Calendar'[Date]),
+			    USERELATIONSHIP(dispatcher_key[McLeod User Code],movements[dispatcher_user_id])
 			)
 		formatString: 0
 		displayFolder: Operations Measures\SOP
@@ -1718,7 +1694,7 @@ table measures_
 			    IF([Margin]>=20000,1725+(([Margin]-19999)*.165),
 			    IF([Margin]>=15000,1025+(([Margin]-14999)*.14),
 			    IF([Margin]>=10000,450+(([Margin]-9999)*.115),
-			    IF([Margin]>=5000,(([Margin]-4999)*.0),BLANK()
+			    IF([Margin]>=5000,(([Margin]-4999)*.09),BLANK()
 			))))))))
 		isHidden
 		displayFolder: Comission Measures
@@ -1798,10 +1774,10 @@ table measures_
 			VAR months_margin_goal = CALCULATE([Margin Goal],REMOVEFILTERS('Calendar'[Date]))
 			VAR override_mpdg = CALCULATE([Override margin goal],REMOVEFILTERS('Calendar'[Date]))
 			VAR mpd = DIVIDE(months_margin_goal, workingdays)
-			Var mpdg_wolf_pack = 
-			    SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
+			//Var mpdg_wolf_pack = 
+			    //SWITCH(TRUE(),SELECTEDVALUE(wolf_pack[wolf_pack])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
 			
-			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),mpdg_wolf_pack,mpd*[Working days Elapsed])
+			Var mpdg = SWITCH(TRUE(),SELECTEDVALUE(salesperson_key[Name])=BLANK(),override_mpdg*[Working days Elapsed],mpd*[Working days Elapsed])
 			
 			RETURN
 			mpdg
@@ -1812,11 +1788,7 @@ table measures_
 
 	measure 'Count of SOPP and SOPD' = ```
 			
-			VAR count_sop = 
-			CALCULATE(
-			    [Count of SOPD Issues]+[Count of SOPP Issues],
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
-			)
+			VAR count_sop =[Count of SOPD Issues]+[Count of SOPP Issues]
 			
 			VAR ifs = 
 			IF(count_sop>=1,count_sop,0)
@@ -1832,8 +1804,7 @@ table measures_
 			
 			CALCULATE(
 			    DISTINCTCOUNT(movements[id]),
-			    movements[dnc]=TRUE(),
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    movements[dnc]=TRUE()
 			)
 		formatString: 0
 		displayFolder: Operations Measures\DNC
@@ -1868,8 +1839,7 @@ table measures_
 			
 			CALCULATE(
 			    TOTALMTD([Total Revenue],'Calendar'[Date],'Calendar'[Day of Month]<DAY(TODAY())),
-			    movements[status]<>"A",
-			    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date])
+			    movements[status]<>"A"
 			)
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Revenue Measures
@@ -1946,6 +1916,139 @@ table measures_
 		formatString: 0
 		displayFolder: Operations Measures
 		lineageTag: 1e22ebd4-cf31-4752-9add-16f111d81801
+
+	measure 'is today' =
+			
+			IF(
+			    MIN('Calendar'[Date])=TODAY(),
+			    1,
+			    0
+			)
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 3680c1a6-c73f-4dda-9d96-1c8562db52a8
+
+	measure 'is this week' =
+			
+			IF(
+			        WEEKNUM(MIN('Calendar'[Date]))=WEEKNUM(TODAY()),
+			        IF(
+			            YEAR(MIN('Calendar'[Date]))=YEAR(TODAY()),
+			            1,
+			            0
+			        )
+			)
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 5523c688-b146-4b79-9821-a93d3710afb2
+
+	measure 'Is this Month' =
+			
+			IF(MONTH(MIN('Calendar'[Date]))=MONTH(TODAY()),
+			    IF(YEAR(MIN('Calendar'[Date]))=YEAR(TODAY()),
+			        1,
+			        0
+			    )
+			)
+		formatString: 0
+		displayFolder: Calendar Measures
+		lineageTag: 23a6a21b-4f56-4cc4-9a5e-5b5c578554dd
+
+	measure 'Count of Behaviors' =
+			
+			CALCULATE(
+			    COUNTROWS(behaviors),
+			    USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			    USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			)
+		formatString: 0
+		displayFolder: Behavior Measures
+		lineageTag: 814292f8-7ea2-4246-9b03-3be11f8f774a
+
+	measure Calls =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        behaviors[id]),
+			        OR(behaviors[mail_activity_type_id]="Mapping Call",behaviors[mail_activity_type_id]="Follow-up Call"),
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			        USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			        )
+		displayFolder: Behavior Measures
+		lineageTag: 456954b7-ee5c-414f-a67a-5ec7da1c1ab6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Conversations =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        behaviors[id]),
+			        OR(behaviors[mail_activity_type_id]="New Conversation", behaviors[mail_activity_type_id]="Follow-up Conversation"),
+			        USERELATIONSHIP('Calendar'[Date],behaviors[Behavior Date]),
+			        USERELATIONSHIP(behaviors[author_id],salesperson_key[Name])
+			        )
+		displayFolder: Behavior Measures
+		lineageTag: 219a4caa-5ce5-42b8-9d6d-dfdb80243cf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Call Rank' = RANKX(all(salesperson_key[Name]),[Calls])
+		displayFolder: Behavior Measures
+		lineageTag: 81b03448-3f92-4d8a-a96f-babff23eca28
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Daily Performance' =
+			
+			--Current Day--
+			MIN('Calendar'[Day of Month]) & REPT(UNICHAR(10),2) &
+			
+			--Events--
+			"Revenue" & " $" & [Total Revenue] & REPT(UNICHAR(10),2) &
+			
+			"Margin" & " $" & [Margin]
+		displayFolder: Calendar Measures
+		lineageTag: 88c5f783-a053-456e-807d-8d4f7ab0a9da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'number of stops' = ```
+			
+			VAR TWO = 2
+			VAR PU = 
+			    CALCULATE(
+			        IF(
+			            ISBLANK(MIN(orders[extra_pickups])),
+			            BLANK(),
+			            MIN(orders[extra_pickups])
+			        )
+			    )
+			VAR DEL = 
+			    CALCULATE(
+			        IF(
+			            ISBLANK(MIN(orders[extra_deliveries])),
+			            BLANK(),
+			            MIN(orders[extra_deliveries])
+			        )
+			    )
+			VAR ADD_ = 
+			    IF(
+			        ISBLANK(PU) || ISBLANK(DEL),
+			        BLANK(),
+			        PU + DEL
+			    )
+			RETURN 
+			    IF(
+			        ISBLANK(ADD_),
+			        BLANK(),
+			        TWO + ADD_
+			    )
+			```
+		displayFolder: Movement Measures
+		lineageTag: f60214ae-d7db-4ebf-9a15-4be840feb66e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		isHidden

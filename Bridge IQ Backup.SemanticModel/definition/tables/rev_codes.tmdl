@@ -18,21 +18,13 @@ table rev_codes
 
 		annotation SummarizationSetBy = Automatic
 
-	column wolf_pack
-		dataType: string
-		lineageTag: 2ad6eb3c-3623-4b2f-8b63-c360fa9b8131
-		summarizeBy: none
-		sourceColumn: wolf_pack
-
-		annotation SummarizationSetBy = Automatic
-
 	partition rev_codes = m
 		mode: import
 		source =
 				let
 				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Teams.xlsx"), null, true),
 				    rev_codes_Table = Source{[Item="rev_codes",Kind="Table"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(rev_codes_Table,{{"rev_code_id", Int64.Type}, {"account_rep", type text}, {"wolf_pack", type text}})
+				    #"Changed Type" = Table.TransformColumnTypes(rev_codes_Table,{{"rev_code_id", Int64.Type}, {"account_rep", type text}})
 				in
 				    #"Changed Type"
 

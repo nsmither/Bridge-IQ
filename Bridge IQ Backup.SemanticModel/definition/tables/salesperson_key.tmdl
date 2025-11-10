@@ -104,14 +104,6 @@ table salesperson_key
 
 		annotation SummarizationSetBy = Automatic
 
-	column Devision
-		dataType: string
-		lineageTag: f54f8a60-a70f-409e-bc33-6b53d881d415
-		summarizeBy: none
-		sourceColumn: Devision
-
-		annotation SummarizationSetBy = Automatic
-
 	column Department
 		dataType: string
 		lineageTag: e8eb0d92-3391-4e01-8dc2-51c7b5075c4e
@@ -125,6 +117,22 @@ table salesperson_key
 		lineageTag: 4e601ddc-2e98-43d2-b236-7af85d2515c8
 		summarizeBy: none
 		sourceColumn: users.revenue_code_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: 6bdfcb8a-fd0a-4f30-81bd-ed75f74c7912
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Office Payee ID'
+		dataType: string
+		lineageTag: b4453bdc-4557-4821-b5df-52780cfc2ca0
+		summarizeBy: none
+		sourceColumn: Office Payee ID
 
 		annotation SummarizationSetBy = Automatic
 

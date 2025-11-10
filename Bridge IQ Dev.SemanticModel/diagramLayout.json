@@ -519,6 +519,26 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "ffl week schedule",
+          "nodeLineageTag": "ad70944e-7b3b-4155-b701-977bbaf105df",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Team Logos",
+          "nodeLineageTag": "ea360990-2f24-4ca3-a54b-a4634499aa20",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
@@ -881,8 +901,8 @@
       "nodes": [
         {
           "location": {
-            "x": 360,
-            "y": 583
+            "x": 596.31989970043924,
+            "y": 210.92186004611705
           },
           "nodeIndex": "ffl_lineup",
           "nodeLineageTag": "3a4ae469-f750-4726-99f1-1b1124d36f78",
@@ -890,12 +910,12 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
-            "x": 580,
-            "y": 69
+            "x": 901.79731023038528,
+            "y": 9.920025074890205
           },
           "nodeIndex": "salesperson_key",
           "nodeLineageTag": "b6d941d5-ebfa-4572-8487-a51694d36762",
@@ -903,12 +923,12 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
-            "x": 774,
-            "y": 507
+            "x": 1257.9529860886653,
+            "y": 263.13797584103611
           },
           "nodeIndex": "orders",
           "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
@@ -916,17 +936,56 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         },
         {
           "location": {
-            "x": 264,
-            "y": 107
+            "x": 213.71917027650238,
+            "y": 0
           },
           "nodeIndex": "Employee Photos",
           "nodeLineageTag": "fa3f0a45-a866-4212-b83d-72c09c64efd0",
           "size": {
             "height": 271,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 87.058604965412258,
+            "y": 344.9572600806049
+          },
+          "nodeIndex": "Team Logos",
+          "nodeLineageTag": "ea360990-2f24-4ca3-a54b-a4634499aa20",
+          "size": {
+            "height": 222.50976749423535,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 416.39803965432213,
+            "y": 468.14529290317421
+          },
+          "nodeIndex": "ffl week schedule",
+          "nodeLineageTag": "ad70944e-7b3b-4155-b701-977bbaf105df",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 853.84125824875207,
+            "y": 529.73930931445875
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "c583c9ce-20dd-43b3-818e-c9d8da9a588a",
+          "size": {
+            "height": 300,
             "width": 234
           },
           "zIndex": 0
