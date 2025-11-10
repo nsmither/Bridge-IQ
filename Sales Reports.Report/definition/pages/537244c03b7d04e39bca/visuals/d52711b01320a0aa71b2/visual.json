@@ -1,11 +1,11 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "d52711b01320a0aa71b2",
   "position": {
-    "x": 544,
-    "y": 48,
+    "x": 493.69727047146404,
+    "y": 10.124069478908188,
     "z": 1000,
-    "height": 288,
+    "height": 287.64267990074444,
     "width": 720,
     "tabOrder": 1000
   },
@@ -328,5 +328,65 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "43566d5ce69376b3c106",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "crm_stages"
+              }
+            },
+            "Property": "Stage Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "ebbc7166ecdd3ece8605",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count CRM Ids (inactive relationship)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e7e10786e55c31cf9b3f",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Healthy Pipeline Goal"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "829930f1f1dcfcd874bc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count at Risk (inactive relationship)"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
