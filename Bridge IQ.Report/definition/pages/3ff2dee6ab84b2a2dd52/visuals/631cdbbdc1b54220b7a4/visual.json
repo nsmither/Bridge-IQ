@@ -6,7 +6,8 @@
     "y": 87.537993920972653,
     "z": 0,
     "height": 632.21884498480244,
-    "width": 1036.838905775076
+    "width": 1036.838905775076,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "tableEx",
@@ -180,62 +181,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "b58b95d2618621d7a26c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Last Ship Date"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "b1f23740b1b864a76867",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of orders covered"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "889fe1e7e455895ee1b9",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "carrier_key"
-              }
-            },
-            "Property": "mc_number"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "e74157ee2dd6e9b5184e",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "carrier_key"
-              }
-            },
-            "Property": "dot_number"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

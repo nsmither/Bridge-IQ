@@ -7,7 +7,7 @@
     "z": 10000,
     "height": 157,
     "width": 160,
-    "tabOrder": 10000
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "tableEx",
@@ -152,23 +152,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "6232e1304bcc4b742eb6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Team 2B logo"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

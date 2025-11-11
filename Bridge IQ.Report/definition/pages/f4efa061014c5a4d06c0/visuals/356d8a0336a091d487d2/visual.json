@@ -7,7 +7,7 @@
     "z": 8000,
     "height": 62,
     "width": 442,
-    "tabOrder": 7000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "card",
@@ -208,23 +208,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "5c6588daa632239de404",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Team 2B name"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

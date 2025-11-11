@@ -2,12 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "2326c3c3737b918d1d68",
   "position": {
-    "x": 40,
-    "y": 318.75,
+    "x": 42.222222222222221,
+    "y": 320,
     "z": 2000,
-    "height": 436.25,
-    "width": 1200,
-    "tabOrder": 1000
+    "height": 436.66666666666663,
+    "width": 1200
   },
   "visual": {
     "visualType": "pivotTable",
@@ -206,16 +205,16 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "measures_"
+                    "Entity": "Team Logos"
                   }
                 },
-                "Property": "FFL New/Revived Points"
+                "Property": "TeamName"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ]
       }
@@ -926,7 +925,184 @@
   "filterConfig": {
     "filters": [
       {
+        "name": "5b90a7b63dd0ed6601e9",
+        "ordinal": 0,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "FFL 7 Convos a day points"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "65ed2b26d011be2fb856",
+        "ordinal": 1,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "FFL Daily Margin Goal Points"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "eb323fdd5a378dce6728",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "a064e29cb5bd271e76c2",
+        "ordinal": 3,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "FFL Days over Best Load Count Day Points"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5aebaa5075ff06e5fb61",
+        "ordinal": 4,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "FFL Days over Best Maring Day Points"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a509226e2a128ebe1e5c",
+        "ordinal": 5,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ffl_lineup"
+              }
+            },
+            "Property": "employee_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "3fa0d334812a89d0b1a7",
+        "ordinal": 6,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "FFL KARE Check Points"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fed2af377c7b011b5b9c",
+        "ordinal": 7,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Load Count Points"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "48b8d456169b2872f237",
+        "ordinal": 8,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "c",
+              "Entity": "Calendar",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 2,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "c"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "Right": {
+                    "DateSpan": {
+                      "Expression": {
+                        "Literal": {
+                          "Value": "datetime'2025-10-19T00:00:00'"
+                        }
+                      },
+                      "TimeUnit": 5
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
         "name": "0d5975d9d641c09924d2",
+        "ordinal": 9,
         "field": {
           "Column": {
             "Expression": {
@@ -999,77 +1175,8 @@
         }
       },
       {
-        "name": "bd7d09824ba7bbebe31a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ffl_lineup"
-              }
-            },
-            "Property": "employee_name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "3e96fa750750880be8d2",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Load Count Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1a7ace7c483b2987db0c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL weekly margin goal points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e345cf2d862283e96034",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Weekly Margin Goal 1.5 Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "ab12b3f579c21ca22b44",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL 7 Convos a day points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "9be33575e887c49d599a",
+        "name": "558ae32393c96be65968",
+        "ordinal": 10,
         "field": {
           "Measure": {
             "Expression": {
@@ -1083,63 +1190,23 @@
         "type": "Advanced"
       },
       {
-        "name": "b113bc802e81c7223148",
+        "name": "7815855863e26cdf056b",
+        "ordinal": 11,
         "field": {
-          "Measure": {
+          "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "measures_"
+                "Entity": "Team Logos"
               }
             },
-            "Property": "FFL Daily Margin Goal Points"
+            "Property": "TeamName"
           }
         },
-        "type": "Advanced"
+        "type": "Categorical"
       },
       {
-        "name": "c11c79225ce10c0a251c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Days over Best Maring Day Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "b7cfe579d4e02750a80e",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Days over Best Load Count Day Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "51c6dd3bdc6436b31e1d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL KARE Check Points"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d62fd2bf47c002d585ba",
+        "name": "7a1bdec256ab335967af",
+        "ordinal": 12,
         "field": {
           "Measure": {
             "Expression": {
@@ -1153,19 +1220,36 @@
         "type": "Advanced"
       },
       {
-        "name": "865c9ed2c8e0bd9533a0",
+        "name": "59d3fff87e16da27ace5",
+        "ordinal": 13,
         "field": {
-          "Column": {
+          "Measure": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Team Logos"
+                "Entity": "measures_"
               }
             },
-            "Property": "TeamName"
+            "Property": "FFL Weekly Margin Goal 1.5 Points"
           }
         },
-        "type": "Categorical"
+        "type": "Advanced"
+      },
+      {
+        "name": "c1c58e15390cb9a6ca0d",
+        "ordinal": 14,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "FFL weekly margin goal points"
+          }
+        },
+        "type": "Advanced"
       }
-    ]
+    ],
+    "filterSortOrder": "Custom"
   }
 }

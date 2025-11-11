@@ -12,12 +12,24 @@
           "width": {
             "expr": {
               "Literal": {
-                "Value": "193L"
+                "Value": "187L"
               }
             }
           }
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "6574fa978226c90a1154",
+      "target": "65a5fd88c487d1497070",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6574fa978226c90a1154",
+      "target": "59de5cafbe5d6ee2c7d2",
+      "type": "NoFilter"
+    }
+  ]
 }

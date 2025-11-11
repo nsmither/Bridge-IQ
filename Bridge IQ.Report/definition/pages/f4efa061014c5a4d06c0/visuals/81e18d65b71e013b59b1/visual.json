@@ -7,7 +7,7 @@
     "z": 12000,
     "height": 136,
     "width": 256,
-    "tabOrder": 12000
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "card",
@@ -285,20 +285,6 @@
         },
         "type": "Advanced",
         "howCreated": "User"
-      },
-      {
-        "name": "8cb6836ccee3b03ac657",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL Team 2B Total Points"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "bc038817106e8ce5e3b8",
+  "name": "779308eeb45dd922ed39",
   "position": {
-    "x": 830.922693266833,
-    "y": 112.71820448877806,
-    "z": 5004,
-    "height": 144.63840399002495,
-    "width": 418.95261845386534,
-    "tabOrder": 1006
+    "x": 838.88888888888891,
+    "y": 108.88888888888889,
+    "z": 8001,
+    "height": 170,
+    "width": 404.44444444444446,
+    "tabOrder": 10001
   },
   "visual": {
     "visualType": "tableEx",
@@ -368,7 +368,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "227.81547684066692D"
+                  "Value": "197.79077654467656D"
                 }
               }
             }
@@ -713,7 +713,7 @@
         }
       },
       {
-        "name": "d352b2120046ad87d09a",
+        "name": "92c1b375586161bf8387",
         "field": {
           "Measure": {
             "Expression": {
@@ -725,6 +725,58 @@
           }
         },
         "type": "Advanced"
+      },
+      {
+        "name": "409fc3d4ce4f05632dc0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "RelativeDate",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "c",
+              "Entity": "Calendar",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 0,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "c"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "Right": {
+                    "DateSpan": {
+                      "Expression": {
+                        "Now": {}
+                      },
+                      "TimeUnit": 1
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
       }
     ]
   }

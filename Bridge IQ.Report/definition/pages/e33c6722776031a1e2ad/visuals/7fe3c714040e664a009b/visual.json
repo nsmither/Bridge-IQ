@@ -6,7 +6,8 @@
     "y": 0,
     "z": 0,
     "height": 93.366583541147122,
-    "width": 1223.6408977556109
+    "width": 1223.6408977556109,
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "slicer",
@@ -166,7 +167,7 @@
             "Property": "Date"
           }
         },
-        "type": "Advanced",
+        "type": "RelativeDate",
         "filter": {
           "Version": 2,
           "From": [
@@ -180,7 +181,7 @@
             {
               "Condition": {
                 "Comparison": {
-                  "ComparisonKind": 1,
+                  "ComparisonKind": 0,
                   "Left": {
                     "Column": {
                       "Expression": {
@@ -194,11 +195,9 @@
                   "Right": {
                     "DateSpan": {
                       "Expression": {
-                        "Literal": {
-                          "Value": "datetime'2025-07-01T00:00:00'"
-                        }
+                        "Now": {}
                       },
-                      "TimeUnit": 5
+                      "TimeUnit": 1
                     }
                   }
                 }

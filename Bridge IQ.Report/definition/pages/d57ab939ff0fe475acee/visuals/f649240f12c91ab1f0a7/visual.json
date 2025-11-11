@@ -6,8 +6,7 @@
     "y": 496,
     "z": 4000,
     "height": 224,
-    "width": 384,
-    "tabOrder": 1000
+    "width": 384
   },
   "visual": {
     "visualType": "gauge",

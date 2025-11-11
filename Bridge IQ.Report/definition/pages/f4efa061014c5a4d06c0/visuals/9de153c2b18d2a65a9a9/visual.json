@@ -7,7 +7,7 @@
     "z": 6000,
     "height": 534.44444444444446,
     "width": 441.11111111111109,
-    "tabOrder": 4000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -634,48 +634,6 @@
         },
         "type": "Advanced",
         "howCreated": "User"
-      },
-      {
-        "name": "0c367a9272bb060d0da0",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Employee Photos"
-              }
-            },
-            "Property": "Image URL"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "3386be93357c9c04c261",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Employee Photos"
-              }
-            },
-            "Property": "EmployeeName"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "44b2eaf09d0080e0074b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL total points final v5"
-          }
-        },
-        "type": "Advanced"
       },
       {
         "name": "7239d8222e461c0864ee",

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "65a5fd88c487d1497070",
   "position": {
-    "x": 36.25,
-    "y": 112.5,
+    "x": 31.111111111111111,
+    "y": 111.11111111111111,
     "z": 5000,
-    "height": 145,
-    "width": 347.5,
-    "tabOrder": 1002
+    "height": 170,
+    "width": 368.88888888888886,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "tableEx",
@@ -384,7 +384,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "153.75D"
+                  "Value": "158.2662297073074D"
                 }
               }
             }
@@ -398,7 +398,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "152.54754718484418D"
+                  "Value": "168.0943750978277D"
                 }
               }
             }
@@ -743,7 +743,80 @@
         }
       },
       {
-        "name": "bacb7cc75d5d77688986",
+        "name": "42662945c7327b751ad7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Employee Photos"
+              }
+            },
+            "Property": "EmployeeName"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "e",
+              "Entity": "Employee Photos",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "e"
+                              }
+                            },
+                            "Property": "EmployeeName"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "4185825c2a2e125f57d8",
         "field": {
           "Measure": {
             "Expression": {
@@ -755,6 +828,58 @@
           }
         },
         "type": "Advanced"
+      },
+      {
+        "name": "012db4fad3255eb32c25",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "RelativeDate",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "c",
+              "Entity": "Calendar",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 0,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "c"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "Right": {
+                    "DateSpan": {
+                      "Expression": {
+                        "Now": {}
+                      },
+                      "TimeUnit": 1
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
       }
     ]
   }

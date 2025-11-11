@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "59de5cafbe5d6ee2c7d2",
   "position": {
-    "x": 436.25,
-    "y": 112.5,
-    "z": 5002,
-    "height": 145,
-    "width": 345,
-    "tabOrder": 1004
+    "x": 435.55555555555554,
+    "y": 108.88888888888889,
+    "z": 7000,
+    "height": 170,
+    "width": 358.88888888888886,
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "tableEx",
@@ -340,7 +340,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "153.75D"
+                  "Value": "164.8069589790547D"
                 }
               }
             }
@@ -368,7 +368,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "147.27164187495455D"
+                  "Value": "158.62684894188044D"
                 }
               }
             }
@@ -743,7 +743,134 @@
         }
       },
       {
-        "name": "4dcae6b5a07aa62105c9",
+        "name": "d52ed57c4346e43affea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "c",
+              "Entity": "Calendar",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 2,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "c"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "Right": {
+                    "DateSpan": {
+                      "Expression": {
+                        "Literal": {
+                          "Value": "datetime'2025-10-19T00:00:00'"
+                        }
+                      },
+                      "TimeUnit": 5
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "245d3259f220fd5e3718",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Employee Photos"
+              }
+            },
+            "Property": "EmployeeName"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "e",
+              "Entity": "Employee Photos",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "e"
+                              }
+                            },
+                            "Property": "EmployeeName"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "acd130617b3904d8afb8",
         "field": {
           "Measure": {
             "Expression": {

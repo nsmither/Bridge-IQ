@@ -14256,6 +14256,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.9
 			          }
+			        },
+			        {
+			          "Salesperson": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ],
 			      "NameType": "Name"
@@ -20502,6 +20512,132 @@ cultureInfo en-US
 			      "Terms": [
 			        {
 			          "Season MVP": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "odoo.name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "odoo",
+			          "ConceptualProperty": "name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Company Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "odoo.user_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "odoo",
+			          "ConceptualProperty": "user_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Salesperson": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "odoo.x_studio_mcleod_code": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "odoo",
+			          "ConceptualProperty": "x_studio_mcleod_code"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "McLoed Code": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "odoo.x_studio_last_stage_update": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "odoo",
+			          "ConceptualProperty": "x_studio_last_stage_update"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Last Stage Update": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "odoo.x_res_partner_prospecting_stage": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "odoo",
+			          "ConceptualProperty": "x_res_partner_prospecting_stage"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Stage": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "odoo.activity_date_deadline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "odoo",
+			          "ConceptualProperty": "activity_date_deadline"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Activity  Deadline": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
