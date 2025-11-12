@@ -4436,69 +4436,93 @@ table measures_
 
 	measure 'Team Total Wins' = ```
 			
-			IF(
-			    HASONEVALUE('ffl_lineup'[team]),
-			    VAR CurrentTeam = SELECTEDVALUE('ffl_lineup'[team])
-			    VAR TodaysDate = TODAY()
-			    RETURN
-			    SUMX (
-			        FILTER (
-			            'ffl week schedule',
-			            'ffl week schedule'[end of week ] < TodaysDate &&
-			            (
-			                'ffl week schedule'[ team 1A] = CurrentTeam ||
-			                'ffl week schedule'[team 1B] = CurrentTeam ||
-			                'ffl week schedule'[ team 2A] = CurrentTeam ||
-			                'ffl week schedule'[team 2B] = CurrentTeam
-			            )
-			        ),
+			VAR CurrentTeam = SELECTEDVALUE('ffl_lineup'[team])
+			VAR TodaysDate = TODAY()
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        ALL('ffl week schedule'[Weeks ]),
 			        VAR CurrentWeek = 'ffl week schedule'[Weeks ]
-			        VAR Team1A = 'ffl week schedule'[ team 1A]
-			        VAR Team1B = 'ffl week schedule'[team 1B]
-			        VAR Team2A = 'ffl week schedule'[ team 2A]
-			        VAR Team2B = 'ffl week schedule'[team 2B]
-			
-			        VAR Score1A = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team1A,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			        VAR Score1B = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team1B,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			        VAR Score2A = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team2A,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			        VAR Score2B = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team2B,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			
-			        VAR Result =
-			            SWITCH (
-			                TRUE(),
-			                Team1A = CurrentTeam && Score1A > Score1B, 1,
-			                Team1B = CurrentTeam && Score1B > Score1A, 1,
-			                Team2A = CurrentTeam && Score2A > Score2B, 1,
-			                Team2B = CurrentTeam && Score2B > Score2A, 1,
-			                0
+			        VAR WeekEndDate = 
+			            CALCULATE(
+			                MAX('ffl week schedule'[end of week ]),
+			                ALL('ffl week schedule'),
+			                'ffl week schedule'[Weeks ] = CurrentWeek
 			            )
-			        RETURN Result
+			        RETURN WeekEndDate < TodaysDate
 			    ),
-			    BLANK()
+			    VAR CurrentWeek = 'ffl week schedule'[Weeks ]
+			    
+			    // Get single values for each team position
+			    VAR Team1A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 1A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team1B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 1B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 2A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 2B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    
+			    // Find opponent
+			    VAR MyOpponent = 
+			        SWITCH(
+			            TRUE(),
+			            CurrentTeam = Team1A, Team1B,
+			            CurrentTeam = Team1B, Team1A,
+			            CurrentTeam = Team2A, Team2B,
+			            CurrentTeam = Team2B, Team2A,
+			            BLANK()
+			        )
+			    
+			    // Calculate scores - Use ALLSELECTED to respect visual filters but ignore slicer
+			    VAR MyScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALLSELECTED('ffl week schedule'),
+			                'ffl_lineup'[team] = CurrentTeam,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    VAR OpponentScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALLSELECTED('ffl week schedule'),
+			                'ffl_lineup'[team] = MyOpponent,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    // Return 1 if won, 0 if lost or no game
+			    RETURN
+			        IF(
+			            NOT(ISBLANK(MyScore)) && NOT(ISBLANK(OpponentScore)) && MyScore > OpponentScore,
+			            1,
+			            0
+			        )
 			)
 			```
 		displayFolder: FFL
@@ -4508,69 +4532,93 @@ table measures_
 
 	measure 'Team Total Losses' = ```
 			
-			IF(
-			    HASONEVALUE('ffl_lineup'[team]),
-			    VAR CurrentTeam = SELECTEDVALUE('ffl_lineup'[team])
-			    VAR TodaysDate = TODAY()
-			    RETURN
-			    SUMX (
-			        FILTER (
-			            'ffl week schedule',
-			            'ffl week schedule'[end of week ] < TodaysDate &&
-			            (
-			                'ffl week schedule'[ team 1A] = CurrentTeam ||
-			                'ffl week schedule'[team 1B] = CurrentTeam ||
-			                'ffl week schedule'[ team 2A] = CurrentTeam ||
-			                'ffl week schedule'[team 2B] = CurrentTeam
-			            )
-			        ),
+			VAR CurrentTeam = SELECTEDVALUE('ffl_lineup'[team])
+			VAR TodaysDate = TODAY()
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        ALL('ffl week schedule'[Weeks ]),
 			        VAR CurrentWeek = 'ffl week schedule'[Weeks ]
-			        VAR Team1A = 'ffl week schedule'[ team 1A]
-			        VAR Team1B = 'ffl week schedule'[team 1B]
-			        VAR Team2A = 'ffl week schedule'[ team 2A]
-			        VAR Team2B = 'ffl week schedule'[team 2B]
-			
-			        VAR Score1A = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team1A,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			        VAR Score1B = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team1B,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			        VAR Score2A = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team2A,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			        VAR Score2B = CALCULATE ( 
-			            [FFL total points final v5], 
-			            ALL('ffl_lineup'),
-			            ALL('ffl week schedule'),
-			            'ffl_lineup'[team] = Team2B,
-			            'ffl week schedule'[Weeks ] = CurrentWeek
-			        )
-			
-			        VAR Result =
-			            SWITCH (
-			                TRUE(),
-			                Team1A = CurrentTeam && Score1A < Score1B, 1,
-			                Team1B = CurrentTeam && Score1B < Score1A, 1,
-			                Team2A = CurrentTeam && Score2A < Score2B, 1,
-			                Team2B = CurrentTeam && Score2B < Score2A, 1,
-			                0
+			        VAR WeekEndDate = 
+			            CALCULATE(
+			                MAX('ffl week schedule'[end of week ]),
+			                ALL('ffl week schedule'),
+			                'ffl week schedule'[Weeks ] = CurrentWeek
 			            )
-			        RETURN Result
+			        RETURN WeekEndDate < TodaysDate
 			    ),
-			    BLANK()
+			    VAR CurrentWeek = 'ffl week schedule'[Weeks ]
+			    
+			    // Get single values for each team position
+			    VAR Team1A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 1A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team1B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 1B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 2A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 2B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    
+			    // Find opponent
+			    VAR MyOpponent = 
+			        SWITCH(
+			            TRUE(),
+			            CurrentTeam = Team1A, Team1B,
+			            CurrentTeam = Team1B, Team1A,
+			            CurrentTeam = Team2A, Team2B,
+			            CurrentTeam = Team2B, Team2A,
+			            BLANK()
+			        )
+			    
+			    // Calculate scores - keep the lineup table context but remove week filters
+			    VAR MyScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALL('ffl week schedule'),
+			                'ffl_lineup'[team] = CurrentTeam,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    VAR OpponentScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALL('ffl week schedule'),
+			                'ffl_lineup'[team] = MyOpponent,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    // Return 1 if lost, 0 if won or no game
+			    RETURN
+			        IF(
+			            NOT(ISBLANK(MyScore)) && NOT(ISBLANK(OpponentScore)) && MyScore < OpponentScore,
+			            1,
+			            0
+			        )
 			)
 			```
 		displayFolder: FFL

@@ -2,33 +2,70 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "779308eeb45dd922ed39",
   "position": {
-    "x": 838.88888888888891,
-    "y": 108.88888888888889,
+    "x": 114.15359207266722,
+    "y": 141.63501238645748,
     "z": 8001,
-    "height": 170,
-    "width": 404.44444444444446,
+    "height": 515.80511973575562,
+    "width": 1052.7497935590422,
     "tabOrder": 10001
   },
   "visual": {
-    "visualType": "tableEx",
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Values": {
+        "Columns": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Employee Photos"
+                      "Entity": "ffl week schedule"
                     }
                   },
-                  "Property": "EmployeeName"
+                  "Property": "Weeks "
                 }
               },
-              "queryRef": "Employee Photos.EmployeeName",
-              "nativeQueryRef": "Name",
-              "displayName": "Name"
+              "queryRef": "ffl week schedule.Weeks ",
+              "nativeQueryRef": "Weeks ",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Team Logos"
+                    }
+                  },
+                  "Property": "TeamName"
+                }
+              },
+              "queryRef": "Team Logos.TeamName",
+              "nativeQueryRef": "TeamName",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Team Total Wins"
+                }
+              },
+              "queryRef": "measures_.Team Total Wins",
+              "nativeQueryRef": "Team Total Wins"
             },
             {
               "field": {
@@ -38,12 +75,11 @@
                       "Entity": "measures_"
                     }
                   },
-                  "Property": "Total points WOW"
+                  "Property": "Team Total Losses"
                 }
               },
-              "queryRef": "measures_.Total points WOW",
-              "nativeQueryRef": " Top Under Dog (WOW %)",
-              "displayName": " Top Under Dog (WOW %)"
+              "queryRef": "measures_.Team Total Losses",
+              "nativeQueryRef": "Team Total Losses"
             }
           ]
         }
@@ -52,16 +88,16 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "measures_"
+                    "Entity": "Team Logos"
                   }
                 },
-                "Property": "Total points WOW"
+                "Property": "TeamName"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ]
       }
@@ -354,13 +390,13 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "150.19847451763061D"
+                  "Value": "99.07980405917264D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "Employee Photos.EmployeeName"
+            "metadata": "measures_.Team Total Wins"
           }
         },
         {
@@ -368,20 +404,541 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "197.79077654467656D"
+                  "Value": "121.05985841570023D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "measures_.Total points WOW"
+            "metadata": "measures_.Team Total Losses"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "76.17457249240583D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 1'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Losses"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "82.12221132371337D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 1'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Wins"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "81.12469384245725D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 2'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Wins"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "79.16707783510228D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 2'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Losses"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "62.17207750259101D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 3'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Wins"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "76.17458804984894D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 3'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Losses"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "63.22387105621905D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "total": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ffl week schedule"
+                        }
+                      },
+                      "Property": "Weeks "
+                    }
+                  }
+                ]
+              }
+            ],
+            "metadata": "measures_.Team Total Wins"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "82.18207921064312D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "total": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ffl week schedule"
+                        }
+                      },
+                      "Property": "Weeks "
+                    }
+                  }
+                ]
+              }
+            ],
+            "metadata": "measures_.Team Total Losses"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "70.95458998044121D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 4'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Losses"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "76.03716478586432D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 4'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Wins"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "66.52433463146926D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 5'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Wins"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "69.92020887826725D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 5'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Losses"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "65.4673887831459D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 6'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Wins"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "75.18250006517559D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "ffl week schedule"
+                          }
+                        },
+                        "Property": "Weeks "
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Week 6'"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": "measures_.Team Total Losses"
           }
         }
       ],
       "total": [
         {
+          "properties": {}
+        }
+      ],
+      "subTotals": [
+        {
           "properties": {
-            "totals": {
+            "rowSubtotals": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -624,96 +1181,10 @@
           }
         },
         "type": "TopN",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "subquery",
-              "Expression": {
-                "Subquery": {
-                  "Query": {
-                    "Version": 2,
-                    "From": [
-                      {
-                        "Name": "e",
-                        "Entity": "Employee Photos",
-                        "Type": 0
-                      },
-                      {
-                        "Name": "m",
-                        "Entity": "measures_",
-                        "Type": 0
-                      }
-                    ],
-                    "Select": [
-                      {
-                        "Column": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Source": "e"
-                            }
-                          },
-                          "Property": "EmployeeName"
-                        },
-                        "Name": "field"
-                      }
-                    ],
-                    "OrderBy": [
-                      {
-                        "Direction": 2,
-                        "Expression": {
-                          "Measure": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
-                              }
-                            },
-                            "Property": "Total points WOW"
-                          }
-                        }
-                      }
-                    ],
-                    "Top": 3
-                  }
-                }
-              },
-              "Type": 2
-            },
-            {
-              "Name": "e",
-              "Entity": "Employee Photos",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "In": {
-                  "Expressions": [
-                    {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Source": "e"
-                          }
-                        },
-                        "Property": "EmployeeName"
-                      }
-                    }
-                  ],
-                  "Table": {
-                    "SourceRef": {
-                      "Source": "subquery"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
+        "howCreated": "User"
       },
       {
-        "name": "92c1b375586161bf8387",
+        "name": "09980e3015737cbf9525",
         "field": {
           "Measure": {
             "Expression": {
@@ -721,54 +1192,95 @@
                 "Entity": "measures_"
               }
             },
-            "Property": "Total points WOW"
+            "Property": "Team Total Wins"
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "409fc3d4ce4f05632dc0",
+        "name": "9044299e5b51efac419a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Team Total Losses"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "df1717f9922bec64b075",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Calendar"
+                "Entity": "ffl week schedule"
               }
             },
-            "Property": "Date"
+            "Property": "Weeks "
           }
         },
-        "type": "RelativeDate",
+        "type": "Categorical",
+        "objects": {
+          "general": [
+            {
+              "properties": {}
+            }
+          ]
+        }
+      },
+      {
+        "name": "66a0fe57f1d6df2c2b62",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Team Logos"
+              }
+            },
+            "Property": "TeamName"
+          }
+        },
+        "type": "Categorical",
         "filter": {
           "Version": 2,
           "From": [
             {
-              "Name": "c",
-              "Entity": "Calendar",
+              "Name": "t",
+              "Entity": "Team Logos",
               "Type": 0
             }
           ],
           "Where": [
             {
               "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "c"
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "t"
+                              }
+                            },
+                            "Property": "TeamName"
+                          }
                         }
-                      },
-                      "Property": "Date"
-                    }
-                  },
-                  "Right": {
-                    "DateSpan": {
-                      "Expression": {
-                        "Now": {}
-                      },
-                      "TimeUnit": 1
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
                     }
                   }
                 }
@@ -776,7 +1288,21 @@
             }
           ]
         },
-        "howCreated": "User"
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
       }
     ]
   }
