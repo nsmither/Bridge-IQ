@@ -20466,19 +20466,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Total points WOW"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Top Under Dog (WOW %)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "employee_photos.employeename": {
 			      "Definition": {

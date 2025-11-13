@@ -56,24 +56,31 @@
       "data": [
         {
           "properties": {
-            "startDate": {
-              "expr": {
-                "Literal": {
-                  "Value": "datetime'2025-11-09T00:00:00'"
-                }
-              }
-            },
-            "endDate": {
-              "expr": {
-                "Literal": {
-                  "Value": "datetime'2025-11-15T00:00:00'"
-                }
-              }
-            },
             "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Between'"
+                  "Value": "'Relative'"
+                }
+              }
+            },
+            "relativeRange": {
+              "expr": {
+                "Literal": {
+                  "Value": "'This'"
+                }
+              }
+            },
+            "relativeDuration": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "relativePeriod": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Weeks'"
                 }
               }
             }
@@ -96,45 +103,24 @@
                 "Where": [
                   {
                     "Condition": {
-                      "And": {
+                      "Comparison": {
+                        "ComparisonKind": 0,
                         "Left": {
-                          "Comparison": {
-                            "ComparisonKind": 2,
-                            "Left": {
-                              "Column": {
-                                "Expression": {
-                                  "SourceRef": {
-                                    "Source": "c"
-                                  }
-                                },
-                                "Property": "Date"
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "c"
                               }
                             },
-                            "Right": {
-                              "Literal": {
-                                "Value": "datetime'2025-11-09T00:00:00'"
-                              }
-                            }
+                            "Property": "Date"
                           }
                         },
                         "Right": {
-                          "Comparison": {
-                            "ComparisonKind": 3,
-                            "Left": {
-                              "Column": {
-                                "Expression": {
-                                  "SourceRef": {
-                                    "Source": "c"
-                                  }
-                                },
-                                "Property": "Date"
-                              }
+                          "DateSpan": {
+                            "Expression": {
+                              "Now": {}
                             },
-                            "Right": {
-                              "Literal": {
-                                "Value": "datetime'2025-11-16T00:00:00'"
-                              }
-                            }
+                            "TimeUnit": 1
                           }
                         }
                       }
@@ -153,6 +139,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dateRange": [
+        {
+          "properties": {
+            "includeToday": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
