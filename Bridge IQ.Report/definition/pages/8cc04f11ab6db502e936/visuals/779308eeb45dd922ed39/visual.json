@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "779308eeb45dd922ed39",
   "position": {
     "x": 892.76807980049875,
     "y": 141.64588528678306,
-    "z": 8001,
+    "z": 8000,
     "height": 85.785536159601008,
     "width": 274.31421446384041,
-    "tabOrder": 10001
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -1182,55 +1182,6 @@
         },
         "type": "TopN",
         "howCreated": "User"
-      },
-      {
-        "name": "09980e3015737cbf9525",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Team Total Wins"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "9044299e5b51efac419a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Team Total Losses"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "df1717f9922bec64b075",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ffl week schedule"
-              }
-            },
-            "Property": "Weeks "
-          }
-        },
-        "type": "Categorical",
-        "objects": {
-          "general": [
-            {
-              "properties": {}
-            }
-          ]
-        }
       },
       {
         "name": "66a0fe57f1d6df2c2b62",

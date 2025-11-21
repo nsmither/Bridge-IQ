@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "65a5fd88c487d1497070",
   "position": {
     "x": 32.917705735660853,
     "y": 110.72319201995013,
-    "z": 5000,
+    "z": 4000,
     "height": 170.57356608478804,
     "width": 369.07730673316712,
-    "tabOrder": 2000
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "tableEx",
@@ -814,20 +814,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "4185825c2a2e125f57d8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "FFL total points final v5"
-          }
-        },
-        "type": "Advanced"
       },
       {
         "name": "012db4fad3255eb32c25",

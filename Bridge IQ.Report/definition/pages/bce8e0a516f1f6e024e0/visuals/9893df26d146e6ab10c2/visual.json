@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "9893df26d146e6ab10c2",
   "position": {
-    "x": 13.333333333333332,
-    "y": 23.333333333333332,
-    "z": 2000,
-    "height": 80,
+    "x": 83.647416413373861,
+    "y": 48.632218844984806,
+    "z": 1000,
+    "height": 79.756838905775084,
     "width": 320,
-    "tabOrder": 1000
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "slicer",
@@ -77,7 +77,56 @@
       ],
       "general": [
         {
-          "properties": {}
+          "properties": {
+            "selfFilterEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "filter": {
+              "filter": {
+                "Version": 2,
+                "From": [
+                  {
+                    "Name": "s",
+                    "Entity": "salesperson_key",
+                    "Type": 0
+                  }
+                ],
+                "Where": [
+                  {
+                    "Condition": {
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "s"
+                                }
+                              },
+                              "Property": "Name"
+                            }
+                          }
+                        ],
+                        "Values": [
+                          [
+                            {
+                              "Literal": {
+                                "Value": "'JADEN NICLEY'"
+                              }
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
         }
       ]
     },

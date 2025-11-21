@@ -798,11 +798,12 @@ table measures_
 
 	measure 'Days since Last Shipment is over 120' = ```
 			
-			Var at_risk = IF([Days Since Last Shipment]>120,1,0)
-			Var ifs = 
-			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",at_risk,
-			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",at_risk,0))
+			Var at_risk = IF([Days Since Last Shipment]>120,1,
+			                IF([Days Since Last Shipment]=BLANK(),1,0))
 			
+			Var ifs = 
+			    IF(max(odoo[x_res_partner_prospecting_stage])="Customer",at_risk,
+			    IF(max(odoo[x_res_partner_prospecting_stage])="1-3 Loads",at_risk,0))
 			
 			return
 			ifs

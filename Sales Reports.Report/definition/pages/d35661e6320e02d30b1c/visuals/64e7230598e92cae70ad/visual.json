@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
   "name": "64e7230598e92cae70ad",
   "position": {
     "x": 1032,
@@ -70,13 +70,18 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Aggregation": {
                 "Expression": {
-                  "SourceRef": {
-                    "Entity": "measures_"
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "margin_load_count_goals"
+                      }
+                    },
+                    "Property": "Margin Goal"
                   }
                 },
-                "Property": "Margin"
+                "Function": 0
               }
             },
             "direction": "Descending"

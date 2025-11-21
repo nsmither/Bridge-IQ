@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "59de5cafbe5d6ee2c7d2",
   "position": {
     "x": 435.91022443890279,
     "y": 108.7281795511222,
-    "z": 7000,
+    "z": 6000,
     "height": 169.57605985037407,
     "width": 358.10473815461353,
-    "tabOrder": 4000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "tableEx",
@@ -868,20 +868,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "acd130617b3904d8afb8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Points Season"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -1,11 +1,11 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "7fa15a808382c703ae45",
   "position": {
     "x": 0,
-    "y": 324.25155004428694,
+    "y": 272.34042553191489,
     "z": 4000,
-    "height": 384.34012400354294,
+    "height": 447.41641337386022,
     "width": 1280,
     "tabOrder": 4000
   },
@@ -638,6 +638,20 @@
           "selector": {
             "metadata": "measures_.Count of Behaviors"
           }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "214.22292884712581D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "odoo.name"
+          }
         }
       ]
     },
@@ -1156,6 +1170,61 @@
           }
         },
         "type": "Categorical"
+      },
+      {
+        "name": "08b99b2f03119040ea83",
+        "ordinal": 18,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "odoo"
+              }
+            },
+            "Property": "x_studio_do_not_move"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "o",
+              "Entity": "odoo",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "o"
+                          }
+                        },
+                        "Property": "x_studio_do_not_move"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "false"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
       }
     ],
     "filterSortOrder": "Custom"
