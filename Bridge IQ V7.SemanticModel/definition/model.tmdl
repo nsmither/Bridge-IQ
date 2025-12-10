@@ -1,0 +1,119 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Parameters
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Historic Tables'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 'Transform File from parade_orders'
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup 'Transform File from parade_orders\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from historic_parade_orders'
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup 'Transform File from historic_parade_orders\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from behaviors'
+
+	annotation PBI_QueryGroupOrder = 6
+
+queryGroup 'Transform File from behaviors\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from historic_behaviors'
+
+	annotation PBI_QueryGroupOrder = 8
+
+queryGroup 'Transform File from historic_behaviors\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+/// Errors in queries that were loaded on 10/16/2025 9:01:05 AM.
+queryGroup 'Query Errors - 10/16/2025 9:01:05 AM'
+
+	annotation PBI_QueryGroupOrder = 10
+
+annotation PBI_QueryOrder = ["mcleod_historic_orders","Contacts","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","users","pay_schedule","sop_issues","behaviors","behavior_goals","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer_margin_goal","customer","healthy_pipeline_goals","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_behaviors","historic_callins","movements","factoring_company","driver_extra_pay","Calendar","crm_stages","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","carrier_key","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","crt_movement_data","lane","daily_number_override","account_rep","observed_holidays","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","behavior_key","dispatcher_key","division_key","odoo","payee","off_payee","transitioned_accounts","pay_dates","ffl_lineup","Employee Photos","ffl week schedule","Team Logos","Errors in ffl week schedule","drs_payee"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode","CalcGroup"]
+
+ref table DateTableTemplate_e2c46345-9a3a-40bb-ae4b-e3de83b68f6a
+ref table stop
+ref table customer
+ref table orders
+ref table movements
+ref table driver_extra_pay
+ref table Calendar
+ref table measures_
+ref table employees
+ref table job_history
+ref table salesperson_key
+ref table callins
+ref table overdue_check_calls
+ref table crt_movement_data
+ref table lane
+ref table margin_load_count_goals
+ref table daily_number_override
+ref table rev_codes
+ref table account_rep
+ref table observed_holidays
+ref table LocalDateTable_ed26f4c3-9c62-405b-8c3b-c81747750938
+ref table behaviors
+ref table behavior_key
+ref table behavior_goals
+ref table customer_margin_goal
+ref table crm_stages
+ref table healthy_pipeline_goals
+ref table sop_issues
+ref table dispatcher_key
+ref table LocalDateTable_602d0dc9-a979-4162-a15e-cf937935b0b7
+ref table LocalDateTable_7e773c2c-a1bd-4f2f-b9f7-efdc6b4a7c73
+ref table pay_schedule
+ref table LocalDateTable_5204cc32-7744-4162-bd7a-37c8843dcd5c
+ref table LocalDateTable_984f2224-97c9-4ff5-8864-d5ee44b7d514
+ref table carrier_key
+ref table division_key
+ref table LocalDateTable_5d529210-5800-429f-b2e3-388a81d360f9
+ref table LocalDateTable_67948750-4a55-4170-865e-d76c6427f063
+ref table LocalDateTable_2a3d8ac1-aff0-4e32-a507-1f99a679e947
+ref table 'Behavior KPI'
+ref table 'Behaviors Paramater'
+ref table 'Time intelligence'
+ref table 'Sales KPI''s'
+ref table odoo
+ref table payee
+ref table transitioned_accounts
+ref table pay_dates
+ref table LocalDateTable_071b01ee-fb93-4e02-b088-9fa5349dda26
+ref table ffl_lineup
+ref table 'Employee Photos'
+ref table 'ffl week schedule'
+ref table LocalDateTable_e33814f8-eec2-44ca-a33e-ada525a06173
+ref table LocalDateTable_240c5f16-071c-4116-a9e4-5499a06f4cf8
+ref table 'Team Logos'
+ref table factoring_company
+
+ref cultureInfo en-US
+

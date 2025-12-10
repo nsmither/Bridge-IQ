@@ -1,0 +1,100 @@
+table carrier_key
+	lineageTag: d46e93c2-0fe7-447c-aa96-63a09c700d0e
+
+	column address1
+		dataType: string
+		lineageTag: 7071f5f6-b183-4985-bfcc-e9b45d46dfa3
+		summarizeBy: none
+		sourceColumn: address1
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 929d7294-f315-4b89-9d8f-c32ae64823fd
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: 9da5d9a9-bb78-4b91-905b-159234b0fc2e
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 3b1b7a83-8339-4a12-8af9-010096adecbb
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: b95024b2-1b2e-4eb6-9a17-6adfd8f642e0
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 5c9d921a-88ee-4224-b8f9-838f1c583a3b
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column zip_code
+		dataType: string
+		lineageTag: 43deb3a0-72fa-40c0-a74b-81c586cecb3d
+		summarizeBy: none
+		sourceColumn: zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column dot_number
+		dataType: string
+		lineageTag: 52fcdf4c-17d2-4a20-8186-c2e1597f8cb0
+		summarizeBy: none
+		sourceColumn: dot_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column mc_number
+		dataType: string
+		lineageTag: 19a0e7be-5468-4e0e-94ee-2eacd68c382e
+		summarizeBy: none
+		sourceColumn: mc_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column factoring_company_id
+		dataType: string
+		lineageTag: 6fd27678-051b-46df-bb69-c25baf546b67
+		summarizeBy: none
+		sourceColumn: factoring_company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition carrier_key = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_payee = Source{[Schema="dbo",Item="payee"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_payee,{"address1", "city", "id", "name", "state", "status", "zip_code"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns", {"id"}, drs_payee, {"id"}, "drs_payee", JoinKind.LeftOuter),
+				    #"Expanded drs_payee" = Table.ExpandTableColumn(#"Merged Queries", "drs_payee", {"dot_number", "factoring_company_id", "icc_number"}, {"dot_number", "factoring_company_id", "icc_number"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded drs_payee",{{"icc_number", "mc_number"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

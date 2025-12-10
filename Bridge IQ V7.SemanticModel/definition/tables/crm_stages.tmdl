@@ -1,0 +1,36 @@
+table crm_stages
+	lineageTag: 3fe647cf-f0e9-4ca1-931e-2f3de372b7cb
+
+	column Order
+		dataType: int64
+		formatString: 0
+		lineageTag: 630a3f49-43f5-4b8c-96eb-8434269c285d
+		summarizeBy: sum
+		sourceColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stage Name'
+		dataType: string
+		lineageTag: 12c05801-f4f2-4d91-895b-f6426805c0f6
+		summarizeBy: none
+		sourceColumn: Stage Name
+		sortByColumn: Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition crm_stages = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("Lc67CgIxEIXhVxlSr2Bcr6UIoiCrFmIRUsRN1GDMhFzw9R2zlv/HKY4QjLOGHYPxcIqYgulzYrIRbEJ88RlL/1Q3Z6q1ZB3CFiN0+Kk0JbpifFn/qD2j3mEwsE9OeV1tTnYuytm7NYMsqmD+55JyE622GdYhVFoR8VELB1R6OMTHv1VJGd8mMim/", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Order = _t, #"Stage Name" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Order", Int64.Type}, {"Stage Name", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
