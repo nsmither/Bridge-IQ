@@ -740,3 +740,16 @@ expression 'Errors in ffl week schedule' =
 
 	annotation PBI_ResultType = Table
 
+expression drs_payee =
+		let
+		    Source = Sql.Database("bl-appdb", "lme"),
+		    dbo_drs_payee = Source{[Schema="dbo",Item="drs_payee"]}[Data],
+		    #"Removed Other Columns" = Table.SelectColumns(dbo_drs_payee,{"dot_number", "factoring_company_id", "icc_number", "id"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 878c148a-1e31-4d67-8b16-ab3f6f7dc4de
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "8da4c0ac14ce2214d88f",
   "position": {
     "x": 318,
@@ -7,7 +7,7 @@
     "z": 11000,
     "height": 336,
     "width": 1232,
-    "tabOrder": 11000
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -154,6 +154,54 @@
         ]
       }
     },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "customer.name"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "customer"
+                    }
+                  },
+                  "Property": "name"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "orders.id"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "orders"
+                    }
+                  },
+                  "Property": "id"
+                }
+              }
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
     "objects": {
       "subTotals": [
         {
@@ -300,5 +348,121 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "09e22cc53276a01070f4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "customer"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "1849186fba9f04cbcefa",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "orders"
+              }
+            },
+            "Property": "id"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0cb031fdbfc26a3fa5a6",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6ba58336449bec6dfb1d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of orders covered"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5960e38e2539a2ea3e50",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin Per Order"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7eda742f39e2f9d2da47",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Customer Margin Goal"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c68e438a1261f67bde52",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Customer Margin vs Customer Margin Goal Variance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0ec89e3d025c1d649c9e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

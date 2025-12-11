@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "58a2414731b3a8b0c076",
   "position": {
     "x": 0,
@@ -7,7 +7,7 @@
     "z": 1000,
     "height": 128,
     "width": 432,
-    "tabOrder": 1000
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "slicer",
@@ -93,6 +93,16 @@
                 }
               ],
               "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "2024L"
+                  }
+                }
+              ],
+              "isToggled": true
             }
           ]
         }
@@ -155,7 +165,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "2025L"
+                                "Value": "2024L"
                               }
                             },
                             {
@@ -198,7 +208,7 @@
                                 "0": [
                                   {
                                     "Literal": {
-                                      "Value": "2025L"
+                                      "Value": "2024L"
                                     }
                                   }
                                 ]
@@ -243,7 +253,7 @@
                         },
                         "valueMap": [
                           {
-                            "0": "2025",
+                            "0": "2024",
                             "1": "October"
                           }
                         ]

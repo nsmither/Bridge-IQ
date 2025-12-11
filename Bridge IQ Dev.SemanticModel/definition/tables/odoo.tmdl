@@ -379,6 +379,21 @@ table odoo
 			     )
 			
 			
+			VAR HopeIsland = 
+			    IF([Days since Last Salesperson Update]<7,FALSE(),
+			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
+			            IF([Days Since Last Stage Update]>30,TRUE(),
+			                IF([Days Over Due]>14,TRUE(),
+			                    IF([Days since last Behaivor]>30,TRUE(),
+			                    FALSE()
+			                    )
+			                )
+			            )
+			        )
+			    )
+			
+			
+			
 			VAR NoForNow = 
 			    IF([Days since Last Salesperson Update]<7,FALSE(),
 			        IF(odoo[activity_date_deadline]=BLANK(),TRUE(),
@@ -458,13 +473,15 @@ table odoo
 			
 			VAR AtRisk =
 			    IF(odoo[x_res_partner_prospecting_stage]="Working",Working,
-			        IF(odoo[x_res_partner_prospecting_stage]="No For Now",NoForNow,
-			            IF(odoo[x_res_partner_prospecting_stage]="Qualified",Qualified,
-			                IF(odoo[x_res_partner_prospecting_stage]="Quoted",Quoted,
-			                    IF(odoo[x_res_partner_prospecting_stage]="Credit App",CreditApp,
-			                        IF(odoo[x_res_partner_prospecting_stage]="1-3 Loads",OneToThree,
-			                            IF(odoo[x_res_partner_prospecting_stage]="Customer",Customer,
-			                            FALSE()
+			        IF(odoo[x_res_partner_prospecting_stage]="Hope Island",HopeIsland,
+			            IF(odoo[x_res_partner_prospecting_stage]="No For Now",NoForNow,
+			                IF(odoo[x_res_partner_prospecting_stage]="Qualified",Qualified,
+			                    IF(odoo[x_res_partner_prospecting_stage]="Quoted",Quoted,
+			                        IF(odoo[x_res_partner_prospecting_stage]="Credit App",CreditApp,
+			                            IF(odoo[x_res_partner_prospecting_stage]="1-3 Loads",OneToThree,
+			                                IF(odoo[x_res_partner_prospecting_stage]="Customer",Customer,
+			                                FALSE()
+			                                )
 			                            )
 			                        )
 			                    )
@@ -472,7 +489,6 @@ table odoo
 			            )
 			        )
 			    )
-			
 			RETURN
 			AtRisk
 			```

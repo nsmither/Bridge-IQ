@@ -22,7 +22,7 @@ table transitioned_accounts
 		mode: import
 		source =
 				let
-				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/bridge_iq/Data%20Sets/Salesperon%20Change/Salesperson%20Change.xlsx"), null, true),
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Salesperson%20Change.xlsx"), null, true),
 				    salesperson_change_Table = Source{[Item="salesperson_change",Kind="Table"]}[Data],
 				    #"Changed Type" = Table.TransformColumnTypes(salesperson_change_Table,{{"Customer ID", type text}, {"Change Date", type datetime}})
 				in

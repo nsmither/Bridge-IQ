@@ -613,3 +613,11 @@ relationship 59362e10-5143-d29e-e652-7d9be13a7bce
 	fromColumn: 'Employee Photos'.'ffl_lineup.team'
 	toColumn: 'Team Logos'.Teamnumber
 
+relationship AutoDetected_abf0a4c4-5db2-44da-aa92-6fc3379c96fa
+	fromColumn: carrier_key.factoring_company_id
+	toColumn: factoring_company.id
+
+relationship 55de292a-01df-81c0-a96a-57467c09cd75
+	fromColumn: 'wires_not_accounted for'.curr_movement_id
+	toColumn: movements.id
+

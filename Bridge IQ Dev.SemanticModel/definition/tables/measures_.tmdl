@@ -33,7 +33,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Sum of driver_extra_pay' = SUM(driver_extra_pay[amount])
+	measure 'Sum of driver_extra_pay' = SUM(driver_extra_pay[amount])+SUM('wires_not_accounted for'[check amount n])
 		displayFolder: Pay Measures
 		lineageTag: 6be686a6-e220-4dff-91a4-141b0da5ca73
 
@@ -798,11 +798,12 @@ table measures_
 
 	measure 'Days since Last Shipment is over 120' = ```
 			
-			Var at_risk = IF([Days Since Last Shipment]>120,1,0)
-			Var ifs = 
-			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",at_risk,
-			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",at_risk,0))
+			Var at_risk = IF([Days Since Last Shipment]>120,1,
+			                IF([Days Since Last Shipment]=BLANK(),1,0))
 			
+			Var ifs = 
+			    IF(max(odoo[x_res_partner_prospecting_stage])="Customer",at_risk,
+			    IF(max(odoo[x_res_partner_prospecting_stage])="1-3 Loads",at_risk,0))
 			
 			return
 			ifs
@@ -819,10 +820,11 @@ table measures_
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",0,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Working",prospect_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="No For Now",prospect_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Hope Island",prospect_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Qualified",pipeline_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Quoted",pipeline_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Credit App",pipeline_at_risk,
-			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",pipeline_at_risk,0)))))))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",pipeline_at_risk,0))))))))
 			
 			Return
 			ifs
@@ -836,15 +838,17 @@ table measures_
 			Var opportunity_at_risk = IF([Days since last Behaivor]>60,1,0)
 			Var working_at_risk = IF([Days since last Behaivor]>60,1,0)
 			Var no_for_now_at_risk = IF([Days since last Behaivor]>90,1,0)
+			Var hope_island_at_risk = IF([Days since last Behaivor]>30,1,0)
 			
 			Var Ifs = 
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Qualified",opportunity_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Quoted",opportunity_at_risk,
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Hope Island",hope_island_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Credit App", opportunity_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="1-3 Loads",opportunity_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Customer",opportunity_at_risk,
 			    IF(MIN(odoo[x_res_partner_prospecting_stage])="Working",working_at_risk,
-			    IF(MIN(odoo[x_res_partner_prospecting_stage])="No For Now",no_for_now_at_risk,0)))))))
+			    IF(MIN(odoo[x_res_partner_prospecting_stage])="No For Now",no_for_now_at_risk,0))))))))
 			
 			Return
 			Ifs
@@ -4034,15 +4038,21 @@ table measures_
 		displayFolder: FFL
 		lineageTag: 9eb83486-2042-4350-a06b-678ac8e7378c
 
-	measure 'FFL week number' =
+	measure 'FFL week number' = ```
 			
 			VAR TodaysDate = TODAY()
-			RETURN
+			VAR WeekText = 
 			    CALCULATE(
 			        MIN('ffl week schedule'[Weeks ]),
-			        USERELATIONSHIP('Calendar'[Date], 'ffl week schedule'[start of week]),
-			        'Calendar'[Date] = TodaysDate
+			        FILTER(
+			            'ffl week schedule',
+			            TodaysDate >= 'ffl week schedule'[start of week] &&
+			            TodaysDate <= 'ffl week schedule'[end of week ]
+			        )
 			    )
+			RETURN
+			    WeekText
+			```
 		displayFolder: FFL
 		lineageTag: 842538b1-aeec-40c2-8ccf-9e06f354bcc5
 
@@ -4378,15 +4388,299 @@ table measures_
 		displayFolder: FFL
 		lineageTag: 946c5d85-fda6-4e41-8766-8f7e14afcea3
 
-	measure 'Total Points Season' =
+	measure 'Total Points Season' = ```
 			
-			CALCULATE(
-			    [FFL total points final v5],
-			    REMOVEFILTERS('Calendar'),
-			    'Calendar'[Date] >= DATE(2025,10,20)
+			VAR TodayDate = TODAY()
+			VAR SeasonStartDate = DATE(2025,10,19)
+			VAR WeeklyTable =
+			    FILTER(
+			        ADDCOLUMNS(
+			            SUMMARIZECOLUMNS(
+			                'Employee Photos'[EmployeeName],
+			                'ffl week schedule'[start of week],
+			                'ffl week schedule'[end of week ]
+			            ),
+			            "@StartOfWeek", 'ffl week schedule'[start of week],
+			            "@EndOfWeek", 'ffl week schedule'[end of week ]
+			        ),
+			        [@StartOfWeek] >= SeasonStartDate &&
+			        [@StartOfWeek] <= TodayDate
+			    )
+			RETURN
+			SUMX(
+			    WeeklyTable,
+			    VAR WeekStart = [@StartOfWeek]
+			    VAR WeekEnd = [@EndOfWeek]
+			    VAR Emp = [EmployeeName]
+			    RETURN
+			        CALCULATE(
+			            [Total FFL Points],
+			            KEEPFILTERS(
+			                DATESBETWEEN(
+			                    'Calendar'[Date],
+			                    WeekStart,
+			                    WeekEnd
+			                )
+			            ),
+			            KEEPFILTERS(
+			                TREATAS({ Emp }, 'Employee Photos'[EmployeeName])
+			            )
+			        )
 			)
+			
+			
+			```
 		displayFolder: FFL
 		lineageTag: b3cc5e82-462e-46c4-894d-0b39c4298675
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team Total Wins' = ```
+			
+			VAR CurrentTeam = SELECTEDVALUE('ffl_lineup'[team])
+			VAR TodaysDate = TODAY()
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        ALL('ffl week schedule'[Weeks ]),
+			        VAR CurrentWeek = 'ffl week schedule'[Weeks ]
+			        VAR WeekEndDate = 
+			            CALCULATE(
+			                MAX('ffl week schedule'[end of week ]),
+			                ALL('ffl week schedule'),
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            )
+			        RETURN WeekEndDate < TodaysDate
+			    ),
+			    VAR CurrentWeek = 'ffl week schedule'[Weeks ]
+			    
+			    // Get single values for each team position
+			    VAR Team1A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 1A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team1B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 1B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 2A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 2B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    
+			    // Find opponent
+			    VAR MyOpponent = 
+			        SWITCH(
+			            TRUE(),
+			            CurrentTeam = Team1A, Team1B,
+			            CurrentTeam = Team1B, Team1A,
+			            CurrentTeam = Team2A, Team2B,
+			            CurrentTeam = Team2B, Team2A,
+			            BLANK()
+			        )
+			    
+			    // Calculate scores - Use ALLSELECTED to respect visual filters but ignore slicer
+			    VAR MyScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALLSELECTED('ffl week schedule'),
+			                'ffl_lineup'[team] = CurrentTeam,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    VAR OpponentScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALLSELECTED('ffl week schedule'),
+			                'ffl_lineup'[team] = MyOpponent,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    // Return 1 if won, 0 if lost or no game
+			    RETURN
+			        IF(
+			            NOT(ISBLANK(MyScore)) && NOT(ISBLANK(OpponentScore)) && MyScore > OpponentScore,
+			            1,
+			            0
+			        )
+			)
+			```
+		displayFolder: FFL
+		lineageTag: a8bfa413-c18b-4c96-9d42-a62137fa0504
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team Total Losses' = ```
+			
+			VAR CurrentTeam = SELECTEDVALUE('ffl_lineup'[team])
+			VAR TodaysDate = TODAY()
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        ALL('ffl week schedule'[Weeks ]),
+			        VAR CurrentWeek = 'ffl week schedule'[Weeks ]
+			        VAR WeekEndDate = 
+			            CALCULATE(
+			                MAX('ffl week schedule'[end of week ]),
+			                ALL('ffl week schedule'),
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            )
+			        RETURN WeekEndDate < TodaysDate
+			    ),
+			    VAR CurrentWeek = 'ffl week schedule'[Weeks ]
+			    
+			    // Get single values for each team position
+			    VAR Team1A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 1A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team1B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 1B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2A = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[ team 2A]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    VAR Team2B = 
+			        CALCULATE(
+			            MAX('ffl week schedule'[team 2B]),
+			            ALL('ffl week schedule'),
+			            'ffl week schedule'[Weeks ] = CurrentWeek
+			        )
+			    
+			    // Find opponent
+			    VAR MyOpponent = 
+			        SWITCH(
+			            TRUE(),
+			            CurrentTeam = Team1A, Team1B,
+			            CurrentTeam = Team1B, Team1A,
+			            CurrentTeam = Team2A, Team2B,
+			            CurrentTeam = Team2B, Team2A,
+			            BLANK()
+			        )
+			    
+			    // Calculate scores - keep the lineup table context but remove week filters
+			    VAR MyScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALL('ffl week schedule'),
+			                'ffl_lineup'[team] = CurrentTeam,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    VAR OpponentScore =
+			        IF(
+			            NOT(ISBLANK(MyOpponent)),
+			            CALCULATE(
+			                [FFL total points final v5],
+			                ALL('ffl week schedule'),
+			                'ffl_lineup'[team] = MyOpponent,
+			                'ffl week schedule'[Weeks ] = CurrentWeek
+			            ),
+			            BLANK()
+			        )
+			    
+			    // Return 1 if lost, 0 if won or no game
+			    RETURN
+			        IF(
+			            NOT(ISBLANK(MyScore)) && NOT(ISBLANK(OpponentScore)) && MyScore < OpponentScore,
+			            1,
+			            0
+			        )
+			)
+			```
+		displayFolder: FFL
+		lineageTag: 7b6cf906-bddf-405d-88ae-95daac5fd990
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Leaderboard Record' =
+			
+			[Team Total Wins] & "-" & [Team Total Losses]
+		displayFolder: FFL
+		lineageTag: e0e43f6d-3160-48ca-8db5-d15bc42e2c86
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Team Points (for WinsLosses)' = ```
+			
+			VAR CurrentWeek = SELECTEDVALUE('ffl week schedule'[Weeks ])
+			VAR StartDate = CALCULATE(
+			    MIN('ffl week schedule'[start of week]), 
+			    'ffl week schedule'[Weeks ] = CurrentWeek,
+			    ALL('ffl week schedule')
+			)
+			VAR EndDate = CALCULATE(
+			    MAX('ffl week schedule'[end of week ]), 
+			    'ffl week schedule'[Weeks ] = CurrentWeek,
+			    ALL('ffl week schedule')
+			)
+			
+			RETURN
+			IF(
+			    NOT ISBLANK(CurrentWeek),
+			    CALCULATE(
+			        SUMX(
+			            VALUES('Employee Photos'[EmployeeName]),
+			            [FFL total points final v5]
+			        ),
+			        'ffl week schedule'[start of week]>= StartDate,
+			        'ffl week schedule'[end of week ] <= EndDate
+			    ),
+			    SUMX(
+			        VALUES('Employee Photos'[EmployeeName]),
+			        [FFL total points final v5]
+			    )
+			)
+			```
+		displayFolder: FFL
+		lineageTag: 66b91811-c880-47fc-b81d-4263acb9f762
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Test Week Filter' =
+			
+			VAR CurrentWeek = SELECTEDVALUE('ffl week schedule'[Weeks ])
+			VAR StartDate = CALCULATE(MIN('ffl week schedule'[start of week]), 'ffl week schedule'[Weeks ] = CurrentWeek, ALL('ffl week schedule'))
+			VAR EndDate = CALCULATE(MAX('ffl week schedule'[end of week ]), 'ffl week schedule'[Weeks ] = CurrentWeek, ALL('ffl week schedule'))
+			
+			RETURN
+			"Week: " & CurrentWeek & " | Start: " & StartDate & " | End: " & EndDate & " | Load Count: " & [Load Count Points]
+		displayFolder: FFL
+		lineageTag: 0fafa390-5e89-4ea4-98e8-cbff185b49fb
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
