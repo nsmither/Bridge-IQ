@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "ca868be73802bc41dcc8",
   "position": {
     "x": 16,
@@ -236,17 +236,17 @@
                           [
                             {
                               "Literal": {
-                                "Value": "2025L"
+                                "Value": "2026L"
                               }
                             },
                             {
                               "Literal": {
-                                "Value": "'Q4'"
+                                "Value": "'Q1'"
                               }
                             },
                             {
                               "Literal": {
-                                "Value": "'October'"
+                                "Value": "'January'"
                               }
                             }
                           ]
@@ -309,7 +309,7 @@
                                 "0": [
                                   {
                                     "Literal": {
-                                      "Value": "2025L"
+                                      "Value": "2026L"
                                     }
                                   }
                                 ]
@@ -318,7 +318,7 @@
                                 "1": [
                                   {
                                     "Literal": {
-                                      "Value": "'Q4'"
+                                      "Value": "'Q1'"
                                     }
                                   }
                                 ]
@@ -327,7 +327,7 @@
                                 "2": [
                                   {
                                     "Literal": {
-                                      "Value": "'October'"
+                                      "Value": "'January'"
                                     }
                                   }
                                 ]
@@ -375,9 +375,9 @@
                         },
                         "valueMap": [
                           {
-                            "0": "2025",
-                            "1": "Q4",
-                            "2": "October"
+                            "0": "2026",
+                            "1": "Q1",
+                            "2": "January"
                           }
                         ]
                       }

@@ -1,0 +1,33 @@
+table factoring_company
+	lineageTag: 2e9be950-f4e5-4c75-83f3-af71fde152dd
+
+	column id
+		dataType: string
+		lineageTag: 16a45f73-40e3-40ad-bc83-2fa20f4f0ab5
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 82dbbd89-e4c8-4a51-84da-89df3cf945bf
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition factoring_company = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_factoring_company = Source{[Schema="dbo",Item="factoring_company"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_factoring_company,{"id", "name"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

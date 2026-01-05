@@ -53,7 +53,12 @@ queryGroup 'Query Errors - 10/16/2025 9:01:05 AM'
 
 	annotation PBI_QueryGroupOrder = 10
 
-annotation PBI_QueryOrder = ["mcleod_historic_orders","Contacts","pcs_orders","pcs_movements","pcs_employees","pcs_dispatchers","pcs_orders_dispatchers","stop_historic","users","pay_schedule","sop_issues","behaviors","behavior_goals","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer_margin_goal","customer","healthy_pipeline_goals","pcs_customers","custmers_pcs_sync","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_behaviors","historic_callins","movements","factoring_company","driver_extra_pay","Calendar","crm_stages","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","carrier_key","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","crt_movement_data","lane","daily_number_override","account_rep","observed_holidays","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","behavior_key","dispatcher_key","division_key","odoo","payee","off_payee","transitioned_accounts","pay_dates","ffl_lineup","Employee Photos","ffl week schedule","Team Logos","wires_not_accounted for","Errors in ffl week schedule","drs_payee"]
+/// Collection of subsidiary journals from the McLeod IQ Data Warehouse
+queryGroup journals
+
+	annotation PBI_QueryGroupOrder = 11
+
+annotation PBI_QueryOrder = ["mcleod_historic_orders","Contacts","stop_historic","users","pay_schedule","sop_issues","behaviors","behavior_goals","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer_margin_goal","customer","healthy_pipeline_goals","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_behaviors","historic_callins","movements","factoring_company","driver_extra_pay","Calendar","crm_stages","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","carrier_key","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","crt_movement_data","lane","daily_number_override","account_rep","observed_holidays","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","behavior_key","dispatcher_key","division_key","odoo","payee","off_payee","transitioned_accounts","pay_dates","ffl_lineup","Employee Photos","ffl week schedule","Team Logos","wires_not_accounted for","Errors in ffl week schedule","drs_payee","journal","DW journal_ap","DW journal_cash","DW journal_driver","DW journal_office","DW journal_sales","batch_control","gl_ledger_hist","gl_ledger","gl_account","base_or_commission_pay_schedule"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -115,6 +120,18 @@ ref table LocalDateTable_240c5f16-071c-4116-a9e4-5499a06f4cf8
 ref table 'Team Logos'
 ref table factoring_company
 ref table 'wires_not_accounted for'
+ref table journal
+ref table LocalDateTable_9ee9e8bb-0c0e-439f-a64b-d76684c98bbd
+ref table LocalDateTable_88bef206-31ea-480f-ad32-6ed1a10be738
+ref table batch_control
+ref table gl_ledger
+ref table LocalDateTable_9f4f1f9a-657f-4803-a8d3-7b3451367d13
+ref table LocalDateTable_18cec52a-aea3-4463-95f0-edc3b0b835dd
+ref table gl_account
+ref table base_or_commission_pay_schedule
+ref table LocalDateTable_310ea0fb-96f6-4c25-a836-603d2aed15cb
+ref table LocalDateTable_4c5727d3-5a15-421e-acb8-b9e496939202
+ref table LocalDateTable_176a9bce-2631-41a8-9cfe-4ebe3e6ff622
 
 ref cultureInfo en-US
 

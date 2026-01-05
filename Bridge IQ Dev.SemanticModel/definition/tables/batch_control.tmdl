@@ -1,0 +1,35 @@
+/// DW_batch_control
+table batch_control
+	lineageTag: a5b97c55-b9bb-4c18-acca-460f78fcc734
+
+	column code
+		dataType: string
+		lineageTag: c8c0d242-2342-4f71-bff1-80de0e1ec521
+		summarizeBy: none
+		sourceColumn: code
+
+		annotation SummarizationSetBy = Automatic
+
+	column descr
+		dataType: string
+		lineageTag: 639be637-69d8-4a4f-bcc9-54b4cf0cf054
+		summarizeBy: none
+		sourceColumn: descr
+
+		annotation SummarizationSetBy = Automatic
+
+	partition batch_control = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("bl-mcbiserver"),
+				    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
+				    DW_batch_control = McLeod_IQ{[Schema="DW",Item="batch_control"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DW_batch_control,{"code", "descr"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

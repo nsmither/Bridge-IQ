@@ -93,6 +93,16 @@
                 }
               ],
               "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "2024L"
+                  }
+                }
+              ],
+              "isToggled": true
             }
           ]
         }
@@ -160,7 +170,7 @@
                             },
                             {
                               "Literal": {
-                                "Value": "'April'"
+                                "Value": "'December'"
                               }
                             }
                           ]
@@ -207,7 +217,7 @@
                                 "1": [
                                   {
                                     "Literal": {
-                                      "Value": "'April'"
+                                      "Value": "'December'"
                                     }
                                   }
                                 ]
@@ -244,7 +254,7 @@
                         "valueMap": [
                           {
                             "0": "2025",
-                            "1": "April"
+                            "1": "December"
                           }
                         ]
                       }

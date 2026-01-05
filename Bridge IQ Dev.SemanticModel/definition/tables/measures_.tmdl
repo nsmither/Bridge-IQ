@@ -4684,6 +4684,144 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Receivables Debits' =
+			
+			CALCULATE(
+			    SUM(journal[amount]),
+			    journal[glid]="10300000",
+			    journal[amount]>0
+			)
+		displayFolder: **Journal Testing**
+		lineageTag: 9cceba65-e30d-47d3-a551-41e57055d88a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Max Transaction Date' =
+			
+			CALCULATE(
+			    MAX(journal[transaction_date]),
+			    journal[glid]="10300000",
+			    journal[amount]<0
+			)
+		displayFolder: **Journal Testing**
+		lineageTag: 014f5b5a-c295-4cff-96cf-c3c70b515772
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Within Selected Pay Period' = ```
+			
+			VAR StartDate =
+			    SELECTEDVALUE ( base_or_commission_pay_schedule[Start Date] )
+			VAR EndDate =
+			    SELECTEDVALUE ( base_or_commission_pay_schedule[End Date] )
+			VAR MaxPayDate =
+			    [Max Transaction Date]
+			RETURN
+			IF (
+			    NOT ISBLANK ( MaxPayDate )
+			        && NOT ISBLANK ( StartDate )
+			        && NOT ISBLANK ( EndDate )
+			        && MaxPayDate >= StartDate
+			        && MaxPayDate <= EndDate,
+			    1,
+			    0
+			)
+			
+			```
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: aed090fe-92a8-4a87-b02a-1393b513d054
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receivables Credits' =
+			
+			CALCULATE(
+			    SUM(journal[amount]),
+			    journal[glid]="10300000",
+			    journal[amount]<0
+			)*-1
+		displayFolder: **Journal Testing**
+		lineageTag: c6edad5c-1d69-4eb5-be7c-178fed52df00
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receivables Balance' = [Receivables Debits]-[Receivables Credits]
+		displayFolder: **Journal Testing**
+		lineageTag: d48759e8-c71f-4a64-8704-6af7c67cb2db
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Commissions Ship Date' = MIN(orders[shipper_sched_early_date])
+		displayFolder: Commission Measures\Commission Testing\Base Measures
+		lineageTag: e14293c8-0609-45b6-a5cd-11b8aca838ff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Is New Customer (Per Order, Shipper Early Date)' =
+			
+			VAR Cust     = SELECTEDVALUE ( orders[customer_id] )
+			VAR ShipDate = SELECTEDVALUE ( orders[shipper_sched_early_date] )
+			VAR PriorCount =
+			    CALCULATE (
+			        COUNTROWS ( orders ),
+			        FILTER (
+			            ALL ( orders ),
+			            orders[customer_id] = Cust
+			                && orders[shipper_sched_early_date] >= ShipDate - 730
+			                && orders[shipper_sched_early_date] <= ShipDate - 366
+			        ),
+			        movements[status] <> "A" && movements[status] <> "V"
+			    )
+			RETURN
+			IF ( ISBLANK ( ShipDate ) || PriorCount > 0, 0, 1 )
+		displayFolder: Commission Measures\Commission Testing\New Customers
+		lineageTag: ec78b63f-7d81-4d8b-bbe4-0b36293ca1a7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Customer 25% (Per Order, Shipper Early Date)' = ```
+			
+			CALCULATE(
+			    SUMX (
+			        VALUES ( orders[id] ),
+			        [Is New Customer (Per Order, Shipper Early Date)] * [margin] * 0.25
+			    ),
+			    orders[order_type_id]<>"LTL"
+			)
+			
+			```
+		displayFolder: Commission Measures\Commission Testing\New Customers
+		lineageTag: ffc5854c-58f4-4719-9b1a-b87e91e11c9d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Existing Customer 20% (Per Order, Shipper Early Date)' = ```
+			
+			CALCULATE (
+			    SUMX (
+			        VALUES ( orders[id] ),
+			        ( 1 - [Is New Customer (Per Order, Shipper Early Date)] ) * [margin] * 0.20
+			    ),
+			    orders[order_type_id] <> "LTL"
+			)
+			
+			```
+		displayFolder: Commission Measures\Commission Testing\Established Customers\Without Transitions
+		lineageTag: 834495d6-83e6-4941-a3cd-6e7bf6b044fd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'LTL 15%' =
+			
+			CALCULATE(
+			    [margin]*.15,
+			    orders[order_type_id]="LTL"
+			)
+		displayFolder: Commission Measures\Commission Testing
+		lineageTag: e687b637-9dfb-40dd-9a52-31d6ba5b588e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column
 		isHidden
 		formatString: 0

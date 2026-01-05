@@ -1,0 +1,165 @@
+/// DW_gl_ledger and DW_gl_ledger_hist appended together
+table gl_ledger
+	lineageTag: 9dceff3a-9209-45a8-8477-a90ff2c79a8f
+
+	column iq_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b223b5c7-6a6e-478c-a206-ee9f41a64d97
+		summarizeBy: sum
+		sourceColumn: iq_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: 26201d3d-b01a-4e56-aa03-24f0b39cba4c
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column batch_code
+		dataType: string
+		lineageTag: 9823e206-d71e-4258-92f9-a6ddddb3c6aa
+		summarizeBy: none
+		sourceColumn: batch_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column batch_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 44b7b806-686e-4e0f-8eec-096e71dca0cd
+		summarizeBy: sum
+		sourceColumn: batch_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column batch_seq
+		dataType: int64
+		formatString: 0
+		lineageTag: 49fd99a5-ffe7-4862-8953-e1d7ea599b90
+		summarizeBy: sum
+		sourceColumn: batch_seq
+
+		annotation SummarizationSetBy = Automatic
+
+	column correction
+		dataType: string
+		lineageTag: 11970115-7951-4b99-8c6d-4b42e89d2738
+		summarizeBy: none
+		sourceColumn: correction
+
+		annotation SummarizationSetBy = Automatic
+
+	column glid
+		dataType: string
+		lineageTag: 06d98374-70d6-4981-b847-c21e06502af1
+		summarizeBy: none
+		sourceColumn: glid
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: f819953a-cd15-4c7c-a54d-54f4f2882909
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payee_id
+		dataType: string
+		lineageTag: ee6166a6-9896-4a58-8df0-2b89422cd4c4
+		summarizeBy: none
+		sourceColumn: payee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 71ce3862-6d96-4e04-bc49-926029111458
+		summarizeBy: none
+		sourceColumn: post_date
+
+		variation Variation
+			isDefault
+			relationship: b703d7bc-cb3d-40da-9731-c6ec9d52a1f4
+			defaultHierarchy: LocalDateTable_9f4f1f9a-657f-4803-a8d3-7b3451367d13.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column reference
+		dataType: string
+		lineageTag: 65863376-69a9-40ea-b01c-7d7de5c2bd44
+		summarizeBy: none
+		sourceColumn: reference
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		lineageTag: d808b50f-bf3c-41e3-93f5-abb6cf821af9
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 08a5169d-4069-4bcc-a705-6d4bf8d1d35c
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		variation Variation
+			isDefault
+			relationship: 948df15a-6a67-4441-a7d0-7f22a6f03b74
+			defaultHierarchy: LocalDateTable_18cec52a-aea3-4463-95f0-edc3b0b835dd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_no
+		dataType: string
+		lineageTag: e1964a8a-e894-4426-a8ad-8936ff24cae8
+		summarizeBy: none
+		sourceColumn: transaction_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 73b6b98c-49b0-4cf0-bec0-28ed70f180ef
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column check_no
+		dataType: string
+		lineageTag: 62db5d4d-5bf7-416e-a6c5-f91adf50ff20
+		summarizeBy: none
+		sourceColumn: check_no
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gl_ledger = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("bl-mcbiserver"),
+				    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
+				    DW_gl_ledger = McLeod_IQ{[Schema="DW",Item="gl_ledger"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DW_gl_ledger,{"iq_id", "amount", "batch_code", "batch_number", "batch_seq", "correction", "glid", "id", "payee_id", "post_date", "reference", "source", "transaction_date", "transaction_no", "order_id", "check_no"}),
+				    #"Appended Query" = Table.Combine({#"Removed Other Columns", gl_ledger_hist})
+				in
+				    #"Appended Query"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

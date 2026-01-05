@@ -1,0 +1,58 @@
+table 'Team Logos'
+	lineageTag: ea360990-2f24-4ca3-a54b-a4634499aa20
+
+	column Id
+		dataType: string
+		lineageTag: 40137c96-1d8e-4366-9d20-bc67b9a584e6
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column TeamName
+		dataType: string
+		lineageTag: ab795174-3382-4d42-854a-6c36c5a2b131
+		summarizeBy: none
+		sourceColumn: TeamName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Teamnumber
+		dataType: string
+		lineageTag: e51aa3b8-2432-42ab-a994-4b7712d4ed72
+		summarizeBy: none
+		sourceColumn: Teamnumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'File.ServerRelativeUrl'
+		dataType: string
+		lineageTag: 086641a9-c31e-4ed7-8935-0dd6a2e6fcc7
+		summarizeBy: none
+		sourceColumn: File.ServerRelativeUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Image URL' = "https://bridgelogisticsinc.sharepoint.com/"&'Team Logos'[File.ServerRelativeUrl]
+		lineageTag: 1c1d1e81-c0d3-427a-955d-25e2846d4154
+		dataCategory: ImageUrl
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Team Logos' = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Tables("https://bridgelogisticsinc.sharepoint.com/sites/BusinessIntelligence", [Implementation=null, ApiVersion=15]),
+				    #"1dd76955-0061-4ca5-86f6-3474d7d78784" = Source{[Id="1dd76955-0061-4ca5-86f6-3474d7d78784"]}[Items],
+				    #"Renamed Columns" = Table.RenameColumns(#"1dd76955-0061-4ca5-86f6-3474d7d78784",{{"ID", "ID.1"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Id", "TeamName", "Teamnumber", "File"}),
+				    #"Expanded File" = Table.ExpandRecordColumn(#"Removed Other Columns", "File", {"ServerRelativeUrl"}, {"File.ServerRelativeUrl"})
+				in
+				    #"Expanded File"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

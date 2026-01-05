@@ -1,0 +1,64 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "e28d790973b5019286a2",
+  "displayName": "What's Most Important Now",
+  "displayOption": "FitToPage",
+  "height": 1200,
+  "width": 1550,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e8278e34269317fb70d3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "movements"
+              }
+            },
+            "Property": "status"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "58a2414731b3a8b0c076",
+      "target": "bfc7f0d9b64989c434ee",
+      "type": "NoFilter"
+    },
+    {
+      "source": "8da4c0ac14ce2214d88f",
+      "target": "bfc7f0d9b64989c434ee",
+      "type": "NoFilter"
+    },
+    {
+      "source": "0a5fab5c62be3a7c4daf",
+      "target": "bfc7f0d9b64989c434ee",
+      "type": "NoFilter"
+    },
+    {
+      "source": "c621b9bcc9d3db6c0319",
+      "target": "bfc7f0d9b64989c434ee",
+      "type": "NoFilter"
+    },
+    {
+      "source": "61709df5bbe29c17f6e7",
+      "target": "bfc7f0d9b64989c434ee",
+      "type": "NoFilter"
+    },
+    {
+      "source": "c9c53d2af2f000ab4c1e",
+      "target": "bfc7f0d9b64989c434ee",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cf69d576dc330fd03662",
+      "target": "bfc7f0d9b64989c434ee",
+      "type": "NoFilter"
+    }
+  ]
+}

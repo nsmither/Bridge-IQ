@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "dfa9084ba600401a6bc5",
   "position": {
     "x": 16,
@@ -163,7 +163,6 @@
                   }
                 }
               ],
-              "isToggled": true,
               "children": [
                 {
                   "identityValues": [
@@ -180,6 +179,28 @@
                     {
                       "Literal": {
                         "Value": "'Q4'"
+                      }
+                    }
+                  ],
+                  "isToggled": true
+                }
+              ]
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "2026L"
+                  }
+                }
+              ],
+              "isToggled": true,
+              "children": [
+                {
+                  "identityValues": [
+                    {
+                      "Literal": {
+                        "Value": "'Q1'"
                       }
                     }
                   ],
@@ -258,17 +279,17 @@
                           [
                             {
                               "Literal": {
-                                "Value": "2025L"
+                                "Value": "2026L"
                               }
                             },
                             {
                               "Literal": {
-                                "Value": "'Q4'"
+                                "Value": "'Q1'"
                               }
                             },
                             {
                               "Literal": {
-                                "Value": "'October'"
+                                "Value": "'January'"
                               }
                             }
                           ]
@@ -331,7 +352,7 @@
                                 "0": [
                                   {
                                     "Literal": {
-                                      "Value": "2025L"
+                                      "Value": "2026L"
                                     }
                                   }
                                 ]
@@ -340,7 +361,7 @@
                                 "1": [
                                   {
                                     "Literal": {
-                                      "Value": "'Q4'"
+                                      "Value": "'Q1'"
                                     }
                                   }
                                 ]
@@ -349,7 +370,7 @@
                                 "2": [
                                   {
                                     "Literal": {
-                                      "Value": "'October'"
+                                      "Value": "'January'"
                                     }
                                   }
                                 ]
@@ -397,9 +418,9 @@
                         },
                         "valueMap": [
                           {
-                            "0": "2025",
-                            "1": "Q4",
-                            "2": "October"
+                            "0": "2026",
+                            "1": "Q1",
+                            "2": "January"
                           }
                         ]
                       }

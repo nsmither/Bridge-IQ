@@ -1,0 +1,43 @@
+table pay_dates
+	lineageTag: 6ba30c9e-6f97-4a6d-adc8-76b6d6c95e86
+
+	column 'Pay Period'
+		dataType: int64
+		formatString: 0
+		lineageTag: c5b50152-d9ec-4bfe-815c-f40c6e09e46b
+		summarizeBy: sum
+		sourceColumn: Pay Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pay Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5b9c87db-23f9-44c3-927d-f6380afd4002
+		summarizeBy: none
+		sourceColumn: Pay Date
+
+		variation Variation
+			isDefault
+			relationship: 1208bac4-6ed5-463a-8939-6a7787e783f0
+			defaultHierarchy: LocalDateTable_071b01ee-fb93-4e02-b088-9fa5349dda26.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition pay_dates = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Commission%20Payroll%20Schedule.xlsx"), null, true),
+				    #"Pay Schedule_Sheet" = Source{[Item="Pay Schedule",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Pay Schedule_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Pay Period", Int64.Type}, {"Pay Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

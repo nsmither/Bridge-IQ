@@ -1,0 +1,69 @@
+table 'wires_not_accounted for'
+	lineageTag: ee5fa7be-58a7-4a6b-ac15-bb7211308d45
+
+	column Date
+		dataType: string
+		lineageTag: 625e26ed-82fb-43a3-966c-9fc542d21f53
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e7037f8-aa6d-48fe-8ced-a08db6ffd8d6
+		summarizeBy: sum
+		sourceColumn: Orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column Company
+		dataType: string
+		lineageTag: eb4c7103-6c49-42d0-868a-2d4103879232
+		summarizeBy: none
+		sourceColumn: Company
+
+		annotation SummarizationSetBy = Automatic
+
+	column Salesperson_x
+		dataType: string
+		lineageTag: fa028602-97a9-4f8e-a3cd-c7d3cbf98819
+		summarizeBy: none
+		sourceColumn: Salesperson_x
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'check amount n'
+		dataType: double
+		lineageTag: f8b39314-6369-44c3-bb25-14d8d5b05189
+		summarizeBy: sum
+		sourceColumn: check amount n
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column curr_movement_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e9073a4-9208-4eac-ab95-948c9d975d9b
+		summarizeBy: none
+		sourceColumn: curr_movement_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'wires_not_accounted for' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Wires%20Not%20Accounted%20For%20with%20movement.xlsx"), null, true),
+				    Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Table1_Table,{{"Date", type text}, {"Orders", Int64.Type}, {"Company", type text}, {"Salesperson_x", type text}, {"check amount n", type number}, {"curr_movement_id", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

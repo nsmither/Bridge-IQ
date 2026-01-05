@@ -1,0 +1,218 @@
+/// All subsidiary journals appended together
+table journal
+	lineageTag: 2be9b9f0-b8c8-4a9a-b745-26dbf877e540
+
+	column iq_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0fb22e5a-1c6d-4d70-82c9-4135137169e0
+		summarizeBy: sum
+		sourceColumn: iq_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: da5899f1-51e4-49d1-947a-5fb305ad8064
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column batch_code
+		dataType: string
+		lineageTag: a5650bcb-c1b4-4cc1-8d41-42c2dc7e17f7
+		summarizeBy: none
+		sourceColumn: batch_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column batch_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cd8156c-21b1-4155-ae37-9b68c82ed494
+		summarizeBy: sum
+		sourceColumn: batch_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column batch_seq
+		dataType: int64
+		formatString: 0
+		lineageTag: 5be6f3e3-7007-40f4-b1f9-16cb27189545
+		summarizeBy: sum
+		sourceColumn: batch_seq
+
+		annotation SummarizationSetBy = Automatic
+
+	column check_no
+		dataType: string
+		lineageTag: 75cdfbd3-adad-4e94-bfac-977b01fe4c94
+		summarizeBy: none
+		sourceColumn: check_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column correction
+		dataType: string
+		lineageTag: 65ff89d0-0ac9-47ec-a0f3-fab4d6d135d5
+		summarizeBy: none
+		sourceColumn: correction
+
+		annotation SummarizationSetBy = Automatic
+
+	column glid
+		dataType: string
+		lineageTag: 46e6b675-db75-4aae-8bb2-40e467884cd7
+		summarizeBy: none
+		sourceColumn: glid
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: 5883ff72-5f23-4cc9-82fb-7d1694267e89
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_number
+		dataType: string
+		lineageTag: d88c7249-ecec-4a74-bc8e-59dd2b77ab0a
+		summarizeBy: none
+		sourceColumn: invoice_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column payee_id
+		dataType: string
+		lineageTag: 6fc5e93b-6c87-478c-80a4-6b84870fe108
+		summarizeBy: none
+		sourceColumn: payee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 241c4de4-491d-4c17-8d97-ec0a24953712
+		summarizeBy: none
+		sourceColumn: post_date
+
+		variation Variation
+			isDefault
+			relationship: 37b7d817-6703-4e01-84f0-4133e37e0728
+			defaultHierarchy: LocalDateTable_9ee9e8bb-0c0e-439f-a64b-d76684c98bbd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_module
+		dataType: string
+		lineageTag: ca933720-26e9-4ba3-8284-bb0af774ef2c
+		summarizeBy: none
+		sourceColumn: post_module
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 03906ef2-d2e3-4253-af77-256b912a91cd
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		variation Variation
+			isDefault
+			relationship: c898eddb-24b8-4095-be29-00aeed662319
+			defaultHierarchy: LocalDateTable_88bef206-31ea-480f-ad32-6ed1a10be738.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendor_id
+		dataType: string
+		lineageTag: b9ab1441-d9c0-43fb-9a7e-823008e463db
+		summarizeBy: none
+		sourceColumn: vendor_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendor_name
+		dataType: string
+		lineageTag: e7c58a2b-bbba-41f2-af1c-1059e1ca0e76
+		summarizeBy: none
+		sourceColumn: vendor_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column voucher_id
+		dataType: int64
+		formatString: 0
+		lineageTag: fd61c0ea-aa1d-43a7-90d0-91f8c6772033
+		summarizeBy: sum
+		sourceColumn: voucher_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: daf30dad-02b6-4bda-bb81-139d02166613
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_no_string
+		dataType: string
+		lineageTag: 3651ba22-7b11-4ab2-a56e-e6b858f45381
+		summarizeBy: none
+		sourceColumn: invoice_no_string
+
+		annotation SummarizationSetBy = Automatic
+
+	column memo
+		dataType: string
+		lineageTag: 38f85e16-6551-4563-9dcc-728df0a6b6c1
+		summarizeBy: none
+		sourceColumn: memo
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 4e141e80-29ab-43b8-8a93-b99bd3b81360
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_id
+		dataType: string
+		lineageTag: 36f53382-5b57-4e9f-ad97-af8009f0862c
+		summarizeBy: none
+		sourceColumn: company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_key
+		dataType: string
+		lineageTag: 04f39479-c8c1-4f2b-9fd5-b3888526380e
+		summarizeBy: none
+		sourceColumn: post_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition journal = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({#"DW journal_ap", #"DW journal_cash", #"DW journal_driver", #"DW journal_office", #"DW journal_sales"})
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

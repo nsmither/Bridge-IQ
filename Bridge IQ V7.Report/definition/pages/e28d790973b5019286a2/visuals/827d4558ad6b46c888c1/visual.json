@@ -180,6 +180,20 @@
           ]
         },
         "howCreated": "User"
+      },
+      {
+        "name": "1e112a769147eb30d31f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "salesperson_key"
+              }
+            },
+            "Property": "Name"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

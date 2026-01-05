@@ -212,7 +212,7 @@ table orders
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	column pieces
-		dataType: double
+		dataType: int64
 		lineageTag: 37c4e511-4f1f-499c-805b-89f9cb2693f9
 		summarizeBy: sum
 		sourceColumn: pieces
@@ -582,7 +582,7 @@ table orders
 				    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane"),
 				    #"Trimmed Text1" = Table.TransformColumns(#"Merged Columns2",{{"shipper_stop_id", Text.Trim, type text}}),
 				    
-				    #"Appended Query" = Table.Combine({#"Trimmed Text1", mcleod_historic_orders, pcs_orders})
+				    #"Appended Query" = Table.Combine({#"Trimmed Text1", mcleod_historic_orders})
 				in
 				    #"Appended Query"
 				```

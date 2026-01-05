@@ -621,3 +621,62 @@ relationship 55de292a-01df-81c0-a96a-57467c09cd75
 	fromColumn: 'wires_not_accounted for'.curr_movement_id
 	toColumn: movements.id
 
+relationship 37b7d817-6703-4e01-84f0-4133e37e0728
+	joinOnDateBehavior: datePartOnly
+	fromColumn: journal.post_date
+	toColumn: LocalDateTable_9ee9e8bb-0c0e-439f-a64b-d76684c98bbd.Date
+
+relationship c898eddb-24b8-4095-be29-00aeed662319
+	joinOnDateBehavior: datePartOnly
+	fromColumn: journal.transaction_date
+	toColumn: LocalDateTable_88bef206-31ea-480f-ad32-6ed1a10be738.Date
+
+relationship b703d7bc-cb3d-40da-9731-c6ec9d52a1f4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: gl_ledger.post_date
+	toColumn: LocalDateTable_9f4f1f9a-657f-4803-a8d3-7b3451367d13.Date
+
+relationship 948df15a-6a67-4441-a7d0-7f22a6f03b74
+	joinOnDateBehavior: datePartOnly
+	fromColumn: gl_ledger.transaction_date
+	toColumn: LocalDateTable_18cec52a-aea3-4463-95f0-edc3b0b835dd.Date
+
+relationship 02ed4719-da5d-7e60-6799-aff97dcc40f4
+	fromColumn: journal.batch_code
+	toColumn: batch_control.code
+
+relationship 538910a3-0fa5-372b-6f0c-74f6bff5725f
+	fromColumn: gl_ledger.batch_code
+	toColumn: batch_control.code
+
+relationship 82716af7-c6a8-3fe8-21b3-ab7f123373db
+	fromColumn: journal.glid
+	toColumn: gl_account.id
+
+relationship db441c87-b383-f186-e56d-30d3ba83b6e6
+	fromColumn: gl_ledger.glid
+	toColumn: gl_account.id
+
+relationship c3409566-2916-b6a3-4649-6efda6f86f5a
+	fromColumn: journal.order_id
+	toColumn: orders.id
+
+relationship 94ca6877-720a-a500-321e-b157fa00ab0e
+	fromColumn: gl_ledger.order_id
+	toColumn: orders.id
+
+relationship 89b9f677-0816-4669-a8c8-f442ded8a523
+	joinOnDateBehavior: datePartOnly
+	fromColumn: base_or_commission_pay_schedule.'Start Date'
+	toColumn: LocalDateTable_310ea0fb-96f6-4c25-a836-603d2aed15cb.Date
+
+relationship 56ea0089-9c49-42ea-934c-3883f1cf6ec1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: base_or_commission_pay_schedule.'End Date'
+	toColumn: LocalDateTable_4c5727d3-5a15-421e-acb8-b9e496939202.Date
+
+relationship 40e82423-55e3-47f2-83cf-eaed21ae2dd4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: base_or_commission_pay_schedule.'Pay Date'
+	toColumn: LocalDateTable_176a9bce-2631-41a8-9cfe-4ebe3e6ff622.Date
+

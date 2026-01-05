@@ -508,3 +508,112 @@ relationship ddc8f246-c76c-54e0-5c0c-39f727272fb3
 	fromColumn: odoo.x_studio_last_salesperson_update
 	toColumn: Calendar.Date
 
+relationship be9c3dc5-2aec-a8f0-5848-6470a6b11efb
+	crossFilteringBehavior: bothDirections
+	fromColumn: salesperson_key.'Office Payee ID'
+	toColumn: payee.id
+
+relationship 1208bac4-6ed5-463a-8939-6a7787e783f0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: pay_dates.'Pay Date'
+	toColumn: LocalDateTable_071b01ee-fb93-4e02-b088-9fa5349dda26.Date
+
+relationship 3b3aa9a8-d457-a172-9241-cef771bcfb7d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: pay_dates.'Pay Date'
+
+relationship 879f14dd-d5dd-1a20-6883-163cfc600193
+	isActive: false
+	fromColumn: payee.hire_date
+	toColumn: Calendar.Date
+
+relationship 5bec0b74-7982-1e31-92ed-f205c7312005
+	isActive: false
+	fromColumn: payee.last_raise_date
+	toColumn: Calendar.Date
+
+relationship a7feffdd-13bb-f279-2a53-4ff12f8d6a50
+	isActive: false
+	fromColumn: payee.termination_date
+	toColumn: Calendar.Date
+
+relationship 42957be7-ec5b-6365-a288-446a62599801
+	isActive: false
+	fromColumn: transitioned_accounts.'Change Date'
+	toColumn: Calendar.Date
+
+relationship 14031265-facc-05ae-0dd1-60159e4ef59c
+	fromColumn: transitioned_accounts.'Customer ID'
+	toColumn: customer.id
+
+relationship eac4758b-44f6-8cc2-f3d9-c8ae1d60543d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: ffl_lineup.employee_name
+	toColumn: salesperson_key.Name
+
+relationship 9e332f23-783c-0247-014a-ca5de92a7018
+	isActive: false
+	fromColumn: employees.Name
+	toColumn: ffl_lineup.employee_name
+
+relationship bce370c5-b5d9-6b2d-b10f-fb225fc80c61
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Employee Photos'.EmployeeName
+	toColumn: ffl_lineup.employee_name
+
+relationship 856fae69-2d91-45aa-9efe-33280f0ba05c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'ffl week schedule'.'start of week'
+	toColumn: LocalDateTable_e33814f8-eec2-44ca-a33e-ada525a06173.Date
+
+relationship 77a6da26-51d8-4465-8356-a7fefc3278db
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'ffl week schedule'.'end of week '
+	toColumn: LocalDateTable_240c5f16-071c-4116-a9e4-5499a06f4cf8.Date
+
+relationship ab82696e-9394-6e1e-28e0-6939050d6ec7
+	isActive: false
+	fromColumn: 'ffl week schedule'.' team 1A'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship aba5dda6-c503-6c70-71d3-f5d64fb8a5f2
+	isActive: false
+	fromColumn: 'ffl week schedule'.' team 2A'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship ca7c21ff-88ac-0ef6-4e4d-a30d3f04198e
+	isActive: false
+	fromColumn: 'ffl week schedule'.'team 1B'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship 06b55305-9dc5-2e69-62cf-61f9ba47f743
+	isActive: false
+	fromColumn: 'ffl week schedule'.'team 2B'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship af280d98-956b-f9f4-2bf2-2a148e354201
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: 'ffl week schedule'.'start of week'
+
+relationship 8871d2e1-6b9d-fa07-4909-1599813f10bc
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: 'ffl week schedule'.'end of week '
+
+relationship 59362e10-5143-d29e-e652-7d9be13a7bce
+	fromColumn: 'Employee Photos'.'ffl_lineup.team'
+	toColumn: 'Team Logos'.Teamnumber
+
+relationship AutoDetected_abf0a4c4-5db2-44da-aa92-6fc3379c96fa
+	fromColumn: carrier_key.factoring_company_id
+	toColumn: factoring_company.id
+

@@ -1,0 +1,43 @@
+/// DW gl_account
+table gl_account
+	lineageTag: 079b1ed5-dc98-4780-9212-f8cd3eaaa90b
+
+	column descr
+		dataType: string
+		lineageTag: f3290bca-de95-4b3a-bdca-e14642e34c91
+		summarizeBy: none
+		sourceColumn: descr
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: 7b5f32b7-19b5-4081-aa80-a9b43e10828b
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column type_id
+		dataType: string
+		lineageTag: d3908d6a-bc69-4062-99ac-916526543a70
+		summarizeBy: none
+		sourceColumn: type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gl_account = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("bl-mcbiserver"),
+				    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
+				    DW_gl_account = McLeod_IQ{[Schema="DW",Item="gl_account"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DW_gl_account,{"descr", "id", "type_id"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
