@@ -623,6 +623,16 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "base_or_commission_pay_schedule",
+          "nodeLineageTag": "a49dfb0b-312d-4c5d-a904-92af073199f2",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
@@ -817,8 +827,49 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 654,
+            "y": 131
+          },
+          "nodeIndex": "customer",
+          "nodeLineageTag": "ac556894-2d76-4b17-a7fb-97f07f433a0e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 714,
+            "y": 457
+          },
+          "nodeIndex": "orders",
+          "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 2",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 1",
+  "selectedDiagram": "Layout 2",
   "defaultDiagram": "All tables"
 }

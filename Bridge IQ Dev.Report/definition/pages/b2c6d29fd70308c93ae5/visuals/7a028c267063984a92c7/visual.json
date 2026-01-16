@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "e705b6d9096823ddb7c7",
+  "name": "7a028c267063984a92c7",
   "position": {
     "x": 0,
     "y": 0,
     "z": 1000,
-    "height": 79.253604749787954,
-    "width": 559.1178965224766,
+    "height": 139.87804553321794,
+    "width": 279.75609106643589,
     "tabOrder": 1000
   },
   "visual": {
@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "base_or_commission_pay_schedule"
+                      "Entity": "Calendar"
                     }
                   },
                   "Property": "Year"
                 }
               },
-              "queryRef": "base_or_commission_pay_schedule.Year",
+              "queryRef": "Calendar.Year",
               "nativeQueryRef": "Year",
               "active": true
             },
@@ -35,14 +35,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "base_or_commission_pay_schedule"
+                      "Entity": "Calendar"
                     }
                   },
-                  "Property": "Pay Period Visual Filter"
+                  "Property": "Month Name"
                 }
               },
-              "queryRef": "base_or_commission_pay_schedule.Pay Period Visual Filter",
-              "nativeQueryRef": "Pay Period Visual Filter",
+              "queryRef": "Calendar.Month Name",
+              "nativeQueryRef": "Month Name",
               "active": true
             }
           ]
@@ -57,7 +57,7 @@
         "levels": [
           {
             "queryRefs": [
-              "base_or_commission_pay_schedule.Year"
+              "Calendar.Year"
             ],
             "isCollapsed": true,
             "identityKeys": [
@@ -65,7 +65,7 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "base_or_commission_pay_schedule"
+                      "Entity": "Calendar"
                     }
                   },
                   "Property": "Year"
@@ -76,7 +76,7 @@
           },
           {
             "queryRefs": [
-              "base_or_commission_pay_schedule.Pay Period Visual Filter"
+              "Calendar.Month Name"
             ],
             "isCollapsed": true,
             "isPinned": true
@@ -98,7 +98,7 @@
               "identityValues": [
                 {
                   "Literal": {
-                    "Value": "2026L"
+                    "Value": "2024L"
                   }
                 }
               ],
@@ -130,8 +130,8 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "b",
-                    "Entity": "base_or_commission_pay_schedule",
+                    "Name": "c",
+                    "Entity": "Calendar",
                     "Type": 0
                   }
                 ],
@@ -144,20 +144,10 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "b"
+                                  "Source": "c"
                                 }
                               },
                               "Property": "Year"
-                            }
-                          },
-                          {
-                            "Column": {
-                              "Expression": {
-                                "SourceRef": {
-                                  "Source": "b"
-                                }
-                              },
-                              "Property": "Pay Period Visual Filter"
                             }
                           }
                         ],
@@ -165,12 +155,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "2026L"
-                              }
-                            },
-                            {
-                              "Literal": {
-                                "Value": "'1 - 1/15/2026 ([12/27/2025] - [1/9/2026])'"
+                                "Value": "2025L"
                               }
                             }
                           ]
@@ -184,20 +169,10 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Entity": "base_or_commission_pay_schedule"
+                                  "Entity": "Calendar"
                                 }
                               },
                               "Property": "Year"
-                            }
-                          },
-                          {
-                            "Column": {
-                              "Expression": {
-                                "SourceRef": {
-                                  "Entity": "base_or_commission_pay_schedule"
-                                }
-                              },
-                              "Property": "Pay Period Visual Filter"
                             }
                           }
                         ],
@@ -208,16 +183,7 @@
                                 "0": [
                                   {
                                     "Literal": {
-                                      "Value": "2026L"
-                                    }
-                                  }
-                                ]
-                              },
-                              {
-                                "1": [
-                                  {
-                                    "Literal": {
-                                      "Value": "'1 - 1/15/2026 ([12/27/2025] - [1/9/2026])'"
+                                      "Value": "2025L"
                                     }
                                   }
                                 ]
@@ -230,22 +196,10 @@
                                 "Column": {
                                   "Expression": {
                                     "SourceRef": {
-                                      "Entity": "base_or_commission_pay_schedule"
+                                      "Entity": "Calendar"
                                     }
                                   },
                                   "Property": "Year"
-                                }
-                              }
-                            },
-                            {
-                              "value": {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "base_or_commission_pay_schedule"
-                                    }
-                                  },
-                                  "Property": "Pay Period Visual Filter"
                                 }
                               }
                             }
@@ -253,27 +207,13 @@
                         },
                         "valueMap": [
                           {
-                            "0": "2026",
-                            "1": "1 - 1/15/2026 ([12/27/2025] - [1/9/2026])"
+                            "0": "2025"
                           }
                         ]
                       }
                     }
                   }
                 ]
-              }
-            }
-          }
-        }
-      ],
-      "selection": [
-        {
-          "properties": {
-            "strictSingleSelect": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
               }
             }
           }
@@ -285,12 +225,66 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "249995af2b0a76edb6b9",
+        "name": "ff242a2f07649b93be05",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "base_or_commission_pay_schedule"
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "c",
+              "Entity": "Calendar",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 2,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "c"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "Right": {
+                    "DateSpan": {
+                      "Expression": {
+                        "Literal": {
+                          "Value": "datetime'2024-01-01T00:00:00'"
+                        }
+                      },
+                      "TimeUnit": 5
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "8a28de55dcdc1c2d5b47",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
               }
             },
             "Property": "Year"
@@ -299,15 +293,15 @@
         "type": "Advanced"
       },
       {
-        "name": "bdf6360edc80a595d7c3",
+        "name": "fea28053212a8ad60b5d",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "base_or_commission_pay_schedule"
+                "Entity": "Calendar"
               }
             },
-            "Property": "Pay Period Visual Filter"
+            "Property": "Month Name"
           }
         },
         "type": "Categorical"

@@ -1,35 +1,33 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "471018743efa655bfdaa",
+  "name": "9188f2fc656e18e13b70",
   "position": {
-    "x": 0,
-    "y": 375.910780669145,
-    "z": 0,
-    "height": 343.79182156133828,
-    "width": 1270.4832713754647,
-    "tabOrder": 0
+    "x": 704.23791821561338,
+    "y": 33.308550185873607,
+    "z": 1001,
+    "height": 327.13754646840152,
+    "width": 559.10780669144981,
+    "tabOrder": 1001
   },
   "visual": {
-    "visualType": "pivotTable",
+    "visualType": "FlowVisual_C29F1DCC_81F5_4973_94AD_0517D44CC06A",
     "query": {
       "queryState": {
-        "Rows": {
+        "table": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "salesperson_key"
+                      "Entity": "orders"
                     }
                   },
-                  "Property": "Name"
+                  "Property": "id"
                 }
               },
-              "queryRef": "salesperson_key.Name",
-              "nativeQueryRef": "Salesperson Name",
-              "active": true,
-              "displayName": "Salesperson Name"
+              "queryRef": "orders.id",
+              "nativeQueryRef": "id"
             },
             {
               "field": {
@@ -43,8 +41,49 @@
                 }
               },
               "queryRef": "orders.customer_id",
-              "nativeQueryRef": "customer_id",
-              "active": false
+              "nativeQueryRef": "customer_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "customer"
+                    }
+                  },
+                  "Property": "name"
+                }
+              },
+              "queryRef": "customer.name",
+              "nativeQueryRef": "name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "salesperson_key"
+                    }
+                  },
+                  "Property": "Name"
+                }
+              },
+              "queryRef": "salesperson_key.Name",
+              "nativeQueryRef": "Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "salesperson_key"
+                    }
+                  },
+                  "Property": "Work Email"
+                }
+              },
+              "queryRef": "salesperson_key.Work Email",
+              "nativeQueryRef": "Work Email"
             },
             {
               "field": {
@@ -54,17 +93,12 @@
                       "Entity": "orders"
                     }
                   },
-                  "Property": "id"
+                  "Property": "bill_date"
                 }
               },
-              "queryRef": "orders.id",
-              "nativeQueryRef": "id",
-              "active": false
-            }
-          ]
-        },
-        "Values": {
-          "projections": [
+              "queryRef": "orders.bill_date",
+              "nativeQueryRef": "bill_date"
+            },
             {
               "field": {
                 "Measure": {
@@ -157,11 +191,11 @@
                       "Entity": "measures_"
                     }
                   },
-                  "Property": "Base Salary Proposed Plan (single Select only)"
+                  "Property": "Total Comp Proposed Plan"
                 }
               },
-              "queryRef": "measures_.Base Salary Proposed Plan (single Select only)",
-              "nativeQueryRef": "Base Salary Proposed Plan (single Select only)"
+              "queryRef": "measures_.Total Comp Proposed Plan",
+              "nativeQueryRef": "Total Comp Proposed Plan"
             },
             {
               "field": {
@@ -171,11 +205,11 @@
                       "Entity": "measures_"
                     }
                   },
-                  "Property": "Total Comp Proposed Plan"
+                  "Property": "Base Salary Proposed Plan (single Select only)"
                 }
               },
-              "queryRef": "measures_.Propsosed plan total comp",
-              "nativeQueryRef": "Total Comp Proposed Plan"
+              "queryRef": "measures_.Base Salary Proposed Plan (single Select only)",
+              "nativeQueryRef": "Base Salary Proposed Plan (single Select only)"
             }
           ]
         }
@@ -187,90 +221,83 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "salesperson_key"
+                    "Entity": "orders"
                   }
                 },
-                "Property": "Name"
+                "Property": "id"
               }
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": true
       }
     },
-    "expansionStates": [
-      {
-        "roles": [
-          "Rows"
-        ],
-        "levels": [
-          {
-            "queryRefs": [
-              "salesperson_key.Name"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "salesperson_key"
-                    }
-                  },
-                  "Property": "Name"
+    "objects": {
+      "flowInfo": [
+        {
+          "properties": {
+            "FlowId": {
+              "expr": {
+                "Literal": {
+                  "Value": "'/providers/Microsoft.ProcessSimple/environments/655763c8-ade4-ec2b-b6e4-18ad787b4d19/flows/a4d2d174-9353-4543-87f7-0e95a4588601'"
                 }
               }
-            ],
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "orders.customer_id"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "orders"
-                    }
-                  },
-                  "Property": "customer_id"
+            },
+            "ManagementUri": {
+              "expr": {
+                "Literal": {
+                  "Value": "'https://us.api.flow.microsoft.com/providers/Microsoft.ProcessSimple'"
                 }
               }
-            ],
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "orders.id"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "orders"
-                    }
-                  },
-                  "Property": "id"
+            },
+            "EnvironmentId": {
+              "expr": {
+                "Literal": {
+                  "Value": "'655763c8-ade4-ec2b-b6e4-18ad787b4d19'"
                 }
               }
-            ],
-            "isPinned": true
+            },
+            "EnvironmentLocation": {
+              "expr": {
+                "Literal": {
+                  "Value": "'unitedstates'"
+                }
+              }
+            },
+            "EnvironmentRegion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'westus'"
+                }
+              }
+            }
           }
-        ],
-        "root": {}
-      }
-    ],
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "d4a6e2e53c20705ad05f",
+        "name": "876dcde0beadb21a0ea5",
+        "ordinal": 0,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Base Salary Proposed Plan (single Select only)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6a0a4c4e101081109ca3",
+        "ordinal": 1,
         "field": {
           "Column": {
             "Expression": {
@@ -337,60 +364,26 @@
               }
             }
           ]
-        },
-        "howCreated": "User"
+        }
       },
       {
-        "name": "77c84f77c75b02b5aff9",
+        "name": "da722f684c07570010a5",
+        "ordinal": 2,
         "field": {
-          "Measure": {
+          "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "measures_"
+                "Entity": "orders"
               }
             },
-            "Property": "Within Selected Pay Period"
+            "Property": "customer_id"
           }
         },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "m",
-              "Entity": "measures_",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "m"
-                        }
-                      },
-                      "Property": "Within Selected Pay Period"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
+        "type": "Categorical"
       },
       {
-        "name": "da5052a37b30e79dc819",
+        "name": "96baa6a9287b076b0005",
+        "ordinal": 3,
         "field": {
           "Measure": {
             "Expression": {
@@ -439,49 +432,8 @@
         "howCreated": "User"
       },
       {
-        "name": "a9b2e2206048ae800989",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "salesperson_key"
-              }
-            },
-            "Property": "Name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "c257e65d26a5e4ebead3",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "customer_id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "8ad4ba7764e6400aa0c7",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "b14b7233cb4ba00cad48",
+        "name": "7e778380d5132e6d20aa",
+        "ordinal": 4,
         "field": {
           "Measure": {
             "Expression": {
@@ -489,41 +441,49 @@
                 "Entity": "measures_"
               }
             },
-            "Property": "Max Transaction Date"
+            "Property": "Within Selected Pay Period"
           }
         },
-        "type": "Advanced"
-      },
-      {
-        "name": "36cbb440e703076a2665",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "measures_",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 0,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "Within Selected Pay Period"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "1L"
+                    }
+                  }
+                }
               }
-            },
-            "Property": "Margin"
-          }
+            }
+          ]
         },
-        "type": "Advanced"
+        "howCreated": "User"
       },
       {
-        "name": "6905f802e01462d77245",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "New Customer 25% (Per Order, Shipper Early Date)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "81d238c0d0090b6565e4",
+        "name": "588bc6eee16845240c38",
+        "ordinal": 5,
         "field": {
           "Measure": {
             "Expression": {
@@ -537,7 +497,23 @@
         "type": "Advanced"
       },
       {
-        "name": "c0aaeafe4a8ead4577dc",
+        "name": "2c5bebb5d586d0290659",
+        "ordinal": 6,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "orders"
+              }
+            },
+            "Property": "id"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "c656641a71940ae708ea",
+        "ordinal": 7,
         "field": {
           "Measure": {
             "Expression": {
@@ -551,7 +527,83 @@
         "type": "Advanced"
       },
       {
-        "name": "84490a4daa0104005040",
+        "name": "3fa9868f4b87760c36e8",
+        "ordinal": 8,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9af7d28a51c8e85b4ba5",
+        "ordinal": 9,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Max Transaction Date"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f026d9de1d5a83aa5150",
+        "ordinal": 10,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "customer"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2ded24ad205cd1ec111b",
+        "ordinal": 11,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "salesperson_key"
+              }
+            },
+            "Property": "Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "521cc279611d9b3bc017",
+        "ordinal": 12,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "New Customer 25% (Per Order, Shipper Early Date)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a00ff025b10945abd43a",
+        "ordinal": 13,
         "field": {
           "Measure": {
             "Expression": {
@@ -565,21 +617,8 @@
         "type": "Advanced"
       },
       {
-        "name": "5e3f14b2927b17b60b03",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Base Salary Proposed Plan (single Select only)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f9f9d957c3be4b6ed5b3",
+        "name": "e73836c3adc0bdbc03dd",
+        "ordinal": 14,
         "field": {
           "Measure": {
             "Expression": {
@@ -591,7 +630,23 @@
           }
         },
         "type": "Advanced"
+      },
+      {
+        "name": "83142477d08360537b32",
+        "ordinal": 15,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "salesperson_key"
+              }
+            },
+            "Property": "Work Email"
+          }
+        },
+        "type": "Categorical"
       }
-    ]
+    ],
+    "filterSortOrder": "Custom"
   }
 }

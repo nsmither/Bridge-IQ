@@ -4774,7 +4774,7 @@ table measures_
 			    )
 			RETURN
 			IF ( ISBLANK ( ShipDate ) || PriorCount > 0, 0, 1 )
-		displayFolder: Commission Measures\Commission Testing\New Customers
+		displayFolder: Commission Measures\Commission Testing\Proposed Plan
 		lineageTag: ec78b63f-7d81-4d8b-bbe4-0b36293ca1a7
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -4790,7 +4790,7 @@ table measures_
 			)
 			
 			```
-		displayFolder: Commission Measures\Commission Testing\New Customers
+		displayFolder: Commission Measures\Commission Testing\Proposed Plan
 		lineageTag: ffc5854c-58f4-4719-9b1a-b87e91e11c9d
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -4806,7 +4806,7 @@ table measures_
 			)
 			
 			```
-		displayFolder: Commission Measures\Commission Testing\Established Customers\Without Transitions
+		displayFolder: Commission Measures\Commission Testing\Proposed Plan
 		lineageTag: 834495d6-83e6-4941-a3cd-6e7bf6b044fd
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -4821,6 +4821,54 @@ table measures_
 		lineageTag: e687b637-9dfb-40dd-9a52-31d6ba5b588e
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Proposed Plan 1/8/26' = [New Customer 25% (Per Order, Shipper Early Date)]+[Existing Customer 20% (Per Order, Shipper Early Date)]+[LTL 15%]
+		displayFolder: Commission Measures\Commission Testing\Proposed Plan
+		lineageTag: cd38d3e5-bc00-4257-8029-0492b7f4e78d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comp Proposed Plan' =
+			
+			SUMX(
+			    salesperson_key,
+			    IF([Total Commission Proposed Plan 1/8/26]>[Base Salary Proposed Plan (single Select only)],
+			        [Total Commission Proposed Plan 1/8/26],
+			        [Base Salary Proposed Plan (single Select only)]
+			    )
+			)
+		displayFolder: Commission Measures\Commission Testing\Proposed Plan
+		lineageTag: 9fbd4380-210e-4f84-8491-c3f164211f90
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Base Salary Proposed Plan (single Select only)' = sum(payee[regular_rate])
+		displayFolder: Commission Measures\Commission Testing\Proposed Plan
+		lineageTag: f2de7e68-a20f-4256-9034-a02548dd1413
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Rate ***' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        'orders',                                      -- your fact table
+			        'salesperson_key'[Name],               -- or [Salesperson Name]
+			        'Calendar'[Month / Year]                        -- your month/year column
+			    ),
+			    [Standard Commission Rate]
+			)
+			
+			```
+		displayFolder: Commission Measures
+		lineageTag: f9781ea0-093a-44f5-aba2-1abfc88a2598
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Commission Rate as % of Margin' = DIVIDE([Total Commission Rate ***],[margin])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Commission Measures
+		lineageTag: 48bd1d07-1d94-41e5-8885-b98cae06dd40
 
 	column Column
 		isHidden
