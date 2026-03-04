@@ -25,7 +25,7 @@ expression mcleod_historic_orders =
 		    dbo_orders = lme{[Schema="dbo",Item="orders"]}[Data],
 		    #"Filtered Orders Pre RefreshCutOFfDate" = Table.SelectRows(dbo_orders, each [ordered_date] < RefreshCutOffDate),
 		    //Start General Data Transformation
-		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Orders Pre RefreshCutOFfDate",{"company_id", "actual_reefer_profile", "agency_id", "agent_payee_id", "allow_relay", "autorate_status", "booking_no", "booking_number", "brk_qual_profile", "broker_location_id", "brokerage_workflow_id", "cbp_crossing_date", "cbp_crossing_location_id", "cbp_crossing_reason", "cbsa_crossing_date", "cbsa_crossing_location_id", "cbsa_crossing_reason", "cc_fuel_revenue", "cc_fuel_revenue_c", "cc_fuel_revenue_d", "cc_fuel_revenue_n", "cc_fuel_revenue_r", "cc_net_revenue", "cc_net_revenue_c", "cc_net_revenue_d", "cc_net_revenue_n", "cc_net_revenue_r", "cc_pro_nbr", "cobroker_location_id", "collection_method", "com_setpnt_temp", "com_setpnt_temp_um", "commitment_id", "container", "container_planned", "container_type_id", "controlling_carrier_code", "copy_from_company", "copy_from_order_id", "copy_to_company", "copy_to_order_id", "ctrl_party_id", "cube", "curr_movement_id", "cust_order_no", "declared_val", "def_move_type", "default_match_id", "dim_height", "dim_length", "dim_surcharge", "dim_surcharge_c", "dim_surcharge_d", "dim_surcharge_n", "dim_surcharge_r", "dim_width", "dispatch_opt", "dl_team_reqd", "dray_del_date", "dray_del_pay", "dray_del_pay_c", "dray_del_pay_d", "dray_del_pay_n", "dray_del_pay_r", "dray_del_payee", "dray_del_xfer_dt", "dray_pu_date", "dray_pu_pay", "dray_pu_pay_c", "dray_pu_pay_d", "dray_pu_pay_n", "dray_pu_pay_r", "dray_pu_payee", "dray_pu_xfer_dt", "eir1_no", "eir2_no", "est_tolls", "est_tolls_c", "est_tolls_d", "est_tolls_n", "est_tolls_r", "excise_disable_update", "excise_taxable", "excisetax_total", "excisetax_total_c", "excisetax_total_d", "excisetax_total_n", "excisetax_total_r", "force_assign", "forwd_location_id", "free_days", "freight_charge_c", "freight_charge_d", "freight_charge_r", "high_value", "hold_reason", "image_is_present", "import_export", "include_split_point", "intelliset", "invoice_recv_date", "is_autorate_dist", "is_container", "is_dedicated", "is_local_mile", "is_requested", "jag_carrier_id", "jag_cost_rate_id", "ldport_location_id", "linear_feet_avail", "loadboard", "ltl", "markup_flat", "markup_flat_c", "markup_flat_d", "markup_flat_n", "markup_flat_r", "markup_percent", "master_order_id", "master_sequence", "next_rebill", "nte_lp_num", "nte_lp_qual", "operational_status", "optiset", "optimize", "order_mode", "order_value_c", "order_value_d", "order_value_n", "order_value_r", "orig_dest_rate_id", "otherchargetotal_c", "otherchargetotal_d", "otherchargetotal_n", "otherchargetotal_r", "pallets_required", "pay_gross_d", "pay_gross_n", "pay_gross_r", "planning_comment", "pnn_callback", "pnn_comment", "pnn_comment2", "pnn_post_type", "pnn_rate", "pay_gross", "pay_gross_c", "pick_up_no", "pnn_rate_type", "pnn_trailer_length", "pnn_trailer_width", "ponum", "port", "port_of_discharge", "preload_trailer_id", "preloaded", "rate_currency_type", "rate_id", "rate_min_weight", "rate_min_weight_um", "rate_unit_desc", "recurring_order_id", "reply_transmitted", "requesting_company", "return_temp", "return_temp_um", "return_temp_var", "return_temp_var_um", "revenue_share_method", "sail_date", "seal_number", "seg_alloc_code", "setpoint_temp", "setpoint_temp_um", "setpoint_var", "setpoint_var_um", "ship_status_to_edi", "shipment_id", "shipstatus2edi_dt", "ss_location_id", "subject_order_status", "subject_order_void_date", "swap", "teams_required", "temperature_max_um", "temperature_min_um", "total_charge_c", "total_charge_d", "total_charge_n", "total_charge_r", "totalcharge_and_excisetax_c", "totalcharge_and_excisetax_d", "totalcharge_and_excisetax_n", "totalcharge_and_excisetax_r", "tractor_type", "vessel", "vessel_cutoff_date", "bill_distance_um", "billing_empty_distance", "billing_empty_distance_um", "billing_loaded_distance", "billing_loaded_distance_um", "bol_note", "external_invoiceno", "freight_charge_n", "load_date", "ordered_by", "ordered_method", "placard_required", "rate", "rate_type", "rate_units", "ready_to_bill", "totalcharge_and_excisetax", "weight_um", "xferred2billing", "xferred2billing_dt", "lock_miles", "is_auto_tonu", "floor_loaded_freight", "equipment_type_options", "ic_movement_from", "ic_company_from", "is_intercompany", "rate_source", "ic_order_from", "ordered_by_id", "pnn_loadboard_user_id", "voided_load_transmitted_dt", "voided_load_transmitted", "total_charge"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Orders Pre RefreshCutOFfDate",{"company_id", "actual_reefer_profile", "agency_id", "agent_payee_id", "allow_relay", "autorate_status", "booking_no", "booking_number", "brk_qual_profile", "broker_location_id", "brokerage_workflow_id", "cbp_crossing_date", "cbp_crossing_location_id", "cbp_crossing_reason", "cbsa_crossing_date", "cbsa_crossing_location_id", "cbsa_crossing_reason", "cc_fuel_revenue", "cc_fuel_revenue_c", "cc_fuel_revenue_d", "cc_fuel_revenue_n", "cc_fuel_revenue_r", "cc_net_revenue", "cc_net_revenue_c", "cc_net_revenue_d", "cc_net_revenue_n", "cc_net_revenue_r", "cc_pro_nbr", "cobroker_location_id", "collection_method", "com_setpnt_temp", "com_setpnt_temp_um", "commitment_id", "container", "container_planned", "container_type_id", "controlling_carrier_code", "copy_from_company", "copy_from_order_id", "copy_to_company", "copy_to_order_id", "ctrl_party_id", "cube", "curr_movement_id", "cust_order_no", "declared_val", "def_move_type", "default_match_id", "dim_height", "dim_length", "dim_surcharge", "dim_surcharge_c", "dim_surcharge_d", "dim_surcharge_n", "dim_surcharge_r", "dim_width", "dispatch_opt", "dl_team_reqd", "dray_del_date", "dray_del_pay", "dray_del_pay_c", "dray_del_pay_d", "dray_del_pay_n", "dray_del_pay_r", "dray_del_payee", "dray_del_xfer_dt", "dray_pu_date", "dray_pu_pay", "dray_pu_pay_c", "dray_pu_pay_d", "dray_pu_pay_n", "dray_pu_pay_r", "dray_pu_payee", "dray_pu_xfer_dt", "eir1_no", "eir2_no", "est_tolls", "est_tolls_c", "est_tolls_d", "est_tolls_n", "est_tolls_r", "excise_disable_update", "excise_taxable", "excisetax_total", "excisetax_total_c", "excisetax_total_d", "excisetax_total_n", "excisetax_total_r", "force_assign", "forwd_location_id", "free_days", "freight_charge_c", "freight_charge_d", "freight_charge_r", "high_value", "hold_reason", "image_is_present", "import_export", "include_split_point", "intelliset", "invoice_recv_date", "is_autorate_dist", "is_container", "is_dedicated", "is_local_mile", "is_requested", "jag_carrier_id", "jag_cost_rate_id", "ldport_location_id", "linear_feet_avail", "loadboard", "ltl", "markup_flat", "markup_flat_c", "markup_flat_d", "markup_flat_n", "markup_flat_r", "markup_percent", "master_order_id", "master_sequence", "next_rebill", "nte_lp_num", "nte_lp_qual", "operational_status", "optiset", "optimize", "order_mode", "order_value_c", "order_value_d", "order_value_n", "order_value_r", "orig_dest_rate_id", "otherchargetotal_c", "otherchargetotal_d", "otherchargetotal_n", "otherchargetotal_r", "pallets_required", "pay_gross_d", "pay_gross_n", "pay_gross_r", "planning_comment", "pnn_callback", "pnn_comment", "pnn_comment2", "pnn_post_type", "pnn_rate", "pay_gross", "pay_gross_c", "pick_up_no", "pnn_rate_type", "pnn_trailer_length", "pnn_trailer_width", "ponum", "port", "port_of_discharge", "preload_trailer_id", "preloaded", "rate_currency_type", "rate_id", "rate_min_weight", "rate_min_weight_um", "rate_unit_desc", "recurring_order_id", "reply_transmitted", "requesting_company", "return_temp", "return_temp_um", "return_temp_var", "return_temp_var_um", "revenue_share_method", "sail_date", "seal_number", "seg_alloc_code", "setpoint_temp", "setpoint_temp_um", "setpoint_var", "setpoint_var_um", "ship_status_to_edi", "shipment_id", "shipstatus2edi_dt", "ss_location_id", "subject_order_status", "subject_order_void_date", "swap", "teams_required", "temperature_max_um", "temperature_min_um", "total_charge_c", "total_charge_d", "total_charge_n", "total_charge_r", "totalcharge_and_excisetax_c", "totalcharge_and_excisetax_d", "totalcharge_and_excisetax_n", "totalcharge_and_excisetax_r", "tractor_type", "vessel", "vessel_cutoff_date", "bill_distance_um", "billing_empty_distance", "billing_empty_distance_um", "billing_loaded_distance", "billing_loaded_distance_um", "bol_note", "external_invoiceno", "freight_charge_n", "load_date", "ordered_by", "placard_required", "rate", "rate_type", "rate_units", "ready_to_bill", "totalcharge_and_excisetax", "weight_um", "xferred2billing", "xferred2billing_dt", "lock_miles", "is_auto_tonu", "floor_loaded_freight", "equipment_type_options", "ic_movement_from", "ic_company_from", "is_intercompany", "rate_source", "ic_order_from", "ordered_by_id", "pnn_loadboard_user_id", "voided_load_transmitted_dt", "voided_load_transmitted", "total_charge"}),
 		    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"blnum", "customer_po"}, {"consignee_refno", "bol"}, {"ordered_date", "order_entered_date"}, {"otherchargetotal", "other_charges_total"}, {"salesperson", "salesperson_id"}}),
 		    #"Inserted order_entered_time" = Table.AddColumn(#"Renamed Columns", "order_entered_time", each DateTime.Time([order_entered_date]), type time),
 		    //End General Data Transformation
@@ -584,97 +584,6 @@ expression drs_payee =
 		in
 		    #"Removed Other Columns"
 	lineageTag: 878c148a-1e31-4d67-8b16-ab3f6f7dc4de
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression 'DW journal_ap' =
-		let
-		    Source = Sql.Databases("bl-mcbiserver"),
-		    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
-		    DW_journal_ap = McLeod_IQ{[Schema="DW",Item="journal_ap"]}[Data],
-		    #"Removed Other Columns" = Table.SelectColumns(DW_journal_ap,{"iq_id", "amount", "batch_code", "batch_number", "batch_seq", "check_no", "correction", "glid", "id", "invoice_number", "payee_id", "post_date", "post_module", "transaction_date", "vendor_id", "vendor_name", "voucher_id"})
-		in
-		    #"Removed Other Columns"
-	lineageTag: 3471d9dd-9497-4095-afbf-28acbb836b23
-	queryGroup: journals
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression 'DW journal_cash' =
-		let
-		    Source = Sql.Databases("bl-mcbiserver"),
-		    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
-		    DW_journal_cash = McLeod_IQ{[Schema="DW",Item="journal_cash"]}[Data],
-		    #"Removed Other Columns" = Table.SelectColumns(DW_journal_cash,{"iq_id", "amount", "batch_code", "batch_number", "batch_seq", "check_no", "correction", "customer_id", "glid", "id", "invoice_no_string", "memo", "order_id", "post_date", "post_module", "transaction_date"})
-		in
-		    #"Removed Other Columns"
-	lineageTag: 3be02812-128d-4649-8168-baba106f7a85
-	queryGroup: journals
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression 'DW journal_driver' =
-		let
-		    Source = Sql.Databases("bl-mcbiserver"),
-		    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
-		    DW_journal_driver = McLeod_IQ{[Schema="DW",Item="journal_driver"]}[Data],
-		    #"Removed Other Columns" = Table.SelectColumns(DW_journal_driver,{"iq_id", "company_id", "amount", "batch_code", "batch_number", "batch_seq", "check_no", "correction", "glid", "id", "memo", "order_id", "payee_id", "post_date", "post_module", "transaction_date"})
-		in
-		    #"Removed Other Columns"
-	lineageTag: 325f0f54-a5bb-4ac9-a075-8366637d8818
-	queryGroup: journals
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression 'DW journal_office' =
-		let
-		    Source = Sql.Databases("bl-mcbiserver"),
-		    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
-		    DW_journal_office = McLeod_IQ{[Schema="DW",Item="journal_office"]}[Data],
-		    #"Removed Other Columns" = Table.SelectColumns(DW_journal_office,{"iq_id", "company_id", "amount", "batch_code", "batch_number", "batch_seq", "check_no", "correction", "glid", "id", "memo", "payee_id", "post_date", "post_key", "post_module", "transaction_date"})
-		in
-		    #"Removed Other Columns"
-	lineageTag: 8fd0d753-4e4c-4ec8-b8ae-b21b4bfd0ec4
-	queryGroup: journals
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression 'DW journal_sales' =
-		let
-		    Source = Sql.Databases("bl-mcbiserver"),
-		    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
-		    DW_journal_sales = McLeod_IQ{[Schema="DW",Item="journal_sales"]}[Data],
-		    #"Removed Other Columns" = Table.SelectColumns(DW_journal_sales,{"iq_id", "amount", "batch_code", "batch_number", "batch_seq", "correction", "customer_id", "glid", "id", "invoice_no_string", "order_id", "post_date", "post_module", "transaction_date"})
-		in
-		    #"Removed Other Columns"
-	lineageTag: 3f8b3813-9b2b-4468-9f2a-3da2e267e90c
-	queryGroup: journals
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-/// DW_gl_ledger_hist
-expression gl_ledger_hist =
-		let
-		    Source = Sql.Databases("bl-mcbiserver"),
-		    McLeod_IQ = Source{[Name="McLeod_IQ"]}[Data],
-		    DW_gl_ledger_hist = McLeod_IQ{[Schema="DW",Item="gl_ledger_hist"]}[Data],
-		    #"Removed Other Columns" = Table.SelectColumns(DW_gl_ledger_hist,{"iq_id", "amount", "batch_code", "batch_number", "batch_seq", "correction", "glid", "id", "payee_id", "post_date", "reference", "source", "transaction_date", "transaction_no", "order_id", "check_no"})
-		in
-		    #"Removed Other Columns"
-	lineageTag: 02f7f9e9-e432-4f00-8495-3e97a44dd6f1
-	queryGroup: 'Historic Tables'
 
 	annotation PBI_NavigationStepName = Navigation
 

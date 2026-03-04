@@ -1166,8 +1166,62 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 8,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 200,
+            "y": 322
+          },
+          "nodeIndex": "job_history",
+          "nodeLineageTag": "0d8addef-5917-4ed8-92a6-3a017ca615e0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1007,
+            "y": 35
+          },
+          "nodeIndex": "employees",
+          "nodeLineageTag": "0af26c3a-e69f-4de1-a4d5-3c1431c72fc3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 631,
+            "y": 102
+          },
+          "nodeIndex": "orders",
+          "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 7",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 6",
+  "selectedDiagram": "Layout 7",
   "defaultDiagram": "All tables"
 }

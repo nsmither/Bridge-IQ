@@ -621,3 +621,10 @@ relationship 55de292a-01df-81c0-a96a-57467c09cd75
 	fromColumn: 'wires_not_accounted for'.curr_movement_id
 	toColumn: movements.id
 
+relationship 917f814c-31bd-b7e6-6942-307d700e7293
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: employees.'McLeod User Code'
+	toColumn: orders.entered_user_id
+

@@ -4684,191 +4684,63 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Receivables Debits' =
+	measure 'Current Ops' = ```
 			
+			
+			VAR current_ops = 
 			CALCULATE(
-			    SUM(journal[amount]),
-			    journal[glid]="10300000",
-			    journal[amount]>0
+			    DISTINCTCOUNT(job_history[ID]),
+			    job_history[Job Start Date]<=MAX('Calendar'[Date]),
+			    OR(job_history[Job End Date]>=MIN('Calendar'[Date]),ISBLANK(job_history[Job End Date])),
+			    job_history[Department]="Operations",
+			    job_history[Job Title]<>"Strategic Growth Manager"
 			)
-		displayFolder: **Journal Testing**
-		lineageTag: 9cceba65-e30d-47d3-a551-41e57055d88a
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Max Transaction Date' =
 			
-			CALCULATE(
-			    MAX(journal[transaction_date]),
-			    journal[glid]="10300000",
-			    journal[amount]<0
-			)
-		displayFolder: **Journal Testing**
-		lineageTag: 014f5b5a-c295-4cff-96cf-c3c70b515772
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Within Selected Pay Period' = ```
-			
-			VAR StartDate =
-			    SELECTEDVALUE ( base_or_commission_pay_schedule[Start Date] )
-			VAR EndDate =
-			    SELECTEDVALUE ( base_or_commission_pay_schedule[End Date] )
-			VAR MaxPayDate =
-			    [Max Transaction Date]
 			RETURN
-			IF (
-			    NOT ISBLANK ( MaxPayDate )
-			        && NOT ISBLANK ( StartDate )
-			        && NOT ISBLANK ( EndDate )
-			        && MaxPayDate >= StartDate
-			        && MaxPayDate <= EndDate,
-			    1,
-			    0
+			current_ops
+			```
+		displayFolder: HR
+		lineageTag: 6eaade68-6b57-41d2-9d37-183bcc0cefde
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Current Sales NEW' = ```
+			
+			
+			VAR current_ops = 
+			CALCULATE(
+			    DISTINCTCOUNT(job_history[ID]),
+			    job_history[Job Start Date]<=MAX('Calendar'[Date]),
+			    OR(job_history[Job End Date]>=MIN('Calendar'[Date]),ISBLANK(job_history[Job End Date])),
+			    job_history[Department]="Sales",
+			    job_history[Job Title]<>"Strategic Growth Manager"
 			)
 			
-			```
-		displayFolder: Commission Measures\Commission Testing\Base Measures
-		lineageTag: aed090fe-92a8-4a87-b02a-1393b513d054
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Receivables Credits' =
-			
-			CALCULATE(
-			    SUM(journal[amount]),
-			    journal[glid]="10300000",
-			    journal[amount]<0
-			)*-1
-		displayFolder: **Journal Testing**
-		lineageTag: c6edad5c-1d69-4eb5-be7c-178fed52df00
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Receivables Balance' = [Receivables Debits]-[Receivables Credits]
-		displayFolder: **Journal Testing**
-		lineageTag: d48759e8-c71f-4a64-8704-6af7c67cb2db
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Commissions Ship Date' = MIN(orders[shipper_sched_early_date])
-		displayFolder: Commission Measures\Commission Testing\Base Measures
-		lineageTag: e14293c8-0609-45b6-a5cd-11b8aca838ff
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Is New Customer (Per Order, Shipper Early Date)' =
-			
-			VAR Cust     = SELECTEDVALUE ( orders[customer_id] )
-			VAR ShipDate = SELECTEDVALUE ( orders[shipper_sched_early_date] )
-			VAR PriorCount =
-			    CALCULATE (
-			        COUNTROWS ( orders ),
-			        FILTER (
-			            ALL ( orders ),
-			            orders[customer_id] = Cust
-			                && orders[shipper_sched_early_date] >= ShipDate - 730
-			                && orders[shipper_sched_early_date] <= ShipDate - 366
-			        ),
-			        movements[status] <> "A" && movements[status] <> "V"
-			    )
 			RETURN
-			IF ( ISBLANK ( ShipDate ) || PriorCount > 0, 0, 1 )
-		displayFolder: Commission Measures\Commission Testing\Proposed Plan
-		lineageTag: ec78b63f-7d81-4d8b-bbe4-0b36293ca1a7
+			current_ops
+			```
+		displayFolder: HR
+		lineageTag: dba55b7d-8c8b-4e02-9d8d-68cac7bc3a1f
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'New Customer 25% (Per Order, Shipper Early Date)' = ```
+	measure 'Current Floor' = [Current Ops]+[Current Sales NEW]
+		displayFolder: HR
+		lineageTag: 63ed3f25-5627-4502-a9ec-5673e2172acc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of orders built Manually' =
 			
 			CALCULATE(
-			    SUMX (
-			        VALUES ( orders[id] ),
-			        [Is New Customer (Per Order, Shipper Early Date)] * [margin] * 0.25
-			    ),
-			    orders[order_type_id]<>"LTL"
+			    DISTINCTCOUNT(orders[id]),
+			    USERELATIONSHIP(employees[McLeod User Code],orders[entered_user_id]),
+			    orders[ordered_method]="M"
 			)
-			
-			```
-		displayFolder: Commission Measures\Commission Testing\Proposed Plan
-		lineageTag: ffc5854c-58f4-4719-9b1a-b87e91e11c9d
+		displayFolder: Operations Measures\Count of Orders
+		lineageTag: 981a3f0a-b595-4c12-ac16-ddd0e55b9b5b
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Existing Customer 20% (Per Order, Shipper Early Date)' = ```
-			
-			CALCULATE (
-			    SUMX (
-			        VALUES ( orders[id] ),
-			        ( 1 - [Is New Customer (Per Order, Shipper Early Date)] ) * [margin] * 0.20
-			    ),
-			    orders[order_type_id] <> "LTL"
-			)
-			
-			```
-		displayFolder: Commission Measures\Commission Testing\Proposed Plan
-		lineageTag: 834495d6-83e6-4941-a3cd-6e7bf6b044fd
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'LTL 15%' =
-			
-			CALCULATE(
-			    [margin]*.15,
-			    orders[order_type_id]="LTL"
-			)
-		displayFolder: Commission Measures\Commission Testing
-		lineageTag: e687b637-9dfb-40dd-9a52-31d6ba5b588e
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Total Commission Proposed Plan 1/8/26' = [New Customer 25% (Per Order, Shipper Early Date)]+[Existing Customer 20% (Per Order, Shipper Early Date)]+[LTL 15%]
-		displayFolder: Commission Measures\Commission Testing\Proposed Plan
-		lineageTag: cd38d3e5-bc00-4257-8029-0492b7f4e78d
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Total Comp Proposed Plan' =
-			
-			SUMX(
-			    salesperson_key,
-			    IF([Total Commission Proposed Plan 1/8/26]>[Base Salary Proposed Plan (single Select only)],
-			        [Total Commission Proposed Plan 1/8/26],
-			        [Base Salary Proposed Plan (single Select only)]
-			    )
-			)
-		displayFolder: Commission Measures\Commission Testing\Proposed Plan
-		lineageTag: 9fbd4380-210e-4f84-8491-c3f164211f90
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Base Salary Proposed Plan (single Select only)' = sum(payee[regular_rate])
-		displayFolder: Commission Measures\Commission Testing\Proposed Plan
-		lineageTag: f2de7e68-a20f-4256-9034-a02548dd1413
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Total Commission Rate ***' = ```
-			
-			SUMX(
-			    SUMMARIZE(
-			        'orders',                                      -- your fact table
-			        'salesperson_key'[Name],               -- or [Salesperson Name]
-			        'Calendar'[Month / Year]                        -- your month/year column
-			    ),
-			    [Standard Commission Rate]
-			)
-			
-			```
-		displayFolder: Commission Measures
-		lineageTag: f9781ea0-093a-44f5-aba2-1abfc88a2598
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Total Commission Rate as % of Margin' = DIVIDE([Total Commission Rate ***],[margin])
-		formatString: 0.00%;-0.00%;0.00%
-		displayFolder: Commission Measures
-		lineageTag: 48bd1d07-1d94-41e5-8885-b98cae06dd40
 
 	column Column
 		isHidden
