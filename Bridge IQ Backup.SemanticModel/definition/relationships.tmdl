@@ -617,3 +617,19 @@ relationship AutoDetected_abf0a4c4-5db2-44da-aa92-6fc3379c96fa
 	fromColumn: carrier_key.factoring_company_id
 	toColumn: factoring_company.id
 
+relationship 55de292a-01df-81c0-a96a-57467c09cd75
+	fromColumn: 'wires_not_accounted for'.curr_movement_id
+	toColumn: movements.id
+
+relationship 917f814c-31bd-b7e6-6942-307d700e7293
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: employees.'McLeod User Code'
+	toColumn: orders.entered_user_id
+
+relationship efcb065e-6afc-467c-ab8c-6d2dd1da0f22
+	joinOnDateBehavior: datePartOnly
+	fromColumn: orders.brlo_commission_paid_date
+	toColumn: LocalDateTable_fe042541-3fcd-4185-9041-ad52f238537a.Date
+

@@ -191,6 +191,14 @@ table customer
 
 		annotation SummarizationSetBy = Automatic
 
+	column new_establishe_transitioned
+		dataType: string
+		lineageTag: bccb6274-a82a-479f-9393-38e8ac36409c
+		summarizeBy: none
+		sourceColumn: new_establishe_transitioned
+
+		annotation SummarizationSetBy = Automatic
+
 	partition customer = m
 		mode: import
 		source =

@@ -33,7 +33,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Sum of driver_extra_pay' = SUM(driver_extra_pay[amount])
+	measure 'Sum of driver_extra_pay' = SUM(driver_extra_pay[amount])+SUM('wires_not_accounted for'[check amount n])
 		displayFolder: Pay Measures
 		lineageTag: 6be686a6-e220-4dff-91a4-141b0da5ca73
 
@@ -4681,6 +4681,64 @@ table measures_
 			"Week: " & CurrentWeek & " | Start: " & StartDate & " | End: " & EndDate & " | Load Count: " & [Load Count Points]
 		displayFolder: FFL
 		lineageTag: 0fafa390-5e89-4ea4-98e8-cbff185b49fb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Current Ops' = ```
+			
+			
+			VAR current_ops = 
+			CALCULATE(
+			    DISTINCTCOUNT(job_history[ID]),
+			    job_history[Job Start Date]<=MAX('Calendar'[Date]),
+			    OR(job_history[Job End Date]>=MIN('Calendar'[Date]),ISBLANK(job_history[Job End Date])),
+			    job_history[Department]="Operations",
+			    job_history[Job Title]<>"Strategic Growth Manager"
+			)
+			
+			RETURN
+			current_ops
+			```
+		displayFolder: HR
+		lineageTag: 6eaade68-6b57-41d2-9d37-183bcc0cefde
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Current Sales NEW' = ```
+			
+			
+			VAR current_ops = 
+			CALCULATE(
+			    DISTINCTCOUNT(job_history[ID]),
+			    job_history[Job Start Date]<=MAX('Calendar'[Date]),
+			    OR(job_history[Job End Date]>=MIN('Calendar'[Date]),ISBLANK(job_history[Job End Date])),
+			    job_history[Department]="Sales",
+			    job_history[Job Title]<>"Strategic Growth Manager"
+			)
+			
+			RETURN
+			current_ops
+			```
+		displayFolder: HR
+		lineageTag: dba55b7d-8c8b-4e02-9d8d-68cac7bc3a1f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Current Floor' = [Current Ops]+[Current Sales NEW]
+		displayFolder: HR
+		lineageTag: 63ed3f25-5627-4502-a9ec-5673e2172acc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of orders built Manually' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[id]),
+			    USERELATIONSHIP(employees[McLeod User Code],orders[entered_user_id]),
+			    orders[ordered_method]="M"
+			)
+		displayFolder: Operations Measures\Count of Orders
+		lineageTag: 981a3f0a-b595-4c12-ac16-ddd0e55b9b5b
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

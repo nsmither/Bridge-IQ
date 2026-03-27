@@ -30,11 +30,11 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
-	column customer_po
+	column blnum
 		dataType: string
 		lineageTag: 9a62a3bd-20f0-48c0-abe3-a02c955850a2
 		summarizeBy: none
-		sourceColumn: customer_po
+		sourceColumn: blnum
 
 		annotation SummarizationSetBy = Automatic
 
@@ -62,11 +62,11 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
-	column bol
+	column consignee_refno
 		dataType: string
 		lineageTag: 9d3dc956-e392-4b3c-bf5d-a2f8b579a141
 		summarizeBy: none
-		sourceColumn: bol
+		sourceColumn: consignee_refno
 
 		annotation SummarizationSetBy = Automatic
 
@@ -189,23 +189,23 @@ table orders
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	column order_entered_date
+	column ordered_date
 		dataType: dateTime
 		formatString: Long Date
 		lineageTag: 6308c6ae-434c-42be-865d-44cf9a7a7922
 		summarizeBy: none
-		sourceColumn: order_entered_date
+		sourceColumn: ordered_date
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column other_charges_total
+	column otherchargetotal
 		dataType: decimal
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		lineageTag: ae28246c-66ca-4b52-8639-09304efac25e
 		summarizeBy: sum
-		sourceColumn: other_charges_total
+		sourceColumn: otherchargetotal
 
 		annotation SummarizationSetBy = Automatic
 
@@ -299,19 +299,11 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
-	column notify_when_covered
-		dataType: string
-		lineageTag: aea1a36c-4afb-43c4-b7bd-afe7d9d2ee18
-		summarizeBy: none
-		sourceColumn: notify_when_covered
-
-		annotation SummarizationSetBy = Automatic
-
-	column salesperson_id
+	column salesperson
 		dataType: string
 		lineageTag: 21fce3f1-f25f-40f1-a041-771bd1cd12bd
 		summarizeBy: none
-		sourceColumn: salesperson_id
+		sourceColumn: salesperson
 
 		annotation SummarizationSetBy = Automatic
 
@@ -511,15 +503,6 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
-	column linear_feet_brlo
-		dataType: int64
-		formatString: 0
-		lineageTag: 70864f03-34de-4bcc-9038-5b8e25ec49b6
-		summarizeBy: sum
-		sourceColumn: linear_feet_brlo
-
-		annotation SummarizationSetBy = Automatic
-
 	column pallets_how_many
 		dataType: int64
 		formatString: 0
@@ -531,7 +514,7 @@ table orders
 
 	column bol_recv_date
 		dataType: dateTime
-		formatString: General Date
+		formatString: Long Date
 		lineageTag: 5c996698-e217-42d1-a421-9c83702af551
 		summarizeBy: none
 		sourceColumn: bol_recv_date
@@ -543,6 +526,8 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column ordered_method
 		dataType: string
 		lineageTag: fa046798-ce0f-46fb-9ce8-e17eb8df4839
@@ -551,26 +536,64 @@ table orders
 
 		annotation SummarizationSetBy = Automatic
 
+	column brlo_commission_paid
+		dataType: double
+		lineageTag: 16d72d2f-b03c-4d27-8da4-0921d7e86558
+		summarizeBy: sum
+		sourceColumn: brlo_commission_paid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column brlo_commission_status
+		dataType: string
+		lineageTag: c68a57d5-7cf3-4d7d-a780-d906d63b1b05
+		summarizeBy: none
+		sourceColumn: brlo_commission_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column brlo_commission_paid_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e66c2ba6-5658-4f1b-a362-18b65b948797
+		summarizeBy: none
+		sourceColumn: brlo_commission_paid_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column linear_feet_brlo
+		dataType: int64
+		formatString: 0
+		lineageTag: 2239afc2-ab9b-45f6-ba6c-af3f24ac0dbc
+		summarizeBy: sum
+		sourceColumn: linear_feet_brlo
+
+		annotation SummarizationSetBy = Automatic
+
 	partition orders = m
 		mode: import
-		source = ```
+		source =
 				let
-				    Source = Sql.Databases("bl-appdb"),
-				    lme = Source{[Name="lme"]}[Data],
-				    dbo_orders = lme{[Schema="dbo",Item="orders"]}[Data],
-				    #"Filtered Orders on or after RefreshCutOFfDate" = Table.SelectRows(dbo_orders, each [ordered_date] >= RefreshCutOffDate),
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_orders = Source{[Schema="dbo",Item="orders"]}[Data],
+				    //Filtered Orders on or after RefreshCutOFfDate
+				    #"Filtered Rows" = Table.SelectRows(dbo_orders, each [ordered_date] >= RefreshCutOffDate),
 				    //Start General Data Transformation
-				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Orders on or after RefreshCutOFfDate",{"company_id", "actual_reefer_profile", "agency_id", "agent_payee_id", "allow_relay", "autorate_status", "booking_no", "booking_number", "brk_qual_profile", "broker_location_id", "brokerage_workflow_id", "cbp_crossing_date", "cbp_crossing_location_id", "cbp_crossing_reason", "cbsa_crossing_date", "cbsa_crossing_location_id", "cbsa_crossing_reason", "cc_fuel_revenue", "cc_fuel_revenue_c", "cc_fuel_revenue_d", "cc_fuel_revenue_n", "cc_fuel_revenue_r", "cc_net_revenue", "cc_net_revenue_c", "cc_net_revenue_d", "cc_net_revenue_n", "cc_net_revenue_r", "cc_pro_nbr", "cobroker_location_id", "collection_method", "com_setpnt_temp", "com_setpnt_temp_um", "commitment_id", "container", "container_planned", "container_type_id", "controlling_carrier_code", "copy_from_company", "copy_from_order_id", "copy_to_company", "copy_to_order_id", "ctrl_party_id", "cube", "curr_movement_id", "cust_order_no", "declared_val", "def_move_type", "default_match_id", "dim_height", "dim_length", "dim_surcharge", "dim_surcharge_c", "dim_surcharge_d", "dim_surcharge_n", "dim_surcharge_r", "dim_width", "dispatch_opt", "dl_team_reqd", "dray_del_date", "dray_del_pay", "dray_del_pay_c", "dray_del_pay_d", "dray_del_pay_n", "dray_del_pay_r", "dray_del_payee", "dray_del_xfer_dt", "dray_pu_date", "dray_pu_pay", "dray_pu_pay_c", "dray_pu_pay_d", "dray_pu_pay_n", "dray_pu_pay_r", "dray_pu_payee", "dray_pu_xfer_dt", "eir1_no", "eir2_no", "est_tolls", "est_tolls_c", "est_tolls_d", "est_tolls_n", "est_tolls_r", "excise_disable_update", "excise_taxable", "excisetax_total", "excisetax_total_c", "excisetax_total_d", "excisetax_total_n", "excisetax_total_r", "force_assign", "forwd_location_id", "free_days", "freight_charge_c", "freight_charge_d", "freight_charge_r", "high_value", "hold_reason", "image_is_present", "import_export", "include_split_point", "intelliset", "invoice_recv_date", "is_autorate_dist", "is_container", "is_dedicated", "is_local_mile", "is_requested", "jag_carrier_id", "jag_cost_rate_id", "ldport_location_id", "linear_feet_avail", "loadboard", "ltl", "markup_flat", "markup_flat_c", "markup_flat_d", "markup_flat_n", "markup_flat_r", "markup_percent", "master_order_id", "master_sequence", "next_rebill", "nte_lp_num", "nte_lp_qual", "operational_status", "optiset", "optimize", "order_mode", "order_value_c", "order_value_d", "order_value_n", "order_value_r", "orig_dest_rate_id", "otherchargetotal_c", "otherchargetotal_d", "otherchargetotal_n", "otherchargetotal_r", "pallets_required", "pay_gross_d", "pay_gross_n", "pay_gross_r", "planning_comment", "pnn_callback", "pnn_comment", "pnn_comment2", "pnn_post_type", "pnn_rate", "pay_gross", "pay_gross_c", "pick_up_no", "pnn_rate_type", "pnn_trailer_length", "pnn_trailer_width", "ponum", "port", "port_of_discharge", "preload_trailer_id", "preloaded", "rate_currency_type", "rate_id", "rate_min_weight", "rate_min_weight_um", "rate_unit_desc", "recurring_order_id", "reply_transmitted", "requesting_company", "return_temp", "return_temp_um", "return_temp_var", "return_temp_var_um", "revenue_share_method", "sail_date", "seal_number", "seg_alloc_code", "setpoint_temp", "setpoint_temp_um", "setpoint_var", "setpoint_var_um", "ship_status_to_edi", "shipment_id", "shipstatus2edi_dt", "ss_location_id", "subject_order_status", "subject_order_void_date", "swap", "teams_required", "temperature_max_um", "temperature_min_um", "total_charge_c", "total_charge_d", "total_charge_n", "total_charge_r", "totalcharge_and_excisetax_c", "totalcharge_and_excisetax_d", "totalcharge_and_excisetax_n", "totalcharge_and_excisetax_r", "tractor_type", "vessel", "vessel_cutoff_date", "bill_distance_um", "billing_empty_distance", "billing_empty_distance_um", "billing_loaded_distance", "billing_loaded_distance_um", "bol_note", "external_invoiceno", "freight_charge_n", "load_date", "ordered_by", "placard_required", "rate", "rate_type", "rate_units", "ready_to_bill", "totalcharge_and_excisetax", "weight_um", "xferred2billing", "xferred2billing_dt", "lock_miles", "is_auto_tonu", "floor_loaded_freight", "equipment_type_options", "ic_movement_from", "ic_company_from", "is_intercompany", "rate_source", "ic_order_from", "ordered_by_id", "pnn_loadboard_user_id", "voided_load_transmitted_dt", "voided_load_transmitted", "total_charge"}),
-				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"blnum", "customer_po"}, {"consignee_refno", "bol"}, {"ordered_date", "order_entered_date"}, {"otherchargetotal", "other_charges_total"}, {"salesperson", "salesperson_id"}}),
-				    #"Inserted order_entered_time" = Table.AddColumn(#"Renamed Columns", "order_entered_time", each DateTime.Time([order_entered_date]), type time),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"bill_date", "bill_distance", "billing_user_id", "blnum", "bol_received", "bol_recv_date", "commodity", "commodity_id", "consignee_refno", "consignee_stop_id", "customer_id", "entered_user_id", "equipment_type_id", "extra_deliveries", "extra_pickups", "freight_charge", "hazmat", "hazmat_code", "id", "on_hold", "operations_user", "order_type_id", "order_value", "ordered_date", "ordered_method", "otherchargetotal", "pallets_how_many", "pieces", "revenue_code_id", "round_trip", "shipper_stop_id", "status", "subject_order_number", "temperature_max", "temperature_min", "weight", "is_tonu", "salesperson", "linear_feet_brlo", "brlo_commission_paid", "brlo_commission_status", "brlo_commission_paid_date"}),
+				    #"Inserted order_entered_time" = Table.AddColumn(#"Removed Other Columns", "order_entered_time", each DateTime.Time([ordered_date]), type time),
+				    #"Extracted Date" = Table.TransformColumns(#"Inserted order_entered_time",{{"ordered_date", DateTime.Date, type date}}),
 				    //End General Data Transformation
-				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted order_entered_time",{{"bill_date", type date}, {"freight_charge", Currency.Type}, {"order_entered_date", type date}, {"other_charges_total", Currency.Type}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Extracted Date",{{"bill_date", type date}, {"bol_recv_date", type date}, {"freight_charge", Currency.Type}, {"otherchargetotal", Currency.Type}, {"brlo_commission_paid", Currency.Type}, {"brlo_commission_paid_date", type date}}),
 				    //Start add shipper and consignee data
 				    #"Merged stop table shipper" = Table.NestedJoin(#"Changed Type", {"shipper_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
 				    #"Expanded stop" = Table.ExpandTableColumn(#"Merged stop table shipper", "stop", {"city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
 				    #"Renamed shipper data" = Table.RenameColumns(#"Expanded stop",{{"stop.city_name", "shipper_city_name"}, {"stop.location_name", "shipper_location_name"}, {"stop.sched_arrive_early", "shipper_sched_early_date"}, {"stop.sched_arrive_late", "shipper_sched_late_date"}, {"stop.state", "shipper_state"}, {"stop.zip_code", "shipper_zip_code"}, {"stop.sched_arrive_early_time", "shipper_sched_early_time"}, {"stop.sched_arrive_late_time", "shipper_sched_late_time"}}),
-				    #"Filtered Rows" = Table.SelectRows(#"Renamed shipper data", each ([status] <> "V")),
-				    #"Merged stop table consignee" = Table.NestedJoin(#"Filtered Rows", {"consignee_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed shipper data", each ([status] <> "V")),
+				    #"Merged stop table consignee" = Table.NestedJoin(#"Filtered Rows1", {"consignee_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
 				    #"Expanded stop1" = Table.ExpandTableColumn(#"Merged stop table consignee", "stop", {"city_id", "city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_id", "stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
 				    //End add shipper and consignee data
 				    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
@@ -588,12 +611,9 @@ table orders
 				    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
 				    //End Add Lane
 				    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane"),
-				    #"Trimmed Text1" = Table.TransformColumns(#"Merged Columns2",{{"shipper_stop_id", Text.Trim, type text}}),
-				    
-				    #"Appended Query" = Table.Combine({#"Trimmed Text1", mcleod_historic_orders})
+				    #"Appended Query" = Table.Combine({#"Merged Columns2", mcleod_historic_orders})
 				in
 				    #"Appended Query"
-				```
 
 	annotation PBI_NavigationStepName = Navigation
 

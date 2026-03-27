@@ -559,6 +559,16 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "base_or_commission_pay_schedule",
+          "nodeLineageTag": "df32d6af-0876-4148-967a-1976358e98ba",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
@@ -1220,8 +1230,62 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 9,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 217,
+            "y": 155
+          },
+          "nodeIndex": "base_or_commission_pay_schedule",
+          "nodeLineageTag": "df32d6af-0876-4148-967a-1976358e98ba",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 746,
+            "y": 394
+          },
+          "nodeIndex": "orders",
+          "nodeLineageTag": "616850d9-b6a2-4b0e-99f2-f3ebcab5b217",
+          "size": {
+            "height": 300,
+            "width": 364
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 723,
+            "y": -39
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "c583c9ce-20dd-43b3-818e-c9d8da9a588a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 8",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 7",
+  "selectedDiagram": "Layout 8",
   "defaultDiagram": "All tables"
 }

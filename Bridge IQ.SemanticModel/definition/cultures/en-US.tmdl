@@ -9254,7 +9254,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "orders",
-			          "ConceptualProperty": "bol"
+			          "ConceptualProperty": "consignee_refno"
 			        }
 			      },
 			      "State": "Generated",
@@ -10442,7 +10442,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "orders",
-			          "ConceptualProperty": "customer_po"
+			          "ConceptualProperty": "blnum"
 			        }
 			      },
 			      "State": "Generated",
@@ -11239,29 +11239,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "order.notify_when_covered": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "orders",
-			          "ConceptualProperty": "notify_when_covered"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "notify when covered": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "notify_when_covered": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        }
-			      ]
-			    },
 			    "order.on_hold": {
 			      "Definition": {
 			        "Binding": {
@@ -11531,7 +11508,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "orders",
-			          "ConceptualProperty": "order_entered_date"
+			          "ConceptualProperty": "ordered_date"
 			        }
 			      },
 			      "State": "Generated",
@@ -11931,7 +11908,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "orders",
-			          "ConceptualProperty": "other_charges_total"
+			          "ConceptualProperty": "otherchargetotal"
 			        }
 			      },
 			      "State": "Generated",
@@ -12394,7 +12371,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "orders",
-			          "ConceptualProperty": "salesperson_id"
+			          "ConceptualProperty": "salesperson"
 			        }
 			      },
 			      "State": "Generated",

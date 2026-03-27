@@ -1,0 +1,95 @@
+table base_or_commission_pay_schedule
+	lineageTag: df32d6af-0876-4148-967a-1976358e98ba
+
+	column 'Pay Period'
+		dataType: int64
+		formatString: 0
+		lineageTag: d14784ba-e8f4-4bf1-ae7c-4b65d973c517
+		summarizeBy: sum
+		sourceColumn: Pay Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: a7bf5a09-635e-40d7-ae93-24163248492a
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 695bec22-6c95-4cb8-a99a-74017ab42a20
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		variation Variation
+			isDefault
+			relationship: c76be58a-a90c-4c6b-a37b-17c5f2515d75
+			defaultHierarchy: LocalDateTable_71b4122a-fb94-4326-b2df-2778c4eaf0a2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b61c529e-1c66-4274-80cf-f90424181634
+		summarizeBy: none
+		sourceColumn: End Date
+
+		variation Variation
+			isDefault
+			relationship: b2413a74-afa9-4554-958f-235a9140e337
+			defaultHierarchy: LocalDateTable_ea8f6867-f91e-4a98-81c0-1a5c706a74ea.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Pay Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 224f88b2-d5ee-4b76-992a-f71e303e83ab
+		summarizeBy: none
+		sourceColumn: Pay Date
+
+		variation Variation
+			isDefault
+			relationship: 1efd63e8-52b3-46ea-9997-a4aed49658c1
+			defaultHierarchy: LocalDateTable_431930e6-04c3-4b85-805a-264951e0a529.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Pay Period Visual Filter'
+		dataType: string
+		lineageTag: 515de449-d8dc-4e05-a2c6-9b98545afd54
+		summarizeBy: none
+		sourceColumn: Pay Period Visual Filter
+		sortByColumn: 'Pay Date'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition base_or_commission_pay_schedule = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Commission%20Payroll%20Schedule.xlsx"), null, true),
+				    base_or_commission_pay_schedule_Table = Source{[Item="base_or_commission_pay_schedule",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(base_or_commission_pay_schedule_Table,{{"Pay Period", Int64.Type}, {"Year", Int64.Type}, {"Start Date", type date}, {"End Date", type date}, {"Pay Date", type date}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Pay Period Visual Filter", each Text.From([Pay Period]) & " - " & Text.From([Pay Date]) & " ([" & Text.From([Start Date]) & "] - [" & Text.From([End Date]) & "])")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

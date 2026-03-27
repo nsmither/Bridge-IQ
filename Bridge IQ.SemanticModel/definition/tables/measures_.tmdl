@@ -8,7 +8,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
-	measure 'Sum of other_charges' = SUM(orders[other_charges_total])
+	measure 'Sum of other_charges' = SUM(orders[otherchargetotal])
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: Revenue Measures
 		lineageTag: 5f9abf81-2be6-48b2-9799-922feb050f30
@@ -499,7 +499,7 @@ table measures_
 		lineageTag: 06663e34-2ac5-4c2d-b23e-2f4cdab296d3
 
 	measure 'Date Diff order_entered_date vs shipper_sched_early_date' = ```
-			DATEDIFF(MIN(orders[order_entered_date]),MIN(orders[shipper_sched_early_date]),DAY)
+			DATEDIFF(MIN(orders[ordered_date]),MIN(orders[shipper_sched_early_date]),DAY)
 			
 			```
 		formatString: 0
@@ -2137,7 +2137,7 @@ table measures_
 	measure billed_other_charges =
 			
 			CALCULATE(
-			    SUMX(orders,orders[other_charges_total]),
+			    SUMX(orders,orders[otherchargetotal]),
 			    REMOVEFILTERS('Calendar'[Date]),
 			    USERELATIONSHIP('Calendar'[Date],orders[bill_date])
 			)
@@ -3719,7 +3719,7 @@ table measures_
 			    ADDCOLUMNS(
 			        SUMMARIZE(
 			            orders,
-			            orders[salesperson_id],
+			            orders[salesperson],
 			            orders[shipper_sched_early_date]
 			        ),
 			        "DailyLoadCount", CALCULATE([Count of orders covered])
@@ -3747,10 +3747,10 @@ table measures_
 	measure 'Days Over Best Margin Day (Rollup)' =
 			
 			IF(
-			    ISINSCOPE(orders[salesperson_id]),
+			    ISINSCOPE(orders[salesperson]),
 			    [Days Over Best Margin Day (Base)],
 			    SUMX(
-			        VALUES(orders[salesperson_id]),
+			        VALUES(orders[salesperson]),
 			        CALCULATE([Days Over Best Margin Day (Base)])
 			    )
 			)
@@ -3796,10 +3796,10 @@ table measures_
 	measure 'Days Over Best Load Count Day (Rollup)' =
 			
 			IF(
-			    ISINSCOPE(orders[salesperson_id]),
+			    ISINSCOPE(orders[salesperson]),
 			    [Days Over Best Load Count Day (Base)],
 			    SUMX(
-			        VALUES(orders[salesperson_id]),
+			        VALUES(orders[salesperson]),
 			        CALCULATE([Days Over Best Load Count Day (Base)])
 			    )
 			)
@@ -3816,7 +3816,7 @@ table measures_
 			    ADDCOLUMNS(
 			        SUMMARIZE(
 			            orders,
-			            orders[salesperson_id],
+			            orders[salesperson],
 			            orders[shipper_sched_early_date]
 			        ),
 			        "DailyMargin", CALCULATE([Margin])
@@ -4739,6 +4739,34 @@ table measures_
 			)
 		displayFolder: Operations Measures\Count of Orders
 		lineageTag: 981a3f0a-b595-4c12-ac16-ddd0e55b9b5b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sum of Commisions paid (testing)' =
+			
+			CALCULATE(
+			    sum(orders[brlo_commission_paid]),
+			    REMOVEFILTERS(orders[shipper_sched_early_date]),
+			    USERELATIONSHIP(base_or_commission_pay_schedule[Pay Date],orders[brlo_commission_paid_date]),
+			    orders[brlo_commission_status]="P"
+			    )
+		isHidden
+		displayFolder: Commission Measures\Testing
+		lineageTag: b6f47312-f8e1-46e7-bb32-b5684cceee09
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comp (testing)' =
+			
+			SUMX(salesperson_key,
+			    IF(
+			        [Sum of Commisions paid (testing)]>=[Base Salary],
+			        [Sum of Commisions paid (testing)],
+			        [Base Salary]
+			    )
+			)
+		displayFolder: Commission Measures\Testing
+		lineageTag: 6e78c12a-1a24-4339-bb72-bb8ebaf58b91
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
