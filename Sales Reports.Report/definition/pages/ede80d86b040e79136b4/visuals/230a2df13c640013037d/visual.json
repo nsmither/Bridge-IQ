@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
   "name": "230a2df13c640013037d",
   "position": {
     "x": 16,
@@ -241,12 +241,12 @@
                             },
                             {
                               "Literal": {
-                                "Value": "'Q1'"
+                                "Value": "'Q2'"
                               }
                             },
                             {
                               "Literal": {
-                                "Value": "'January'"
+                                "Value": "'April'"
                               }
                             }
                           ]
@@ -318,7 +318,7 @@
                                 "1": [
                                   {
                                     "Literal": {
-                                      "Value": "'Q1'"
+                                      "Value": "'Q2'"
                                     }
                                   }
                                 ]
@@ -327,7 +327,7 @@
                                 "2": [
                                   {
                                     "Literal": {
-                                      "Value": "'January'"
+                                      "Value": "'April'"
                                     }
                                   }
                                 ]
@@ -376,8 +376,8 @@
                         "valueMap": [
                           {
                             "0": "2026",
-                            "1": "Q1",
-                            "2": "January"
+                            "1": "Q2",
+                            "2": "April"
                           }
                         ]
                       }

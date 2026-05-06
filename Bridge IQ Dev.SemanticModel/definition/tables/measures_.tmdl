@@ -19,7 +19,7 @@ table measures_
 			
 			CALCULATE(
 			    [Sum of freight_charges]+[Sum of other_charges],
-			    FILTER(movements,movements[status]<>"A")
+			    OR(movements[status]<>"A",movements[status]<>"V")
 			)
 			
 			```
@@ -4769,6 +4769,16 @@ table measures_
 		lineageTag: 6e78c12a-1a24-4339-bb72-bb8ebaf58b91
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Per Order' =
+			
+			DIVIDE(
+			    [Total Revenue],
+			    [Count of orders covered]
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Revenue Measures
+		lineageTag: 8cc6db08-fb1b-4a98-9a58-4f77e05b58e1
 
 	column Column
 		isHidden

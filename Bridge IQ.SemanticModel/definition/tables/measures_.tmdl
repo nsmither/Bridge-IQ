@@ -4770,6 +4770,17 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Revenue Per Order' =
+			
+			DIVIDE(
+			    [Total Revenue],
+			    [Count of orders covered]
+			)
+		displayFolder: Revenue Measures
+		lineageTag: 63dbcf29-1987-4f35-9162-635bc9dd9f8e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column
 		isHidden
 		formatString: 0

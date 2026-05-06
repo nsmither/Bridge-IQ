@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
   "name": "dfa9084ba600401a6bc5",
   "position": {
     "x": 16,
@@ -200,7 +200,7 @@
                   "identityValues": [
                     {
                       "Literal": {
-                        "Value": "'Q1'"
+                        "Value": "'Q2'"
                       }
                     }
                   ],
@@ -284,12 +284,12 @@
                             },
                             {
                               "Literal": {
-                                "Value": "'Q1'"
+                                "Value": "'Q2'"
                               }
                             },
                             {
                               "Literal": {
-                                "Value": "'January'"
+                                "Value": "'April'"
                               }
                             }
                           ]
@@ -361,7 +361,7 @@
                                 "1": [
                                   {
                                     "Literal": {
-                                      "Value": "'Q1'"
+                                      "Value": "'Q2'"
                                     }
                                   }
                                 ]
@@ -370,7 +370,7 @@
                                 "2": [
                                   {
                                     "Literal": {
-                                      "Value": "'January'"
+                                      "Value": "'April'"
                                     }
                                   }
                                 ]
@@ -419,8 +419,8 @@
                         "valueMap": [
                           {
                             "0": "2026",
-                            "1": "Q1",
-                            "2": "January"
+                            "1": "Q2",
+                            "2": "April"
                           }
                         ]
                       }
