@@ -1,0 +1,63 @@
+table ops_complexity
+	lineageTag: a1442785-bb05-4ee5-90f5-e44766ee13da
+
+	column order_id
+		dataType: string
+		lineageTag: 4a178b87-fa20-4032-8d10-0895b1e8162e
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Regulatory_Group_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 37491f3c-a6e2-4bbd-bf84-9e5ddab3e35b
+		summarizeBy: sum
+		sourceColumn: Regulatory_Group_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Facility_Access_Group_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: b82e5487-6b0c-4fac-80d9-5af1d0d485c7
+		summarizeBy: sum
+		sourceColumn: Facility_Access_Group_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Equipment_Securement_Group_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 58de56fd-ec93-4c6c-a165-97695fc63956
+		summarizeBy: sum
+		sourceColumn: Equipment_Securement_Group_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Service_Escalation_Group_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 5cc6765d-63c8-448a-9cb7-7f26686636b5
+		summarizeBy: sum
+		sourceColumn: Service_Escalation_Group_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ops_complexity = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://bridgelogisticsinc.sharepoint.com/sites/BL-BiTeam/Shared%20Documents/02%20BL-Areas/bridge_iq/Data%20Sets/Operational%20Complexities/Operational%20Complexities.xlsx"), null, true),
+				    operational_complexities_Table = Source{[Item="operational_complexities",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(operational_complexities_Table,{{"order_id", type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Changed Type", {"order_id"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Duplicates",{{"Regulatory_Group_Flag", Int64.Type}, {"Facility_Access_Group_Flag", Int64.Type}, {"Equipment_Securement_Group_Flag", Int64.Type}, {"Service_Escalation_Group_Flag", Int64.Type}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

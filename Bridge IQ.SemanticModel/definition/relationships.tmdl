@@ -654,3 +654,9 @@ relationship e64a5647-ec39-ce43-a4f9-4369adb2a674
 	fromColumn: orders.brlo_commission_paid_date
 	toColumn: base_or_commission_pay_schedule.'Pay Date'
 
+relationship e9deaeed-3710-25f9-edf4-495dd35556f5
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: orders.id
+	toColumn: ops_complexity.order_id
+

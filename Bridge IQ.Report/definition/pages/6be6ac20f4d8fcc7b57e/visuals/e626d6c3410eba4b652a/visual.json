@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "e626d6c3410eba4b652a",
   "position": {
     "x": 0,
@@ -81,65 +81,5 @@
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "2add5d1300d27e84b08f",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "Month / Year"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "8ce06e57f27398f9bbec",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Current Ops"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f24de30cc0ca5c677395",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Current Sales NEW"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "56028f27aa582644c8b4",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Current Floor"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

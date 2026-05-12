@@ -4781,6 +4781,1078 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Revenue Percentile' = ```
+			
+			VAR CurrentRevenue =
+			    [Total Revenue]
+			
+			VAR CustomersWithRevenue =
+			    FILTER(
+			        ALL(customer),
+			        CALCULATE([Total Revenue]) > 0
+			    )
+			
+			VAR CustomerRank =
+			    RANKX(
+			        CustomersWithRevenue,
+			        CALCULATE([Total Revenue]),
+			        CurrentRevenue,
+			        ASC,
+			        DENSE
+			    )
+			
+			VAR CustomerCount =
+			    COUNTROWS(CustomersWithRevenue)
+			
+			RETURN
+			IF(
+			    CurrentRevenue > 0,
+			    DIVIDE(CustomerRank, CustomerCount),
+			    BLANK()
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Customer Ranking\Revenue Score
+		lineageTag: 3de97678-e968-490e-9200-3e4127dc8bb4
+
+	measure 'Revenue Percentile Score' =
+			
+			VAR P = [Revenue Percentile]
+			RETURN
+			IF(
+			    ISBLANK(P),
+			    BLANK(),                 -- customer has zero / no revenue → excluded
+			    SWITCH(
+			        TRUE(),
+			        P >= 0.8, 3,        -- ≥ 80th percentile
+			        P >= 0.2, 2,         -- 20th–79.9th percentile
+			        1                    -- < 20th percentile
+			    )
+			)
+		displayFolder: Customer Ranking\Revenue Score
+		lineageTag: faa23e91-2c84-468a-b6a8-c0e6f68bee03
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Per Order Percentile' = ```
+			
+			VAR CurrentMPO = [Margin Per Order]
+			
+			VAR CustomerTable =
+			    ADDCOLUMNS(
+			        FILTER(
+			            ALLSELECTED(customer[name]),
+			            CALCULATE([Margin Per Order]) > 0
+			        ),
+			        "__MPO", CALCULATE([Margin Per Order])
+			    )
+			
+			VAR RankMPO =
+			    RANKX(
+			        CustomerTable,
+			        [__MPO],
+			        CurrentMPO,
+			        ASC,
+			        SKIP
+			    )
+			
+			VAR N = COUNTROWS(CustomerTable)
+			
+			RETURN
+			IF(
+			    CurrentMPO > 0 && N > 1,
+			    DIVIDE(RankMPO - 1, N - 1),
+			    BLANK()
+			)
+			
+			```
+		displayFolder: Customer Ranking\MPO Score
+		lineageTag: 5081428f-1bd3-47ed-946c-b813e865010b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Per Order Percentile Score' =
+			
+			VAR P = [Margin Per Order Percentile]
+			RETURN
+			IF(
+			    ISBLANK(P),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        P >= 0.8, 3,
+			        P >= 0.2, 2,
+			        1
+			    )
+			)
+		displayFolder: Customer Ranking\MPO Score
+		lineageTag: d77f0b84-9157-49a6-8ed0-13091761b3c8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % Volatility (StdDev by Month)' = ```
+			
+			VAR Periods =
+			    VALUES('Calendar'[Start of Month])   -- e.g. a MonthStart date column in your Date table
+			RETURN
+			    STDEVX.P(
+			        Periods,
+			        CALCULATE([Margin %])
+			    )
+			
+			```
+		displayFolder: Customer Ranking\Margin Volatility Score
+		lineageTag: 849426b1-c19a-4cb7-bc3e-a56487f9925e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin % Volatility (CV by Month)' = ```
+			
+			VAR Periods =
+			    VALUES('Calendar'[Start of Month])
+			VAR StandDev =
+			    STDEVX.P(Periods, CALCULATE([Margin %]))
+			VAR Mean =
+			    AVERAGEX(Periods, CALCULATE([Margin %]))
+			RETURN
+			    DIVIDE(StandDev, Mean)
+			
+			```
+		displayFolder: Customer Ranking\Margin Volatility Score
+		lineageTag: 3d8db557-8f07-4e2a-be6f-e46388bf8cca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Volatility Score' =
+			
+			VAR v = [Margin % Volatility (CV by Month)]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(v), BLANK(),
+			    v <= 0.15, 3,        -- stable
+			    v <= 0.30, 2,        -- some swings
+			    1                   -- highly volatile
+			)
+		displayFolder: Customer Ranking\Margin Volatility Score
+		lineageTag: d255c150-3cf6-416c-8d74-6ebf96e60305
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Load Consistency (CV by Month)' =
+			
+			VAR Months =
+			    VALUES ( 'Calendar'[Start of Month] )
+			VAR AvgLoads =
+			    AVERAGEX(
+			        Months,
+			        CALCULATE ( [Count of orders covered] )
+			    )
+			VAR StdDevLoads =
+			    STDEVX.P(
+			        Months,
+			        CALCULATE ( [Count of orders covered] )
+			    )
+			RETURN
+			    DIVIDE ( StdDevLoads, AvgLoads )
+		displayFolder: Customer Ranking\Load Consistency Score
+		lineageTag: fc2a0bf7-4988-4fcd-8268-00c3a0137a8f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Load Consistency Score' =
+			
+			VAR LoadCnt = [Count of orders covered]
+			VAR CV = [Load Consistency (CV by Month)]
+			RETURN
+			IF (
+			    LoadCnt = 0,
+			    BLANK(),
+			    SWITCH (
+			        TRUE(),
+			        ISBLANK ( CV ), BLANK(),
+			        CV <= 0.35, 3,    -- very steady
+			        CV <= 0.75, 2,    -- seasonal
+			        1                -- sporadic
+			    )
+			)
+		displayFolder: Customer Ranking\Load Consistency Score
+		lineageTag: 6fb7946a-5427-40d9-8a1b-f3a1b4886dfb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Load Consistency Weighted Score' =
+			
+			DIVIDE([Load Consistency Score], 3) * 10
+		displayFolder: Customer Ranking\Load Consistency Score
+		lineageTag: 38ba48c9-6f3b-42ac-8c87-3cffb8a1e11f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Volatility Weighted Score' =
+			
+			DIVIDE([Margin Volatility Score], 3) * 5
+		displayFolder: Customer Ranking\Margin Volatility Score
+		lineageTag: c23c3762-7ed5-4995-a191-e9e48fbbd6f7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Per Order Weighted Score' =
+			
+			DIVIDE([Margin Per Order Percentile Score], 3) * 15
+		displayFolder: Customer Ranking\MPO Score
+		lineageTag: 0d882f36-ed55-4bcf-aac2-1ffca6962c6e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Percentile Weighted Score' =
+			
+			DIVIDE([Revenue Percentile Score], 3) * 10
+		displayFolder: Customer Ranking\Revenue Score
+		lineageTag: a9cabe6c-1e47-4404-a6f8-26cfc027acb4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Covered Loads' =
+			
+			[Count of orders covered]
+		displayFolder: Customer Ranking\Lane Density Score
+		lineageTag: aa380855-e1f6-4117-aeed-e074c987befb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Covered Loads (per Lane)' =
+			
+			[Count of orders covered]
+		displayFolder: Customer Ranking\Lane Density Score
+		lineageTag: 78f6f894-f3ef-4efd-927c-c9b32fdacc0e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Covered Loads (Top 3 Lanes)' =
+			
+			VAR LaneTable =
+			    ADDCOLUMNS(
+			        VALUES(orders[lane]),                 -- one row per lane
+			        "LaneLoads",
+			            CALCULATE([Covered Loads (per Lane)]) -- loads for that lane
+			    )
+			VAR Top3 =
+			    TOPN(
+			        3,
+			        LaneTable,
+			        [LaneLoads],
+			        DESC
+			    )
+			RETURN
+			    SUMX(Top3, [LaneLoads])
+		displayFolder: Customer Ranking\Lane Density Score
+		lineageTag: 31794dda-00de-4f12-931f-853cc751f506
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lane Density (Top 3 Share)' = ```
+			
+			DIVIDE(
+			    [Covered Loads (Top 3 Lanes)],
+			    [Total Covered Loads]
+			)
+			
+			```
+		displayFolder: Customer Ranking\Lane Density Score
+		lineageTag: 898ede4f-bbfd-4cf2-b9ed-851ccb0144a5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lane Density (Eligible)' = ```
+			
+			IF(
+			    [Total Covered Loads] < 10,
+			    BLANK(),
+			    [Lane Density (Top 3 Share)]
+			)
+			
+			```
+		displayFolder: Customer Ranking\Lane Density Score
+		lineageTag: db9bf884-4db1-4dfe-abae-499ecd09cf2d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lane Density Score' = ```
+			
+			VAR Density = [Lane Density (Eligible)]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(Density), BLANK(),
+			
+			    Density >= 0.75, 3,   -- repeatable core lanes
+			    Density >= 0.45, 2,   -- some repetition
+			    1                     -- random lanes
+			)
+			
+			```
+		displayFolder: Customer Ranking\Lane Density Score
+		lineageTag: 17611432-cbda-45a1-afa6-30cb0571bd43
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lane Density Weighted Score' =
+			
+			DIVIDE([Lane Density Score], 3) * 5
+		displayFolder: Customer Ranking\Lane Density Score
+		lineageTag: 81577075-06f6-4d97-8f2a-0217f2466f07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Temperature_Group_Flag =
+			
+			VAR IsReeferEquipment =
+			    SELECTEDVALUE ( orders[equipment_type_id] ) IN {
+			        "R",        -- Reefer
+			        "RF",       -- Reefer Flat
+			        "REEFER"   -- Text-based IDs
+			    }
+			
+			VAR HasTempRequirements =
+			    NOT ISBLANK ( MIN ( orders[temperature_min] ) )
+			        || NOT ISBLANK ( MAX ( orders[temperature_max] ) )
+			
+			RETURN
+			IF (
+			    IsReeferEquipment
+			        || HasTempRequirements,
+			    1,
+			    0
+			)
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 44cf53fa-7c51-4836-9a03-ce7ee0ca59cf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Operational Complexity Points' = ```
+			
+			    [Ops Regulatory Points]
+			  + [Ops Facility Points]
+			  + [Ops Equipment Points]
+			  + [Ops Temperature Points]
+			```
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 2a8fa81f-ebc4-4fdb-a32f-c05466b4befc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ops Regulatory Points' = ```
+			
+			MAX ( ops_complexity[Regulatory_Group_Flag] ) * 3
+			
+			```
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 833c49ff-f6db-4290-b5e0-df7253c1cb3a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ops Facility Points' =
+			
+			[Facility_Group_Flag] * 2
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: bc1219d8-5aaf-41e8-a73f-600be73ef5d5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ops Equipment Points' = ```
+			
+			[Equipment_Group_Flag] * 2
+			
+			```
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 7a3144b6-57dd-46ab-8823-a2a99ac08db1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pct Service Escalated Loads' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS ( orders ),
+			        FILTER(
+			            orders,
+			            [Service_Group_Flag] = 1
+			        )
+			    ),
+			    [Count of orders covered]
+			)
+		displayFolder: Customer Ranking\Service Requirements
+		lineageTag: d7d53a75-ac55-465e-ac35-266921c98786
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ops Temperature Points' =
+			
+			[Temperature_Group_Flag] * 2
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 1f78458b-d08f-4297-94bf-263a17628703
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Operational Complexity Score' =
+			
+			VAR pts = [Operational Complexity Points]
+			RETURN
+			IF (
+			    [Count of orders covered] = 0,
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        pts <= 2, 3,
+			        pts <= 5, 2,
+			        1
+			    )
+			)
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 26f2f3c2-016b-4b96-886a-99d530cfebfe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Operational Complexity Weighted' =
+			
+			DIVIDE([Operational Complexity Score (Normalized)], 3) * 5
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: f4ee29ae-7b15-4857-94ef-603b9871779d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Operational Complexity Points' =
+			
+			IF(
+			    [Count of orders covered] = 0,
+			    BLANK(),
+			    AVERAGEX(
+			        VALUES(orders[id]),
+			        [Operational Complexity Points]
+			    )
+			)
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 4d8f58ec-60e6-435b-8e7a-cf38f748bba3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Operational Complexity Score (Normalized)' =
+			
+			VAR p = [Avg Operational Complexity Points]
+			RETURN
+			IF(
+			    ISBLANK(p),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        p <= 2, 3,
+			        p <= 5, 2,
+			        1
+			    )
+			)
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 75ae7562-af8e-4044-bcac-206c2bcb1754
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Service_Group_Flag =
+			
+			VAR CommentServiceFlag =
+			    MAX ( ops_complexity[Service_Escalation_Group_Flag] )
+			
+			VAR IsExpediteOrder =
+			    SELECTEDVALUE ( orders[order_type_id] ) = "EXPEDITE"
+			
+			RETURN
+			IF (
+			    CommentServiceFlag = 1
+			        || IsExpediteOrder,
+			    1,
+			    0
+			)
+		displayFolder: Customer Ranking\Service Requirements
+		lineageTag: 7de41bca-0b2b-4771-80db-7efaf6835360
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Equipment_Group_Flag = ```
+			
+			VAR CommentEquipmentFlag =
+			    MAX ( ops_complexity[Equipment_Securement_Group_Flag] )
+			
+			VAR IsBeltTrailer =
+			    SELECTEDVALUE ( orders[equipment_type_id] )
+			        IN { "BW", "BW/EXP" }
+			
+			RETURN
+			IF (
+			    CommentEquipmentFlag = 1
+			        || IsBeltTrailer,
+			    1,
+			    0
+			)
+			
+			```
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 602d345e-6bd8-4e06-ad6e-a5d836dae882
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Facility_Group_Flag =
+			
+			VAR CommentFacilityFlag =
+			    MAX ( ops_complexity[Facility_Access_Group_Flag] )
+			
+			VAR IsFacilityEquipment =
+			    SELECTEDVALUE ( orders[equipment_type_id] )
+			        IN { "LABOR", "DROP" }
+			
+			VAR HasExtraStops =
+			    ( MAX ( orders[extra_pickups] )
+			    + MAX ( orders[extra_deliveries] ) ) > 0
+			
+			RETURN
+			IF (
+			    CommentFacilityFlag = 1
+			        || IsFacilityEquipment
+			        || HasExtraStops,
+			    1,
+			    0
+			)
+		displayFolder: Customer Ranking\Operational Complexities
+		lineageTag: 3d2836b7-9ce9-404f-83d5-c6b9aedddd44
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Days Over Terms' =
+			
+			MAX ( customer[average_pay_days] )
+			    - MAX ( customer[bill_due_days] )
+		displayFolder: Customer Ranking\Payment Terms Score
+		lineageTag: 2decc6bf-a5bb-4f13-95bf-614d22da0805
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Payment Terms Score' =
+			
+			VAR DaysLate = [Days Over Terms]
+			RETURN
+			IF (
+			    [Count of orders covered] = 0
+			        || ISBLANK ( DaysLate ),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        DaysLate <= 0, 3,     -- pays on time or early
+			        DaysLate <= 10, 2,    -- slightly late
+			        1                    -- consistently late
+			    )
+			)
+		displayFolder: Customer Ranking\Payment Terms Score
+		lineageTag: e6701551-ba2e-421c-9123-6c0924339567
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Payment Terms Weighted' =
+			
+			DIVIDE ( [Payment Terms Score], 3 ) * 10
+		displayFolder: Customer Ranking\Payment Terms Score
+		lineageTag: 2cc64d2c-4cc4-41c5-8d57-c80f31d5b8cf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Expected Cost Index' = ```
+			
+			AVERAGEX(
+			    {
+			        ( [Operational Complexity Score (Normalized)] ),
+			        ( [Service Requirements Score] )
+			    },
+			    [Value]
+			)
+			
+			```
+		displayFolder: Customer Ranking\Cost to Serve Score
+		lineageTag: b8a6b263-8c0b-4a96-80d3-cb01dc69109d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Service Requirements Score' = ```
+			
+			VAR PctEscalated = [Pct Service Escalated Loads]
+			RETURN
+			IF (
+			    [Count of orders covered] = 0,
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK ( PctEscalated ), BLANK(),
+			        PctEscalated <= 0.15, 3,   -- mostly standard
+			        PctEscalated <= 0.40, 2,   -- above average service
+			        1                          -- constant escalation
+			    )
+			)
+			
+			```
+		displayFolder: Customer Ranking\Service Requirements
+		lineageTag: efd93752-6f77-4fa5-9a43-9444253cb57a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Service Requirements Weighted' = ```
+			
+			DIVIDE( [Service Requirements Score], 3 ) * 5
+			
+			```
+		displayFolder: Customer Ranking\Service Requirements
+		lineageTag: ca15a6f7-43b3-474c-aefa-a4379f9a7270
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cost to Serve Efficiency' =
+			
+			[Margin Per Order Percentile Score]
+			    - [Expected Cost Index]
+		displayFolder: Customer Ranking\Cost to Serve Score
+		lineageTag: fef76def-41fe-4f50-98d8-0c25f1f450c7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cost to Serve Score' =
+			
+			VAR Eff = [Cost to Serve Efficiency]
+			RETURN
+			IF (
+			    [Count of orders covered] = 0,
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        Eff >= 0.5, 3,     -- low cost to serve / very efficient
+			        Eff >= -0.5, 2,    -- acceptable / breakeven
+			        1                  -- high cost to serve
+			    )
+			)
+		displayFolder: Customer Ranking\Cost to Serve Score
+		lineageTag: 9ac580bf-3973-4005-a05a-dd4b2e8c137b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cost to Serve Weighted' =
+			
+			DIVIDE ( [Cost to Serve Score], 3 ) * 5
+		displayFolder: Customer Ranking\Cost to Serve Score
+		lineageTag: 7528bfa2-7226-46ea-aef6-aa70a24c8970
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Weeks in Scope' =
+			
+			COUNTROWS(
+			    VALUES( Calendar[Week of Year] )
+			)
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 37c4e3c8-c47d-4a2e-bb59-b269853d6a3a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Loads per Active Week' =
+			
+			DIVIDE( [Count of orders covered], [Active Weeks] )
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 921a82f6-d658-45b1-b69c-60f747ef3c66
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Active Weeks' = ```
+			
+			IF (
+			    [Count of orders covered] = 0,
+			    BLANK(),
+			    COUNTROWS(
+			        FILTER(
+			            VALUES ( 'Calendar'[Start of Week] ),
+			            CALCULATE ( [Count of orders covered] ) > 0
+			        )
+			    )
+			)
+			
+			```
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 733e485a-7762-4291-a93d-8a8e050a439b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Relationship Depth Ratio' =
+			
+			DIVIDE(
+			    [Active Weeks],
+			    [Weeks in Scope]
+			)
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 876e4de5-5bc4-406a-af19-76d9c9a87e75
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Relationship Depth Base Score' =
+			
+			VAR Ratio = [Relationship Depth Ratio]
+			RETURN
+			IF (
+			    ISBLANK ( Ratio ),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        Ratio >= 0.75, 3,   -- embedded / anchor
+			        Ratio >= 0.35, 2,   -- consistent / known
+			        1                  -- transactional
+			    )
+			)
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 8fde963c-7ac6-4aea-bae0-4b2566a3ecc5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Relationship Cadence Adjustment' =
+			
+			VAR LPW = [Loads per Active Week]
+			RETURN
+			IF (
+			    ISBLANK ( LPW ),
+			    0,
+			    SWITCH(
+			        TRUE(),
+			        LPW >= 3,  0.3,   -- very embedded cadence
+			        LPW >= 1,  0.0,   -- normal cadence
+			        -0.3               -- very light cadence
+			    )
+			)
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 84efc94a-a71c-4597-b986-35e7df2d167d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Relationship Depth Index' =
+			
+			VAR Base = [Relationship Depth Base Score]     -- 1 / 2 / 3
+			VAR Adj  = [Relationship Cadence Adjustment]
+			RETURN
+			IF (
+			    ISBLANK ( Base ),
+			    BLANK(),
+			    MAX(
+			        1,
+			        MIN(
+			            3,
+			            Base + Adj
+			        )
+			    )
+			)
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 30e12aaa-4389-46a6-b9bd-0bfcda1e9cca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Relationship Depth Score' =
+			
+			ROUND( [Relationship Depth Index], 0 )
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: f530ebe6-9011-42e5-8efc-a62add7bfd4a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Relationship Depth Weighted' =
+			
+			DIVIDE( [Relationship Depth Score], 3 ) * 10
+		displayFolder: Customer Ranking\Relationship Depth
+		lineageTag: 5b52d522-53c8-495e-9400-7312cdb01f9f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Customer Score' =
+			
+			IF (
+			    [Count of orders covered] = 0,
+			    BLANK(),
+			    COALESCE([Cost to Serve Weighted], 0)
+			    + COALESCE([Lane Density Weighted Score], 0)
+			    + COALESCE([Load Consistency Weighted Score], 0)
+			    + COALESCE([Margin Per Order Weighted Score], 0)
+			    + COALESCE([Margin Volatility Weighted Score], 0)
+			    + COALESCE([Operational Complexity Weighted], 0)
+			    + COALESCE([Payment Terms Weighted], 0)
+			    + COALESCE([Relationship Depth Weighted], 0)
+			    + COALESCE([Revenue Percentile Weighted Score], 0)
+			    + COALESCE([Service Requirements Weighted], 0)
+			    + COALESCE([Growth Potential Weighted], 0)
+			    + COALESCE([Strategic Fit Weighted], 0)
+			    + COALESCE([Concentration Risk Weighted], 0)
+			)
+		displayFolder: Customer Ranking
+		lineageTag: 587adca5-9f82-47a0-ac30-4e32f8a71678
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Loads per Week' =
+			
+			DIVIDE(
+			    [Count of orders covered],
+			    [Weeks in Scope]
+			)
+		displayFolder: Customer Ranking\Growth Potential
+		lineageTag: 9069ae56-8eb7-4b93-b6e5-2df919cab8bc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Headroom Score' =
+			
+			VAR LPW = [Loads per Week]
+			RETURN
+			IF (
+			    ISBLANK(LPW),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        LPW < 0.5, 3,   -- lots of room to grow
+			        LPW < 2.0, 2,   -- moderate runway
+			        1               -- already saturated
+			    )
+			)
+		displayFolder: Customer Ranking\Growth Potential
+		lineageTag: d4aa7a8a-d666-4d85-9f19-9cdd3c44cd5c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Potential Score' =
+			
+			VAR Depth = [Relationship Depth Score]
+			VAR Headroom = [Growth Headroom Score]
+			RETURN
+			IF (
+			    ISBLANK(Depth) || ISBLANK(Headroom),
+			    BLANK(),
+			    ROUND(
+			        DIVIDE( Depth + Headroom, 2 ),
+			        0
+			    )
+			)
+		displayFolder: Customer Ranking\Growth Potential
+		lineageTag: 426a24f0-113d-423f-a0a3-250183b48dab
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Potential Weighted' = ```
+			
+			DIVIDE( [Growth Potential Score], 3 ) * 10
+			
+			```
+		displayFolder: Customer Ranking\Growth Potential
+		lineageTag: 909fd736-29c7-40a7-bb0c-fd82b506cd17
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Network Fit Score' =
+			
+			[Lane Density Score]
+		displayFolder: Customer Ranking\Strategic Fit Score
+		lineageTag: d40e3b78-f15c-400a-a336-e52507831d2c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Relationship Intent Score' =
+			
+			[Relationship Depth Score]
+		displayFolder: Customer Ranking\Strategic Fit Score
+		lineageTag: 0f727ea0-14b0-4c08-ad4a-5065cd773543
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Alignment Score' =
+			
+			[Growth Potential Score]
+		displayFolder: Customer Ranking\Strategic Fit Score
+		lineageTag: f34ddd5a-4b21-4d39-9920-f71f42106b87
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Strategic Fit Index' =
+			
+			VAR Net  = [Network Fit Score]
+			VAR Rel  = [Relationship Intent Score]
+			VAR Grow = [Growth Alignment Score]
+			RETURN
+			IF (
+			    ISBLANK(Net) || ISBLANK(Rel) || ISBLANK(Grow),
+			    BLANK(),
+			    DIVIDE( Net + Rel + Grow, 3 )
+			)
+		displayFolder: Customer Ranking\Strategic Fit Score
+		lineageTag: 50321fd9-a945-4f08-b2a9-795eecb95b6c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Strategic Fit Score' =
+			
+			VAR v = [Strategic Fit Index]
+			RETURN
+			IF (
+			    ISBLANK(v),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        v >= 2.5, 3,
+			        v >= 1.5, 2,
+			        1
+			    )
+			)
+		displayFolder: Customer Ranking\Strategic Fit Score
+		lineageTag: 8c583e4b-0ef4-4e88-967c-aac983ac711e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Strategic Fit Weighted' =
+			
+			DIVIDE( [Strategic Fit Score], 3 ) * 5
+		displayFolder: Customer Ranking\Strategic Fit Score
+		lineageTag: e6b7cbae-6bb7-4ab2-866c-1ddc0cdcfe6f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Customer Revenue Share' =
+			
+			VAR customerRevenue = [Total Revenue]
+			
+			VAR totalRevenue =
+			    CALCULATE(
+			        [Total Revenue],
+			        REMOVEFILTERS( customer[name] )
+			    )
+			
+			RETURN
+			DIVIDE( customerRevenue, totalRevenue )
+		displayFolder: Customer Ranking\Concentrations Risk Score
+		lineageTag: 23c9a6e2-46be-46ec-9af5-649de4d9143e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Concentration Risk Score' =
+			
+			VAR Share = [Customer Revenue Share]
+			RETURN
+			IF (
+			    ISBLANK(Share),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        Share < 0.10, 3,   -- low risk
+			        Share < 0.20, 2,   -- moderate risk
+			        1                 -- high risk
+			    )
+			)
+		displayFolder: Customer Ranking\Concentrations Risk Score
+		lineageTag: 300c8b31-0c49-4e91-9397-2b456e598cdc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Concentration Risk Weighted' =
+			
+			DIVIDE( [Concentration Risk Score], 3 ) * 5
+		displayFolder: Customer Ranking\Concentrations Risk Score
+		lineageTag: 9bf64ea0-8557-4a36-96cc-b80c4ae28903
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Customer Score – Max' = ```
+			
+			    15 /* Margin Per Order */
+			  + 10 /* Revenue */
+			  + 5 /* Cost to Serve */
+			  + 5 /* Lane Density */
+			  + 10  /* Load Consistency */
+			  + 10  /* Relationship Depth */
+			  + 5  /* Strategic Fit */
+			  + 10  /* Growth Potential */
+			  + 5  /* Margin Volatility */
+			  + 5  /* Operational Complexity */
+			  + 5  /* Service Requirements */
+			  + 10  /* Payment Terms */
+			  + 5  /* Concentration Risk */
+			
+			```
+		displayFolder: Customer Ranking
+		lineageTag: d10a4429-a77d-4c11-a7e2-dd788f34df31
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Customer Score %' =
+			
+			DIVIDE(
+			    [Total Customer Score],
+			    [Total Customer Score – Max]
+			)
+		displayFolder: Customer Ranking
+		lineageTag: 1ad04d2d-af0c-4a24-9bec-7eed0c9d1ecc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Rank (Customer)' =
+			
+			IF (
+			    [Count of orders covered] = 0,
+			    BLANK(),
+			    RANKX(
+			        FILTER(
+			            ALLSELECTED( customer[name] ),
+			            CALCULATE( [Count of orders covered] ) > 0
+			                && NOT ISBLANK( CALCULATE( [Total Revenue] ) )
+			        ),
+			        [Total Revenue],
+			        ,
+			        DESC,
+			        DENSE
+			    )
+			)
+		displayFolder: Customer Ranking
+		lineageTag: f7a56309-b36e-4a7b-9482-6b9de407e7c8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ABC Tier' =
+			
+			VAR ScorePct = [Total Customer Score %]
+			RETURN
+			IF (
+			    ISBLANK(ScorePct),
+			    BLANK(),
+			    SWITCH(
+			        TRUE(),
+			        ScorePct >= 0.80, "A",
+			        ScorePct >= 0.55, "B",
+			        "C"
+			    )
+			)
+		displayFolder: Customer Ranking
+		lineageTag: 8fb5f4c7-d3c2-48ea-b42c-a3f3b17acb38
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ABC Tier – Description' =
+			
+			VAR Tier = [ABC Tier]
+			RETURN
+			SWITCH(
+			    Tier,
+			    "A", "Tier A – Core Partner",
+			    "B", "Tier B – Growth Account",
+			    "C", "Tier C – Transactional",
+			    BLANK()
+			)
+		displayFolder: Customer Ranking
+		lineageTag: 68967576-c4d6-49b3-a293-099fe3296e19
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column
 		isHidden
 		formatString: 0

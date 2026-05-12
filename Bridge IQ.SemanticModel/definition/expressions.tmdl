@@ -1,69 +1,3 @@
-expression stop_historic =
-		let
-		    Source = Sql.Database("bl-appdb", "lme"),
-		    dbo_stop = Source{[Schema="dbo",Item="stop"]}[Data],
-		    //Filtered Stops Pre RefresshCutOffDate
-		    #"Filtered Rows" = Table.SelectRows(dbo_stop, each [sched_arrive_early] < RefreshCutOffDate),
-		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"actual_arrival", "actual_departure", "address", "appt_required", "city_id", "city_name", "id", "latitude", "location_id", "location_name", "longitude", "movement_id", "movement_sequence", "order_id", "order_sequence", "sched_arrive_early", "sched_arrive_late", "state", "status", "stop_type", "zip_code", "zone_id"}),
-		    #"Inserted actual_arrival_time" = Table.AddColumn(#"Removed Other Columns", "actual_arrival_time", each DateTime.Time([actual_arrival]), type time),
-		    #"Inserted actual_departure_time" = Table.AddColumn(#"Inserted actual_arrival_time", "actual_departure_time", each DateTime.Time([actual_departure]), type time),
-		    #"Inserted sched_arrive_early_time" = Table.AddColumn(#"Inserted actual_departure_time", "sched_arrive_early_time", each DateTime.Time([sched_arrive_early]), type time),
-		    #"Inserted sched_arrive_late_time" = Table.AddColumn(#"Inserted sched_arrive_early_time", "sched_arrive_late_time", each DateTime.Time([sched_arrive_late]), type time),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Inserted sched_arrive_late_time",{{"actual_arrival", type date}, {"actual_departure", type date}, {"sched_arrive_early", type date}, {"sched_arrive_late", type date}}),
-		    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"id", Text.Trim, type text}})
-		in
-		    #"Trimmed Text"
-	lineageTag: b3dd5e3a-6047-4487-aedf-02870170447d
-	queryGroup: 'Historic Tables'
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression mcleod_historic_orders =
-		let
-		    Source = Sql.Database("bl-appdb", "lme"),
-		    dbo_orders = Source{[Schema="dbo",Item="orders"]}[Data],
-		    //Filtered Orders before RefreshCutOFfDate
-		    #"Filtered Rows" = Table.SelectRows(dbo_orders, each [ordered_date] < RefreshCutOffDate),
-		    //Start General Data Transformation
-		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"bill_date", "bill_distance", "billing_user_id", "blnum", "bol_received", "bol_recv_date", "commodity", "commodity_id", "consignee_refno", "consignee_stop_id", "customer_id", "entered_user_id", "equipment_type_id", "extra_deliveries", "extra_pickups", "freight_charge", "hazmat", "hazmat_code", "id", "on_hold", "operations_user", "order_type_id", "order_value", "ordered_date", "ordered_method", "otherchargetotal", "pallets_how_many", "pieces", "revenue_code_id", "round_trip", "shipper_stop_id", "status", "subject_order_number", "temperature_max", "temperature_min", "weight", "is_tonu", "salesperson", "linear_feet_brlo", "brlo_commission_paid", "brlo_commission_status", "brlo_commission_paid_date"}),
-		    #"Inserted order_entered_time" = Table.AddColumn(#"Removed Other Columns", "order_entered_time", each DateTime.Time([ordered_date]), type time),
-		    #"Extracted Date" = Table.TransformColumns(#"Inserted order_entered_time",{{"ordered_date", DateTime.Date, type date}}),
-		    //End General Data Transformation
-		    #"Changed Type" = Table.TransformColumnTypes(#"Extracted Date",{{"bill_date", type date}, {"bol_recv_date", type date}, {"freight_charge", Currency.Type}, {"otherchargetotal", Currency.Type}, {"brlo_commission_paid_date", type date}}),
-		    //Start add shipper and consignee data
-		    #"Merged stop table shipper" = Table.NestedJoin(#"Changed Type", {"shipper_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
-		    #"Expanded stop" = Table.ExpandTableColumn(#"Merged stop table shipper", "stop", {"city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
-		    #"Renamed shipper data" = Table.RenameColumns(#"Expanded stop",{{"stop.city_name", "shipper_city_name"}, {"stop.location_name", "shipper_location_name"}, {"stop.sched_arrive_early", "shipper_sched_early_date"}, {"stop.sched_arrive_late", "shipper_sched_late_date"}, {"stop.state", "shipper_state"}, {"stop.zip_code", "shipper_zip_code"}, {"stop.sched_arrive_early_time", "shipper_sched_early_time"}, {"stop.sched_arrive_late_time", "shipper_sched_late_time"}}),
-		    #"Filtered Rows1" = Table.SelectRows(#"Renamed shipper data", each ([status] <> "V")),
-		    #"Merged stop table consignee" = Table.NestedJoin(#"Filtered Rows1", {"consignee_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
-		    #"Expanded stop1" = Table.ExpandTableColumn(#"Merged stop table consignee", "stop", {"city_id", "city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_id", "stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
-		    //End add shipper and consignee data
-		    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
-		    //Start add 3 digit zip
-		    #"Inserted First Characters" = Table.AddColumn(#"Renamed consignee data", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
-		    //End add 3 digit zip
-		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
-		    //Start Add Lane
-		    #"Trimmed Text" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
-		    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text", "shipper_city_name", "shipper_city_name - Copy"),
-		    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
-		    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
-		    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
-		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
-		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
-		    //End Add Lane
-		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
-		in
-		    #"Merged Columns2"
-	lineageTag: ecc7d6f2-89e7-440c-8625-c2621e2e918e
-	queryGroup: 'Historic Tables'
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
 expression RefreshCutOffDate = #datetime(2025, 10, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: af39c097-cda3-4307-8194-af7487559d9a
 	queryGroup: Parameters
@@ -587,6 +521,72 @@ expression drs_payee =
 		in
 		    #"Removed Other Columns"
 	lineageTag: 878c148a-1e31-4d67-8b16-ab3f6f7dc4de
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression mcleod_historic_orders =
+		let
+		    Source = Sql.Database("bl-appdb", "lme"),
+		    dbo_orders = Source{[Schema="dbo",Item="orders"]}[Data],
+		    //Filtered Orders before RefreshCutOFfDate
+		    #"Filtered Rows" = Table.SelectRows(dbo_orders, each [ordered_date] < RefreshCutOffDate),
+		    //Start General Data Transformation
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"bill_date", "bill_distance", "billing_user_id", "blnum", "bol_received", "bol_recv_date", "commodity", "commodity_id", "consignee_refno", "consignee_stop_id", "customer_id", "entered_user_id", "equipment_type_id", "extra_deliveries", "extra_pickups", "freight_charge", "hazmat", "hazmat_code", "id", "on_hold", "operations_user", "order_type_id", "order_value", "ordered_date", "ordered_method", "otherchargetotal", "pallets_how_many", "pieces", "revenue_code_id", "round_trip", "shipper_stop_id", "status", "subject_order_number", "temperature_max", "temperature_min", "weight", "is_tonu", "salesperson", "linear_feet_brlo", "brlo_commission_paid", "brlo_commission_status", "brlo_commission_paid_date"}),
+		    #"Inserted order_entered_time" = Table.AddColumn(#"Removed Other Columns", "order_entered_time", each DateTime.Time([ordered_date]), type time),
+		    #"Extracted Date" = Table.TransformColumns(#"Inserted order_entered_time",{{"ordered_date", DateTime.Date, type date}}),
+		    //End General Data Transformation
+		    #"Changed Type" = Table.TransformColumnTypes(#"Extracted Date",{{"bill_date", type date}, {"bol_recv_date", type date}, {"freight_charge", Currency.Type}, {"otherchargetotal", Currency.Type}, {"brlo_commission_paid_date", type date}}),
+		    //Start add shipper and consignee data
+		    #"Merged stop table shipper" = Table.NestedJoin(#"Changed Type", {"shipper_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
+		    #"Expanded stop" = Table.ExpandTableColumn(#"Merged stop table shipper", "stop", {"city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
+		    #"Renamed shipper data" = Table.RenameColumns(#"Expanded stop",{{"stop.city_name", "shipper_city_name"}, {"stop.location_name", "shipper_location_name"}, {"stop.sched_arrive_early", "shipper_sched_early_date"}, {"stop.sched_arrive_late", "shipper_sched_late_date"}, {"stop.state", "shipper_state"}, {"stop.zip_code", "shipper_zip_code"}, {"stop.sched_arrive_early_time", "shipper_sched_early_time"}, {"stop.sched_arrive_late_time", "shipper_sched_late_time"}}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Renamed shipper data", each ([status] <> "V")),
+		    #"Merged stop table consignee" = Table.NestedJoin(#"Filtered Rows1", {"consignee_stop_id"}, stop, {"id"}, "stop", JoinKind.LeftOuter),
+		    #"Expanded stop1" = Table.ExpandTableColumn(#"Merged stop table consignee", "stop", {"city_id", "city_name", "location_name", "sched_arrive_early", "sched_arrive_late", "state", "zip_code", "sched_arrive_early_time", "sched_arrive_late_time"}, {"stop.city_id", "stop.city_name", "stop.location_name", "stop.sched_arrive_early", "stop.sched_arrive_late", "stop.state", "stop.zip_code", "stop.sched_arrive_early_time", "stop.sched_arrive_late_time"}),
+		    //End add shipper and consignee data
+		    #"Renamed consignee data" = Table.RenameColumns(#"Expanded stop1",{{"stop.city_id", "consignee_city_id"}, {"stop.city_name", "consignee_city_name"}, {"stop.location_name", "consignee_location_name"}, {"stop.sched_arrive_early", "consignee_sched_early_date"}, {"stop.sched_arrive_late", "consignee_sched_late_date"}, {"stop.state", "consignee_state"}, {"stop.zip_code", "consignee_zip_code"}, {"stop.sched_arrive_early_time", "consignee_sched_early_time"}, {"stop.sched_arrive_late_time", "consignee_sched_late_time"}}),
+		    //Start add 3 digit zip
+		    #"Inserted First Characters" = Table.AddColumn(#"Renamed consignee data", "shipper_3_digit_zip_code", each Text.Start([shipper_zip_code], 3), type text),
+		    //End add 3 digit zip
+		    #"Inserted First Characters1" = Table.AddColumn(#"Inserted First Characters", "consignee_3_digit_zip_code", each Text.Start([consignee_zip_code], 3), type text),
+		    //Start Add Lane
+		    #"Trimmed Text" = Table.TransformColumns(#"Inserted First Characters1",{{"shipper_city_name", Text.Trim, type text}, {"shipper_state", Text.Trim, type text}, {"consignee_city_name", Text.Trim, type text}, {"consignee_state", Text.Trim, type text}}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Trimmed Text", "shipper_city_name", "shipper_city_name - Copy"),
+		    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "shipper_state", "shipper_state - Copy"),
+		    #"Duplicated Column2" = Table.DuplicateColumn(#"Duplicated Column1", "consignee_city_name", "consignee_city_name - Copy"),
+		    #"Duplicated Column3" = Table.DuplicateColumn(#"Duplicated Column2", "consignee_state", "consignee_state - Copy"),
+		    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"shipper_city_name - Copy", "shipper_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Shipper"),
+		    #"Merged Columns1" = Table.CombineColumns(#"Merged Columns",{"consignee_city_name - Copy", "consignee_state - Copy"},Combiner.CombineTextByDelimiter(", ", QuoteStyle.None),"Consignee"),
+		    //End Add Lane
+		    #"Merged Columns2" = Table.CombineColumns(#"Merged Columns1",{"Shipper", "Consignee"},Combiner.CombineTextByDelimiter(" - ", QuoteStyle.None),"lane")
+		in
+		    #"Merged Columns2"
+	lineageTag: 6cbe46d4-ce17-42a4-9635-438ae01064aa
+	queryGroup: 'Historic Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression stop_historic =
+		let
+		    Source = Sql.Database("bl-appdb", "lme"),
+		    dbo_stop = Source{[Schema="dbo",Item="stop"]}[Data],
+		    //Filtered Stops Pre RefresshCutOffDate
+		    #"Filtered Rows" = Table.SelectRows(dbo_stop, each [sched_arrive_early] < RefreshCutOffDate),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"actual_arrival", "actual_departure", "address", "appt_required", "city_id", "city_name", "id", "latitude", "location_id", "location_name", "longitude", "movement_id", "movement_sequence", "order_id", "order_sequence", "sched_arrive_early", "sched_arrive_late", "state", "status", "stop_type", "zip_code", "zone_id"}),
+		    #"Inserted actual_arrival_time" = Table.AddColumn(#"Removed Other Columns", "actual_arrival_time", each DateTime.Time([actual_arrival]), type time),
+		    #"Inserted actual_departure_time" = Table.AddColumn(#"Inserted actual_arrival_time", "actual_departure_time", each DateTime.Time([actual_departure]), type time),
+		    #"Inserted sched_arrive_early_time" = Table.AddColumn(#"Inserted actual_departure_time", "sched_arrive_early_time", each DateTime.Time([sched_arrive_early]), type time),
+		    #"Inserted sched_arrive_late_time" = Table.AddColumn(#"Inserted sched_arrive_early_time", "sched_arrive_late_time", each DateTime.Time([sched_arrive_late]), type time),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Inserted sched_arrive_late_time",{{"actual_arrival", type date}, {"actual_departure", type date}, {"sched_arrive_early", type date}, {"sched_arrive_late", type date}}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"id", Text.Trim, type text}})
+		in
+		    #"Trimmed Text"
+	lineageTag: 74d2f4e3-3129-4de3-9c2c-96880414f7fb
+	queryGroup: 'Historic Tables'
 
 	annotation PBI_NavigationStepName = Navigation
 
