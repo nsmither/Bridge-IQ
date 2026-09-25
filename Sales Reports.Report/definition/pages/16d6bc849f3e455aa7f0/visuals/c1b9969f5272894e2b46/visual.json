@@ -1,12 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "c1b9969f5272894e2b46",
   "position": {
     "x": 0,
     "y": 0,
     "z": 0,
     "height": 96,
-    "width": 384
+    "width": 384,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "slicer",
@@ -58,14 +59,14 @@
             "startDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2026-01-01T00:00:00'"
+                  "Value": "datetime'2026-09-01T00:00:00'"
                 }
               }
             },
             "endDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2026-04-30T00:00:00'"
+                  "Value": "datetime'2026-09-28T00:00:00'"
                 }
               }
             },
@@ -111,7 +112,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2026-01-01T00:00:00'"
+                                "Value": "datetime'2026-09-01T00:00:00'"
                               }
                             }
                           }
@@ -131,7 +132,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2026-05-01T00:00:00'"
+                                "Value": "datetime'2026-09-29T00:00:00'"
                               }
                             }
                           }
@@ -432,7 +433,7 @@
         "howCreated": "User"
       },
       {
-        "name": "b4028e12207be60f6dfe",
+        "name": "e4311cba61cc03819b8e",
         "field": {
           "Column": {
             "Expression": {

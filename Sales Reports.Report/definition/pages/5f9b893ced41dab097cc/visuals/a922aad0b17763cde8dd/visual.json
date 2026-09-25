@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "a922aad0b17763cde8dd",
   "position": {
     "x": 96,
@@ -7,7 +7,7 @@
     "z": 15000,
     "height": 80,
     "width": 390,
-    "tabOrder": 11000
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "slicer",
@@ -81,7 +81,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "2025L"
+                                "Value": "2026L"
                               }
                             }
                           ]

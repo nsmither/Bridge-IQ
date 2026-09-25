@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "36d2d84c129ba405c899",
   "position": {
     "x": 416,
@@ -7,7 +7,7 @@
     "z": 4000,
     "height": 256,
     "width": 976,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -23,12 +23,27 @@
                       "Entity": "Calendar"
                     }
                   },
+                  "Property": "Week of Year"
+                }
+              },
+              "queryRef": "Calendar.Week of Year",
+              "nativeQueryRef": "Week of Year",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendar"
+                    }
+                  },
                   "Property": "Date"
                 }
               },
               "queryRef": "Calendar.Date",
               "nativeQueryRef": "Date1",
-              "active": true
+              "active": false
             }
           ]
         },
@@ -48,6 +63,21 @@
               "queryRef": "salesperson_key.Name",
               "nativeQueryRef": "Name",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "customer"
+                    }
+                  },
+                  "Property": "name"
+                }
+              },
+              "queryRef": "customer.name",
+              "nativeQueryRef": "name",
+              "active": false
             }
           ]
         },
@@ -88,6 +118,42 @@
         ]
       }
     },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "salesperson_key.Name"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "salesperson_key"
+                    }
+                  },
+                  "Property": "Name"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "customer.name"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
     "objects": {
       "subTotals": [
         {
@@ -321,64 +387,7 @@
             "Property": "Date"
           }
         },
-        "type": "RelativeDate",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "c",
-              "Entity": "Calendar",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Between": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "c"
-                        }
-                      },
-                      "Property": "Date"
-                    }
-                  },
-                  "LowerBound": {
-                    "DateSpan": {
-                      "Expression": {
-                        "DateAdd": {
-                          "Expression": {
-                            "DateAdd": {
-                              "Expression": {
-                                "Now": {}
-                              },
-                              "Amount": 1,
-                              "TimeUnit": 0
-                            }
-                          },
-                          "Amount": -90,
-                          "TimeUnit": 0
-                        }
-                      },
-                      "TimeUnit": 0
-                    }
-                  },
-                  "UpperBound": {
-                    "DateSpan": {
-                      "Expression": {
-                        "Now": {}
-                      },
-                      "TimeUnit": 0
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
+        "type": "RelativeDate"
       },
       {
         "name": "6a733f453ab2c6dea095",
@@ -465,6 +474,48 @@
             }
           ]
         }
+      },
+      {
+        "name": "32a1b0e65044137dbe5c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of orders covered"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "eb2f4bb1b9f121ac0df2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Week of Year"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5653b9370daa8df04a04",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "customer"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

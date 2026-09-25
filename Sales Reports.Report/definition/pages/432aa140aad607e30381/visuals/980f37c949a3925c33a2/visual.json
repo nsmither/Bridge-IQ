@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "980f37c949a3925c33a2",
   "position": {
     "x": 1416,
@@ -7,7 +7,7 @@
     "z": 1000,
     "height": 432,
     "width": 864,
-    "tabOrder": 1000
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "pivotTable",
@@ -131,7 +131,7 @@
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },

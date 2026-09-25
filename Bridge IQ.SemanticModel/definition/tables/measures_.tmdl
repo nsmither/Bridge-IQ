@@ -5388,7 +5388,7 @@ table measures_
 			    BLANK(),
 			    SWITCH(
 			        TRUE(),
-			        ISBLANK ( PctEscalated ), BLANK(),
+			        ISBLANK ( PctEscalated ), 3,
 			        PctEscalated <= 0.15, 3,   -- mostly standard
 			        PctEscalated <= 0.40, 2,   -- above average service
 			        1                          -- constant escalation

@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "d7434b2049866e00c5cc",
   "position": {
-    "x": 400,
-    "y": 16,
+    "x": 410.57118499573738,
+    "y": 0,
     "z": 7000,
-    "height": 64,
-    "width": 368,
-    "tabOrder": 7000
+    "height": 80.4774083546462,
+    "width": 368.28644501278774,
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "slicer",
@@ -237,6 +237,20 @@
         },
         "type": "Advanced",
         "howCreated": "User"
+      },
+      {
+        "name": "8995e3912953de008c34",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "salesperson_key"
+              }
+            },
+            "Property": "Name"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

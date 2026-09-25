@@ -1,12 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "d9250da6910915962cb4",
   "position": {
     "x": 0,
     "y": 128,
     "z": 0,
     "height": 592,
-    "width": 1280
+    "width": 1280,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -596,7 +597,56 @@
                     [
                       {
                         "Literal": {
+                          "Value": "'Credit App Received'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Credit App Sent'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Customer Conversation'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Email'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'F2F'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'First Load'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
                           "Value": "'Follow-up Conversation'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Mapping call'"
                         }
                       }
                     ],
@@ -617,21 +667,7 @@
                     [
                       {
                         "Literal": {
-                          "Value": "'Credit App Received'"
-                        }
-                      }
-                    ],
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'Credit App Sent'"
-                        }
-                      }
-                    ],
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'Mapping call'"
+                          "Value": "'New Opps'"
                         }
                       }
                     ],
@@ -645,20 +681,6 @@
                     [
                       {
                         "Literal": {
-                          "Value": "'New Opps'"
-                        }
-                      }
-                    ],
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'F2F'"
-                        }
-                      }
-                    ],
-                    [
-                      {
-                        "Literal": {
                           "Value": "'Referral'"
                         }
                       }
@@ -666,14 +688,7 @@
                     [
                       {
                         "Literal": {
-                          "Value": "'Email'"
-                        }
-                      }
-                    ],
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'First Load'"
+                          "Value": "'KARE Check'"
                         }
                       }
                     ]
@@ -791,6 +806,48 @@
           ]
         },
         "howCreated": "User"
+      },
+      {
+        "name": "df551a4389d4c465255e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Behavior KPI"
+              }
+            },
+            "Property": "Calculation group column"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e49250ff63a083cd5220",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0705a0e9642bd90db866",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of Behaviors"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

@@ -1,12 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "3bb483ab61a4d960b930",
   "position": {
     "x": 16,
     "y": 111.99999999999999,
     "z": 0,
     "height": 336,
-    "width": 624
+    "width": 624,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "lineChart",
@@ -27,7 +28,7 @@
               },
               "queryRef": "Calendar.MonthAbv",
               "nativeQueryRef": "MonthAbv1",
-              "active": true
+              "active": false
             },
             {
               "field": {
@@ -42,7 +43,7 @@
               },
               "queryRef": "Calendar.Week / Year",
               "nativeQueryRef": "Week / Year",
-              "active": false
+              "active": true
             }
           ]
         },
@@ -75,7 +76,7 @@
                 }
               },
               "queryRef": "measures_.Customers Served 1YA1",
-              "nativeQueryRef": "Customers Served 1YA"
+              "nativeQueryRef": "Customers Served 1YA1"
             },
             {
               "field": {
@@ -105,7 +106,7 @@
                 }
               },
               "queryRef": "measures_.New / Revived Bill-too's 1YA",
-              "nativeQueryRef": "New / Revived Bill-too's 1YA"
+              "nativeQueryRef": "New / Revived Bill-too's 1YA1"
             }
           ]
         }

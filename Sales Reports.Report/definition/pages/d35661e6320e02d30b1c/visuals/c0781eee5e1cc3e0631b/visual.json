@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "c0781eee5e1cc3e0631b",
   "position": {
     "x": 24,
@@ -7,7 +7,7 @@
     "z": 2000,
     "height": 552,
     "width": 1944,
-    "tabOrder": 2000
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -106,6 +106,21 @@
                       "Entity": "measures_"
                     }
                   },
+                  "Property": "Avg Margin Per Day"
+                }
+              },
+              "queryRef": "measures_.Avg Margin Per Day",
+              "nativeQueryRef": "Avg Margin Per Day"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Schema": "extension",
+                      "Entity": "measures_"
+                    }
+                  },
                   "Property": "Margin vs Margin per week Goal Variance"
                 }
               },
@@ -149,7 +164,7 @@
             "rowSubtotals": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -1245,7 +1260,7 @@
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -1814,7 +1829,21 @@
         }
       },
       {
-        "name": "00bddae137a20aa00687",
+        "name": "fe3c805a45b431b95203",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Week of Month"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d1df0ddcb928db825c00",
         "field": {
           "Measure": {
             "Expression": {
@@ -1822,45 +1851,69 @@
                 "Entity": "measures_"
               }
             },
-            "Property": "Current Sales"
+            "Property": "Working Days"
           }
         },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "m",
-              "Entity": "measures_",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 2,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "m"
-                        }
-                      },
-                      "Property": "Current Sales"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
-                }
+        "type": "Advanced"
+      },
+      {
+        "name": "c8596bdc0dc0ac160580",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "measures_"
               }
-            }
-          ]
+            },
+            "Property": "Margin per Week Goal"
+          }
         },
-        "howCreated": "User"
+        "type": "Advanced"
+      },
+      {
+        "name": "736c5d3a6e820a492054",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7c52827aa21e6793bbd4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin vs Margin per week Goal Variance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1b2cdca82d2744a55d3b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Avg Margin Per Day"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

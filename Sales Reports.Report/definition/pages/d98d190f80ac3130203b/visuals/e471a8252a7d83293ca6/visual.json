@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "e471a8252a7d83293ca6",
   "position": {
     "x": 16,
@@ -7,7 +7,7 @@
     "z": 4000,
     "height": 608,
     "width": 1248,
-    "tabOrder": 4000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "lineChart",
@@ -276,6 +276,53 @@
           ]
         },
         "howCreated": "User"
+      },
+      {
+        "name": "700ac62d3b0b60b19757",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Month Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "6331725d4c1543a0e132",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cffbad41207e7492b30a",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "margin_load_count_goals"
+                  }
+                },
+                "Property": "Margin Goal"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

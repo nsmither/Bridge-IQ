@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "d52711b01320a0aa71b2",
   "position": {
     "x": 523.28267477203644,
@@ -7,7 +7,7 @@
     "z": 1000,
     "height": 243.16109422492403,
     "width": 720.72948328267478,
-    "tabOrder": 1000
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "pivotTable",
@@ -328,65 +328,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "9830b69677f037dab933",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "crm_stages"
-              }
-            },
-            "Property": "Stage Name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "fbfb563c7ffbfefabcd3",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count CRM Ids (inactive relationship)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "8d30dfaa4efd0d5b9b5a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Healthy Pipeline Goal"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "a0fcaebeef6b4e844dcd",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count at Risk (inactive relationship)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

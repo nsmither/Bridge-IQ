@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "52f1aff110dd501dc9a7",
   "position": {
     "x": 604.984802431611,
     "y": 355.01519756838906,
-    "z": 1001,
+    "z": 2000,
     "height": 364.74164133738606,
     "width": 675.01519756838911,
-    "tabOrder": 1001
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -475,20 +475,6 @@
         }
       },
       {
-        "name": "88220c26d6e5cc8ecd5c",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "customer"
-              }
-            },
-            "Property": "name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
         "name": "31167c5d21edd904ecc7",
         "field": {
           "Measure": {
@@ -536,36 +522,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "a9c9bf4904b9290e62e8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "measures_"
-              }
-            },
-            "Property": "No Loads 30 days"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "fdfadfee80901c006a91",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "measures_"
-              }
-            },
-            "Property": "No Loads 90 days"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

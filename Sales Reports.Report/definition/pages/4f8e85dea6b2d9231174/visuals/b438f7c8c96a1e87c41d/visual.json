@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "b438f7c8c96a1e87c41d",
   "position": {
     "x": 992,
@@ -7,7 +7,7 @@
     "z": 13000,
     "height": 96,
     "width": 512,
-    "tabOrder": 13000
+    "tabOrder": 11000
   },
   "visual": {
     "visualType": "slicer",
@@ -268,20 +268,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "28d052cd3a20c0192371",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "Month Name"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

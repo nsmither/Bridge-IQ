@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "4089bd6d2e0151cb031d",
   "position": {
     "x": 416,
@@ -7,7 +7,7 @@
     "z": 3000,
     "height": 272,
     "width": 976,
-    "tabOrder": 4000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -23,12 +23,27 @@
                       "Entity": "Calendar"
                     }
                   },
+                  "Property": "Week of Year"
+                }
+              },
+              "queryRef": "Calendar.Week of Year",
+              "nativeQueryRef": "Week of Year",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendar"
+                    }
+                  },
                   "Property": "Date"
                 }
               },
               "queryRef": "Calendar.Date",
               "nativeQueryRef": "Date1",
-              "active": true
+              "active": false
             }
           ]
         },
@@ -48,6 +63,21 @@
               "queryRef": "salesperson_key.Name",
               "nativeQueryRef": "Name",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "customer"
+                    }
+                  },
+                  "Property": "name"
+                }
+              },
+              "queryRef": "customer.name",
+              "nativeQueryRef": "name",
+              "active": false
             }
           ]
         },
@@ -88,6 +118,42 @@
         ]
       }
     },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "salesperson_key.Name"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "salesperson_key"
+                    }
+                  },
+                  "Property": "Name"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "customer.name"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
     "objects": {
       "subTotals": [
         {
@@ -443,6 +509,62 @@
             }
           ]
         }
+      },
+      {
+        "name": "f1e4e8b4756eca5ce20d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "21dc300754ba1d0e3830",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Customers Served"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d3a7af8ae8d9a1db032a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Week of Year"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "049bcc94750a853b587a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "customer"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

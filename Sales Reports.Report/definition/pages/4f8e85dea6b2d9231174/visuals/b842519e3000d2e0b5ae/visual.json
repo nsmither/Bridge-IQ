@@ -1,12 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "b842519e3000d2e0b5ae",
   "position": {
     "x": 16,
     "y": 0,
     "z": 0,
     "height": 304,
-    "width": 320
+    "width": 320,
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "tableEx",
@@ -597,20 +598,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "b87721b846b21473859a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Margin"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

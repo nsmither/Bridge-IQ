@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "504288423b0745c58a83",
   "position": {
     "x": 352,
@@ -7,7 +7,7 @@
     "z": 4000,
     "height": 304,
     "width": 320,
-    "tabOrder": 4000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "tableEx",
@@ -148,59 +148,6 @@
               }
             ],
             "metadata": "Calendar.Week / Year"
-          }
-        },
-        {
-          "properties": {
-            "backColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Conditional": {
-                      "Cases": [
-                        {
-                          "Condition": {
-                            "Comparison": {
-                              "ComparisonKind": 0,
-                              "Left": {
-                                "Measure": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "measures_"
-                                    }
-                                  },
-                                  "Property": "is this week"
-                                }
-                              },
-                              "Right": {
-                                "Literal": {
-                                  "Value": "1D"
-                                }
-                              }
-                            }
-                          },
-                          "Value": {
-                            "Literal": {
-                              "Value": "'#1B8A50'"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 1
-                }
-              }
-            ],
-            "metadata": "measures_.Total Revenue"
           }
         }
       ],
@@ -613,7 +560,8 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
       }
     ],
     "filterSortOrder": "Custom"

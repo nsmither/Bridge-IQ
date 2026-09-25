@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "9fe50eb6fc5901a3aec3",
   "position": {
     "x": 16,
@@ -7,7 +7,7 @@
     "z": 2000,
     "height": 112,
     "width": 336,
-    "tabOrder": 2000
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "slicer",
@@ -67,7 +67,7 @@
             "endDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2026-05-27T00:00:00'"
+                  "Value": "datetime'2026-12-21T00:00:00'"
                 }
               }
             },
@@ -133,7 +133,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2026-05-28T00:00:00'"
+                                "Value": "datetime'2026-12-22T00:00:00'"
                               }
                             }
                           }
@@ -278,7 +278,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "d676c327e2c4568e7795",
+        "name": "504f3e74bcec6f8c1f7b",
         "field": {
           "Column": {
             "Expression": {

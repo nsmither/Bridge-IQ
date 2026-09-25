@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "ee6a1369a5a0901070a9",
   "position": {
     "x": 656,
@@ -7,7 +7,7 @@
     "z": 7000,
     "height": 336,
     "width": 736,
-    "tabOrder": 3000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -75,7 +75,7 @@
                   "Property": "Customers Served 1YA"
                 }
               },
-              "queryRef": "measures_.Customers Served 1YA",
+              "queryRef": "measures_.Customers Served 1YA NEW",
               "nativeQueryRef": "Customers Served 1YA"
             },
             {
@@ -90,7 +90,7 @@
                   "Property": "New / Revived Bill-too's 1YA"
                 }
               },
-              "queryRef": "measures_.New / Revived Bill-too's 1YA",
+              "queryRef": "measures_.New / Revived Bill-too's 1YA NEW 1YA NEW",
               "nativeQueryRef": "New / Revived Bill-too's 1YA"
             }
           ]
@@ -178,20 +178,6 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "129.78166083450733D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "measures_.Customers Served 1YA"
-          }
-        },
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Literal": {
                   "Value": "132.92000000000002D"
                 }
               }
@@ -206,13 +192,27 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "139.04000000000002D"
+                  "Value": "120.77950985161874D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "measures_.New / Revived Bill-too's 1YA"
+            "metadata": "measures_.Customers Served 1YA NEW"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "162.47243914846388D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "measures_.New / Revived Bill-too's 1YA NEW 1YA NEW"
           }
         }
       ],
@@ -529,6 +529,79 @@
         },
         "type": "RelativeDate",
         "howCreated": "User"
+      },
+      {
+        "name": "b1d822ce2e9139e2e75a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Month Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0018a225c68ea5bde963",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Customers Served"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1ed9917d3a36ad273e54",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "measures_"
+              }
+            },
+            "Property": "New / Revived Bill-too's"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d1b85854bd5a31f2f7c7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Customers Served 1YA"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1016e12d17eeb8991fcd",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "measures_"
+              }
+            },
+            "Property": "New / Revived Bill-too's 1YA"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

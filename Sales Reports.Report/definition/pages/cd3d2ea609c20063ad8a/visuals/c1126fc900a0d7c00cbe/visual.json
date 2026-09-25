@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "c1126fc900a0d7c00cbe",
   "position": {
     "x": 0,
@@ -7,7 +7,7 @@
     "z": 1000,
     "height": 364.74164133738606,
     "width": 592.34042553191489,
-    "tabOrder": 1000
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "pivotTable",
@@ -385,95 +385,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "90d612839023750edd34",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "salesperson_key"
-              }
-            },
-            "Property": "Name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "b06858b665e0c45eb396",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "customer"
-              }
-            },
-            "Property": "name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "3e0bb1ac794e11d7a7ea",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "5ed603771e20885b110d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Customers Served"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "336ac035c35bd89041bb",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "measures_"
-              }
-            },
-            "Property": "90 day revived"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6554822f83351410669a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "measures_"
-              }
-            },
-            "Property": "30 day revived"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

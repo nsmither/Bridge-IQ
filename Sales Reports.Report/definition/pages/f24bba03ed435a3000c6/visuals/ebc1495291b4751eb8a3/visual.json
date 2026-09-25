@@ -1,12 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "ebc1495291b4751eb8a3",
   "position": {
     "x": 1184,
     "y": 0,
     "z": 1000,
     "height": 80,
-    "width": 368
+    "width": 368,
+    "tabOrder": 17000
   },
   "visual": {
     "visualType": "slicer",
@@ -207,23 +208,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "79220ad044564ec4611f",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "rev_codes"
-              }
-            },
-            "Property": "rev_code_id"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "617c8dd9d4cc270022f2",
   "position": {
     "x": 0,
@@ -7,7 +7,7 @@
     "z": 2000,
     "height": 464,
     "width": 960,
-    "tabOrder": 2000
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "azureMap",
@@ -125,21 +125,21 @@
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "2.8D"
+                  "Value": "3.68D"
                 }
               }
             },
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "41.0380924031158D"
+                  "Value": "36.89448889626205D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-96.63730239868164D"
+                  "Value": "-83.1806640625D"
                 }
               }
             }

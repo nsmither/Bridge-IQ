@@ -1,0 +1,77 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "75fbde6a7d070b69d955",
+  "position": {
+    "x": 10,
+    "y": 427,
+    "z": 2,
+    "height": 150,
+    "width": 280,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Schema": "extension",
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Customers Served_"
+                }
+              },
+              "queryRef": "measures_.Customers Served_",
+              "nativeQueryRef": "Customers Served_"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "measures_"
+                  }
+                },
+                "Property": "Customers Served_"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1ebb394dec1b69291080",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Customers Served_"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

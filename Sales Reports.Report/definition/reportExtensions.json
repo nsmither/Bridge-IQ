@@ -43,40 +43,10 @@
           }
         },
         {
-          "name": "Customers Served 1YA",
-          "dataType": "Integer",
-          "expression": "\nVAR DATE_ = \nCALCULATE(\n    [Customers Served],\n    DATEADD('calendar'[Date],-1,YEAR),\n    USERELATIONSHIP(customer[salesperson_id],salesperson_key[McLeod Salesperson Code]),\n    USERELATIONSHIP(orders[shipper_sched_early_date],'Calendar'[Date]))\n\nRETURN\nDATE_",
-          "formatString": "0",
-          "displayFolder": "1 Report Measures",
-          "references": {
-            "measures": [
-              {
-                "entity": "measures_",
-                "name": "Customers Served"
-              }
-            ]
-          }
-        },
-        {
           "name": "New / Revived Bill-too's",
           "dataType": "Double",
           "expression": "\n\nVar customer_tm = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        movements[status]<>\"A\" && movements[status]<> \"V\"\n    )\n\nVar prior_customers = \nCALCULATETABLE(\n    VALUES(orders[customer_id]),\n    FILTER(ALL('Calendar'),\n     'Calendar'[Date] >= min('Calendar'[Date])-90 &&\n     'Calendar'[Date] <= MIN('Calendar'[Date])\n    ),\n    REMOVEFILTERS(salesperson_key[Name]),\n    movements[status]<>\"A\" && movements[status]<>\"V\"\n)\n\nVAR old_return = COUNTROWS(EXCEPT(customer_tm,prior_customers))\n\nReturn\nold_return",
           "displayFolder": "CRM Measures"
-        },
-        {
-          "name": "New / Revived Bill-too's 1YA",
-          "dataType": "Double",
-          "expression": "CALCULATE([New / Revived Bill-too's],DATEADD('calendar'[Date],-1,YEAR))",
-          "displayFolder": "CRM Measures",
-          "references": {
-            "measures": [
-              {
-                "schema": "extension",
-                "entity": "measures_",
-                "name": "New / Revived Bill-too's"
-              }
-            ]
-          }
         },
         {
           "name": "Margin Today",
@@ -909,6 +879,35 @@
           "name": "No Loads 30 days",
           "dataType": "Double",
           "expression": "\n\nVAR customers_last_90 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-90 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\nVAR customers_last_30 = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        REMOVEFILTERS(salesperson_key),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]>=MIN('Calendar'[Date])-30 &&\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        )\n    )\n\nVAR all_customers_prior_today = \n    CALCULATETABLE(\n        VALUES(orders[customer_id]),\n        FILTER(\n            ALL('Calendar'[Date]),\n            'Calendar'[Date]<MIN('Calendar'[Date])\n        ),\n//        REMOVEFILTERS(salesperson_key),\n        movements[status] <> \"A\" &&\n        movements[status] <> \"V\"\n    )\n\nVAR customers_wtih_no_loads_90 =\n    EXCEPT(\n        all_customers_prior_today,\n        customers_last_90\n    )\n\nVAR customers_with_no_loads_30 =\n    EXCEPT(\n        all_customers_prior_today,\n        customers_last_30\n    )\n\nVAR customers_with_no_loads_30_excluding_customers_with_no_loads_90 = \n    EXCEPT(\n        customers_with_no_loads_30,\n        customers_wtih_no_loads_90\n    )\n\nVAR count_customers = \n    COUNTROWS(customers_with_no_loads_30_excluding_customers_with_no_loads_90)\n\nRETURN\ncount_customers"
+        },
+        {
+          "name": "Customers Served 1YA",
+          "dataType": "Double",
+          "expression": "\nCALCULATE(\n    [Customers Served],\n    SAMEPERIODLASTYEAR('calendar'[Date]),\n    USERELATIONSHIP(orders[shipper_sched_early_date], 'calendar'[Date]),\n    USERELATIONSHIP(customer[salesperson_id], salesperson_key[McLeod Salesperson Code])\n)",
+          "displayFolder": "1 Report Measures",
+          "references": {
+            "measures": [
+              {
+                "entity": "measures_",
+                "name": "Customers Served"
+              }
+            ]
+          }
+        },
+        {
+          "name": "New / Revived Bill-too's 1YA",
+          "dataType": "Double",
+          "expression": "\nCALCULATE(\n    [New / Revived Bill-too's],\n    SAMEPERIODLASTYEAR('calendar'[Date]),\n    USERELATIONSHIP(orders[shipper_sched_early_date], 'calendar'[Date]),\n    USERELATIONSHIP(customer[salesperson_id], salesperson_key[McLeod Salesperson Code])\n)",
+          "displayFolder": "CRM Measures",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "measures_",
+                "name": "New / Revived Bill-too's"
+              }
+            ]
+          }
         }
       ]
     }

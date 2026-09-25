@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "c64a171d0ab997d17ec0",
+  "displayName": "Duplicate of Ship vs Delv",
+  "displayOption": "FitToPage",
+  "height": 1050,
+  "width": 1550,
+  "visibility": "HiddenInViewMode"
+}

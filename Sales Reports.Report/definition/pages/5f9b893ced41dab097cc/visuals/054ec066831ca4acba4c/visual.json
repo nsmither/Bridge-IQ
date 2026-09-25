@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "054ec066831ca4acba4c",
   "position": {
     "x": 496,
@@ -7,7 +7,7 @@
     "z": 16000,
     "height": 80,
     "width": 390,
-    "tabOrder": 16000
+    "tabOrder": 14000
   },
   "visual": {
     "visualType": "slicer",
@@ -81,7 +81,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Q4'"
+                                "Value": "'Q3'"
                               }
                             }
                           ]

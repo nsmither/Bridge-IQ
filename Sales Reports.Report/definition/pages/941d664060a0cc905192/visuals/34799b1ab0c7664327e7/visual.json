@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "34799b1ab0c7664327e7",
   "position": {
     "x": 384.00000000000006,
@@ -7,7 +7,7 @@
     "z": 8000,
     "height": 272,
     "width": 512,
-    "tabOrder": 8000
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "tableEx",
@@ -79,6 +79,11 @@
           "selector": {
             "metadata": "salesperson_key.Name"
           }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
         }
       ]
     },

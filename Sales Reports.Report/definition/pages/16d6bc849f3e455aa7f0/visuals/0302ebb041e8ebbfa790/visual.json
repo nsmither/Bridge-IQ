@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "0302ebb041e8ebbfa790",
   "position": {
     "x": 976,
@@ -7,7 +7,7 @@
     "z": 4000,
     "height": 464,
     "width": 560,
-    "tabOrder": 4000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "tableEx",
@@ -109,6 +109,11 @@
           "selector": {
             "metadata": "measures_.Count of orders covered"
           }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
         }
       ]
     },
