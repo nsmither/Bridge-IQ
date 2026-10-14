@@ -1,0 +1,535 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "7d70e31621392e2200c6",
+  "position": {
+    "x": 0,
+    "y": 89,
+    "z": 1000,
+    "height": 447,
+    "width": 1280,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "customer"
+                    }
+                  },
+                  "Property": "name"
+                }
+              },
+              "queryRef": "customer.name",
+              "nativeQueryRef": "name"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Revenue Rank (Customer)"
+                }
+              },
+              "queryRef": "measures_.Revenue Rank (Customer)",
+              "nativeQueryRef": "Revenue Rank (Customer)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "ABC Tier"
+                }
+              },
+              "queryRef": "measures_.ABC Tier",
+              "nativeQueryRef": "ABC Tier"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Total Customer Score"
+                }
+              },
+              "queryRef": "measures_.Total Customer Score",
+              "nativeQueryRef": "Total Customer Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Revenue Percentile Weighted Score"
+                }
+              },
+              "queryRef": "measures_.Revenue Percentile Weighted Score",
+              "nativeQueryRef": "Revenue Percentile Weighted Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Margin Per Order Weighted Score"
+                }
+              },
+              "queryRef": "measures_.Margin Per Order Weighted Score",
+              "nativeQueryRef": "Margin Per Order Weighted Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Margin Volatility Weighted Score"
+                }
+              },
+              "queryRef": "measures_.Margin Volatility Weighted Score",
+              "nativeQueryRef": "Margin Volatility Weighted Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Load Consistency Weighted Score"
+                }
+              },
+              "queryRef": "measures_.Load Consistency Weighted Score",
+              "nativeQueryRef": "Load Consistency Weighted Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Lane Density Weighted Score"
+                }
+              },
+              "queryRef": "measures_.Lane Density Weighted Score",
+              "nativeQueryRef": "Lane Density Weighted Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Operational Complexity Weighted"
+                }
+              },
+              "queryRef": "measures_.Operational Complexity Weighted",
+              "nativeQueryRef": "Operational Complexity Weighted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Service Requirements Weighted"
+                }
+              },
+              "queryRef": "measures_.Service Requirements Weighted",
+              "nativeQueryRef": "Service Requirements Weighted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Payment Terms Weighted"
+                }
+              },
+              "queryRef": "measures_.Payment Terms Weighted",
+              "nativeQueryRef": "Payment Terms Weighted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Expected Cost Index"
+                }
+              },
+              "queryRef": "measures_.Expected Cost Index",
+              "nativeQueryRef": "Expected Cost Index"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Cost to Serve Weighted"
+                }
+              },
+              "queryRef": "measures_.Cost to Serve Weighted",
+              "nativeQueryRef": "Cost to Serve Weighted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Relationship Depth Weighted"
+                }
+              },
+              "queryRef": "measures_.Relationship Depth Weighted",
+              "nativeQueryRef": "Relationship Depth Weighted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Growth Potential Weighted"
+                }
+              },
+              "queryRef": "measures_.Growth Potential Weighted",
+              "nativeQueryRef": "Growth Potential Weighted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Strategic Fit Weighted"
+                }
+              },
+              "queryRef": "measures_.Strategic Fit Weighted",
+              "nativeQueryRef": "Strategic Fit Weighted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Concentration Risk Weighted"
+                }
+              },
+              "queryRef": "measures_.Concentration Risk Weighted",
+              "nativeQueryRef": "Concentration Risk Weighted"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "measures_"
+                  }
+                },
+                "Property": "Revenue Rank (Customer)"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0d7a5d992fcd6c6f978d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "customer"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "3f2ef362acf4e2994e2a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Revenue Percentile Weighted Score"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6bff1e03f4494df89269",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin Per Order Weighted Score"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a5959ee8dc28211f2ba5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Margin Volatility Weighted Score"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "df78db6e119e85c0f60d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Load Consistency Weighted Score"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "399b68fa0762c104c767",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Lane Density Weighted Score"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "db7d5805fd1aabd28c7a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Operational Complexity Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b81266f5cdb383ffad02",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Payment Terms Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "412772e9997eb9765580",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Service Requirements Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "48c5b7b3e6561ca29aaa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Cost to Serve Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e06481ee51bfa0cfe36f",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Relationship Depth Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f2dfc59deeeee5fb7e70",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Growth Potential Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e39301b43af4fcfd57dd",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Strategic Fit Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5eee2e70a900d014ec7e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Concentration Risk Weighted"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "686a709abf99f5596819",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Total Customer Score"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2c7b4cf8c50f55d902f5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Revenue Rank (Customer)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "28d3460825d4cee17a6b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "ABC Tier"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

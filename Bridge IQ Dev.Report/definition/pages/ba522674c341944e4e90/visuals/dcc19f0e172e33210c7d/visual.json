@@ -1,9 +1,9 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "dcc19f0e172e33210c7d",
   "position": {
-    "x": 10.199203187250996,
-    "y": 177.46613545816734,
+    "x": 10.706319702602231,
+    "y": 177.24907063197028,
     "z": 1,
     "height": 542.597609561753,
     "width": 862.85258964143429,
@@ -57,6 +57,20 @@
                       "Entity": "measures_"
                     }
                   },
+                  "Property": "Total Margin paid in pay period"
+                }
+              },
+              "queryRef": "measures_.Total Margin paid in pay period",
+              "nativeQueryRef": "Total Margin paid in pay period"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
                   "Property": "Sum of Commisions paid (testing)"
                 }
               },
@@ -90,7 +104,7 @@
                     "Entity": "measures_"
                   }
                 },
-                "Property": "Sum of Commisions paid (testing) remove pre dec"
+                "Property": "Sum of Commisions paid (testing)"
               }
             },
             "direction": "Ascending"
@@ -162,7 +176,22 @@
             "Property": "Name"
           }
         },
-        "type": "Categorical"
+        "type": "Categorical",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
       },
       {
         "name": "a0c11d1b042cb9292a68",
@@ -254,6 +283,20 @@
           }
         },
         "type": "Categorical"
+      },
+      {
+        "name": "c3394cca4ca8e23ce207",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Total Margin paid in pay period"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

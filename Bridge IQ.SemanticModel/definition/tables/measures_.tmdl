@@ -4744,12 +4744,24 @@ table measures_
 
 	measure 'Sum of Commisions paid (testing)' =
 			
-			CALCULATE(
+			/*CALCULATE(
 			    sum(orders[brlo_commission_paid]),
 			    REMOVEFILTERS(orders[shipper_sched_early_date]),
-			    USERELATIONSHIP(base_or_commission_pay_schedule[Pay Date],orders[brlo_commission_paid_date]),
+			    USERELATIONSHIP(
+			        base_or_commission_pay_schedule[Pay Date],
+			        orders[brlo_commission_paid_date]
+			        ),
 			    orders[brlo_commission_status]="P"
-			    )
+			    )*/
+			
+			CALCULATE(
+			    SUM(orders[brlo_commission_paid]),
+			    REMOVEFILTERS(orders[shipper_sched_early_date]),
+			    USERELATIONSHIP(
+			        base_or_commission_pay_schedule[Pay Date],
+			        orders[brlo_commission_paid_date]
+			    ),
+			    orders[brlo_commission_status] = "P")
 		isHidden
 		displayFolder: Commission Measures\Testing
 		lineageTag: b6f47312-f8e1-46e7-bb32-b5684cceee09
@@ -5850,6 +5862,60 @@ table measures_
 			)
 		displayFolder: Customer Ranking
 		lineageTag: 68967576-c4d6-49b3-a293-099fe3296e19
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG days to pay testing' =
+			
+			CALCULATE(
+			    AVERAGE(customer[average_pay_days]),
+			    USERELATIONSHIP(salesperson_key[McLeod Salesperson Code],customer[salesperson_id]))
+		lineageTag: a8cdf72e-93fc-4280-bcbe-3193d14b1709
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG Margin Per Month Test' =
+			
+			
+			VAR months= DISTINCTCOUNT('Calendar'[Month / Year])
+			
+			VAR avg_month = DIVIDE([Margin],months)
+			
+			RETURN
+			avg_month
+		lineageTag: cfe60f93-aaba-4f2e-8102-4287ad2474ca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sum of Commisions paid (testing) remove pre dec' =
+			
+			CALCULATE(
+			    SUM(orders[brlo_commission_paid]),
+			    REMOVEFILTERS(orders[shipper_sched_early_date]),
+			    USERELATIONSHIP(
+			        base_or_commission_pay_schedule[Pay Date],
+			        orders[brlo_commission_paid_date]
+			    ),
+			    orders[brlo_commission_status] = "P",
+			    orders[shipper_sched_early_date] >= DATE(2026, 1, 1)
+			)
+		displayFolder: Commission Measures\Testing
+		lineageTag: 21d284fe-a6f2-41c8-ae00-cd027f0efbad
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Margin paid in pay period' =
+			
+			CALCULATE(
+			    [Margin],
+			    REMOVEFILTERS(orders[shipper_sched_early_date]),
+			    USERELATIONSHIP(
+			        base_or_commission_pay_schedule[Pay Date],
+			        orders[brlo_commission_paid_date]
+			    ),
+			    orders[brlo_commission_status] = "P")
+		displayFolder: Commission Measures\Testing
+		lineageTag: 15a4185a-0558-491e-945f-c753209559f6
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

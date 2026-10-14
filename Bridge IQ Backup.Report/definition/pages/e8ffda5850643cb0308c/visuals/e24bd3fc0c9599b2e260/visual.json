@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "e24bd3fc0c9599b2e260",
   "position": {
     "x": 9.737954353338969,
     "y": 289.97464074387153,
-    "z": 1,
+    "z": 1000,
     "height": 421.978021978022,
     "width": 664.34488588334739,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "tableEx",
@@ -68,34 +68,6 @@
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "591d3f253480a6c4c7e0",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "customer"
-              }
-            },
-            "Property": "name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "15a6a52d587703a0224a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of orders covered"
-          }
-        },
-        "type": "Advanced"
-      },
       {
         "name": "453da60a5a689099902c",
         "field": {

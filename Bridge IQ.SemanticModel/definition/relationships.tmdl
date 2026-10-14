@@ -155,39 +155,9 @@ relationship c40037d6-e2b6-dcf7-3efd-bb935c17f1ee
 	fromColumn: overdue_check_calls.'Check Call Date'
 	toColumn: Calendar.Date
 
-relationship fe94c6fe-a585-40a4-20ea-f103928fcb09
-	crossFilteringBehavior: bothDirections
-	fromColumn: crt_movement_data.'Movement ID'
-	toColumn: movements.id
-
-relationship fc5fc8e4-1849-d3ac-b3fe-598abd29f064
-	isActive: false
-	fromColumn: crt_movement_data.'Avail Time'
-	toColumn: Calendar.Date
-
-relationship 9add36d8-90b6-034d-1044-57c66973ec3b
-	isActive: false
-	fromColumn: crt_movement_data.'Covered Time'
-	toColumn: Calendar.Date
-
-relationship dd525f85-0cde-3300-3159-dc880be07c34
-	isActive: false
-	fromColumn: crt_movement_data.'Give Back Time '
-	toColumn: Calendar.Date
-
-relationship 761c2141-951b-0a3d-6e7c-70396138b4a2
-	isActive: false
-	fromColumn: crt_movement_data.'Load Board Time'
-	toColumn: Calendar.Date
-
 relationship f84bceea-6db2-2507-b712-d1cba07d870b
 	fromColumn: orders.lane
 	toColumn: lane.lane
-
-relationship 7de0ad41-c2eb-d29c-91b4-6eeba6627d01
-	isActive: false
-	fromColumn: crt_movement_data.'Order ID'
-	toColumn: orders.id
 
 relationship c8de8f41-77b3-7a78-50c4-d71de15d7c08
 	fromColumn: margin_load_count_goals.Month
@@ -246,14 +216,6 @@ relationship 0e539d6e-244b-340b-1d2e-74a2accdfa2e
 
 relationship a2468aca-e09d-24fe-5861-daa212106492
 	fromColumn: customer_margin_goal.Salesperson
-	toColumn: salesperson_key.Name
-
-relationship AutoDetected_8e587438-2a6b-4588-b4c6-9e458e209910
-	fromColumn: healthy_pipeline_goals.Stage
-	toColumn: crm_stages.'Stage Name'
-
-relationship 3e8afa0a-dbfe-d267-4bad-71cf3030a35c
-	fromColumn: healthy_pipeline_goals.'Saleperson Name'
 	toColumn: salesperson_key.Name
 
 relationship e7de55f3-7932-fa99-43dd-f343443de0d7
@@ -345,16 +307,6 @@ relationship cf8a66c6-ea49-e82b-8531-36f405b7ac81
 	fromCardinality: one
 	fromColumn: employees.ID
 	toColumn: dispatcher_key.ID
-
-relationship c068525c-5985-47a0-a2fb-8f38a5e05167
-	joinOnDateBehavior: datePartOnly
-	fromColumn: crt_movement_data.'Hand over'
-	toColumn: LocalDateTable_5d529210-5800-429f-b2e3-388a81d360f9.Date
-
-relationship 1b268b65-e261-470c-8a0d-ca966e3223f0
-	joinOnDateBehavior: datePartOnly
-	fromColumn: crt_movement_data.'Ship date at Avail'
-	toColumn: LocalDateTable_67948750-4a55-4170-865e-d76c6427f063.Date
 
 relationship ff88e45c-e612-46ba-ab09-9a3fade68d98
 	fromColumn: rev_codes.account_rep
@@ -538,80 +490,6 @@ relationship a7feffdd-13bb-f279-2a53-4ff12f8d6a50
 	isActive: false
 	fromColumn: payee.termination_date
 	toColumn: Calendar.Date
-
-relationship 42957be7-ec5b-6365-a288-446a62599801
-	isActive: false
-	fromColumn: transitioned_accounts.'Change Date'
-	toColumn: Calendar.Date
-
-relationship 14031265-facc-05ae-0dd1-60159e4ef59c
-	fromColumn: transitioned_accounts.'Customer ID'
-	toColumn: customer.id
-
-relationship eac4758b-44f6-8cc2-f3d9-c8ae1d60543d
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: ffl_lineup.employee_name
-	toColumn: salesperson_key.Name
-
-relationship 9e332f23-783c-0247-014a-ca5de92a7018
-	isActive: false
-	fromColumn: employees.Name
-	toColumn: ffl_lineup.employee_name
-
-relationship bce370c5-b5d9-6b2d-b10f-fb225fc80c61
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: 'Employee Photos'.EmployeeName
-	toColumn: ffl_lineup.employee_name
-
-relationship 856fae69-2d91-45aa-9efe-33280f0ba05c
-	joinOnDateBehavior: datePartOnly
-	fromColumn: 'ffl week schedule'.'start of week'
-	toColumn: LocalDateTable_e33814f8-eec2-44ca-a33e-ada525a06173.Date
-
-relationship 77a6da26-51d8-4465-8356-a7fefc3278db
-	joinOnDateBehavior: datePartOnly
-	fromColumn: 'ffl week schedule'.'end of week '
-	toColumn: LocalDateTable_240c5f16-071c-4116-a9e4-5499a06f4cf8.Date
-
-relationship ab82696e-9394-6e1e-28e0-6939050d6ec7
-	isActive: false
-	fromColumn: 'ffl week schedule'.' team 1A'
-	toColumn: 'Team Logos'.Teamnumber
-
-relationship aba5dda6-c503-6c70-71d3-f5d64fb8a5f2
-	isActive: false
-	fromColumn: 'ffl week schedule'.' team 2A'
-	toColumn: 'Team Logos'.Teamnumber
-
-relationship ca7c21ff-88ac-0ef6-4e4d-a30d3f04198e
-	isActive: false
-	fromColumn: 'ffl week schedule'.'team 1B'
-	toColumn: 'Team Logos'.Teamnumber
-
-relationship 06b55305-9dc5-2e69-62cf-61f9ba47f743
-	isActive: false
-	fromColumn: 'ffl week schedule'.'team 2B'
-	toColumn: 'Team Logos'.Teamnumber
-
-relationship af280d98-956b-f9f4-2bf2-2a148e354201
-	isActive: false
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: Calendar.Date
-	toColumn: 'ffl week schedule'.'start of week'
-
-relationship 8871d2e1-6b9d-fa07-4909-1599813f10bc
-	isActive: false
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: Calendar.Date
-	toColumn: 'ffl week schedule'.'end of week '
-
-relationship 59362e10-5143-d29e-e652-7d9be13a7bce
-	fromColumn: 'Employee Photos'.'ffl_lineup.team'
-	toColumn: 'Team Logos'.Teamnumber
 
 relationship AutoDetected_abf0a4c4-5db2-44da-aa92-6fc3379c96fa
 	fromColumn: carrier_key.factoring_company_id

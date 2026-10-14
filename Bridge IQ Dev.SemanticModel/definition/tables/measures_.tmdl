@@ -5897,10 +5897,25 @@ table measures_
 			        orders[brlo_commission_paid_date]
 			    ),
 			    orders[brlo_commission_status] = "P",
-			    orders[shipper_sched_early_date] >= DATE(2025, 12, 1)
+			    orders[shipper_sched_early_date] >= DATE(2026, 1, 1)
 			)
 		displayFolder: Commission Measures\Testing
 		lineageTag: 21d284fe-a6f2-41c8-ae00-cd027f0efbad
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Margin paid in pay period' =
+			
+			CALCULATE(
+			    [Margin],
+			    REMOVEFILTERS(orders[shipper_sched_early_date]),
+			    USERELATIONSHIP(
+			        base_or_commission_pay_schedule[Pay Date],
+			        orders[brlo_commission_paid_date]
+			    ),
+			    orders[brlo_commission_status] = "P")
+		displayFolder: Commission Measures\Testing
+		lineageTag: 15a4185a-0558-491e-945f-c753209559f6
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

@@ -20026,15 +20026,6 @@ cultureInfo en-US
 			      },
 			      "State": "Generated"
 			    },
-			    "employee_photos.image_url": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Employee Photos",
-			          "ConceptualProperty": "Image URL"
-			        }
-			      },
-			      "State": "Generated"
-			    },
 			    "measures_.ffl_team_1b_total_points": {
 			      "Definition": {
 			        "Binding": {
@@ -20067,15 +20058,6 @@ cultureInfo en-US
 			        "Binding": {
 			          "ConceptualEntity": "measures_",
 			          "ConceptualProperty": "FFL Team 2B Total Points"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "team_logos.teamname": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Team Logos",
-			          "ConceptualProperty": "TeamName"
 			        }
 			      },
 			      "State": "Generated"
@@ -20175,15 +20157,6 @@ cultureInfo en-US
 			        "Binding": {
 			          "ConceptualEntity": "measures_",
 			          "ConceptualProperty": "Total points WOW"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "employee_photos.employeename": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Employee Photos",
-			          "ConceptualProperty": "EmployeeName"
 			        }
 			      },
 			      "State": "Generated"
