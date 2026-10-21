@@ -3377,17 +3377,8 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Sum of Commisions paid (testing)' =
+	measure 'Sum of Commisions paid (GMC Or Commission)' =
 			
-			/*CALCULATE(
-			    sum(orders[brlo_commission_paid]),
-			    REMOVEFILTERS(orders[shipper_sched_early_date]),
-			    USERELATIONSHIP(
-			        base_or_commission_pay_schedule[Pay Date],
-			        orders[brlo_commission_paid_date]
-			        ),
-			    orders[brlo_commission_status]="P"
-			    )*/
 			
 			CALCULATE(
 			    SUM(orders[brlo_commission_paid]),
@@ -3398,22 +3389,8 @@ table measures_
 			    ),
 			    orders[brlo_commission_status] = "P")
 		isHidden
-		displayFolder: Commission Measures\Testing
+		displayFolder: Commission Measures\GMC Or Commission
 		lineageTag: b6f47312-f8e1-46e7-bb32-b5684cceee09
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Total Comp (testing)' =
-			
-			SUMX(salesperson_key,
-			    IF(
-			        [Sum of Commisions paid (testing)]>=[Base Salary],
-			        [Sum of Commisions paid (testing)],
-			        [Base Salary]
-			    )
-			)
-		displayFolder: Commission Measures\Testing
-		lineageTag: 6e78c12a-1a24-4339-bb72-bb8ebaf58b91
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
@@ -4522,7 +4499,7 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Sum of Commisions paid (testing) remove pre dec' =
+	measure 'Sum of Commisions paid (GMC Or Commission) remove pre Jan' =
 			
 			CALCULATE(
 			    SUM(orders[brlo_commission_paid]),
@@ -4534,12 +4511,12 @@ table measures_
 			    orders[brlo_commission_status] = "P",
 			    orders[shipper_sched_early_date] >= DATE(2026, 1, 1)
 			)
-		displayFolder: Commission Measures\Testing
+		displayFolder: Commission Measures\GMC Or Commission
 		lineageTag: 21d284fe-a6f2-41c8-ae00-cd027f0efbad
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Margin paid in pay period' =
+	measure 'Total Margin paid in pay period (GMC or Commission' =
 			
 			CALCULATE(
 			    [Margin],
@@ -4549,7 +4526,7 @@ table measures_
 			        orders[brlo_commission_paid_date]
 			    ),
 			    orders[brlo_commission_status] = "P")
-		displayFolder: Commission Measures\Testing
+		displayFolder: Commission Measures\GMC Or Commission
 		lineageTag: 15a4185a-0558-491e-945f-c753209559f6
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}

@@ -178,18 +178,6 @@
         },
         {
           "location": {
-            "x": 1296.4884172763041,
-            "y": 1899.6813258060492
-          },
-          "nodeIndex": "crt_movement_data",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 2
-        },
-        {
-          "location": {
             "x": 1456.6214672909978,
             "y": 1724.6629285280246
           },
@@ -312,19 +300,6 @@
           "nodeLineageTag": "3fe647cf-f0e9-4ca1-931e-2f3de372b7cb",
           "size": {
             "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 3922.7545173056915,
-            "y": 1108.9129285280246
-          },
-          "nodeIndex": "healthy_pipeline_goals",
-          "nodeLineageTag": "cb9522ca-5231-4a40-836b-34657a1cbc76",
-          "size": {
-            "height": 152,
             "width": 234
           },
           "zIndex": 0
@@ -478,70 +453,6 @@
           "nodeLineageTag": "6ba30c9e-6f97-4a6d-adc8-76b6d6c95e86",
           "size": {
             "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 8001.0728153666914,
-            "y": 148
-          },
-          "nodeIndex": "transitioned_accounts",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 9005.3911134276914,
-            "y": 1004.8406629030246
-          },
-          "nodeIndex": "ffl_lineup",
-          "nodeLineageTag": "3a4ae469-f750-4726-99f1-1b1124d36f78",
-          "size": {
-            "height": 152,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 8721.3911134276914,
-            "y": 1004.8406629030246
-          },
-          "nodeIndex": "Employee Photos",
-          "nodeLineageTag": "fa3f0a45-a866-4212-b83d-72c09c64efd0",
-          "size": {
-            "height": 152,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 9623.3911134276914,
-            "y": 907.84066290302462
-          },
-          "nodeIndex": "ffl week schedule",
-          "nodeLineageTag": "ad70944e-7b3b-4155-b701-977bbaf105df",
-          "size": {
-            "height": 272,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 9339.3911134276914,
-            "y": 955.84066290302462
-          },
-          "nodeIndex": "Team Logos",
-          "nodeLineageTag": "ea360990-2f24-4ca3-a54b-a4634499aa20",
-          "size": {
-            "height": 176,
             "width": 234
           },
           "zIndex": 0
@@ -772,19 +683,6 @@
         },
         {
           "location": {
-            "x": 1346.6233243630759,
-            "y": 404.63653264390723
-          },
-          "nodeIndex": "healthy_pipeline_goals",
-          "nodeLineageTag": "cb9522ca-5231-4a40-836b-34657a1cbc76",
-          "size": {
-            "height": 152,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
             "x": 622.12719025192973,
             "y": 1163.6497235185536
           },
@@ -917,19 +815,6 @@
         },
         {
           "location": {
-            "x": 26,
-            "y": 489.98855142247038
-          },
-          "nodeIndex": "transitioned_accounts",
-          "nodeLineageTag": "897dda26-edf0-4451-988c-251a5ccbd845",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 5
-        },
-        {
-          "location": {
             "x": 69.265102708367323,
             "y": 97.770532769664669
           },
@@ -958,19 +843,6 @@
       "nodes": [
         {
           "location": {
-            "x": 596.31989970043924,
-            "y": 210.92186004611705
-          },
-          "nodeIndex": "ffl_lineup",
-          "nodeLineageTag": "3a4ae469-f750-4726-99f1-1b1124d36f78",
-          "size": {
-            "height": 152,
-            "width": 234
-          },
-          "zIndex": 1
-        },
-        {
-          "location": {
             "x": 901.79731023038528,
             "y": 9.920025074890205
           },
@@ -994,45 +866,6 @@
             "width": 234
           },
           "zIndex": 3
-        },
-        {
-          "location": {
-            "x": 213.71917027650238,
-            "y": 0
-          },
-          "nodeIndex": "Employee Photos",
-          "nodeLineageTag": "fa3f0a45-a866-4212-b83d-72c09c64efd0",
-          "size": {
-            "height": 271,
-            "width": 234
-          },
-          "zIndex": 4
-        },
-        {
-          "location": {
-            "x": 87.058604965412258,
-            "y": 344.9572600806049
-          },
-          "nodeIndex": "Team Logos",
-          "nodeLineageTag": "ea360990-2f24-4ca3-a54b-a4634499aa20",
-          "size": {
-            "height": 222.50976749423535,
-            "width": 234
-          },
-          "zIndex": 5
-        },
-        {
-          "location": {
-            "x": 416.39803965432213,
-            "y": 468.14529290317421
-          },
-          "nodeIndex": "ffl week schedule",
-          "nodeLineageTag": "ad70944e-7b3b-4155-b701-977bbaf105df",
-          "size": {
-            "height": 272,
-            "width": 234
-          },
-          "zIndex": 6
         },
         {
           "location": {
@@ -1099,7 +932,7 @@
       "ordinal": 6,
       "scrollPosition": {
         "x": 0,
-        "y": 0
+        "y": 28
       },
       "nodes": [
         {

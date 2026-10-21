@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "dcc19f0e172e33210c7d",
   "position": {
     "x": 10.706319702602231,
@@ -57,11 +57,11 @@
                       "Entity": "measures_"
                     }
                   },
-                  "Property": "Total Margin paid in pay period"
+                  "Property": "Total Margin paid in pay period (GMC or Commission"
                 }
               },
               "queryRef": "measures_.Total Margin paid in pay period",
-              "nativeQueryRef": "Total Margin paid in pay period"
+              "nativeQueryRef": "Total Margin paid in pay period (GMC or Commission"
             },
             {
               "field": {
@@ -71,11 +71,11 @@
                       "Entity": "measures_"
                     }
                   },
-                  "Property": "Sum of Commisions paid (testing)"
+                  "Property": "Sum of Commisions paid (GMC Or Commission)"
                 }
               },
               "queryRef": "measures_.Sum of Commisions paid (testing)",
-              "nativeQueryRef": "Sum of Commisions paid (testing)"
+              "nativeQueryRef": "Sum of Commisions paid (GMC Or Commission)"
             },
             {
               "field": {
@@ -85,11 +85,11 @@
                       "Entity": "measures_"
                     }
                   },
-                  "Property": "Sum of Commisions paid (testing) remove pre dec"
+                  "Property": "Sum of Commisions paid (GMC Or Commission) remove pre Jan"
                 }
               },
               "queryRef": "measures_.Sum of Commisions paid (testing) remove pre dec",
-              "nativeQueryRef": "Sum of Commisions paid (testing) remove pre dec"
+              "nativeQueryRef": "Sum of Commisions paid (GMC Or Commission) remove pre Jan"
             }
           ]
         }
@@ -104,7 +104,7 @@
                     "Entity": "measures_"
                   }
                 },
-                "Property": "Sum of Commisions paid (testing)"
+                "Property": "Sum of Commisions paid (GMC Or Commission)"
               }
             },
             "direction": "Ascending"
@@ -251,7 +251,7 @@
                 "Entity": "measures_"
               }
             },
-            "Property": "Sum of Commisions paid (testing)"
+            "Property": "Sum of Commisions paid (GMC Or Commission)"
           }
         },
         "type": "Advanced"
@@ -265,7 +265,7 @@
                 "Entity": "measures_"
               }
             },
-            "Property": "Sum of Commisions paid (testing) remove pre dec"
+            "Property": "Sum of Commisions paid (GMC Or Commission) remove pre Jan"
           }
         },
         "type": "Advanced"
@@ -293,7 +293,7 @@
                 "Entity": "measures_"
               }
             },
-            "Property": "Total Margin paid in pay period"
+            "Property": "Total Margin paid in pay period (GMC or Commission"
           }
         },
         "type": "Advanced"
