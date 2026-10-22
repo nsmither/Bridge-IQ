@@ -4531,6 +4531,260 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Count of Adjustments' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(driver_extra_pay[movement_id]),
+			    driver_extra_pay[deduct_code_id] = "ADJ")
+		displayFolder: Exception Management
+		lineageTag: 17f793bf-c128-46a2-b04e-5212f9b6f109
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Carriers Re-Used 120 Days No Loadboard' =
+			
+			SUMX(
+			    FILTER(
+			        VALUES(orders[id]),
+			        CALCULATE(
+			            SELECTEDVALUE(orders[order_type_id])) = "FTL"
+			    ),
+			
+			    VAR CurrentShipDate =
+			        CALCULATE(
+			            MIN(orders[shipper_sched_early_date])
+			        )
+			
+			    VAR CurrentCarrier =
+			        CALCULATE(
+			            SELECTEDVALUE(movements[override_payee_id])
+			        )
+			
+			    VAR NoLoadboardPosting =
+			        CALCULATE(
+			            [Count of orders NO loadboard posting pings]
+			        )
+			
+			    VAR PreviousLoads120Days =
+			        CALCULATE(
+			            DISTINCTCOUNT(orders[id]),
+			            REMOVEFILTERS('Calendar'),
+			            REMOVEFILTERS(orders),
+			            movements[override_payee_id] = CurrentCarrier,
+			            orders[shipper_sched_early_date] < CurrentShipDate,
+			            orders[shipper_sched_early_date] >= CurrentShipDate - 120
+			        )
+			
+			    RETURN
+			        IF(
+			            NOT ISBLANK(NoLoadboardPosting)
+			                && NoLoadboardPosting > 0
+			                && NOT ISBLANK(CurrentCarrier)
+			                && NOT ISBLANK(CurrentShipDate)
+			                && PreviousLoads120Days > 0,
+			            1,
+			            0
+			        )
+			)
+		displayFolder: Exception Management
+		lineageTag: 5b1470c9-1f5a-4952-9cb7-5e69b533e774
+
+	measure 'Count of Carriers Re-Used All Time No Loadboard' =
+			
+			SUMX(
+			    FILTER(
+			        VALUES(orders[id]),
+			        CALCULATE(
+			            SELECTEDVALUE(orders[order_type_id])) = "FTL"
+			    ),
+			
+			    VAR CurrentShipDate =
+			        CALCULATE(
+			            MIN(orders[shipper_sched_early_date])
+			        )
+			
+			    VAR CurrentCarrier =
+			        CALCULATE(
+			            SELECTEDVALUE(movements[override_payee_id])
+			        )
+			
+			    VAR NoLoadboardPosting =
+			        CALCULATE(
+			            [Count of orders NO loadboard posting pings]
+			        )
+			
+			    VAR PreviousLoads =
+			        CALCULATE(
+			            DISTINCTCOUNT(orders[id]),
+			            REMOVEFILTERS('Calendar'),
+			            REMOVEFILTERS(orders),
+			            movements[override_payee_id] = CurrentCarrier,
+			            orders[shipper_sched_early_date] < CurrentShipDate
+			        )
+			
+			    RETURN
+			        IF(
+			            NOT ISBLANK(NoLoadboardPosting)
+			                && NoLoadboardPosting > 0
+			                && NOT ISBLANK(CurrentCarrier)
+			                && NOT ISBLANK(CurrentShipDate)
+			                && PreviousLoads > 0,
+			            1,
+			            0
+			        )
+			)
+		displayFolder: Exception Management
+		lineageTag: 9f036ecd-5cac-4948-8272-e111d1e0b20c
+
+	measure 'Count of Credit Rebills' =
+			
+			COUNTROWS(
+			    FILTER(
+			        VALUES('bill history'[order_id]),
+			        CALCULATE(
+			            DISTINCTCOUNT('bill history'[invoice_no_string])
+			        ) > 1
+			    )
+			)
+		displayFolder: Exception Management
+		lineageTag: b2fbbaf2-b360-4eaf-97dd-452190d6b979
+
+	measure 'Count of Entered (Day of ship)' =
+			
+			CALCULATE(
+			    COUNTROWS(orders),
+			    FILTER(
+			        orders,
+			        orders[ordered_date] = orders[shipper_sched_early_date]
+			    )
+			)
+		displayFolder: Exception Management
+		lineageTag: 64d38387-159b-4052-b9c7-c1bfca399a8a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Layover' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(driver_extra_pay[movement_id]),
+			    driver_extra_pay[deduct_code_id] = "LAY"
+			)
+		displayFolder: Exception Management
+		lineageTag: fd0617cb-9e12-4f4a-8cc5-19de1012a849
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Loadboard posting pings' =
+			
+			CALCULATE(
+			    COUNTROWS(
+			        FILTER(
+			            'Audit Log Orders',
+			            CONTAINSSTRING(
+			                'Audit Log Orders'[changed_values],
+			                "loadboard|N|Y"
+			            )
+			        )
+			    ),
+			    USERELATIONSHIP(
+			        'Audit Log Orders'[primary_key_values],
+			        orders[id]
+			    )
+			)
+		displayFolder: Exception Management
+		lineageTag: e6475b59-245a-43a4-80b3-bdd8f1793de1
+
+	measure 'Count of Negative Margin Orders' =
+			
+			COUNTROWS(
+			    FILTER(
+			        VALUES(orders[id]),
+			        CALCULATE([Margin]) < 0
+			    )
+			)
+		displayFolder: Exception Management
+		lineageTag: 040c3168-f4c3-4dc0-8809-c7804ea1ceab
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of Orders Covered (Day of ship)' =
+			
+			CALCULATE(
+			    COUNTROWS('Audit Log Movement'),
+			
+			    FILTER(
+			        'Audit Log Movement',
+			        CONTAINSSTRING(
+			            'Audit Log Movement'[changed_values],
+			            "override_payee_id|<null>|"
+			        )
+			        &&
+			        'Audit Log Movement'[change_date_time] = min(orders[shipper_sched_early_date])
+			    ),
+			
+			    USERELATIONSHIP(
+			        'Audit Log Movement'[primary_key_values],
+			        movements[id]
+			    )
+			)
+		displayFolder: Exception Management
+		lineageTag: bc6e12c5-528d-4fe0-8352-0367216e2b27
+
+	measure 'Count of orders NO loadboard posting pings' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[id]),
+			    FILTER(
+			        VALUES(orders[id]),
+			        CALCULATE(
+			            COUNTROWS('Audit Log Orders'),
+			            USERELATIONSHIP(
+			                'Audit Log Orders'[primary_key_values],
+			                orders[id]
+			            ),
+			            CONTAINSSTRING(
+			                'Audit Log Orders'[changed_values],
+			                "loadboard|N|Y"
+			            )
+			        ) = 0
+			    )
+			)
+		displayFolder: Exception Management
+		lineageTag: bb9dc59e-06bb-42ef-8fe3-5d0331abc112
+
+	measure 'Count of Return to Shipper' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(driver_extra_pay[movement_id]),
+			    driver_extra_pay[deduct_code_id] = "RES"
+			)
+		displayFolder: Exception Management
+		lineageTag: 8df0b905-f7e9-472e-9a74-e702131a1527
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Count of TONU Orders' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(orders[id]),
+			    orders[is_tonu] = "Y"
+			)
+		displayFolder: Exception Management
+		lineageTag: d50e3968-ca54-4aca-ba72-b23aa1c9ca21
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 're-used carriers %' = DIVIDE([Count of Carriers Re-Used All Time No Loadboard],[Count of orders covered])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Exception Management
+		lineageTag: adac2be5-21cb-4163-9f75-ea836a8f0b55
+
+	measure 'Count of logged actions' = DISTINCTCOUNT('Audit Log Movement'[id])+DISTINCTCOUNT('Audit Log Orders'[id])
+		displayFolder: Exception Management
+		lineageTag: b475c1ee-df40-4cf0-a6fc-f5cc608266d0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column
 		isHidden
 		formatString: 0

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "d9e6e105e8bde0369f82",
+  "position": {
+    "x": 0,
+    "y": 116.58354114713218,
+    "z": 2,
+    "height": 105.9850374064838,
+    "width": 1280.2992518703243,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Orders Covered (Day of ship)"
+                }
+              },
+              "queryRef": "measures_.Count of Orders Covered (Day of ship)",
+              "nativeQueryRef": "Orders Covered (Day of ship)",
+              "displayName": "Orders Covered (Day of ship)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Entered (Day of ship)"
+                }
+              },
+              "queryRef": "measures_.Count of Entered (Day of ship)",
+              "nativeQueryRef": "Orders Entered (Day of ship)",
+              "displayName": "Orders Entered (Day of ship)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Carriers Re-Used All Time No Loadboard"
+                }
+              },
+              "queryRef": "measures_.Count of Carriers Re-Used All Time No Loadboard",
+              "nativeQueryRef": "Count of Carriers Re-Used All Time No Loadboard"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "measures_"
+                  }
+                },
+                "Property": "Count of Orders Covered (Day of ship)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

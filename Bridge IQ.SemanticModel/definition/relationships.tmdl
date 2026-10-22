@@ -538,3 +538,34 @@ relationship e9deaeed-3710-25f9-edf4-495dd35556f5
 	fromColumn: orders.id
 	toColumn: ops_complexity.order_id
 
+relationship 7d8728a7-f4d2-2ba0-bd3a-a0c5c9921d7b
+	fromColumn: 'Audit Log Orders'.change_date_time
+	toColumn: Calendar.Date
+
+relationship ead4c5b8-ce33-727c-1830-7024908d7e43
+	isActive: false
+	fromColumn: 'Audit Log Orders'.primary_key_values
+	toColumn: orders.id
+
+relationship 255af875-b3e2-e7ce-725a-09770ff5d7a5
+	isActive: false
+	fromColumn: 'Audit Log Movement'.primary_key_values
+	toColumn: movements.id
+
+relationship a7d9800d-b90f-081c-c950-8efd0a6f5a5d
+	fromColumn: 'Audit Log Movement'.change_date_time
+	toColumn: Calendar.Date
+
+relationship 9faa9b82-3624-8f15-9356-37015e40f8f1
+	isActive: false
+	fromColumn: 'bill history'.order_id
+	toColumn: orders.id
+
+relationship c45ff2b7-ba66-f0a6-fea1-7643e438383b
+	fromColumn: 'bill history'.bill_date
+	toColumn: Calendar.Date
+
+relationship d8d54349-ea1d-79e8-ed45-d8e07e76367e
+	fromColumn: 'bill history'.customer_id
+	toColumn: customer.id
+

@@ -568,3 +568,24 @@ expression stop_historic =
 
 	annotation PBI_ResultType = Table
 
+expression 'Audit Log Master Appending Quary' =
+		let
+		    Source = Sql.Database("bl-appdb", "lme"),
+		    dbo_audit_log = Source{[Schema="dbo",Item="audit_log"]}[Data],
+		    #"Removed Columns" = Table.RemoveColumns(dbo_audit_log,{"transaction_id", "application_id", "company_id"}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Removed Columns",{"sql_statement"}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Removed Columns1", each ([changed_values] <> "<initial>")),
+		    #"Inserted Time1" = Table.AddColumn(#"Filtered Rows1", "Time.1", each DateTime.Time([change_date_time]), type time),
+		    #"Reordered Columns" = Table.ReorderColumns(#"Inserted Time1",{"change_date_time", "Time.1", "changed_values", "id", "primary_key_crc", "primary_key_values", "table_name", "user_id", "change_date_time_utc"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Time.1", "Time"}}),
+		    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"change_date_time", DateTime.Date, type date}}),
+		    #"Removed Columns2" = Table.RemoveColumns(#"Extracted Date",{"change_date_time_utc"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns2",{{"Time", type time}})
+		in
+		    #"Changed Type"
+	lineageTag: 61ce49fc-d79c-4e54-a956-f15c6dca9466
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

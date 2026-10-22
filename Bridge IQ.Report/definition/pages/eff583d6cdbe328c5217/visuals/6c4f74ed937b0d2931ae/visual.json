@@ -1,0 +1,220 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "6c4f74ed937b0d2931ae",
+  "position": {
+    "x": 28.615960099750623,
+    "y": 116.58354114713218,
+    "z": 3,
+    "height": 117.64339152119702,
+    "width": 1223.067331670823,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Credit Rebills"
+                }
+              },
+              "queryRef": "measures_.Count of Credit Rebills",
+              "nativeQueryRef": "Credit Rebills",
+              "displayName": "Credit Rebills"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Negative Margin Orders"
+                }
+              },
+              "queryRef": "measures_.Count of Negative Margin Orders",
+              "nativeQueryRef": "Negative Margin",
+              "displayName": "Negative Margin"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of TONU Orders"
+                }
+              },
+              "queryRef": "measures_.Count of TONU Orders",
+              "nativeQueryRef": "TONU",
+              "displayName": "TONU"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Adjustments"
+                }
+              },
+              "queryRef": "measures_.Count of Negative Driver Adjustments",
+              "nativeQueryRef": "Adjustments",
+              "displayName": "Adjustments"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Layover"
+                }
+              },
+              "queryRef": "measures_.Count of Layover",
+              "nativeQueryRef": "Layover",
+              "displayName": "Layover"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "Count of Return to Shipper"
+                }
+              },
+              "queryRef": "measures_.Count of Return to Shipper",
+              "nativeQueryRef": "Return to Shipper",
+              "displayName": "Return to Shipper"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "measures_"
+                  }
+                },
+                "Property": "Count of Credit Rebills"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2317d1fd10cfb2966691",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of Credit Rebills"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f308182a55a1c4f0d7b7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of Negative Margin Orders"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1e230827dfae9ecb25c5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of TONU Orders"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0a7c94c3f5464e35d0e9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of Adjustments"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "11a81df82e2764b0ac2d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of Layover"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "931d0ee1633a03520bfd",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "Count of Return to Shipper"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

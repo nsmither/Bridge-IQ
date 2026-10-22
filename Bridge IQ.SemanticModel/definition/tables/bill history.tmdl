@@ -1,0 +1,462 @@
+table 'bill history'
+	lineageTag: 9b8d09ea-087d-42f4-bf9f-c6d1d7d28ff2
+
+	column bill_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: aca6254f-2013-4e94-88d7-23df6a10e52b
+		summarizeBy: none
+		sourceColumn: bill_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column bill_type
+		dataType: string
+		sourceProviderType: char
+		lineageTag: cd454863-13a5-44d1-aa09-ebc22cbee1a6
+		summarizeBy: none
+		sourceColumn: bill_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column billing_user_id
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 871b3de8-c502-4d00-af4c-9bcc95dcc804
+		summarizeBy: none
+		sourceColumn: billing_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column blnum
+		dataType: string
+		sourceProviderType: varchar(28)
+		lineageTag: 1df8b524-d596-402d-a81f-22a0ffcef68a
+		summarizeBy: none
+		sourceColumn: blnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column canceled
+		dataType: string
+		sourceProviderType: char
+		lineageTag: aa3a25f8-5159-428b-85da-2b1075f43d6b
+		summarizeBy: none
+		sourceColumn: canceled
+
+		annotation SummarizationSetBy = Automatic
+
+	column commodity
+		dataType: string
+		sourceProviderType: char
+		lineageTag: b30414ad-bf07-4f2c-a63c-74194c1eef00
+		summarizeBy: none
+		sourceColumn: commodity
+
+		annotation SummarizationSetBy = Automatic
+
+	column commodity_descr
+		dataType: string
+		sourceProviderType: varchar(80)
+		lineageTag: 7c6b3d57-fc6f-433f-9445-902f4b8bcc93
+		summarizeBy: none
+		sourceColumn: commodity_descr
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignee_ref_no
+		dataType: string
+		sourceProviderType: varchar(28)
+		lineageTag: 5b0a3db8-ad20-434b-9074-e557626be6b8
+		summarizeBy: none
+		sourceColumn: consignee_ref_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		sourceProviderType: char
+		lineageTag: ba280bd1-2299-4264-95ac-3416897420d1
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: fb3bb00a-6cd0-4410-bb86-b252ce4d0335
+		summarizeBy: none
+		sourceColumn: delivery_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column distance
+		dataType: double
+		sourceProviderType: decimal(10, 1)
+		lineageTag: 0af0958b-f92e-4989-b383-f3c18bd22882
+		summarizeBy: sum
+		sourceColumn: distance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column distance_um
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 24da0c53-0b0c-4f7e-ab82-e120735e3994
+		summarizeBy: none
+		sourceColumn: distance_um
+
+		annotation SummarizationSetBy = Automatic
+
+	column entered_user_id
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 4c12f774-ccdd-4cf7-a50c-16fe845fcd21
+		summarizeBy: none
+		sourceColumn: entered_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column excisetax_total_d
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: 9541b42a-9656-4e9e-9435-adc35e7e5f00
+		summarizeBy: none
+		sourceColumn: excisetax_total_d
+
+		annotation SummarizationSetBy = Automatic
+
+	column external_invoiceno
+		dataType: string
+		sourceProviderType: varchar(16)
+		lineageTag: 03448a1b-f5c3-47d3-a815-5a68146f6a98
+		summarizeBy: none
+		sourceColumn: external_invoiceno
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		isNullable: false
+		sourceProviderType: varchar(32)
+		lineageTag: 0784a61f-e0ef-46bd-840d-1affd348e0da
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 4d13fb7a-7968-4d3d-842f-53e540977798
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_no_string
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 3c0eb254-4ae7-49a1-83d5-8e6f6f80c8f7
+		summarizeBy: none
+		sourceColumn: invoice_no_string
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_recv_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: 5453585b-2703-42b0-a71a-1f19b7e6c8f7
+		summarizeBy: none
+		sourceColumn: invoice_recv_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column linehaul_chg
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: 88d0c190-0e77-4ee9-8c0d-3c5f9b2f64d4
+		summarizeBy: sum
+		sourceColumn: linehaul_chg
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column linehaul_chg_c
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 4c7e85ae-3c9c-4f7f-b49b-011b2daab66b
+		summarizeBy: none
+		sourceColumn: linehaul_chg_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column linehaul_chg_d
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: 010541cc-8647-45f8-b5f2-797c2d9f4913
+		summarizeBy: none
+		sourceColumn: linehaul_chg_d
+
+		annotation SummarizationSetBy = Automatic
+
+	column linehaul_chg_n
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: 64ab256d-331f-4063-b951-2bdbd5408a40
+		summarizeBy: sum
+		sourceColumn: linehaul_chg_n
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_type_id
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 7fbfd118-32eb-4c88-92c0-002add747d90
+		summarizeBy: none
+		sourceColumn: order_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column other_charge
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: 620db2cf-b2f5-4cfc-9cc2-6892952fec85
+		summarizeBy: sum
+		sourceColumn: other_charge
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column other_charge_c
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 97d923ca-ac08-4918-b6be-1f0a82e0e433
+		summarizeBy: none
+		sourceColumn: other_charge_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column other_charge_d
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: cf229968-6cdd-4e74-b864-7b0dc11851ea
+		summarizeBy: none
+		sourceColumn: other_charge_d
+
+		annotation SummarizationSetBy = Automatic
+
+	column other_charge_n
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: 9126550a-ae7e-470c-aac8-232caf9d7cee
+		summarizeBy: sum
+		sourceColumn: other_charge_n
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column other_charge_r
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: 8ce6507e-e6be-4b45-8118-12931a638642
+		summarizeBy: sum
+		sourceColumn: other_charge_r
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pay_gross_d
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: 10a3a3a1-1854-4797-8cef-ff1e62eaf645
+		summarizeBy: none
+		sourceColumn: pay_gross_d
+
+		annotation SummarizationSetBy = Automatic
+
+	column pieces
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 22c0e612-0e64-47fc-a778-28152c62dc6e
+		summarizeBy: sum
+		sourceColumn: pieces
+
+		annotation SummarizationSetBy = Automatic
+
+	column rate
+		dataType: double
+		sourceProviderType: decimal(12, 4)
+		lineageTag: 0980e80a-242e-4a9b-ac47-e5f89f032676
+		summarizeBy: sum
+		sourceColumn: rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue_id
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 81e29f23-5db8-4b66-b506-11d06ed3de82
+		summarizeBy: none
+		sourceColumn: revenue_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ship_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: d240cd7e-50c5-4e42-8c3b-faca7423fcea
+		summarizeBy: none
+		sourceColumn: ship_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_charges
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: 7c3ef276-d16f-4396-9045-7f695d5473a5
+		summarizeBy: sum
+		sourceColumn: total_charges
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_charges_c
+		dataType: string
+		sourceProviderType: char
+		lineageTag: 213fb042-1474-4496-a189-ef4ec601b52a
+		summarizeBy: none
+		sourceColumn: total_charges_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_charges_d
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: c7eb8422-08a0-4570-9129-eb75a9118c74
+		summarizeBy: none
+		sourceColumn: total_charges_d
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_charges_n
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: b7160a9c-2287-4b08-b7f5-877eb39e9eb2
+		summarizeBy: sum
+		sourceColumn: total_charges_n
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_charges_r
+		dataType: double
+		sourceProviderType: decimal(10, 6)
+		lineageTag: 71c6f01f-9d0d-41b4-a48a-fec3700c15e5
+		summarizeBy: sum
+		sourceColumn: total_charges_r
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column totalcharge_and_excisetax
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: c54a2119-ce5d-4b8c-9933-4f02d4dba239
+		summarizeBy: sum
+		sourceColumn: totalcharge_and_excisetax
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column totalcharge_and_excisetax_d
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: d5365e43-9b0b-4e7d-ab60-842e28b4896d
+		summarizeBy: none
+		sourceColumn: totalcharge_and_excisetax_d
+
+		annotation SummarizationSetBy = Automatic
+
+	column totalcharge_and_excisetax_n
+		dataType: double
+		sourceProviderType: decimal(16, 2)
+		lineageTag: 814a5805-321a-4994-9a60-99479f86fced
+		summarizeBy: sum
+		sourceColumn: totalcharge_and_excisetax_n
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column transfer_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: 316fafb5-788c-4b59-b17b-c48e8e7c839c
+		summarizeBy: none
+		sourceColumn: transfer_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column weight
+		dataType: double
+		sourceProviderType: decimal(7, 1)
+		lineageTag: 6231394e-e74e-4cdf-b250-b24e264ac0cc
+		summarizeBy: sum
+		sourceColumn: weight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weight_um
+		dataType: string
+		sourceProviderType: char
+		lineageTag: ff00b5e9-2789-4d30-a67b-fc9cdd7d755d
+		summarizeBy: none
+		sourceColumn: weight_um
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'bill history' = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_billing_history = Source{[Schema="dbo",Item="billing_history"]}[Data],
+				    #"Reordered Columns" = Table.ReorderColumns(dbo_billing_history,{"company_id", "agent", "autorate_status", "bill_date", "bill_of_lading", "bill_type", "billing_empty_distance", "billing_empty_distance_um", "billing_loaded_distance", "billing_loaded_distance_um", "billing_user_id", "blnum", "booking_number", "broker", "canceled", "commodity", "commodity_descr", "consignee_ref_no", "container", "customer_id", "delivery_date", "dist_include_split", "distance", "distance_um", "driver_id", "edi_transfered", "entered_user_id", "excisetax_total", "excisetax_total_c", "excisetax_total_d", "excisetax_total_n", "excisetax_total_r", "external_invoiceno", "factoring_exp_date", "factoring_id", "fixed_charge_label", "fixed_charge_seg_alloc_code", "gp_exported", "id", "invoice_no", "order_id", "invoice_no_string", "invoice_recv_date", "invoiced_flag", "is_dedicated_bill", "is_fixed", "is_split_bill", "is_summary_bill", "last_auto_collect", "last_auto_collect_type", "linehaul_chg", "linehaul_chg_c", "linehaul_chg_d", "linehaul_chg_n", "linehaul_chg_r", "master_order_id", "minimum_weight", "minimum_weight_um", "order_type_id", "other_charge", "other_charge_c", "other_charge_d", "other_charge_n", "other_charge_r", "pay_gross", "pay_gross_c", "pay_gross_d", "pay_gross_n", "pay_gross_r", "payment_method", "pieces", "port", "post_key", "post_key_openitem", "post_module", "printed", "purchase_order_no", "rate", "rate_id", "rate_type", "rate_unit_desc", "rating_method", "rating_type", "rating_units", "ready_to_process", "rebilled", "revenue_id", "round_trip_flag", "ship_date", "shipment_id", "total_charges", "total_charges_c", "total_charges_d", "total_charges_n", "total_charges_r", "totalcharge_and_excisetax", "totalcharge_and_excisetax_c", "totalcharge_and_excisetax_d", "totalcharge_and_excisetax_n", "totalcharge_and_excisetax_r", "tractor_id", "trailer_id", "trailer2_id", "transfer_date", "vessel", "weight", "weight_um", "lock_miles", "ic_company_from", "ic_movement_from", "is_intercompany", "ic_order_from"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns",{"company_id", "agent", "autorate_status", "bill_of_lading", "billing_empty_distance", "billing_empty_distance_um", "billing_loaded_distance", "billing_loaded_distance_um", "booking_number", "broker", "container", "dist_include_split", "driver_id", "edi_transfered", "excisetax_total", "excisetax_total_c", "excisetax_total_n", "excisetax_total_r", "factoring_exp_date", "factoring_id", "fixed_charge_label", "fixed_charge_seg_alloc_code", "gp_exported", "invoice_no", "invoiced_flag", "is_dedicated_bill", "is_fixed", "is_split_bill", "is_summary_bill", "last_auto_collect", "last_auto_collect_type", "linehaul_chg_r", "master_order_id", "minimum_weight", "minimum_weight_um", "pay_gross", "pay_gross_c", "pay_gross_n", "pay_gross_r", "payment_method", "port", "post_key", "post_key_openitem", "post_module", "printed", "purchase_order_no", "rate_id", "rate_type", "rate_unit_desc", "rating_method", "rating_type", "rating_units", "ready_to_process", "rebilled", "round_trip_flag", "shipment_id", "totalcharge_and_excisetax_c", "totalcharge_and_excisetax_r", "tractor_id", "trailer_id", "trailer2_id", "vessel", "lock_miles", "ic_company_from", "ic_movement_from", "is_intercompany", "ic_order_from"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
