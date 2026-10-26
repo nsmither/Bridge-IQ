@@ -468,10 +468,30 @@ table measures_
 	measure 'Count of movements with 3 or more pings' =
 			
 			CALCULATE(
-			    DISTINCTCOUNT(callins[movement_id]),
-			    FILTER(GROUPBY(callins,callins[movement_id]),[Count of tracking pings]>=3),
-			    USERELATIONSHIP(movements[dispatcher_user_id],dispatcher_key[McLeod User Code]
-			))
+			    DISTINCTCOUNT(movements[id]),
+			
+			    FILTER(
+			        VALUES(movements[id]),
+			        CALCULATE(
+			            [Count of tracking pings]
+			        ) >= 3
+			    ),
+			
+			    movements[status] <> "A",
+			
+			    orders[order_type_id] IN {
+			        "FTL",
+			        "BW",
+			        "PARTIAL"
+			    },
+			
+			    orders[bill_distance] > 50,
+			
+			    USERELATIONSHIP(
+			        movements[dispatcher_user_id],
+			        dispatcher_key[McLeod User Code]
+			    )
+			)
 		formatString: 0
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: df5754d3-b223-4231-bb8a-39def543c971
@@ -493,7 +513,7 @@ table measures_
 		lineageTag: 745f6c52-bce7-4aed-a430-abd1d9155a54
 
 	/// Divides count of movements with 3 or more ping by count of trackable movements
-	measure 'Percentage Of movement with 3 or more pings' = DIVIDE([Count of movements with 3 or more pings],[Count of Trackable Movements])
+	measure 'Percentage Of movement with 3 or more pings' = DIVIDE([Count of movements with 3 or more pings],[Count of Trackable Movements],0)
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: Movement Measures\Callins Measures
 		lineageTag: 06663e34-2ac5-4c2d-b23e-2f4cdab296d3
@@ -4638,16 +4658,24 @@ table measures_
 
 	measure 'Count of Credit Rebills' =
 			
-			COUNTROWS(
-			    FILTER(
-			        VALUES('bill history'[order_id]),
-			        CALCULATE(
-			            DISTINCTCOUNT('bill history'[invoice_no_string])
-			        ) > 1
+			CALCULATE(
+			    COUNTROWS(
+			        FILTER(
+			            VALUES('bill history'[order_id]),
+			            CALCULATE(
+			                DISTINCTCOUNT('bill history'[invoice_no_string])
+			            ) > 1
+			        )
+			    ),
+			    TREATAS(
+			        VALUES(orders[id]),
+			        'bill history'[order_id]
 			    )
 			)
 		displayFolder: Exception Management
 		lineageTag: b2fbbaf2-b360-4eaf-97dd-452190d6b979
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Count of Entered (Day of ship)' =
 			
@@ -4784,6 +4812,55 @@ table measures_
 		lineageTag: b475c1ee-df40-4cf0-a6fc-f5cc608266d0
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'count of logs' = DISTINCTCOUNT('Audit Log Master'[id])
+		displayFolder: Audit log testing
+		lineageTag: 67a8ed51-dbc2-40ab-bdd4-daeb0f6018c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Automation count of Logs' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Audit Log Master'[id]),
+			    'Audit Log Master'[user_id] IN {
+			        "loadmaster",
+			        "voomaapi",
+			        "parade"
+			    }
+			)
+		displayFolder: Audit log testing
+		lineageTag: fe51155e-abb1-459d-9958-352460b4f489
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'non - automation count of Logs' =
+			
+			CALCULATE(
+			    COUNTROWS('Audit Log Master'),
+			    NOT(
+			        'Audit Log Master'[user_id] IN {
+			            "loadmaster",
+			            "voomaapi",
+			            "parade"
+			        }
+			    )
+			)
+		displayFolder: Audit log testing
+		lineageTag: 4b094ad3-6468-4b62-88ef-53a8919ba11d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Automation % of Logs' =
+			
+			DIVIDE(
+			    [Automation Count of Logs],
+			    [Count of Logs],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Audit log testing
+		lineageTag: b4b5aa6e-7f97-481d-b6e7-b07bd17061ae
 
 	column Column
 		isHidden

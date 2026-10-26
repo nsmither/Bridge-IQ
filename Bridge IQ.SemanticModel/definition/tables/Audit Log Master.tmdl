@@ -1,0 +1,96 @@
+table 'Audit Log Master'
+	lineageTag: 13f58e4e-ceb9-49b3-ac0e-740271e9dd9e
+
+	column change_date_time
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a22cd2d3-5c27-419a-b33b-e203193c9a9e
+		summarizeBy: none
+		sourceColumn: change_date_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: dc60fcc1-3fda-47f0-bdbd-1e63186a3422
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column changed_values
+		dataType: string
+		lineageTag: 6034b4c9-6284-4f28-965a-d19416df3a41
+		summarizeBy: none
+		sourceColumn: changed_values
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: 9bbf2860-e468-4383-a56c-d70740add30f
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column primary_key_crc
+		dataType: int64
+		formatString: 0
+		lineageTag: ef8c27d4-04f3-4dfb-bae9-ab6a560b6100
+		summarizeBy: sum
+		sourceColumn: primary_key_crc
+
+		annotation SummarizationSetBy = Automatic
+
+	column primary_key_values
+		dataType: string
+		lineageTag: 5040b696-f655-4edb-ab81-c5419fdccc73
+		summarizeBy: none
+		sourceColumn: primary_key_values
+
+		annotation SummarizationSetBy = Automatic
+
+	column table_name
+		dataType: string
+		lineageTag: 2f9099c6-f926-45e7-b329-27061679a0fa
+		summarizeBy: none
+		sourceColumn: table_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		lineageTag: ced9117d-6f93-471f-80db-54a1c6e1860f
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Audit Log Master' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("bl-appdb", "lme"),
+				    dbo_audit_log = Source{[Schema="dbo",Item="audit_log"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(dbo_audit_log,{"transaction_id", "application_id", "company_id"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Removed Columns",{"sql_statement"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Removed Columns1", each ([changed_values] <> "<initial>")),
+				    #"Inserted Time1" = Table.AddColumn(#"Filtered Rows1", "Time.1", each DateTime.Time([change_date_time]), type time),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Inserted Time1",{"change_date_time", "Time.1", "changed_values", "id", "primary_key_crc", "primary_key_values", "table_name", "user_id", "change_date_time_utc"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Time.1", "Time"}}),
+				    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"change_date_time", DateTime.Date, type date}}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Extracted Date",{"change_date_time_utc"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns2",{{"Time", type time}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

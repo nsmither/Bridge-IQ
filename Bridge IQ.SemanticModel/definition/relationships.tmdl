@@ -569,3 +569,34 @@ relationship d8d54349-ea1d-79e8-ed45-d8e07e76367e
 	fromColumn: 'bill history'.customer_id
 	toColumn: customer.id
 
+relationship 129929a0-5794-9789-28ef-d6ecaec4b971
+	fromColumn: 'Audit Log Master'.change_date_time
+	toColumn: Calendar.Date
+
+relationship a82ad4b1-c936-60f4-b177-a4d39e3ced33
+	isActive: false
+	fromColumn: 'Audit Log Master'.primary_key_values
+	toColumn: orders.id
+
+relationship 14ee8906-4d33-5bb8-295a-ab917a9619db
+	isActive: false
+	fromColumn: 'Audit Log Master'.primary_key_values
+	toColumn: movements.id
+
+relationship 37d8a6ee-1ba6-c69c-7ef0-635d7b0e4f9b
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: employees.'McLeod User Code'
+	toColumn: 'Audit Log Master'.user_id
+
+relationship bd2cc6be-1b59-42d9-9f54-c7dc072f6ee1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Order Audit Summary'.'First Change'
+	toColumn: LocalDateTable_331a446d-1967-4679-8718-914c7e8980c4.Date
+
+relationship 97b48094-4c11-41eb-8c07-cab9731741fc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Order Audit Summary'.'Last Change'
+	toColumn: LocalDateTable_9ac4b11c-2504-4280-aeff-a2bff63f1472.Date
+

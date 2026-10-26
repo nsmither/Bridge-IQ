@@ -155,6 +155,23 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "measures_"
+                  }
+                },
+                "Property": "re-used carriers %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "expansionStates": [
@@ -442,6 +459,20 @@
               }
             },
             "Property": "rev_code_id"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "29fb590e2e0a51f8045c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "re-used carriers %"
           }
         },
         "type": "Advanced"

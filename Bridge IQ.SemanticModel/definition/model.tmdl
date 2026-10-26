@@ -48,7 +48,7 @@ queryGroup 'Transform File from historic_behaviors\Helper Queries'
 
 	annotation PBI_QueryGroupOrder = 0
 
-annotation PBI_QueryOrder = ["mcleod_historic_orders","Contacts","stop_historic","base_or_commission_pay_schedule","users","pay_schedule","sop_issues","behaviors","behavior_goals","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer_margin_goal","customer","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_behaviors","historic_callins","movements","factoring_company","driver_extra_pay","Calendar","crm_stages","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","carrier_key","ops_complexity","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","lane","daily_number_override","account_rep","observed_holidays","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","behavior_key","dispatcher_key","division_key","odoo","payee","off_payee","pay_dates","wires_not_accounted for","drs_payee","bill history","Audit Log Master Appending Quary","Audit Log Orders","Audit Log Movement"]
+annotation PBI_QueryOrder = ["mcleod_historic_orders","Contacts","stop_historic","base_or_commission_pay_schedule","users","pay_schedule","sop_issues","behaviors","behavior_goals","margin_load_count_goals","overdue_check_calls","dnc","stop","rev_codes","customer_margin_goal","customer","RefreshCutOffDate","orders","mcleod_historic_movement","MovementCutOffNumber","mcleod_historic_driver_extra_pay","mcleod_historic_movement_order","movement_order","historic_parade_orders","historic_behaviors","historic_callins","movements","factoring_company","driver_extra_pay","Calendar","crm_stages","employees","job_history","salesperson_key","Parameter1","Transform Sample File","Sample File","Transform File","parade_orders","carrier_key","ops_complexity","Parameter2","Transform Sample File (2)","Sample File (2)","Transform File (2)","callins","lane","daily_number_override","account_rep","observed_holidays","Parameter3","Transform Sample File (3)","Sample File (3)","Transform File (3)","Parameter4","Transform Sample File (4)","Sample File (4)","Transform File (4)","behavior_key","dispatcher_key","division_key","odoo","payee","off_payee","pay_dates","wires_not_accounted for","drs_payee","bill history","Audit Log Master","Audit Log Orders","Audit Log Movement"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -107,6 +107,10 @@ ref table ops_complexity
 ref table 'Audit Log Orders'
 ref table 'Audit Log Movement'
 ref table 'bill history'
+ref table 'Audit Log Master'
+ref table 'Order Audit Summary'
+ref table LocalDateTable_331a446d-1967-4679-8718-914c7e8980c4
+ref table LocalDateTable_9ac4b11c-2504-4280-aeff-a2bff63f1472
 
 ref cultureInfo en-US
 

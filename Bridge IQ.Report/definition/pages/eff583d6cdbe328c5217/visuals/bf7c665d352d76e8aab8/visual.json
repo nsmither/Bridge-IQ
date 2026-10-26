@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "bf7c665d352d76e8aab8",
   "position": {
-    "x": 28.488104374520336,
-    "y": 234.78127398311585,
+    "x": 28.810289389067524,
+    "y": 234.59807073954983,
     "z": 4,
     "height": 485.28012279355329,
     "width": 1223.0237912509592,
@@ -20,6 +20,21 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
+                      "Entity": "rev_codes"
+                    }
+                  },
+                  "Property": "rev_code_id"
+                }
+              },
+              "queryRef": "rev_codes.rev_code_id",
+              "nativeQueryRef": "rev_code_id",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
                       "Entity": "customer"
                     }
                   },
@@ -28,7 +43,7 @@
               },
               "queryRef": "customer.name",
               "nativeQueryRef": "name",
-              "active": true
+              "active": false
             },
             {
               "field": {
@@ -43,7 +58,7 @@
               },
               "queryRef": "orders.lane",
               "nativeQueryRef": "lane",
-              "active": true
+              "active": false
             },
             {
               "field": {
@@ -166,6 +181,25 @@
         "levels": [
           {
             "queryRefs": [
+              "rev_codes.rev_code_id"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "rev_codes"
+                    }
+                  },
+                  "Property": "rev_code_id"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
               "customer.name"
             ],
             "isCollapsed": true,
@@ -222,83 +256,7 @@
             "isPinned": true
           }
         ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'ABC INDUSTRIES INC'"
-                  }
-                }
-              ],
-              "children": [
-                {
-                  "identityValues": [
-                    {
-                      "Literal": {
-                        "Value": "'UNION, SC - WINONA LAKE, IN'"
-                      }
-                    }
-                  ],
-                  "isToggled": true
-                }
-              ]
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'SILGAN PLASTICS CORP'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'CCL USA Inc.'"
-                  }
-                }
-              ],
-              "children": [
-                {
-                  "identityValues": [
-                    {
-                      "Literal": {
-                        "Value": "'NORCROSS, GA - CLEMSON, SC'"
-                      }
-                    }
-                  ],
-                  "isToggled": true
-                }
-              ]
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'ANGSTROM FIBER SIDNEY LLC'"
-                  }
-                }
-              ],
-              "children": [
-                {
-                  "identityValues": [
-                    {
-                      "Literal": {
-                        "Value": "'PIQUA, OH - SIDNEY, OH'"
-                      }
-                    }
-                  ],
-                  "isToggled": true
-                }
-              ]
-            }
-          ]
-        }
+        "root": {}
       }
     ],
     "objects": {

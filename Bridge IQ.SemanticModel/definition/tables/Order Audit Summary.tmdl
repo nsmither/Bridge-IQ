@@ -1,0 +1,122 @@
+table 'Order Audit Summary'
+	lineageTag: 7de1c8a8-a6f0-46e3-b6c4-7fd3a617b706
+
+	column 'Order ID'
+		lineageTag: 719c32ae-2554-4ffc-bd85-1bc082785b3d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Order ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'First Change'
+		formatString: General Date
+		lineageTag: aa817422-454a-4189-aa14-d8062a6f3a0c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [First Change]
+
+		variation Variation
+			isDefault
+			relationship: bd2cc6be-1b59-42d9-9f54-c7dc072f6ee1
+			defaultHierarchy: LocalDateTable_331a446d-1967-4679-8718-914c7e8980c4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Change'
+		formatString: General Date
+		lineageTag: 638b27ff-de8a-4f61-a649-57201407c503
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Last Change]
+
+		variation Variation
+			isDefault
+			relationship: 97b48094-4c11-41eb-8c07-cab9731741fc
+			defaultHierarchy: LocalDateTable_9ac4b11c-2504-4280-aeff-a2bff63f1472.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Count of Changes'
+		formatString: 0
+		lineageTag: 56b08a95-2474-4461-9fe8-a7b728a99bd0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Count of Changes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'People / Systems'
+		lineageTag: 997452f1-c962-4e11-9588-9fcf04c4d725
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [People / Systems]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Order Audit Summary' = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    DISTINCT(
+				        SELECTCOLUMNS(
+				            'Audit Log Master',
+				            "Order ID", 'Audit Log Master'[primary_key_values]
+				        )
+				    ),
+				
+				    "First Change",
+				        VAR CurrentOrder = [Order ID]
+				        RETURN
+				            MINX(
+				                FILTER(
+				                    'Audit Log Master',
+				                    'Audit Log Master'[primary_key_values] = CurrentOrder
+				                ),
+				                'Audit Log Master'[change_date_time]
+				                    + 'Audit Log Master'[Time]
+				            ),
+				
+				    "Last Change",
+				        VAR CurrentOrder = [Order ID]
+				        RETURN
+				            MAXX(
+				                FILTER(
+				                    'Audit Log Master',
+				                    'Audit Log Master'[primary_key_values] = CurrentOrder
+				                ),
+				                'Audit Log Master'[change_date_time]
+				                    + 'Audit Log Master'[Time]
+				            ),
+				
+				    "Count of Changes",
+				        VAR CurrentOrder = [Order ID]
+				        RETURN
+				            COUNTROWS(
+				                FILTER(
+				                    'Audit Log Master',
+				                    'Audit Log Master'[primary_key_values] = CurrentOrder
+				                )
+				            ),
+				
+				    "People / Systems",
+				        VAR CurrentOrder = [Order ID]
+				        RETURN
+				            CONCATENATEX(
+				                DISTINCT(
+				                    SELECTCOLUMNS(
+				                        FILTER(
+				                            'Audit Log Master',
+				                            'Audit Log Master'[primary_key_values] = CurrentOrder
+				                        ),
+				                        "User", 'Audit Log Master'[user_id]
+				                    )
+				                ),
+				                [User],
+				                ", "
+				            )
+				)
+
+	annotation PBI_Id = afdbc718b949478c9053009e6afa64a8
+

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "6b11015f94adea8a4c60",
+  "position": {
+    "x": 0,
+    "y": 134.66334164588528,
+    "z": 1,
+    "height": 765.33665835411477,
+    "width": 972.94264339152119
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit Log Master"
+                    }
+                  },
+                  "Property": "change_date_time"
+                }
+              },
+              "queryRef": "Audit Log Master.change_date_time",
+              "nativeQueryRef": "change_date_time",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit Log Master"
+                    }
+                  },
+                  "Property": "user_id"
+                }
+              },
+              "queryRef": "Audit Log Master.user_id",
+              "nativeQueryRef": "user_id",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
+                  "Property": "count of logs"
+                }
+              },
+              "queryRef": "measures_.count of logs",
+              "nativeQueryRef": "count of logs"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "measures_"
+                  }
+                },
+                "Property": "count of logs"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9738f3a529b51fa9b0c1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "measures_"
+              }
+            },
+            "Property": "count of logs"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5579e77020cd3894314e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Audit Log Master"
+              }
+            },
+            "Property": "change_date_time"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5a8f0b5b02e65a6cf2ed",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Audit Log Master"
+              }
+            },
+            "Property": "user_id"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

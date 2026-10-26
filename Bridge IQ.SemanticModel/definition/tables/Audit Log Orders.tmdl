@@ -81,7 +81,7 @@ table 'Audit Log Orders'
 				    #"Inserted Time" = Table.AddColumn(dbo_audit_log_tx, "Time", each DateTime.Time([change_date_time]), type time),
 				    #"Reordered Columns" = Table.ReorderColumns(#"Inserted Time",{"company_id", "application_id", "change_date_time", "Time", "changed_values", "id", "primary_key_crc", "primary_key_values", "sql_statement", "table_name", "transaction_id", "user_id", "change_date_time_utc"}),
 				    #"Extracted Date" = Table.TransformColumns(#"Reordered Columns",{{"change_date_time", DateTime.Date, type date}}),
-				    #"Appended Query" = Table.Combine({#"Extracted Date", #"Audit Log Master Appending Quary"}),
+				    #"Appended Query" = Table.Combine({#"Extracted Date", #"Audit Log Master"}),
 				    #"Filtered Rows" = Table.SelectRows(#"Appended Query", each [table_name] = "orders"),
 				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each ([changed_values] <> "<initial>")),
 				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"transaction_id", "application_id","sql_statement","change_date_time_utc", "company_id"})
