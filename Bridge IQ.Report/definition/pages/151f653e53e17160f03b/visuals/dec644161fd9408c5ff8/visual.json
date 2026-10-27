@@ -3,11 +3,11 @@
   "name": "dec644161fd9408c5ff8",
   "position": {
     "x": 0,
-    "y": 222.643391521197,
-    "z": 3,
-    "height": 497.35660847880297,
-    "width": 1280.1995012468828,
-    "tabOrder": 3
+    "y": 222.73556231003042,
+    "z": 3000,
+    "height": 408.51063829787233,
+    "width": 1240.1215805471124,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -102,6 +102,21 @@
                       "Entity": "measures_"
                     }
                   },
+                  "Property": "Count of Entered (Day of ship)"
+                }
+              },
+              "queryRef": "measures_.Count of Entered (Day of)",
+              "nativeQueryRef": "Entered (Day of ship)",
+              "displayName": "Entered (Day of ship)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "measures_"
+                    }
+                  },
                   "Property": "Count of Orders Covered (Day of ship)"
                 }
               },
@@ -117,12 +132,11 @@
                       "Entity": "measures_"
                     }
                   },
-                  "Property": "Count of Entered (Day of ship)"
+                  "Property": "Covered % (Day of ship)"
                 }
               },
-              "queryRef": "measures_.Count of Entered (Day of)",
-              "nativeQueryRef": "Entered (Day of ship)",
-              "displayName": "Entered (Day of ship)"
+              "queryRef": "measures_.Covered % (Day of ship)",
+              "nativeQueryRef": "Covered % (Day of ship)"
             },
             {
               "field": {
@@ -166,7 +180,7 @@
                     "Entity": "measures_"
                   }
                 },
-                "Property": "re-used carriers %"
+                "Property": "Count of orders covered"
               }
             },
             "direction": "Descending"
@@ -185,6 +199,18 @@
               "rev_codes.rev_code_id"
             ],
             "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "rev_codes"
+                    }
+                  },
+                  "Property": "rev_code_id"
+                }
+              }
+            ],
             "isPinned": true
           },
           {
@@ -445,34 +471,6 @@
               }
             },
             "Property": "Count of Entered (Day of ship)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e7e7e96028d6e8196587",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "rev_codes"
-              }
-            },
-            "Property": "rev_code_id"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "29fb590e2e0a51f8045c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "re-used carriers %"
           }
         },
         "type": "Advanced"

@@ -4,10 +4,10 @@
   "position": {
     "x": 28.615960099750623,
     "y": 116.58354114713218,
-    "z": 3,
+    "z": 2000,
     "height": 117.64339152119702,
     "width": 1223.067331670823,
-    "tabOrder": 3
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -128,93 +128,5 @@
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "2317d1fd10cfb2966691",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Credit Rebills"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f308182a55a1c4f0d7b7",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Negative Margin Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1e230827dfae9ecb25c5",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of TONU Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "0a7c94c3f5464e35d0e9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Adjustments"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "11a81df82e2764b0ac2d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Layover"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "931d0ee1633a03520bfd",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Return to Shipper"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

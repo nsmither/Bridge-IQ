@@ -4,10 +4,10 @@
   "position": {
     "x": 377.10037174721191,
     "y": 14.275092936802976,
-    "z": 1,
+    "z": 1000,
     "height": 102.30483271375465,
     "width": 299.77695167286248,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "slicer",
@@ -55,23 +55,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "2558cefee4a6ea3d5c9d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "rev_codes"
-              }
-            },
-            "Property": "rev_code_id"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

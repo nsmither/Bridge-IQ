@@ -4615,12 +4615,13 @@ table measures_
 			    FILTER(
 			        VALUES(orders[id]),
 			        CALCULATE(
-			            SELECTEDVALUE(orders[order_type_id])) = "FTL"
+			            SELECTEDVALUE(orders[order_type_id])
+			        ) = "FTL"
 			    ),
 			
 			    VAR CurrentShipDate =
 			        CALCULATE(
-			            MIN(orders[shipper_sched_early_date])
+			            SELECTEDVALUE(orders[shipper_sched_early_date])
 			        )
 			
 			    VAR CurrentCarrier =
@@ -4644,8 +4645,7 @@ table measures_
 			
 			    RETURN
 			        IF(
-			            NOT ISBLANK(NoLoadboardPosting)
-			                && NoLoadboardPosting > 0
+			            NoLoadboardPosting > 0
 			                && NOT ISBLANK(CurrentCarrier)
 			                && NOT ISBLANK(CurrentShipDate)
 			                && PreviousLoads > 0,
@@ -4655,6 +4655,8 @@ table measures_
 			)
 		displayFolder: Exception Management
 		lineageTag: 9f036ecd-5cac-4948-8272-e111d1e0b20c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Count of Credit Rebills' =
 			
@@ -4680,10 +4682,11 @@ table measures_
 	measure 'Count of Entered (Day of ship)' =
 			
 			CALCULATE(
-			    COUNTROWS(orders),
+			    DISTINCTCOUNT(orders[id]),
 			    FILTER(
 			        orders,
-			        orders[ordered_date] = orders[shipper_sched_early_date]
+			        DATEVALUE(orders[ordered_date]) =
+			        DATEVALUE(orders[shipper_sched_early_date])
 			    )
 			)
 		displayFolder: Exception Management
@@ -4738,25 +4741,42 @@ table measures_
 	measure 'Count of Orders Covered (Day of ship)' =
 			
 			CALCULATE(
-			    COUNTROWS('Audit Log Movement'),
+			    DISTINCTCOUNT(movements[id]),
 			
 			    FILTER(
-			        'Audit Log Movement',
-			        CONTAINSSTRING(
-			            'Audit Log Movement'[changed_values],
-			            "override_payee_id|<null>|"
-			        )
-			        &&
-			        'Audit Log Movement'[change_date_time] = min(orders[shipper_sched_early_date])
-			    ),
+			        VALUES(movements[id]),
+			        VAR ShipDate =
+			            CALCULATE(
+			                MIN(orders[shipper_sched_early_date])
+			            )
 			
-			    USERELATIONSHIP(
-			        'Audit Log Movement'[primary_key_values],
-			        movements[id]
+			        VAR CoveredDayOfShip =
+			            CALCULATE(
+			                COUNTROWS('Audit Log Movement'),
+			                FILTER(
+			                    'Audit Log Movement',
+			                    CONTAINSSTRING(
+			                        'Audit Log Movement'[changed_values],
+			                        "override_payee_id|<null>|"
+			                    )
+			                    &&
+			                    DATEVALUE('Audit Log Movement'[change_date_time])
+			                        = DATEVALUE(ShipDate)
+			                ),
+			                USERELATIONSHIP(
+			                    'Audit Log Movement'[primary_key_values],
+			                    movements[id]
+			                )
+			            )
+			
+			        RETURN
+			            CoveredDayOfShip > 0
 			    )
 			)
 		displayFolder: Exception Management
 		lineageTag: bc6e12c5-528d-4fe0-8352-0367216e2b27
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Count of orders NO loadboard posting pings' =
 			
@@ -4813,7 +4833,12 @@ table measures_
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'count of logs' = DISTINCTCOUNT('Audit Log Master'[id])
+	measure 'count of logs' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Audit Log Master'[id]),
+			    USERELATIONSHIP('Audit Log Master'[user_id],employees[McLeod User Code])
+			)
 		displayFolder: Audit log testing
 		lineageTag: 67a8ed51-dbc2-40ab-bdd4-daeb0f6018c1
 
@@ -4861,6 +4886,46 @@ table measures_
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: Audit log testing
 		lineageTag: b4b5aa6e-7f97-481d-b6e7-b07bd17061ae
+
+	measure 'Covered % (Day of ship)' = DIVIDE([Count of Orders Covered (Day of ship)],[Count of orders covered])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Exception Management
+		lineageTag: b8b79c5f-ed5b-4ae7-9890-b94b5404a12f
+
+	measure 'count of order logs' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Audit Log Master'[id]),
+			    'Audit Log Master'[table_name] = "Orders",
+			    USERELATIONSHIP('Audit Log Master'[user_id],employees[McLeod User Code])
+			)
+		displayFolder: Audit log testing
+		lineageTag: 1c16b10d-9ab6-4f6a-af98-fd5cbb9aebda
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'count of movement logs' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Audit Log Master'[id]),
+			    'Audit Log Master'[table_name] = "Movement",
+			    USERELATIONSHIP('Audit Log Master'[user_id],employees[McLeod User Code])
+			)
+		displayFolder: Audit log testing
+		lineageTag: 94d4633d-f106-46ab-9326-004db7481af0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% of order logs' = DIVIDE([count of order logs], [count of logs])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Audit log testing
+		lineageTag: 92103bf5-9912-463c-9b8b-48f0f9005df0
+
+	measure '% of movement logs' = DIVIDE([count of movement logs], [count of logs])
+		displayFolder: Audit log testing
+		lineageTag: df6efaae-3d02-482e-bac7-d4fb912aa710
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		isHidden

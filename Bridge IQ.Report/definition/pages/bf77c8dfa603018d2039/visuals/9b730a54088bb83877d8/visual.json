@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "52ab1a128b8de1a14479",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "9b730a54088bb83877d8",
   "position": {
     "x": 16,
     "y": 96,
-    "z": 0,
+    "z": 1000,
     "height": 608,
     "width": 1248,
-    "tabOrder": 0
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "lineChart",
@@ -276,53 +276,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "b4ab739345760083e88c",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "Month Name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "9b0c913f3aaa6e0dc091",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Margin"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "8c6a8d5b14d5b5922105",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "margin_load_count_goals"
-                  }
-                },
-                "Property": "Margin Goal"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "cc898ed3442468aaf9f6",
   "position": {
     "x": 777,
     "y": 0,
-    "z": 2001,
+    "z": 3000,
     "height": 67,
     "width": 503,
-    "tabOrder": 2001
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "slicer",
@@ -63,23 +63,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "d61696d734eaba185a71",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "customer"
-              }
-            },
-            "Property": "salesperson_id"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

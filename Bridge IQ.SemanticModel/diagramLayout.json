@@ -1047,7 +1047,7 @@
       "ordinal": 7,
       "scrollPosition": {
         "x": 0,
-        "y": 0
+        "y": 382
       },
       "nodes": [
         {
@@ -1061,7 +1061,7 @@
             "height": 272,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
@@ -1074,7 +1074,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
@@ -1087,7 +1087,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 5
         },
         {
           "location": {
@@ -1100,7 +1100,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         },
         {
           "location": {
@@ -1111,6 +1111,19 @@
           "nodeLineageTag": "0af26c3a-e69f-4de1-a4d5-3c1431c72fc3",
           "size": {
             "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 606,
+            "y": 381
+          },
+          "nodeIndex": "rev_codes",
+          "nodeLineageTag": "3cdc5a80-c6b4-41b3-9dbd-2c2e43274b14",
+          "size": {
+            "height": 128,
             "width": 234
           },
           "zIndex": 0
@@ -1181,19 +1194,6 @@
             "width": 234
           },
           "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 879,
-            "y": 329
-          },
-          "nodeIndex": "rev_codes",
-          "nodeLineageTag": "3cdc5a80-c6b4-41b3-9dbd-2c2e43274b14",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
         }
       ],
       "name": "Layout 7",
@@ -1204,6 +1204,6 @@
       "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 7",
+  "selectedDiagram": "Layout 6",
   "defaultDiagram": "All tables"
 }

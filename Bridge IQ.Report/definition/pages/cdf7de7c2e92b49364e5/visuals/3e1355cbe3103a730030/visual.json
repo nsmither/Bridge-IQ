@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "3e1355cbe3103a730030",
   "position": {
     "x": 0,
@@ -285,20 +285,6 @@
         }
       },
       {
-        "name": "fecc1a7712ce5c664892",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "AVG days to pay testing"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
         "name": "de1991c2606d1038bb40",
         "field": {
           "Measure": {
@@ -346,20 +332,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "a9e28960514a0734b725",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "salesperson_key"
-              }
-            },
-            "Property": "Name"
-          }
-        },
-        "type": "Categorical"
       },
       {
         "name": "dc9b98c6d3a749851407",
@@ -423,40 +395,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "e8d75f4510e36232ac00",
-        "field": {
-          "Arithmetic": {
-            "Left": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "measures_"
-                  }
-                },
-                "Property": "Margin"
-              }
-            },
-            "Right": {
-              "ScopedEval": {
-                "Expression": {
-                  "Measure": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "measures_"
-                      }
-                    },
-                    "Property": "Margin"
-                  }
-                },
-                "Scope": []
-              }
-            },
-            "Operator": 3
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

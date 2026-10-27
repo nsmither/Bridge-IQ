@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c603b65b8084b23e76c1",
   "position": {
     "x": 10.140845070422536,
@@ -270,37 +270,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "e2d468811c24d0cce846",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "base_or_commission_pay_schedule"
-              }
-            },
-            "Property": "Year"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "250ec72a540a04b02123",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "base_or_commission_pay_schedule"
-              }
-            },
-            "Property": "Pay Period Visual Filter"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

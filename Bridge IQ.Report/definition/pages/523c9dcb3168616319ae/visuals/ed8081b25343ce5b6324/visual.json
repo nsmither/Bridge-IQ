@@ -4,7 +4,7 @@
   "position": {
     "x": 28.728179551122192,
     "y": 234.31421446384039,
-    "z": 4,
+    "z": 4000,
     "height": 485.68578553615959,
     "width": 1222.7431421446383,
     "tabOrder": 0
@@ -270,107 +270,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "66e2cf7c78ec3cefc50d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of orders covered"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "ccb452aa7179d74e5456",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "customer"
-              }
-            },
-            "Property": "name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "486251647ace7628e13a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "lane"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "47579a03ac75991c75d9",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "d8703deaf4c5e4ba0d4b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Percentage Of movement with 3 or more pings"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "053277dc29b62c1c7617",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Margin %"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e5b2386228018ab7f8d5",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "rev_codes"
-              }
-            },
-            "Property": "rev_code_id"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

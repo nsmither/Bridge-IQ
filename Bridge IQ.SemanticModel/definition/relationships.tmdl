@@ -600,3 +600,8 @@ relationship 97b48094-4c11-41eb-8c07-cab9731741fc
 	fromColumn: 'Order Audit Summary'.'Last Change'
 	toColumn: LocalDateTable_9ac4b11c-2504-4280-aeff-a2bff63f1472.Date
 
+relationship 9c5ddacd-0c45-5738-c694-2162bc0e0112
+	isActive: false
+	fromColumn: orders.revenue_code_id
+	toColumn: rev_codes.rev_code_id
+

@@ -4,9 +4,10 @@
   "position": {
     "x": 983.04239401496261,
     "y": 630.67331670822944,
-    "z": 3,
+    "z": 3000,
     "height": 269.32668329177056,
-    "width": 297.38154613466338
+    "width": 297.38154613466338,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "tableEx",
@@ -33,23 +34,5 @@
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "15bc5d249c86aaff39b0",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Audit Log Master"
-              }
-            },
-            "Property": "table_name"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

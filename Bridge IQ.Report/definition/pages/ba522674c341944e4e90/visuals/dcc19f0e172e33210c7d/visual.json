@@ -4,10 +4,10 @@
   "position": {
     "x": 10.706319702602231,
     "y": 177.24907063197028,
-    "z": 1,
+    "z": 1000,
     "height": 542.597609561753,
     "width": 862.85258964143429,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -241,62 +241,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "f3b6f5bda04c64ae1ee7",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Sum of Commisions paid (GMC Or Commission)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6164e88245280308506d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Sum of Commisions paid (GMC Or Commission) remove pre Jan"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "5e8a6c0e430c51d318e6",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "c3394cca4ca8e23ce207",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Total Margin paid in pay period (GMC or Commission"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

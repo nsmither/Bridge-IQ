@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "bf7c665d352d76e8aab8",
   "position": {
-    "x": 28.810289389067524,
-    "y": 234.59807073954983,
-    "z": 4,
-    "height": 485.28012279355329,
-    "width": 1223.0237912509592,
-    "tabOrder": 4
+    "x": 29.179331306990882,
+    "y": 234.40729483282675,
+    "z": 3000,
+    "height": 462.97872340425533,
+    "width": 1222.613981762918,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -267,135 +267,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "05fe702720eedcf91084",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "customer"
-              }
-            },
-            "Property": "name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "f3fb53d608b2c8181d90",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "lane"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "53a0cd16e56e89010a4d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "orders"
-              }
-            },
-            "Property": "id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "5a94fa7afc49adf29770",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Credit Rebills"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "a52cfce1987b87e81674",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of TONU Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "bb0332f90fca9ea2a760",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Adjustments"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "65cebd54ced21e4db583",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Layover"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "79f2efefeecd00f33e82",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Return to Shipper"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d8014a81e634434cc09e",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Count of Negative Margin Orders"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

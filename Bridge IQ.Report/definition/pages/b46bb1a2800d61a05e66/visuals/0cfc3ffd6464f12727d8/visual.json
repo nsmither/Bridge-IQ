@@ -4,9 +4,10 @@
   "position": {
     "x": 983.04239401496261,
     "y": 134.66334164588528,
-    "z": 2,
+    "z": 2000,
     "height": 496.00997506234415,
-    "width": 297.38154613466338
+    "width": 297.38154613466338,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -110,51 +111,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "d9714e9b54f873de1fe0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Automation count of Logs"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "10eeeabf9175a5544be1",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "non - automation count of Logs"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "87b3b2e5d4999e7ed532",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "measures_"
-              }
-            },
-            "Property": "Automation % of Logs"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
