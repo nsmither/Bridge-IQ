@@ -1,0 +1,334 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "ddf7f22907addc9dc6a6",
+  "position": {
+    "x": 28.054862842892771,
+    "y": 222.19451371571074,
+    "z": 1000,
+    "height": 654.23940149625935,
+    "width": 1229.925187032419,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit Log Master"
+                    }
+                  },
+                  "Property": "user_id"
+                }
+              },
+              "queryRef": "Audit Log Master.user_id",
+              "nativeQueryRef": "user_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit Log Master"
+                    }
+                  },
+                  "Property": "table_name"
+                }
+              },
+              "queryRef": "Audit Log Master.table_name",
+              "nativeQueryRef": "table_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit Log Master"
+                    }
+                  },
+                  "Property": "change_date_time"
+                }
+              },
+              "queryRef": "Audit Log Master.change_date_time",
+              "nativeQueryRef": "change_date_time"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit Log Master"
+                    }
+                  },
+                  "Property": "primary_key_values"
+                }
+              },
+              "queryRef": "Audit Log Master.primary_key_values",
+              "nativeQueryRef": "primary_key_values"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit Log Master"
+                    }
+                  },
+                  "Property": "changed_values"
+                }
+              },
+              "queryRef": "Audit Log Master.changed_values",
+              "nativeQueryRef": "changed_values"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Audit Log Master"
+                  }
+                },
+                "Property": "change_date_time"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "588.3244094797651D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Audit Log Master.changed_values"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "228.86534251457D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Audit Log Master.primary_key_values"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "108.4987494065881D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Audit Log Master.user_id"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#3a3a3a'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#3a3a3a'"
+                    }
+                  }
+                }
+              }
+            },
+            "border": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#3a3a3a'"
+                    }
+                  }
+                }
+              }
+            },
+            "foreground": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "06757747420c50a3d7c2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Audit Log Master"
+              }
+            },
+            "Property": "user_id"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "16d194306e01381ed799",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Audit Log Master"
+              }
+            },
+            "Property": "table_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2e540df3c961e6eaaae2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Audit Log Master"
+              }
+            },
+            "Property": "change_date_time"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5dcac84ab02e1e1e7179",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Audit Log Master"
+              }
+            },
+            "Property": "primary_key_values"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b99a81d3cd6e50c5ebe7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Audit Log Master"
+              }
+            },
+            "Property": "changed_values"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

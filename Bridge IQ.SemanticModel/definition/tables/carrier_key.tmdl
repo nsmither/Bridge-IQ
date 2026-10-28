@@ -81,6 +81,15 @@ table carrier_key
 
 		annotation SummarizationSetBy = Automatic
 
+	column power_units
+		dataType: int64
+		formatString: 0
+		lineageTag: eb8a7923-751d-4e01-812d-542b3ad8882e
+		summarizeBy: sum
+		sourceColumn: power_units
+
+		annotation SummarizationSetBy = Automatic
+
 	partition carrier_key = m
 		mode: import
 		source =
@@ -89,7 +98,7 @@ table carrier_key
 				    dbo_payee = Source{[Schema="dbo",Item="payee"]}[Data],
 				    #"Removed Other Columns" = Table.SelectColumns(dbo_payee,{"address1", "city", "id", "name", "state", "status", "zip_code"}),
 				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns", {"id"}, drs_payee, {"id"}, "drs_payee", JoinKind.LeftOuter),
-				    #"Expanded drs_payee" = Table.ExpandTableColumn(#"Merged Queries", "drs_payee", {"dot_number", "factoring_company_id", "icc_number"}, {"dot_number", "factoring_company_id", "icc_number"}),
+				    #"Expanded drs_payee" = Table.ExpandTableColumn(#"Merged Queries", "drs_payee", {"dot_number", "factoring_company_id", "icc_number", "power_units"}, {"dot_number", "factoring_company_id", "icc_number", "power_units"}),
 				    #"Renamed Columns" = Table.RenameColumns(#"Expanded drs_payee",{{"icc_number", "mc_number"}})
 				in
 				    #"Renamed Columns"

@@ -3523,16 +3523,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.714
 			          }
-			        },
-			        {
-			          "Customer": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ],
 			      "NameType": "Name"
@@ -20331,19 +20321,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "re-used carriers %"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Re-used carriers no LB %": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "rev_codes.rev_code_id": {
 			      "Definition": {
@@ -20352,19 +20330,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "rev_code_id"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Revenue code": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    }
 			  },
 			  "Relationships": {
